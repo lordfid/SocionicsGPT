@@ -1,0 +1,24 @@
+
+> socionics-dalam-diriku@2.0.1 audit
+> tsx scripts/audit.ts
+
+{
+  "status": "passed",
+  "metrics": {
+    "totalItems": 256,
+    "coreItems": 192,
+    "holdoutItems": 32,
+    "tieBreakItems": 32,
+    "completeCoreCells": 64,
+    "uniqueStatements": 256,
+    "contexts": 14,
+    "simulatedSessions": 10000
+  },
+  "warnings": [],
+  "syntheticTypesRecovered": 16,
+  "extremeProfilesDistinct": true,
+  "uniformResponseConfidence": {
+    "allLow": "tidak cukup bukti",
+    "allHigh": "tidak cukup bukti"
+  }
+}
