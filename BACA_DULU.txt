@@ -1,26 +1,26 @@
-PERBAIKAN DEPLOY SOCIONICSGPT
+PERBAIKAN DEPLOY LAMBAT — SocionicsGPT
 
-1. HAPUS file package-lock.json lama dari root repository GitHub.
-   File lama berisi alamat registry internal dan jangan dipakai lagi.
+HASIL PEMERIKSAAN:
+- .npmrc saat ini sudah benar.
+- vercel.json saat ini secara struktur sudah benar.
+- package-lock.json justru tidak ada.
+- Tanpa package-lock.json, npm harus menghitung ulang versi dependency saat setiap deployment.
+- File dalam paket ini menambahkan package-lock.json bersih dari registry publik dan mengubah instalasi menjadi npm ci.
 
-2. Upload dua file dari paket ini ke ROOT repository:
+LANGKAH:
+1. Upload/replace tiga file ini di ROOT repository, sejajar dengan package.json:
+   - package-lock.json
    - .npmrc
    - vercel.json
+2. Jangan taruh di dalam src/.
+3. Di Vercel pilih Redeploy tanpa build cache untuk percobaan pertama.
+4. Deployment berikutnya dapat memakai cache normal.
 
-3. Pastikan file-file ini sejajar dengan:
-   - package.json
-   - index.html
-   - vite.config.ts
-   - src/
-
-4. Di Vercel lakukan Redeploy tanpa build cache.
-
-Pengaturan Vercel:
-- Framework Preset: Vite
+PENGATURAN:
+- Framework: Vite
 - Root Directory: ./
-- Install Command: npm install
 - Build Command: npm run build
 - Output Directory: dist
 
-JANGAN mengubah package.json.
-JANGAN menaruh file di dalam folder src.
+CATATAN:
+package-lock.json ini berasal dari dependency tree proyek v2.0.1 yang sama, tetapi seluruh URL registry internal sudah diganti menjadi https://registry.npmjs.org/.
