@@ -1,0 +1,26 @@
+PERBAIKAN DEPLOY SOCIONICSGPT
+
+1. HAPUS file package-lock.json lama dari root repository GitHub.
+   File lama berisi alamat registry internal dan jangan dipakai lagi.
+
+2. Upload dua file dari paket ini ke ROOT repository:
+   - .npmrc
+   - vercel.json
+
+3. Pastikan file-file ini sejajar dengan:
+   - package.json
+   - index.html
+   - vite.config.ts
+   - src/
+
+4. Di Vercel lakukan Redeploy tanpa build cache.
+
+Pengaturan Vercel:
+- Framework Preset: Vite
+- Root Directory: ./
+- Install Command: npm install
+- Build Command: npm run build
+- Output Directory: dist
+
+JANGAN mengubah package.json.
+JANGAN menaruh file di dalam folder src.
