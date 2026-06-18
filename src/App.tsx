@@ -37,6 +37,7 @@ import { calculateResult } from "./scoring/engine";
 import { TIM, TIMProfile, InformationElement, MeasurementChannel, ModelAPosition, Quadra, TestSession } from "./types/socionics";
 import { getCasualVersion, getOptionDetail } from "./utils/optionDetails";
 import { runInstrumentAudit } from "./audit/instrumentAudit";
+import ResultPortal from "./components/ResultPortal";
 
 // Option Scale Wording by ScaleType
 const SCALE_OPTIONS_MAP: Record<string, { val: number; label: string }[]> = {
@@ -1111,9 +1112,9 @@ export default function App() {
                 <Target className="w-4 h-4 animate-spin-slow" />
                 <span>INTERPRETASI MODEL A SELESAI</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Daftar Hasil Personal</h2>
+              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Pintu Pertama: Peta Dirimu</h2>
               <p className="text-sm text-slate-400 max-w-xl mx-auto">
-                Silakan periksa pola metabolisme informasi kognitif harian Anda berbasis scoring Model A di bawah ini.
+                Kamu sudah melewati rangkaian panjang. Sekarang hasilnya bukan cuma nama tipe, tetapi empat pintu untuk membaca cara pikir, emosi, dunia, relasi, dan kemungkinan hidupmu.
               </p>
             </div>
 
@@ -1239,6 +1240,14 @@ export default function App() {
                 </button>
               </div>
             </div>
+
+
+            {/* FOUR-DOOR RESULT EXPERIENCE */}
+            <ResultPortal
+              primaryType={calculatedOutput.top3[0].type}
+              result={calculatedOutput}
+              theme={theme}
+            />
 
             {/* INTERACTIVE MODEL A GRID */}
             <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
