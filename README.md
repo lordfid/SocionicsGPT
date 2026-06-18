@@ -1,20 +1,38 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Socionics Dalam Diriku
 
-# Run and deploy your AI Studio app
+Aplikasi web statis untuk tes Socionics berbasis Model A, 8 Information Elements, quadra, coverage audit, holdout validation, adaptive tie-break, dan kartu hasil yang bisa diunduh.
 
-This contains everything you need to run your app locally.
+## Isi utama
 
-View your app in AI Studio: https://ai.studio/apps/54c9c523-2039-4b16-b12b-a2122bd7ab56
+- React + TypeScript + Vite.
+- Berjalan sepenuhnya di browser.
+- Tidak membutuhkan backend, database, API key, atau environment secret.
+- Jawaban dan foto opsional disimpan lokal di browser pengguna.
+- Scoring aktif memakai satu engine: `src/scoring/engine.ts`.
+- Bank pertanyaan aktif memakai `src/data/coreQuestions.ts`, `src/data/holdoutQuestions.ts`, dan `src/data/tieBreakQuestions.ts`.
 
-## Run Locally
+## Jalankan lokal
 
-**Prerequisites:**  Node.js
+```bash
+npm ci
+npm run dev
+```
 
+## Cek kualitas
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm run lint
+npm run build
+```
+
+## Deploy Vercel
+
+Upload isi folder ini ke repository, lalu deploy sebagai proyek Vite. File `vercel.json` sudah memakai:
+
+- `npm ci --no-audit --no-fund`
+- `npm run build`
+- output `dist`
+
+## Catatan interpretasi
+
+Tes ini bukan diagnosis klinis. Hasil memakai bahasa kemungkinan, kecenderungan, dan indikasi pola. Confidence rendah atau jawaban terlalu monoton akan ditandai oleh quality gate.

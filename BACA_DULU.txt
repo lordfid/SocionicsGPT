@@ -1,27 +1,16 @@
-SOCIONICS DALAM DIRIKU v2.1.0 — LIBRARY EDITORIAL UPGRADE
+SOCIONICS DALAM DIRIKU — PAKET REVISI v2.3.0
 
-Perubahan utama:
-- halaman hasil tidak lagi memakai framing empat pintu;
-- hasil menjadi profil editorial yang ringkas dan tajam;
-- ada Catatan ahli, Versi gampangnya, Stereotipe internet, salah paham, blind spot, dan saran praktis;
-- tema visual perpustakaan modern: walnut, parchment, burgundy, navy, dusty plum, muted gold;
-- font Plus Jakarta Sans + DM Serif Display;
-- navigasi hasil mengambang dan rekomendasi seperti rak buku;
-- Bandingkan Dengan Tipe Lain dan Analisis Hubungan Antar-Tipe tetap dipertahankan;
-- kartu hasil PNG ikut memakai nuansa katalog perpustakaan;
-- ResultPortal dipisahkan menjadi lazy-loaded chunk agar bundle utama lebih ringan;
-- bug autosave jawaban tetap diperbaiki dengan savedSession.
+Cara pakai cepat:
+1. Buka terminal di folder ini.
+2. Jalankan: npm ci
+3. Jalankan: npm run dev
+4. Untuk cek sebelum deploy: npm run lint && npm run build
 
-Cara upload:
-1. Ekstrak ZIP.
-2. Upload ISI folder SocionicsGPT-main ke root repository.
-3. Jangan membuat folder pembungkus ganda.
-4. Pengaturan Vercel:
-   Framework: Vite
-   Install: npm ci --prefer-offline --no-audit --no-fund
-   Build: npm run build
-   Output: dist
+Yang sudah dibersihkan:
+- Tidak ada backend.
+- Tidak ada API key.
+- Tidak ada server runtime.
+- Satu engine scoring aktif.
+- Build dan type-check sudah diuji ulang.
 
-Pemeriksaan lokal:
-npm ci
-npm run check
+File laporan revisi ada di docs/REVISION_AUDIT_2026-06-19.md

@@ -1,6 +1,6 @@
 {
-  "name": "SocionicsGPT",
-  "description": "Sistem audit kepribadian kognitif berbasis Model A dengan 64-channel coverage, validasi holdout, adaptive tie-breaks, dan visualisasi interaktif.",
+  "name": "Socionics Dalam Diriku",
+  "description": "Tes Socionics berbasis Model A, quadra, kanal elemen, holdout, adaptive tie-break, dan kartu hasil yang dapat diunduh.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }
