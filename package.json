@@ -1,7 +1,7 @@
 {
   "name": "socionics-dalam-diriku",
   "private": true,
-  "version": "2.1.2",
+  "version": "2.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -9,9 +9,11 @@
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "audit": "tsx scripts/audit.ts",
-    "check": "npm run lint && npm run audit && npm run audit:language && npm run build",
+    "check": "npm run lint && npm run audit && npm run audit:language && npm run audit:result-copy && npm run audit:result-render && npm run build",
     "audit:language": "tsx scripts/auditLanguage.ts",
-    "export:editorial": "tsx scripts/exportEditorialCopy.ts"
+    "export:editorial": "tsx scripts/exportEditorialCopy.ts",
+    "audit:result-copy": "tsx scripts/auditResultCopy.ts",
+    "audit:result-render": "tsx scripts/smokeResultRender.tsx"
   },
   "dependencies": {
     "lucide-react": "^0.546.0",

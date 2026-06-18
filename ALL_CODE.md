@@ -1,6 +1,6 @@
-# ALL CODE — Socionics Dalam Diriku v2.1.2
+# ALL CODE — Socionics Dalam Diriku v2.2.0
 
-Versi ini memuat perbaikan hasil tes, cover buku editorial, katalog kandidat, perbandingan tipe berbentuk buku terbuka, serta analisis relasi berbentuk laci katalog.
+Versi Result Experience Refinement. File ini menggabungkan source, konfigurasi, audit, dan dokumentasi. `node_modules` serta `dist` tidak disertakan.
 
 ## Daftar file
 
@@ -10,6 +10,7 @@ Versi ini memuat perbaikan hasil tes, cover buku editorial, katalog kandidat, pe
 - `BACA_DULU.txt`
 - `CHANGELOG.md`
 - `README.md`
+- `UI_UX_REVISION_REPORT_v2.1.3.md`
 - `docs/AUDIT_RESULT.txt`
 - `docs/COVERAGE_REPORT.md`
 - `docs/DEPLOYMENT.md`
@@ -20,6 +21,8 @@ Versi ini memuat perbaikan hasil tes, cover buku editorial, katalog kandidat, pe
 - `docs/QUESTION_WRITING_GUIDE.md`
 - `docs/REBUILD_REPORT.md`
 - `docs/RESULT_EXPERIENCE_GUIDE.md`
+- `docs/RESULT_UI_GUIDE_v2.2.0.md`
+- `docs/RESULT_UPGRADE_REPORT_v2.2.0.md`
 - `docs/SCORING_GUIDE.md`
 - `docs/UPGRADE_REPORT_v2.1.0.md`
 - `docs/VALIDATION_ROADMAP.md`
@@ -29,7 +32,9 @@ Versi ini memuat perbaikan hasil tes, cover buku editorial, katalog kandidat, pe
 - `package.json`
 - `scripts/audit.ts`
 - `scripts/auditLanguage.ts`
+- `scripts/auditResultCopy.ts`
 - `scripts/exportEditorialCopy.ts`
+- `scripts/smokeResultRender.tsx`
 - `src/App.tsx`
 - `src/audit/instrumentAudit.ts`
 - `src/components/ResultPortal.tsx`
@@ -41,10 +46,13 @@ Versi ini memuat perbaikan hasil tes, cover buku editorial, katalog kandidat, pe
 - `src/hooks/useTestSession.ts`
 - `src/index.css`
 - `src/main.tsx`
+- `src/resultTheme.css`
+- `src/results/modelAEditorial.ts`
 - `src/results/resultExperience.ts`
 - `src/scoring/engine.ts`
 - `src/session/sessionState.ts`
 - `src/types/socionics.ts`
+- `src/utils/editorialText.ts`
 - `src/utils/optionDetails.ts`
 - `tsconfig.json`
 - `vercel.json`
@@ -125,6 +133,32 @@ npm run check
 
 ````md
 # Changelog
+
+## 2.2.0 — Result experience refinement
+
+### UI/UX dan keterbacaan
+
+- Memisahkan tema hasil ke `src/resultTheme.css` sebagai lapisan CSS final yang bersih.
+- Menghapus tumpukan CSS hasil lama dari `src/index.css` agar konflik warna dan layout tidak berulang.
+- Meningkatkan kontras dark mode dan light mode pada cover, paragraf, chip, kartu, callout, dan navigasi.
+- Mengubah navigasi bab menjadi grid responsif yang tidak memotong judul pada layar kecil.
+- Menambahkan indikator bab, progress bar, dan tombol menuju bab berikutnya.
+- Menambahkan panel kualitas bukti: cakupan, konsistensi respons, holdout, jarak kandidat, dan unresolved pair.
+- Menata ulang cover utama, Top 3, rekomendasi, perbandingan, relasi, dan panel Model A.
+
+### Bahasa hasil
+
+- Menambahkan `polishEditorialText()` untuk kapitalisasi awal, konsistensi `kamu`, dan pembersihan spasi.
+- Menghapus ketergantungan halaman hasil pada profil lama yang terlalu puitis dan bertele-tele.
+- Menulis ulang penjelasan delapan posisi Model A berdasarkan fungsi posisi: otomatisitas, fleksibilitas, performa peran, pain, relief, aspirasi, kompetensi yang diabaikan, dan latar otomatis.
+- Menulis ulang 14 pola hubungan antar-tipe menjadi ringkasan, kekuatan, gesekan, dan saran praktis.
+- Mengganti deskripsi comparison dengan pembacaan Base, Creative, PoLR, dan Suggestive yang lebih langsung.
+
+### Audit dan pengujian
+
+- Menambahkan `audit:result-copy` untuk memeriksa kapitalisasi, kata `Anda`, metafora terlarang, dan panjang copy pada seluruh 16 TIM.
+- Menambahkan `audit:result-render` untuk smoke-render 16 TIM × 2 tema, 128 posisi Model A, dan 14 relasi.
+- Menjalankan instalasi bersih, lint, audit instrumen, audit bahasa, audit copy hasil, smoke render, dan production build.
 
 ## 2.1.2 — Library result stage 2
 
@@ -329,6 +363,84 @@ Versi 2.0.4 memperluas halaman hasil menjadi pengalaman eksplorasi interaktif ta
 - **Pintu D — Laboratorium Hidup:** nasihat, sirkel, hadiah, buku, film, musik, pekerjaan, destinasi, kosakata, dan eksperimen tujuh hari.
 
 Setiap kartu menggunakan struktur **Vibe → Artinya → Pembacaan → Sisi rawan/Eksperimen**. Rekomendasi diperlakukan sebagai moodboard dan bahan eksplorasi, bukan resep hidup atau diagnosis.
+````
+
+---
+
+## `UI_UX_REVISION_REPORT_v2.1.3.md`
+
+````md
+# UI/UX Revision Report — v2.1.3
+
+Fokus revisi kali ini adalah membetulkan masalah yang terlihat pada layar hasil: kontras rendah, teks yang tampak tenggelam, navigasi bab hasil yang sempit di mobile, gaya penulisan yang tidak konsisten, dan tampilan hasil yang kurang terasa “menarik dibaca”.
+
+## Ringkasan revisi utama
+
+### A. Perbaikan keterbacaan dan kontras
+1. Memperbaiki struktur tampilan `ResultPortal` agar tidak lagi bergantung pada utilitas `dark:` yang tidak aktif di konteks tema sekarang.
+2. Mengganti pendekatan warna teks di halaman hasil dengan kelas berbasis `theme === "dark"` / `theme === "light"`.
+3. Meningkatkan kontras judul besar pada halaman hasil.
+4. Meningkatkan kontras paragraf deskripsi utama.
+5. Meningkatkan kontras isi kartu insight agar tidak lagi tampak pudar.
+6. Meningkatkan kontras note box / callout box.
+7. Meningkatkan kontras area “Tingkat Keyakinan Tes”.
+8. Meningkatkan kontras daftar sinyal jawaban.
+9. Meningkatkan kontras daftar rekomendasi rak.
+10. Meningkatkan kontras chip metadata pada cover hasil.
+
+### B. Perbaikan struktur visual halaman hasil
+11. Menata ulang hero hasil supaya lebih editorial dan lebih “layak dibaca”.
+12. Menambahkan ringkasan editorial yang lebih jelas di bagian atas.
+13. Menambahkan blok “Pendapat Ahli Singkat”.
+14. Menambahkan blok “Stereotipe Internet”.
+15. Menambahkan chip observasi / sinyal jawaban yang lebih rapi.
+16. Menambahkan highlight chips pada cover kandidat utama.
+17. Menata ulang kartu kandidat top-3 agar lebih bersih.
+18. Menegaskan hierarki visual antara judul, label, isi, dan catatan.
+19. Membuat card insight terasa lebih konsisten antar-bagian.
+20. Menata ulang rekomendasi menjadi rak yang lebih rapi dan lebih mudah dipindai.
+
+### C. Perbaikan mobile UI / navigation
+21. Mengubah navigasi bab hasil dari pola sempit / sulit dibaca menjadi grid responsif.
+22. Membuat tab navigasi bab hasil lebih tinggi dan lebih mudah ditekan dengan jari.
+23. Menjaga judul tab bisa membungkus (wrap), sehingga tidak terpotong.
+24. Menambahkan ikon area tab agar scanning visual lebih cepat.
+25. Membuat layout nav 2 kolom di tablet / mobile lebar, 1 kolom di mobile sempit, dan 1 kolom vertikal di desktop sidebar.
+26. Menyesuaikan layout hero cover agar lebih nyaman di layar kecil.
+27. Mengurangi potensi kesan “sesak” di mobile.
+28. Membuat kartu hasil atas tidak terasa terlalu kosong atau terlalu padat.
+
+### D. Perbaikan copywriting / capitalization
+29. Menambahkan utilitas `polishEditorialText()` untuk merapikan teks hasil.
+30. Memastikan kalimat yang tampil dimulai dengan huruf kapital.
+31. Mengurangi kemunculan pembukaan kalimat yang dimulai huruf kecil.
+32. Mengganti sapaan “Anda” menjadi “Kamu” pada layer presentasi hasil.
+33. Merapikan daftar teks rekomendasi agar konsisten kapitalisasi awalnya.
+34. Merapikan copy hasil agar lebih natural dibaca.
+35. Mengurangi rasa terlalu “aneh” / terlalu puitis di cover hasil dengan memakai snapshot editorial yang lebih ringkas.
+
+### E. Perbaikan estetika tambahan
+36. Menghilangkan rotasi kartu kecil yang memberi kesan kurang rapi.
+37. Memperhalus background card dan panel untuk kesan lebih premium.
+38. Memperjelas batas antar-bagian hasil.
+39. Memperkuat tampilan callout “Yang sering bikin orang salah paham”.
+40. Memperkuat tampilan callout “Yang perlu kamu waspadai”.
+41. Memperkuat tampilan note batas interpretasi.
+42. Menambahkan ikon rak rekomendasi agar lebih menarik secara visual.
+43. Memoles ulang warna cover utama agar lebih seimbang di dark mode.
+44. Memoles ulang warna cover utama agar tidak terlalu datar di light mode.
+45. Memperbaiki rasa keseluruhan halaman hasil supaya lebih “mau dibaca terus”.
+
+## File yang direvisi
+- `src/components/ResultPortal.tsx`
+- `src/App.tsx`
+- `src/index.css`
+- `src/utils/editorialText.ts`
+
+## Catatan teknis
+- Build produksi berhasil.
+- Type-check / lint berhasil.
+- Revisi ini fokus pada UI/UX hasil dan presentasi copy, belum menyentuh audit empiris reliabilitas psikometrik.
 ````
 
 ---
@@ -19870,6 +19982,194 @@ Komponen tetap membaca `channelProfile` aktual peserta dan menampilkan empat sin
 
 ---
 
+## `docs/RESULT_UI_GUIDE_v2.2.0.md`
+
+````md
+# Result UI Guide v2.2.0
+
+## Tujuan
+
+Halaman hasil harus terasa seperti profil editorial yang nyaman dibaca, bukan dashboard teknis dan bukan kumpulan metafora. Informasi teori tetap dipertahankan, tetapi dibagi menjadi blok pendek dengan hierarki visual yang jelas.
+
+## Urutan membaca
+
+1. Cover kandidat utama
+2. Top 3 dan tingkat keyakinan
+3. Ringkasan editorial
+4. Kualitas bukti hasil
+5. Tujuh bab hasil
+6. Delapan posisi Model A
+7. Perbandingan tipe
+8. Analisis hubungan antar-tipe
+9. Rekomendasi dan pengujian ulang
+
+## Standar kontras
+
+- Judul utama harus memakai warna paling terang pada dark mode dan paling gelap pada light mode.
+- Paragraf isi tidak boleh memakai opacity rendah.
+- Kartu transparan harus tetap memiliki permukaan solid yang cukup agar teks tidak tenggelam.
+- Callout penting tidak boleh hanya dibedakan melalui warna; gunakan border, label, dan ruang.
+
+## Standar copy
+
+- Gunakan `kamu`, bukan `Anda` atau `gue`.
+- Awal kalimat harus kapital.
+- Hindari metafora yang tidak menambah informasi.
+- Bedakan pendapat teori, versi gampang, stereotipe internet, risiko, dan saran praktis.
+- Intertype relations diperlakukan sebagai hipotesis, bukan kepastian kualitas hubungan.
+- PoLR dibaca dari pain/freeze/avoidance, bukan skor elemen terendah.
+- Suggestive dibaca dari relief/trust/seeking, bukan sekadar kelemahan.
+
+## Standar mobile
+
+- Tidak ada judul tab yang dipotong.
+- Tidak ada horizontal overflow pada 360 px.
+- Target tombol minimum mudah ditekan dengan jari.
+- Kartu utama berubah menjadi satu kolom.
+- Stamp dan label dekoratif tidak boleh menutupi teks.
+````
+
+---
+
+## `docs/RESULT_UPGRADE_REPORT_v2.2.0.md`
+
+````md
+# SocionicsGPT v2.2.0 — Result Experience Refinement
+
+Versi ini melanjutkan revisi berdasarkan masalah yang terlihat pada screenshot pengguna: teks tenggelam, kontras sangat rendah, tab bab terpotong, kartu terlalu transparan, tampilan mobile sempit, dan copy lama yang masih memakai bahasa puitis atau berlebihan.
+
+## Akar masalah yang diperbaiki
+
+1. Beberapa warna memakai utilitas `dark:` sementara tema aplikasi dikendalikan lewat state dan kelas khusus, sehingga warna dark mode tidak selalu aktif.
+2. Banyak kartu memakai opacity rendah di atas latar gelap, membuat teks hampir tidak terlihat.
+3. Navigasi bab memakai baris horizontal dengan `min-width: max-content`, sehingga isi melebar keluar layar.
+4. CSS hasil telah ditimpa berkali-kali dan memiliki aturan duplikat yang saling bertabrakan.
+5. Bagian Model A, comparison, dan relation masih mengambil copy lama dari `TIM_PROFILES` yang terlalu puitis, kaku, dan bertele-tele.
+6. Tidak ada audit otomatis untuk memastikan seluruh 16 tipe dapat dirender pada dua tema.
+
+## 72 revisi utama
+
+### Fondasi CSS
+
+1. Memindahkan seluruh tema hasil ke `src/resultTheme.css`.
+2. Memuat result theme setelah Tailwind agar menjadi lapisan final.
+3. Membersihkan `src/index.css` dari tumpukan aturan hasil lama.
+4. Mengurangi CSS hasil dari aturan duplikat yang saling bertabrakan.
+5. Menambahkan variabel warna untuk parchment, walnut, burgundy, gold, plum, ink, dan muted text.
+6. Membuat variabel warna berbeda untuk light dan dark mode.
+7. Menghapus ketergantungan utama pada selector utilitas `dark:` untuk copy hasil.
+8. Menambahkan batas lebar dan overflow protection pada seluruh result page.
+9. Menambahkan aturan word wrapping pada teks panjang.
+10. Menambahkan reduced-motion support.
+
+### Cover dan Top 3
+
+11. Meningkatkan kontras judul tipe utama.
+12. Meningkatkan kontras nama lengkap TIM.
+13. Meningkatkan kontras metadata quadra, club, dan fit score.
+14. Mengganti deskripsi lama dengan ringkasan editorial berbasis Base dan Creative.
+15. Menambahkan empat highlight Model A pada cover.
+16. Menata ulang ribbon kandidat utama agar tidak menutupi isi.
+17. Membuat monogram tipe lebih jelas di layar kecil.
+18. Memperbaiki progress bar kandidat agar tidak tampak kosong.
+19. Memperjelas angka persentase Top 3.
+20. Memperjelas kartu tingkat keyakinan.
+
+### Ringkasan dan kualitas bukti
+
+21. Menambahkan Pendapat Ahli Singkat.
+22. Menambahkan Stereotipe Internet dengan label yang jelas.
+23. Menambahkan daftar sinyal jawaban yang benar-benar terlihat.
+24. Menambahkan panel Kualitas Bukti Hasil.
+25. Menampilkan persentase cakupan jawaban.
+26. Menampilkan estimasi konsistensi respons.
+27. Menampilkan dukungan holdout kandidat utama.
+28. Menampilkan jarak kandidat pertama dan kedua.
+29. Menampilkan unresolved pair bila masih ada pasangan yang sulit dibedakan.
+30. Menambahkan penjelasan bahwa hasil perlu diuji lewat perilaku nyata.
+
+### Navigasi bab
+
+31. Mengubah navigasi bab menjadi grid responsif.
+32. Menghapus `min-width: max-content` yang menyebabkan overflow.
+33. Membuat judul tab dapat membungkus ke baris baru.
+34. Menambahkan ikon pada setiap tab.
+35. Memperbesar target sentuh tab.
+36. Menggunakan satu kolom pada mobile sempit.
+37. Menggunakan dua kolom pada ukuran menengah.
+38. Menggunakan sidebar satu kolom pada desktop.
+39. Menambahkan indikator Bab X dari 7.
+40. Menambahkan progress bar bab.
+41. Menambahkan tombol Bab Berikutnya.
+42. Menambahkan smooth scroll yang tetap menghormati reduced motion.
+
+### Kartu insight dan rekomendasi
+
+43. Membuat permukaan kartu lebih solid agar teks tidak tenggelam.
+44. Meningkatkan kontras Pendapat Ahli.
+45. Meningkatkan kontras Versi Gampangnya.
+46. Memperjelas callout Stereotipe Internet.
+47. Memperjelas callout Yang Sering Bikin Orang Salah Paham.
+48. Memperjelas callout Yang Perlu Kamu Waspadai.
+49. Memperjelas bullet Saran Praktis.
+50. Membuat heading kartu bisa membungkus tanpa terpotong.
+51. Menambahkan ikon berbeda untuk setiap kelompok rekomendasi.
+52. Membuat rekomendasi bergaya punggung buku tanpa mengorbankan keterbacaan.
+53. Memperbaiki layout rekomendasi di mobile.
+
+### Model A
+
+54. Menulis ulang panel rincian delapan posisi Model A.
+55. Memisahkan arti posisi dari arti elemen.
+56. Menambahkan contoh keseharian untuk setiap posisi dan elemen.
+57. Menambahkan bukti yang perlu dicari.
+58. Menambahkan sisi yang perlu dijaga.
+59. Menambahkan pertanyaan refleksi.
+60. Membaca PoLR dari pain, freeze, shame, avoidance, dan kekakuan adaptasi.
+61. Membaca Suggestive dari relief, trust, admiration, dan bantuan yang dicari.
+62. Menghapus copy lama seperti “jiwa batin”, “spiritual raksasa”, dan frasa yang terlalu dramatis dari result presentation.
+
+### Comparison dan intertype
+
+63. Menulis ulang comparison Base, Creative, PoLR, dan Suggestive tanpa memakai profil lama.
+64. Membuat dua halaman comparison tetap terbaca di mobile.
+65. Menulis ulang 14 pola relasi antar-tipe.
+66. Menambahkan Potensi Kekuatan pada setiap relasi.
+67. Menambahkan Gesekan yang Mungkin Muncul.
+68. Menambahkan Saran Praktis.
+69. Menjaga relasi sebagai hipotesis, bukan penentu kecocokan mutlak.
+
+### Bahasa dan audit
+
+70. Menambahkan `polishEditorialText()` untuk kapitalisasi awal, konsistensi `kamu`, dan pembersihan spasi.
+71. Menambahkan audit copy seluruh 16 TIM.
+72. Menambahkan smoke-render 16 TIM × 2 tema, 128 posisi Model A, dan 14 relasi.
+
+## Pemeriksaan final
+
+- Instalasi bersih `npm ci`: lulus.
+- TypeScript: lulus.
+- Audit instrumen: lulus.
+- Audit bahasa: lulus.
+- Audit copy hasil 16 TIM: lulus.
+- Smoke render 16 TIM × 2 tema: lulus.
+- 128 posisi Model A: lulus.
+- 14 relasi editorial: lulus.
+- Production build: lulus.
+
+## Bundle akhir
+
+- CSS: 76.76 kB, gzip 14.03 kB.
+- ResultPortal lazy chunk: 86.19 kB, gzip 28.17 kB.
+- Main JavaScript: 521.72 kB, gzip 159.94 kB.
+
+## Landasan interpretasi
+
+Output tetap mengikuti prinsip bahwa posisi Model A lebih penting daripada sekadar skor elemen tinggi. PoLR tidak diperlakukan sebagai elemen terendah, Suggestive tidak diperlakukan sebagai kelemahan biasa, dan intertype relations ditempatkan sebagai hipotesis lanjutan setelah tipe cukup stabil.
+````
+
+---
+
 ## `docs/SCORING_GUIDE.md`
 
 ````md
@@ -20096,13 +20396,13 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
 ````json
 {
   "name": "socionics-dalam-diriku",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "socionics-dalam-diriku",
-      "version": "2.1.2",
+      "version": "2.2.0",
       "dependencies": {
         "lucide-react": "^0.546.0",
         "motion": "^12.23.24",
@@ -23096,7 +23396,7 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
 {
   "name": "socionics-dalam-diriku",
   "private": true,
-  "version": "2.1.2",
+  "version": "2.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -23104,9 +23404,11 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "audit": "tsx scripts/audit.ts",
-    "check": "npm run lint && npm run audit && npm run audit:language && npm run build",
+    "check": "npm run lint && npm run audit && npm run audit:language && npm run audit:result-copy && npm run audit:result-render && npm run build",
     "audit:language": "tsx scripts/auditLanguage.ts",
-    "export:editorial": "tsx scripts/exportEditorialCopy.ts"
+    "export:editorial": "tsx scripts/exportEditorialCopy.ts",
+    "audit:result-copy": "tsx scripts/auditResultCopy.ts",
+    "audit:result-render": "tsx scripts/smokeResultRender.tsx"
   },
   "dependencies": {
     "lucide-react": "^0.546.0",
@@ -23319,6 +23621,85 @@ console.log(JSON.stringify({
 
 ---
 
+## `scripts/auditResultCopy.ts`
+
+````ts
+import { ALL_QUESTIONS } from "../src/data/questions";
+import { calculateResult } from "../src/scoring/engine";
+import { buildResultExperience } from "../src/results/resultExperience";
+import { polishEditorialList, polishEditorialText } from "../src/utils/editorialText";
+import type { TIM } from "../src/types/socionics";
+import { TIM_MODELS } from "../src/constants/socionicsData";
+
+const answers = Object.fromEntries(
+  ALL_QUESTIONS.map((question, index) => [question.id, (index % 5) + 1]),
+);
+
+const result = calculateResult(answers, ALL_QUESTIONS, {
+  questionIds: ALL_QUESTIONS.map((question) => question.id),
+  startedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+});
+
+const problems: string[] = [];
+const banned = [
+  /\bAnda\b/i,
+  /jendela yang terus membuka/i,
+  /empat pintu/i,
+  /ruang cuaca/i,
+  /penyair batin/i,
+  /menari di antara/i,
+];
+
+const inspect = (label: string, value?: string) => {
+  if (!value) return;
+  const text = polishEditorialText(value);
+  if (/^[a-zà-ÿ]/.test(text)) problems.push(`${label}: dimulai huruf kecil -> ${text}`);
+  if (text.length > 520) problems.push(`${label}: terlalu panjang (${text.length} karakter)`);
+  for (const pattern of banned) {
+    if (pattern.test(text)) problems.push(`${label}: mengandung pola terlarang ${pattern} -> ${text}`);
+  }
+};
+
+for (const type of Object.keys(TIM_MODELS) as TIM[]) {
+  const experience = buildResultExperience(type, result);
+  inspect(`${type}.title`, experience.title);
+  inspect(`${type}.subtitle`, experience.subtitle);
+  inspect(`${type}.expertSnapshot`, experience.expertSnapshot);
+  inspect(`${type}.internetSnapshot`, experience.internetSnapshot);
+  polishEditorialList(experience.tags).forEach((item, index) => inspect(`${type}.tag.${index}`, item));
+  polishEditorialList(experience.observedSignals).forEach((item, index) => inspect(`${type}.signal.${index}`, item));
+
+  experience.sections.forEach((section) => {
+    inspect(`${type}.${section.id}.title`, section.title);
+    inspect(`${type}.${section.id}.intro`, section.intro);
+    section.cards.forEach((card, cardIndex) => {
+      inspect(`${type}.${section.id}.${cardIndex}.title`, card.title);
+      inspect(`${type}.${section.id}.${cardIndex}.expert`, card.expert);
+      inspect(`${type}.${section.id}.${cardIndex}.simple`, card.simple);
+      inspect(`${type}.${section.id}.${cardIndex}.stereotype`, card.stereotype);
+      inspect(`${type}.${section.id}.${cardIndex}.misunderstood`, card.misunderstood);
+      inspect(`${type}.${section.id}.${cardIndex}.warning`, card.warning);
+      polishEditorialList(card.actions).forEach((item, index) => inspect(`${type}.${section.id}.${cardIndex}.action.${index}`, item));
+    });
+    section.recommendations?.forEach((group, groupIndex) => {
+      inspect(`${type}.${section.id}.recommendation.${groupIndex}.title`, group.title);
+      inspect(`${type}.${section.id}.recommendation.${groupIndex}.note`, group.note);
+      polishEditorialList(group.items).forEach((item, index) => inspect(`${type}.${section.id}.recommendation.${groupIndex}.${index}`, item));
+    });
+  });
+}
+
+if (problems.length > 0) {
+  console.error(`Audit copy hasil gagal: ${problems.length} masalah.`);
+  problems.slice(0, 100).forEach((problem) => console.error(`- ${problem}`));
+  process.exit(1);
+}
+
+console.log("Audit copy hasil lulus untuk 16 TIM.");
+````
+
+---
+
 ## `scripts/exportEditorialCopy.ts`
 
 ````ts
@@ -23465,6 +23846,90 @@ console.log(`Editorial copy written to ${outputPath}`);
 
 ---
 
+## `scripts/smokeResultRender.tsx`
+
+````tsx
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import ResultPortal from "../src/components/ResultPortal";
+import { TIM_MODELS } from "../src/constants/socionicsData";
+import { ALL_QUESTIONS } from "../src/data/questions";
+import { calculateResult } from "../src/scoring/engine";
+import { getPositionEditorial, getRelationEditorial } from "../src/results/modelAEditorial";
+import type { ModelAPosition, TIM } from "../src/types/socionics";
+
+const answers = Object.fromEntries(
+  ALL_QUESTIONS.map((question, index) => [question.id, ((index * 3) % 5) + 1]),
+);
+
+const result = calculateResult(answers, ALL_QUESTIONS, {
+  questionIds: ALL_QUESTIONS.map((question) => question.id),
+  startedAt: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
+});
+
+const positions: ModelAPosition[] = [
+  "Base",
+  "Creative",
+  "Role",
+  "Vulnerable",
+  "Suggestive",
+  "Mobilizing",
+  "Ignoring",
+  "Demonstrative",
+];
+
+for (const type of Object.keys(TIM_MODELS) as TIM[]) {
+  for (const theme of ["dark", "light"] as const) {
+    const html = renderToStaticMarkup(
+      <ResultPortal primaryType={type} result={result} theme={theme} />,
+    );
+
+    if (html.length < 5000) {
+      throw new Error(`${type}/${theme}: hasil render terlalu pendek (${html.length}).`);
+    }
+    if (/\bundefined\b|\bnull\b/.test(html)) {
+      throw new Error(`${type}/${theme}: render mengandung undefined/null.`);
+    }
+    if (!html.includes("Daftar bab hasil") || !html.includes("Kualitas bukti hasil")) {
+      throw new Error(`${type}/${theme}: struktur hasil utama tidak lengkap.`);
+    }
+  }
+
+  for (const position of positions) {
+    const detail = getPositionEditorial(type, position);
+    if (!detail.inPractice || !detail.evidence || !detail.caution) {
+      throw new Error(`${type}/${position}: rincian Model A tidak lengkap.`);
+    }
+  }
+}
+
+for (const code of [
+  "duality",
+  "activation",
+  "mirror",
+  "identity",
+  "kindred",
+  "business",
+  "semi_duality",
+  "mirage",
+  "contrary",
+  "quasi_identity",
+  "superego",
+  "conflict",
+  "benefit",
+  "supervision",
+]) {
+  const relation = getRelationEditorial(code);
+  if (!relation.summary || !relation.strength || !relation.friction || !relation.advice) {
+    throw new Error(`${code}: editorial relasi tidak lengkap.`);
+  }
+}
+
+console.log("Smoke render hasil lulus: 16 TIM × 2 tema, 128 posisi Model A, dan 14 relasi.");
+````
+
+---
+
 ## `src/App.tsx`
 
 ````tsx
@@ -23502,12 +23967,14 @@ import {
 import { motion } from "motion/react";
 
 import { useTestSession } from "./hooks/useTestSession";
-import { TIM_MODELS, TIM_PROFILES, QUADRA_DATA, INTERTYPE_MAP, INTERTYPE_RELATIONS_METADATA, ELEMENTS_METADATA } from "./constants/socionicsData";
+import { TIM_MODELS, QUADRA_DATA, INTERTYPE_MAP, ELEMENTS_METADATA } from "./constants/socionicsData";
 import { ALL_QUESTIONS } from "./data/questions";
 import { calculateResult } from "./scoring/engine";
 import { TIM, TIMProfile, InformationElement, MeasurementChannel, ModelAPosition, Quadra, TestSession } from "./types/socionics";
 import { getCasualVersion, getOptionDetail } from "./utils/optionDetails";
 import { runInstrumentAudit } from "./audit/instrumentAudit";
+import { polishEditorialText } from "./utils/editorialText";
+import { getPositionEditorial, getRelationEditorial, getTypeComparisonSnapshot } from "./results/modelAEditorial";
 const ResultPortal = React.lazy(() => import("./components/ResultPortal"));
 
 // Option Scale Wording by ScaleType
@@ -23733,6 +24200,24 @@ export default function App() {
       questionIds: session.questionIds,
     });
   }, [session]);
+
+  const resultHeroPreview = useMemo(() => {
+    if (!calculatedOutput) return null;
+    const type = calculatedOutput.top3[0].type;
+    const base = getPositionEditorial(type, "Base");
+    const creative = getPositionEditorial(type, "Creative");
+    const vulnerable = getPositionEditorial(type, "Vulnerable");
+    const suggestive = getPositionEditorial(type, "Suggestive");
+    return {
+      expert: `${base.inPractice} ${creative.inPractice}`,
+      signals: [
+        `Base ${base.element}: ${base.title}`,
+        `Creative ${creative.element}: ${creative.title}`,
+        `PoLR ${vulnerable.element}: area sensitif`,
+        `Suggestive ${suggestive.element}: bantuan yang dicari`,
+      ],
+    };
+  }, [calculatedOutput]);
 
   // Card Uploader assets
   const [cardNickname, setCardNickname] = useState("");
@@ -24598,6 +25083,7 @@ export default function App() {
                 <div className="result-book-title-row">
                   <div className="result-type-monogram">{calculatedOutput.top3[0].type}</div>
                   <div>
+                    <div className="result-book-code">{calculatedOutput.top3[0].type}</div>
                     <h3>{TIM_MODELS[calculatedOutput.top3[0].type].name}</h3>
                     <p>{TIM_MODELS[calculatedOutput.top3[0].type].fullName}</p>
                   </div>
@@ -24606,20 +25092,26 @@ export default function App() {
                 <div className="result-book-meta">
                   <span>Quadra {TIM_MODELS[calculatedOutput.top3[0].type].quadra}</span>
                   <span>{TIM_MODELS[calculatedOutput.top3[0].type].club}</span>
-                  <span>{calculatedOutput.top3[0].fitScore}% kecocokan relatif</span>
+                  <span>{calculatedOutput.top3[0].fitScore}% Kecocokan Relatif</span>
                 </div>
 
                 <p className="result-book-description">
-                  {TIM_PROFILES[calculatedOutput.top3[0].type].description}
+                  {polishEditorialText(resultHeroPreview?.expert ?? "Hasil utama ini merangkum pola Model A yang paling konsisten dengan jawabanmu.")}
                 </p>
+
+                <div className="result-book-highlights">
+                  {(resultHeroPreview?.signals ?? []).slice(0, 4).map((signal) => (
+                    <span key={signal}>{polishEditorialText(signal)}</span>
+                  ))}
+                </div>
 
                 <div className="result-confidence-card">
                   <Shield className="h-5 w-5" />
                   <div>
                     <div className="result-confidence-title">
-                      Keyakinan hasil: {calculatedOutput.confidence.toUpperCase()}
+                      Tingkat Keyakinan Tes: {calculatedOutput.confidence.toUpperCase()}
                     </div>
-                    <p>{calculatedOutput.confidenceExplanation}</p>
+                    <p>{polishEditorialText(calculatedOutput.confidenceExplanation)}</p>
                   </div>
                 </div>
               </article>
@@ -24782,161 +25274,74 @@ export default function App() {
                   })}
                 </div>
 
-                {/* Position detail reader card with conditional toggle */}
-                {activeModelAPos ? (
-                  <div className={`p-6 rounded-2xl border flex flex-col justify-between ${
-                    theme === "dark" ? "border-slate-800 bg-slate-900/30 text-slate-100" : "border-slate-200 bg-white text-slate-800 shadow-sm"
-                  }`}>
-                    <div className="space-y-4">
-                      <div className={`flex justify-between items-center border-b pb-3 ${theme === "dark" ? "border-slate-800" : "border-slate-150"}`}>
-                        <div className="flex items-center space-x-2">
-                          <Info className="w-4 h-4 text-emerald-500" />
-                          <h4 className={`text-base font-bold font-display ${theme === "dark" ? "text-emerald-400" : "text-emerald-600"}`}>
-                            Rincian Posisi {activeModelAPos}
-                          </h4>
+                {/* Position detail reader card */}
+                {activeModelAPos ? (() => {
+                  const detail = getPositionEditorial(calculatedOutput.top3[0].type, activeModelAPos);
+                  return (
+                    <article className={`model-a-reader ${theme === "dark" ? "model-a-reader-dark" : "model-a-reader-light"}`}>
+                      <header className="model-a-reader-header">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <div className="model-a-reader-icon">
+                            <Info className="h-5 w-5" />
+                          </div>
+                          <div className="min-w-0">
+                            <div className="model-a-reader-kicker">Posisi {detail.position} · {detail.block}</div>
+                            <h4>{detail.title} — {detail.element}</h4>
+                            <p>{ELEMENTS_METADATA[detail.element].name}</p>
+                          </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <span className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded ${
-                            theme === "dark" ? "bg-slate-800 text-slate-300" : "bg-slate-100 text-slate-705"
-                          }`}>
-                            Tipe utama {calculatedOutput.top3[0].type}
-                          </span>
-                          <button
-                            onClick={() => setActiveModelAPos(null)}
-                            className={`p-1 rounded-full transition cursor-pointer hover:bg-slate-800/80 ${
-                              theme === "dark" ? "text-slate-400 hover:text-slate-200" : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-                            }`}
-                            title="Sembunyikan Informasi"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveModelAPos(null)}
+                          className="model-a-reader-close"
+                          aria-label="Tutup rincian posisi"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </header>
+
+                      <div className="model-a-status-row">
+                        <span>{detail.status}</span>
+                        <span>Tipe {calculatedOutput.top3[0].type}</span>
+                      </div>
+
+                      <div className="model-a-reader-section">
+                        <span>Artinya dalam Model A</span>
+                        <p>{detail.meaning}</p>
+                      </div>
+
+                      <div className="model-a-reader-section model-a-reader-highlight">
+                        <span>Seperti apa dalam keseharian</span>
+                        <p>{detail.inPractice}</p>
+                      </div>
+
+                      <div className="model-a-reader-grid">
+                        <div>
+                          <span>Bukti yang perlu dicari</span>
+                          <p>{detail.evidence}</p>
+                        </div>
+                        <div>
+                          <span>Yang perlu dijaga</span>
+                          <p>{detail.caution}</p>
                         </div>
                       </div>
 
-                      <div className={`space-y-4 text-xs sm:text-sm leading-relaxed font-sans ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>
-                        {/* Detailed explanatory text built on real model dynamics */}
-                        {activeModelAPos === "Base" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Arah Orientasi Utama:</strong> Element ini kuat dan sangat Anda hargai (Ego). Berfungsi sebagai motor spontan hidup pertama Anda dalam memproses semua data eksternal.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].orientasiBase}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Creative" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Alat Pendukung Utama:</strong> Berfungsi melengkapi dan mewujudkan target dari Base Anda. Sangat fleksibel, kreatif, serta adaptif harian.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].caraCreative}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Role" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Sosok Penyesuai Sosial:</strong> Berfungsi adaptasi sekunder saat bertatap muka di lingkungan formal yang belum akrab. Lemah dan menguras energi mental jika dituntut bekerja konstan lama.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].roleTampilan}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Vulnerable" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>PoLR (Point of Least Resistance):</strong> Titik kelemahan terdalam Anda yang tidak dihargai (Super-Ego). Kritik atau tekanan pada fungsi ini memicu rasa bingung, benci, lelah batin, defensif, atau aksi menyendiri.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs border ${
-                              theme === "dark" ? "bg-rose-500/5 border-rose-500/15 text-rose-300" : "bg-rose-50/70 border-rose-200 text-rose-800"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].tuntutanPolr}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Suggestive" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Titik Receptor Kenyamanan:</strong> Sangat Anda hargai namun bernilai lemah (Super-Id). Datangnya informasi elemen ini dari orang tepercaya di hadapan Anda memulihkan ketenangan jiwa batin seketika harian.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs border ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-emerald-300/90" : "bg-emerald-50/70 border-emerald-200 text-emerald-850"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].bantuanSuggestive}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Mobilizing" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Gairah Pembuktian/Pujian:</strong> Ingin terus dikembangkan secara bertahap namun kinerjanya fluktuatif (Super-Id). Sanjungan atas kemajuan kecil pada fungsi ini mendatangkan kebahagiaan batin yang besar.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].areaMobilizing}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Ignoring" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Kompetensi Dikesampingkan:</strong> Kuat secara otomatis namun tidak dihargai (Id). Sebenarnya mampu Anda lakukan secara prima untuk memitigasi krisis harian, tetapi dijauhi / dihentikan secepatnya karena dinilai di luar esensi identitas.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].kompetensiIgnoring}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Demonstrative" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Latar Belakang Otomatis:</strong> Sangat kuat di bawah alam sadar Anda (Id). Beroperasi terus-menerus mengawal kelancaran aktivitas tanpa menuntut sanjungan atau pamer di panggung.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].kemampuanDemonstrative}
-                            </p>
-                          </div>
-                        )}
+                      <div className="model-a-reflection">
+                        <strong>Pertanyaan refleksi</strong>
+                        <p>{detail.reflection}</p>
                       </div>
-                    </div>
-
-                    <div className={`text-xs font-mono text-right pt-4 border-t mt-4 ${
-                      theme === "dark" ? "text-slate-500 border-slate-800" : "text-slate-400 border-slate-150"
-                    }`}>
-                      Asesmen didukung dynamic context tags.
-                    </div>
-                  </div>
-                ) : (
+                    </article>
+                  );
+                })() : (
                   <div className={`p-8 rounded-2xl border flex flex-col items-center justify-center text-center space-y-3 ${
                     theme === "dark" ? "border-slate-800 bg-slate-900/10 text-slate-400" : "border-slate-200 bg-slate-50 text-slate-500 shadow-sm"
                   }`}>
                     <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-1">
                       <Target className="w-6 h-6 animate-pulse" />
                     </div>
-                    <h4 className="font-display font-semibold text-base">Detail Posisi Belum Dipilih</h4>
+                    <h4 className="font-display font-semibold text-base">Pilih Salah Satu Posisi</h4>
                     <p className="text-xs max-w-xs leading-relaxed">
-                      Silakan klik salah satu kotak fungsi posisi Model A di sebelah kiri untuk membaca analisa dan peran kustom pengolahan informasi Anda secara rinci.
+                      Klik salah satu posisi Model A untuk membaca artinya, contoh keseharian, bukti yang perlu dicari, dan sisi yang perlu dijaga.
                     </p>
                   </div>
                 )}
@@ -24966,38 +25371,41 @@ export default function App() {
 
               {compareTIM ? (
                 <div className="library-open-book">
-                  {[calculatedOutput.top3[0].type, compareTIM].map((type, index) => (
-                    <article key={type} className="library-book-page">
-                      <div className="library-book-page-label">{index === 0 ? "Tipe utama kamu" : "Tipe pembanding"}</div>
-                      <div className="library-book-page-header">
-                        <div>
-                          <strong>{type}</strong>
-                          <h4>{TIM_MODELS[type].name}</h4>
-                          <p>{TIM_MODELS[type].fullName}</p>
+                  {[calculatedOutput.top3[0].type, compareTIM].map((type, index) => {
+                    const snapshot = getTypeComparisonSnapshot(type);
+                    return (
+                      <article key={type} className="library-book-page">
+                        <div className="library-book-page-label">{index === 0 ? "Tipe utama kamu" : "Tipe pembanding"}</div>
+                        <div className="library-book-page-header">
+                          <div>
+                            <strong>{type}</strong>
+                            <h4>{TIM_MODELS[type].name}</h4>
+                            <p>{TIM_MODELS[type].fullName}</p>
+                          </div>
+                          <span>Quadra {TIM_MODELS[type].quadra}</span>
                         </div>
-                        <span>Quadra {TIM_MODELS[type].quadra}</span>
-                      </div>
 
-                      <div className="library-comparison-list">
-                        <div>
-                          <b>Base · {TIM_MODELS[type].positions.Base}</b>
-                          <p>{TIM_PROFILES[type].orientasiBase}</p>
+                        <div className="library-comparison-list">
+                          <div>
+                            <b>Base · {snapshot.base.element}</b>
+                            <p>{snapshot.base.inPractice}</p>
+                          </div>
+                          <div>
+                            <b>Creative · {snapshot.creative.element}</b>
+                            <p>{snapshot.creative.inPractice}</p>
+                          </div>
+                          <div>
+                            <b>PoLR · {snapshot.vulnerable.element}</b>
+                            <p>{snapshot.vulnerable.inPractice}</p>
+                          </div>
+                          <div>
+                            <b>Suggestive · {snapshot.suggestive.element}</b>
+                            <p>{snapshot.suggestive.inPractice}</p>
+                          </div>
                         </div>
-                        <div>
-                          <b>Creative · {TIM_MODELS[type].positions.Creative}</b>
-                          <p>{TIM_PROFILES[type].gayaCreative}</p>
-                        </div>
-                        <div>
-                          <b>PoLR · {TIM_MODELS[type].positions.Vulnerable}</b>
-                          <p>{TIM_PROFILES[type].tuntutanPolr}</p>
-                        </div>
-                        <div>
-                          <b>Suggestive · {TIM_MODELS[type].positions.Suggestive}</b>
-                          <p>{TIM_PROFILES[type].bantuanSuggestive}</p>
-                        </div>
-                      </div>
-                    </article>
-                  ))}
+                      </article>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="library-empty-catalogue">
@@ -25047,11 +25455,7 @@ export default function App() {
                   {(() => {
                     const self = calculatedOutput.top3[0].type;
                     const relationCode = INTERTYPE_MAP[self][intertypeTarget];
-                    const relation = INTERTYPE_RELATIONS_METADATA[relationCode] || {
-                      name: relationCode,
-                      description: "",
-                      impact: "",
-                    };
+                    const relation = getRelationEditorial(relationCode);
 
                     return (
                       <>
@@ -25076,16 +25480,24 @@ export default function App() {
                         <div className="library-relation-copy">
                           <div>
                             <b>Gambaran singkat</b>
-                            <p>{relation.description}</p>
+                            <p>{relation.summary}</p>
                           </div>
                           <div>
-                            <b>Dampak dalam interaksi</b>
-                            <p>{relation.impact}</p>
+                            <b>Potensi kekuatan</b>
+                            <p>{relation.strength}</p>
+                          </div>
+                          <div>
+                            <b>Gesekan yang mungkin muncul</b>
+                            <p>{relation.friction}</p>
+                          </div>
+                          <div>
+                            <b>Saran praktis</b>
+                            <p>{relation.advice}</p>
                           </div>
                         </div>
 
                         <div className="library-relation-note">
-                          Hubungan nyata tetap dipengaruhi kedewasaan, nilai, pengalaman, komunikasi, dan batas pribadi. Socionics hanya memberi peta kecenderungan.
+                          Hubungan nyata tetap dipengaruhi kedewasaan, pengalaman, komunikasi, dan batas pribadi. Gunakan bagian ini sebagai hipotesis, bukan penentu kualitas hubungan.
                         </div>
                       </>
                     );
@@ -25496,8 +25908,11 @@ export function runInstrumentAudit(simulatedSessions = 200): InstrumentAuditRepo
 ````tsx
 import { useMemo, useState } from "react";
 import {
+  BarChart3,
   BookOpen,
   Brain,
+  CheckCircle2,
+  ChevronRight,
   Compass,
   Film,
   Gift,
@@ -25515,6 +25930,7 @@ import {
 import { TIM_MODELS } from "../constants/socionicsData";
 import { buildResultExperience, type ResultSectionId } from "../results/resultExperience";
 import type { AssessmentResult, TIM } from "../types/socionics";
+import { polishEditorialList, polishEditorialText } from "../utils/editorialText";
 
 type Props = {
   primaryType: TIM;
@@ -25546,24 +25962,34 @@ const recommendationIcon = (title: string) => {
 };
 
 export default function ResultPortal({ primaryType, result, theme }: Props) {
-  const experience = useMemo(
-    () => buildResultExperience(primaryType, result),
-    [primaryType, result],
-  );
+  const experience = useMemo(() => buildResultExperience(primaryType, result), [primaryType, result]);
   const [activeSection, setActiveSection] = useState<ResultSectionId>("summary");
   const active = experience.sections.find((section) => section.id === activeSection) ?? experience.sections[0];
+  const activeIndex = Math.max(0, experience.sections.findIndex((section) => section.id === active.id));
+  const nextSection = experience.sections[activeIndex + 1];
   const model = TIM_MODELS[primaryType];
   const isDark = theme === "dark";
+  const candidateGap = Math.max(0, result.top3[0].fitScore - (result.top3[1]?.fitScore ?? 0));
+  const coveragePercent = Math.round(result.coverage.ratio * 100);
+  const consistencyPercent = Math.max(0, Math.min(100, Math.round(100 - result.responseQuality.inconsistencyScore * 45)));
+  const holdoutPercent = Math.round(result.top3[0].holdoutScore);
+
+  const shellClass = isDark ? "library-result-dark" : "library-result-light";
+  const titleClass = isDark ? "text-[#fff5ea]" : "text-[#231914]";
+  const bodyClass = isDark ? "text-[#dbc7ae]" : "text-[#5f4b3e]";
+  const mutedClass = isDark ? "text-[#cbb69c]" : "text-[#6f5948]";
+  const labelClass = isDark ? "text-[#ddb175]" : "text-[#8c5a34]";
+  const accentLabelClass = isDark ? "text-[#ddb5ee]" : "text-[#7a4f74]";
 
   return (
-    <section className={`library-result-shell ${isDark ? "library-result-dark" : "library-result-light"}`}>
+    <section className={`library-result-shell ${shellClass}`}>
       <div className="library-ambient library-ambient-one" />
       <div className="library-ambient library-ambient-two" />
 
       <div className="relative space-y-8">
         <div className="library-catalog-hero">
           <div className="library-catalog-ribbon">Katalog hasil</div>
-          <div className="grid gap-5 xl:grid-cols-[1.3fr_0.7fr] xl:items-start">
+          <div className="grid gap-5 xl:grid-cols-[1.25fr_0.75fr] xl:items-start">
             <div className="space-y-5">
               <div className="flex flex-wrap gap-2">
                 <span className="library-tag">
@@ -25571,68 +25997,109 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
                   {primaryType} · {model.name}
                 </span>
                 {experience.tags.map((tag) => (
-                  <span key={tag} className="library-tag">{tag}</span>
+                  <span key={tag} className="library-tag">
+                    {polishEditorialText(tag)}
+                  </span>
                 ))}
               </div>
 
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#d5b07b]">
+                <p className={`text-[11px] font-bold uppercase tracking-[0.18em] ${labelClass}`}>
                   Ringkasan editorial
                 </p>
-                <h3 className="mt-2 text-3xl font-black tracking-tight text-[#241915] sm:text-5xl dark:text-[#fff7ea]">
-                  {experience.title}
+                <h3 className={`mt-2 text-3xl font-black tracking-tight sm:text-5xl ${titleClass}`}>
+                  {polishEditorialText(experience.title)}
                 </h3>
-                <p className="mt-3 max-w-3xl text-sm leading-7 text-[#5f4a3d] dark:text-[#ddc9b0]">
-                  {experience.subtitle}
+                <p className={`mt-3 max-w-3xl text-sm leading-7 ${bodyClass}`}>
+                  {polishEditorialText(experience.subtitle)}
                 </p>
               </div>
 
               <div className="grid gap-3 md:grid-cols-2">
                 <div className="library-note-card">
-                  <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#8c5a34] dark:text-[#ddb175]">
+                  <div className={`text-[11px] font-extrabold uppercase tracking-[0.16em] ${labelClass}`}>
                     Pendapat ahli singkat
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[#2d221d] dark:text-[#f4e7d4]">
-                    {experience.expertSnapshot}
+                  <p className={`mt-2 text-sm leading-6 ${titleClass}`}>
+                    {polishEditorialText(experience.expertSnapshot)}
                   </p>
                 </div>
                 <div className="library-note-card library-note-purple">
-                  <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#7a4f74] dark:text-[#ddb5ee]">
+                  <div className={`text-[11px] font-extrabold uppercase tracking-[0.16em] ${accentLabelClass}`}>
                     Stereotipe internet
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[#2d221d] dark:text-[#f4e7d4]">
-                    {experience.internetSnapshot}
+                  <p className={`mt-2 text-sm leading-6 ${titleClass}`}>
+                    {polishEditorialText(experience.internetSnapshot)}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="library-signal-strip">
-              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
-                Sinyal yang kelihatan dari jawabanmu
+            <div className="space-y-4">
+              <div className="library-signal-strip">
+                <div className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
+                  Sinyal yang kelihatan dari jawabanmu
+                </div>
+                <p className={`mt-2 text-xs leading-6 ${mutedClass}`}>
+                  Ini bukan vonis, tapi jejak pola yang paling sering muncul dari jawabanmu.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {experience.observedSignals.map((signal) => (
+                    <span key={signal} className="library-signal-chip">
+                      {polishEditorialText(signal)}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {experience.observedSignals.map((signal) => (
-                  <span key={signal} className="library-signal-chip">
-                    {signal}
-                  </span>
-                ))}
+
+              <div className="library-evidence-card">
+                <div className="library-evidence-heading">
+                  <BarChart3 className="h-4 w-4" />
+                  <span>Kualitas bukti hasil</span>
+                </div>
+                <div className="library-evidence-grid">
+                  <div>
+                    <strong>{coveragePercent}%</strong>
+                    <span>Cakupan jawaban</span>
+                  </div>
+                  <div>
+                    <strong>{consistencyPercent}%</strong>
+                    <span>Konsistensi respons</span>
+                  </div>
+                  <div>
+                    <strong>{holdoutPercent}%</strong>
+                    <span>Dukungan holdout</span>
+                  </div>
+                  <div>
+                    <strong>{candidateGap.toFixed(1)}</strong>
+                    <span>Jarak kandidat</span>
+                  </div>
+                </div>
+                {result.unresolvedPair ? (
+                  <p className="library-evidence-note">
+                    Kandidat yang masih perlu dibedakan: <b>{result.unresolvedPair}</b>.
+                  </p>
+                ) : (
+                  <p className="library-evidence-note">
+                    Kandidat utama sudah memiliki jarak yang bisa dibaca, tetapi hasil tetap perlu diuji lewat perilaku nyata.
+                  </p>
+                )}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[250px_minmax(0,1fr)] xl:items-start">
+        <div className="grid gap-6 xl:grid-cols-[280px_minmax(0,1fr)] xl:items-start">
           <aside className="library-floating-nav xl:sticky xl:top-6">
             <div className="space-y-1">
-              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+              <div className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
                 Daftar bab hasil
               </div>
-              <p className="text-xs leading-5 text-[#6d584b] dark:text-[#cbb89e]">
-                Baca hasilmu seperti katalog. Klik bab yang ingin kamu buka lebih dulu.
+              <p className={`text-xs leading-5 ${mutedClass}`}>
+                Buka bagian yang paling ingin kamu baca dulu. Semua bab tetap saling melengkapi.
               </p>
             </div>
-            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 xl:block xl:space-y-2 xl:overflow-visible">
+            <div className="library-nav-grid mt-4">
               {experience.sections.map((section) => {
                 const Icon = SECTION_ICONS[section.id];
                 const current = section.id === active.id;
@@ -25643,13 +26110,15 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
                     onClick={() => setActiveSection(section.id)}
                     className={`library-nav-tab ${current ? "library-nav-tab-active" : ""}`}
                   >
-                    <Icon className="h-4 w-4" />
-                    <span className="min-w-0">
-                      <span className="block text-[10px] font-bold uppercase tracking-[0.16em] opacity-70">
-                        {section.kicker}
+                    <span className="library-nav-icon-wrap">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="min-w-0 text-left">
+                      <span className="block text-[10px] font-bold uppercase tracking-[0.16em] opacity-75">
+                        {polishEditorialText(section.kicker)}
                       </span>
-                      <span className="block truncate text-sm font-extrabold">
-                        {section.title}
+                      <span className="block text-sm font-extrabold leading-5 whitespace-normal break-words">
+                        {polishEditorialText(section.title)}
                       </span>
                     </span>
                   </button>
@@ -25659,15 +26128,19 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
           </aside>
 
           <div className="space-y-6">
-            <div className="library-section-heading">
-              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
-                {active.kicker}
+            <div className="library-section-heading block">
+              <div className="library-chapter-progress">
+                <span>Bab {activeIndex + 1} dari {experience.sections.length}</span>
+                <div><i style={{ width: `${((activeIndex + 1) / experience.sections.length) * 100}%` }} /></div>
               </div>
-              <h4 className="mt-2 text-2xl font-black text-[#251a15] sm:text-3xl dark:text-[#fff5e6]">
-                {active.title}
+              <div className={`mt-4 text-[11px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
+                {polishEditorialText(active.kicker)}
+              </div>
+              <h4 className={`mt-2 text-2xl font-black sm:text-3xl ${titleClass}`}>
+                {polishEditorialText(active.title)}
               </h4>
-              <p className="mt-3 text-sm leading-7 text-[#5f4a3d] dark:text-[#d8c3aa]">
-                {active.intro}
+              <p className={`mt-3 max-w-4xl text-sm leading-7 ${bodyClass}`}>
+                {polishEditorialText(active.intro)}
               </p>
             </div>
 
@@ -25675,55 +26148,58 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
               {active.cards.map((card) => (
                 <article key={`${active.id}-${card.title}`} className="library-insight-card">
                   <div className="flex items-start justify-between gap-3">
-                    <h5 className="text-lg font-black text-[#241915] dark:text-[#fff3e3]">{card.title}</h5>
-                    <span className="library-tag whitespace-nowrap">{active.kicker}</span>
+                    <h5 className={`text-lg font-black leading-6 ${titleClass}`}>{polishEditorialText(card.title)}</h5>
+                    <span className="library-tag whitespace-nowrap">{polishEditorialText(active.kicker)}</span>
                   </div>
 
                   <div className="mt-5 space-y-4">
                     <div>
-                      <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                      <div className={`text-[10px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
                         Pendapat ahli
                       </div>
-                      <p className="mt-1.5 text-sm leading-6 text-[#2f241f] dark:text-[#f4e8d7]">
-                        {card.expert}
+                      <p className={`mt-1.5 text-sm leading-6 ${titleClass}`}>
+                        {polishEditorialText(card.expert)}
                       </p>
                     </div>
 
                     <div>
-                      <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#7a4f74] dark:text-[#d7b0ea]">
+                      <div className={`text-[10px] font-extrabold uppercase tracking-[0.18em] ${accentLabelClass}`}>
                         Versi gampangnya
                       </div>
-                      <p className="mt-1.5 text-sm leading-6 text-[#5b473b] dark:text-[#d5c0a5]">
-                        {card.simple}
+                      <p className={`mt-1.5 text-sm leading-6 ${bodyClass}`}>
+                        {polishEditorialText(card.simple)}
                       </p>
                     </div>
 
                     {card.stereotype && (
-                      <div className="rounded-2xl border border-[rgba(122,79,116,0.18)] bg-[rgba(248,239,250,0.8)] p-3 text-sm leading-6 text-[#4f3b48] dark:border-[rgba(215,176,234,0.14)] dark:bg-[rgba(57,38,59,0.72)] dark:text-[#e7d6f0]">
-                        <strong className="font-extrabold">Stereotipe internet:</strong> {card.stereotype}
+                      <div className="library-copy-block library-copy-block-purple">
+                        <strong className="font-extrabold">Stereotipe internet:</strong>{" "}
+                        {polishEditorialText(card.stereotype)}
                       </div>
                     )}
 
                     {card.misunderstood && (
-                      <div className="rounded-2xl border border-[rgba(146,95,53,0.18)] bg-[rgba(255,249,237,0.8)] p-3 text-sm leading-6 text-[#4a382f] dark:border-[rgba(223,184,126,0.12)] dark:bg-[rgba(60,43,34,0.72)] dark:text-[#e8d7bf]">
-                        <strong className="font-extrabold">Yang sering bikin orang salah paham:</strong> {card.misunderstood}
+                      <div className="library-copy-block library-copy-block-cream">
+                        <strong className="font-extrabold">Yang sering bikin orang salah paham:</strong>{" "}
+                        {polishEditorialText(card.misunderstood)}
                       </div>
                     )}
 
                     {card.warning && (
-                      <div className="rounded-2xl border border-[rgba(138,70,45,0.22)] bg-[rgba(172,93,55,0.08)] p-3 text-sm leading-6 text-[#623f2b] dark:border-[rgba(239,160,94,0.16)] dark:bg-[rgba(97,53,30,0.26)] dark:text-[#f4d0a2]">
-                        <strong className="font-extrabold">Yang perlu kamu waspadai:</strong> {card.warning}
+                      <div className="library-copy-block library-copy-block-warn">
+                        <strong className="font-extrabold">Yang perlu kamu waspadai:</strong>{" "}
+                        {polishEditorialText(card.warning)}
                       </div>
                     )}
 
                     {card.actions && card.actions.length > 0 && (
                       <div>
-                        <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                        <div className={`text-[10px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
                           Saran praktis
                         </div>
                         <ul className="mt-2 space-y-2">
-                          {card.actions.map((action) => (
-                            <li key={action} className="flex gap-2 text-sm leading-6 text-[#312620] dark:text-[#f2e6d5]">
+                          {polishEditorialList(card.actions).map((action) => (
+                            <li key={action} className={`flex gap-2 text-sm leading-6 ${isDark ? "text-[#f2e6d5]" : "text-[#312620]"}`}>
                               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#a56a3f]" />
                               <span>{action}</span>
                             </li>
@@ -25738,7 +26214,7 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
 
             {active.recommendations && active.recommendations.length > 0 && (
               <div className="space-y-4">
-                <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                <div className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
                   Rak rekomendasi untukmu
                 </div>
                 <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
@@ -25747,17 +26223,21 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
                     return (
                       <article key={group.title} className="library-shelf-card">
                         <div className="flex items-start gap-3">
-                          <div className="rounded-2xl border border-[rgba(146,95,53,0.24)] bg-[rgba(255,246,228,0.72)] p-2.5 text-[#8c5a34] shadow-sm dark:border-[rgba(223,184,126,0.16)] dark:bg-[rgba(57,41,33,0.72)] dark:text-[#e6c58f]">
+                          <div className="library-shelf-icon">
                             <Icon className="h-4 w-4" />
                           </div>
                           <div className="min-w-0 flex-1">
-                            <h5 className="text-base font-extrabold text-[#2b201a] dark:text-[#fbf2e2]">{group.title}</h5>
-                            <p className="mt-1 text-xs leading-5 text-[#6f5948] dark:text-[#cbb89e]">{group.note}</p>
+                            <h5 className={`text-base font-extrabold ${isDark ? "text-[#fbf2e2]" : "text-[#2b201a]"}`}>
+                              {polishEditorialText(group.title)}
+                            </h5>
+                            <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
+                              {polishEditorialText(group.note)}
+                            </p>
                           </div>
                         </div>
                         <div className="mt-4 space-y-2">
-                          {group.items.map((item) => (
-                            <div key={item} className="library-book-spine">
+                          {polishEditorialList(group.items).map((item, index) => (
+                            <div key={item} className="library-book-spine" style={{ ["--spine-index" as string]: index }}>
                               <span>{item}</span>
                             </div>
                           ))}
@@ -25767,6 +26247,22 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
                   })}
                 </div>
               </div>
+            )}
+            {nextSection && (
+              <button
+                type="button"
+                className="library-next-chapter"
+                onClick={() => {
+                  setActiveSection(nextSection.id);
+                  document.querySelector(".library-result-shell")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+              >
+                <span>
+                  <small>Bab berikutnya</small>
+                  <strong>{polishEditorialText(nextSection.title)}</strong>
+                </span>
+                <ChevronRight className="h-5 w-5" />
+              </button>
             )}
           </div>
         </div>
@@ -27175,15 +27671,44 @@ export function useTestSession() {
 }
 
 @layer base {
+  html {
+    min-width: 320px;
+    scroll-behavior: smooth;
+  }
+
   body {
+    min-width: 320px;
+    margin: 0;
     font-family: var(--font-sans);
     letter-spacing: -0.011em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img {
+    max-width: 100%;
+    content-visibility: auto;
   }
 }
 
@@ -27192,86 +27717,545 @@ export function useTestSession() {
   letter-spacing: -0.018em;
 }
 
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+````
+
+---
+
+## `src/main.tsx`
+
+````tsx
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import './resultTheme.css';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
+````
+
+---
+
+## `src/resultTheme.css`
+
+````css
+/*
+ * Result Experience v2.2.0
+ * High-contrast editorial library theme.
+ * Loaded after index.css so these rules intentionally become the final layer.
+ */
+
 .library-result-page {
+  --paper: #fffaf0;
+  --paper-2: #f5e8d4;
+  --ink: #251a15;
+  --ink-soft: #624d3e;
+  --muted: #796454;
+  --line: rgba(118, 76, 46, 0.24);
+  --line-strong: rgba(111, 48, 64, 0.38);
+  --walnut: #4e3024;
+  --burgundy: #7a3042;
+  --gold: #b77a44;
+  --plum: #76506f;
+  --surface: rgba(255, 251, 244, 0.94);
+  --surface-strong: #fffdf8;
+  --shadow: 0 18px 46px rgba(62, 35, 21, 0.12);
   position: relative;
   isolation: isolate;
+  width: 100%;
+  max-width: 100%;
+  overflow: clip;
   border-radius: 2rem;
-  padding: clamp(0.25rem, 1vw, 0.75rem);
+  padding: clamp(0.2rem, 1vw, 0.7rem);
+}
+
+.library-page-dark {
+  --paper: #201714;
+  --paper-2: #34251f;
+  --ink: #fff4e5;
+  --ink-soft: #e5d2ba;
+  --muted: #c4ad94;
+  --line: rgba(225, 180, 116, 0.17);
+  --line-strong: rgba(231, 179, 191, 0.28);
+  --walnut: #e2b77e;
+  --burgundy: #e9b3bf;
+  --gold: #e2b574;
+  --plum: #dab1e2;
+  --surface: rgba(48, 35, 30, 0.96);
+  --surface-strong: #382923;
+  --shadow: 0 22px 54px rgba(0, 0, 0, 0.28);
 }
 
 .library-result-page::before {
   content: "";
   position: absolute;
-  inset: -1.5rem;
+  inset: -1.25rem;
   z-index: -2;
-  border-radius: 2.5rem;
+  border-radius: 2.6rem;
   background:
-    radial-gradient(circle at 12% 2%, rgba(159, 98, 60, 0.12), transparent 30%),
-    radial-gradient(circle at 88% 14%, rgba(100, 54, 92, 0.12), transparent 30%),
-    linear-gradient(180deg, rgba(116, 77, 47, 0.04), transparent 28%);
+    radial-gradient(circle at 8% 4%, rgba(165, 106, 63, 0.15), transparent 26%),
+    radial-gradient(circle at 92% 12%, rgba(122, 48, 66, 0.15), transparent 28%),
+    linear-gradient(180deg, rgba(93, 55, 34, 0.04), transparent 30%);
 }
 
-.library-result-page [class*="text-emerald-"] {
-  color: #b77945 !important;
+.library-result-page,
+.library-result-page * {
+  box-sizing: border-box;
 }
 
-.library-result-page [class*="text-teal-"] {
-  color: #77506f !important;
+.library-result-page button,
+.library-result-page input,
+.library-result-page select {
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
-.library-result-page [class*="bg-emerald-500"] {
-  background-color: #b77945 !important;
+.library-result-page h1,
+.library-result-page h2,
+.library-result-page h3,
+.library-result-page h4,
+.library-result-page h5 {
+  text-wrap: balance;
 }
 
-.library-result-page [class*="border-emerald-"] {
-  border-color: rgba(183, 121, 69, 0.42) !important;
+.library-result-page p,
+.library-result-page li,
+.library-result-page span,
+.library-result-page strong,
+.library-result-page b {
+  overflow-wrap: anywhere;
 }
 
-.library-result-page [class*="ring-emerald-"] {
-  --tw-ring-color: rgba(183, 121, 69, 0.42) !important;
+/* Result intro */
+.result-library-intro {
+  max-width: 58rem;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.library-result-page select,
-.library-result-page input {
-  border-color: rgba(165, 106, 63, 0.34) !important;
-  background: rgba(36, 27, 24, 0.88) !important;
+.result-library-intro h2 {
+  margin-top: 0.9rem;
+  color: var(--ink) !important;
+  font-size: clamp(2.2rem, 7vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
 }
 
-.library-result-page > div > div:not(.library-result-shell) {
+.result-library-intro p {
+  margin: 1rem auto 0;
+  max-width: 44rem;
+  color: var(--ink-soft) !important;
+  font-size: clamp(0.84rem, 2vw, 0.95rem);
+  line-height: 1.8;
+}
+
+.result-library-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.5rem 0.85rem;
+  background: var(--surface);
+  color: var(--gold) !important;
+  font-size: 0.67rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  box-shadow: 0 8px 22px rgba(71, 42, 24, 0.08);
+}
+
+/* Hero layout */
+.result-hero-grid {
+  display: grid;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.result-type-book {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 31rem;
+  border: 1px solid var(--line);
+  border-left: 0.7rem solid var(--burgundy);
+  border-radius: 0.7rem 2rem 2rem 0.7rem;
+  padding: clamp(1.35rem, 4vw, 2.8rem);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--paper) 96%, transparent), color-mix(in srgb, var(--paper-2) 94%, transparent)),
+    repeating-linear-gradient(0deg, rgba(90, 54, 31, 0.026) 0 1px, transparent 1px 27px);
+  color: var(--ink);
+  box-shadow: 0 28px 70px rgba(66, 37, 20, 0.15), inset 15px 0 30px rgba(80, 45, 26, 0.055);
+}
+
+.library-page-dark .result-type-book {
+  background:
+    linear-gradient(135deg, rgba(72, 50, 40, 0.98), rgba(39, 30, 28, 0.98)),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 27px);
+  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.34), inset 15px 0 30px rgba(0, 0, 0, 0.14);
+}
+
+.result-type-book::after {
+  content: "";
+  position: absolute;
+  right: -3rem;
+  bottom: -4rem;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--plum) 18%, transparent);
+  filter: blur(18px);
+  pointer-events: none;
+}
+
+.result-book-ribbon {
+  position: absolute;
+  top: 0;
+  right: clamp(1rem, 4vw, 2rem);
+  z-index: 2;
+  padding: 0.72rem 0.95rem 1rem;
+  border-radius: 0 0 0.85rem 0.85rem;
+  background: linear-gradient(180deg, #8d3346, #61222e);
+  color: #fff7e9;
+  font-size: 0.63rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 25px rgba(85, 27, 38, 0.23);
+}
+
+.result-book-edition,
+.result-book-code {
+  position: relative;
+  z-index: 1;
+  color: var(--gold) !important;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.result-book-title-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: clamp(2.7rem, 8vw, 5rem);
+}
+
+.result-type-monogram {
+  display: grid;
+  flex: 0 0 auto;
+  width: clamp(6.2rem, 18vw, 9.4rem);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 1.6rem 0.6rem 1.6rem 0.6rem;
+  background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
+  color: var(--burgundy) !important;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(2.7rem, 8vw, 5rem);
+  box-shadow: 0 14px 36px rgba(68, 38, 23, 0.12);
+}
+
+.result-book-title-row h3 {
+  color: var(--ink) !important;
+  font-size: clamp(2.1rem, 6vw, 4rem);
+  line-height: 1;
+}
+
+.result-book-title-row p {
+  margin-top: 0.65rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.result-book-meta,
+.result-book-highlights {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.35rem;
+}
+
+.result-book-meta span,
+.result-book-highlights span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.44rem 0.75rem;
+  background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
+  color: var(--ink-soft) !important;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.result-book-description {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.6rem;
+  max-width: 50rem;
+  color: var(--ink) !important;
+  font-size: 0.96rem;
+  line-height: 1.9;
+}
+
+.result-confidence-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 1.7rem;
+  border: 1px solid var(--line);
+  border-radius: 1.15rem;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  color: var(--ink-soft) !important;
+}
+
+.result-confidence-card svg {
+  flex: none;
+  color: var(--gold);
+}
+
+.result-confidence-title {
+  color: var(--ink) !important;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.result-confidence-card p {
+  margin-top: 0.3rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.result-side-stack {
+  display: grid;
+  min-width: 0;
+  gap: 1.25rem;
+}
+
+.result-candidate-catalogue,
+.result-export-card,
+.library-comparison-section,
+.library-relation-section,
+.library-retest-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+.result-candidate-catalogue,
+.result-export-card {
   border-radius: 1.5rem;
+  padding: 1.2rem;
 }
 
+.result-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--gold) !important;
+}
+
+.result-panel-heading span {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.result-panel-heading h3 {
+  margin-top: 0.15rem;
+  color: var(--ink) !important;
+  font-size: 1.35rem;
+}
+
+.result-panel-copy {
+  margin-top: 0.85rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.result-candidate-card {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.85rem;
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+}
+
+.result-candidate-rank {
+  flex: none;
+  color: var(--muted) !important;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.66rem;
+}
+
+.result-candidate-card strong {
+  color: var(--burgundy) !important;
+  font-size: 1rem;
+}
+
+.result-candidate-card span {
+  margin-left: 0.45rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.72rem;
+}
+
+.result-candidate-card b {
+  color: var(--gold) !important;
+  font-size: 0.72rem;
+}
+
+.result-candidate-track {
+  margin-top: 0.48rem;
+  height: 0.35rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink-soft) 14%, transparent);
+}
+
+.result-candidate-track div {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--burgundy), var(--gold), var(--plum));
+}
+
+.result-form-field > span {
+  display: block;
+  margin-bottom: 0.42rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.67rem;
+  font-weight: 800;
+}
+
+.result-form-field input,
+.library-catalog-select select {
+  width: 100%;
+  border: 1px solid var(--line) !important;
+  border-radius: 0.85rem;
+  padding: 0.75rem 0.85rem;
+  background: var(--surface-strong) !important;
+  color: var(--ink) !important;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.result-form-field input:focus,
+.library-catalog-select select:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 18%, transparent);
+}
+
+.result-upload-field {
+  display: flex;
+  min-height: 4.2rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: 0.9rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.result-remove-photo {
+  margin-top: 0.6rem;
+  color: var(--burgundy) !important;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.result-download-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 0.9rem;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #733344, #9b6139);
+  color: #fff7ea !important;
+  font-size: 0.8rem;
+  font-weight: 900;
+  box-shadow: 0 12px 25px rgba(100, 47, 49, 0.18);
+  transition: 160ms ease;
+}
+
+.result-download-button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* Main editorial result portal */
 .library-result-shell {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(141, 99, 60, 0.28);
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--line);
   border-radius: 2rem;
-  padding: clamp(1rem, 2.5vw, 2.5rem);
+  padding: clamp(0.9rem, 2.5vw, 2.4rem);
+  background:
+    linear-gradient(color-mix(in srgb, var(--paper) 96%, transparent), color-mix(in srgb, var(--paper-2) 96%, transparent)),
+    repeating-linear-gradient(90deg, rgba(91,58,37,0.025) 0 1px, transparent 1px 36px);
+  color: var(--ink);
   box-shadow: 0 30px 90px rgba(37, 22, 14, 0.18);
 }
 
-.library-result-dark {
-  color: #f6eadb;
+.library-result-dark.library-result-shell {
   background:
-    linear-gradient(rgba(31, 23, 20, 0.94), rgba(31, 23, 20, 0.97)),
-    repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 36px),
-    #1f1714;
-}
-
-.library-result-light {
-  color: #33261f;
-  background:
-    linear-gradient(rgba(251, 246, 236, 0.95), rgba(248, 239, 225, 0.98)),
-    repeating-linear-gradient(90deg, rgba(91,58,37,0.025) 0 1px, transparent 1px 36px),
-    #f8efe1;
+    linear-gradient(rgba(32, 23, 20, 0.98), rgba(32, 23, 20, 0.99)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 36px);
 }
 
 .library-ambient {
   position: absolute;
   pointer-events: none;
-  border-radius: 9999px;
-  filter: blur(76px);
-  opacity: 0.35;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.24;
 }
 
 .library-ambient-one {
@@ -27279,7 +28263,7 @@ export function useTestSession() {
   right: -5rem;
   width: 22rem;
   height: 22rem;
-  background: rgba(107, 45, 62, 0.42);
+  background: rgba(122, 48, 66, 0.42);
 }
 
 .library-ambient-two {
@@ -27287,38 +28271,31 @@ export function useTestSession() {
   left: -7rem;
   width: 24rem;
   height: 24rem;
-  background: rgba(126, 88, 48, 0.36);
+  background: rgba(166, 112, 61, 0.34);
 }
 
 .library-catalog-hero {
   position: relative;
-  border: 1px solid rgba(147, 102, 63, 0.3);
+  border: 1px solid var(--line);
   border-radius: 1.75rem;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
+  padding: clamp(1.15rem, 3vw, 2.4rem);
   background:
-    linear-gradient(135deg, rgba(255, 250, 240, 0.9), rgba(241, 220, 188, 0.72)),
-    repeating-linear-gradient(0deg, rgba(85, 50, 28, 0.03) 0 1px, transparent 1px 26px);
-  box-shadow: 0 20px 50px rgba(74, 42, 25, 0.13);
-}
-
-.library-result-dark .library-catalog-hero {
-  background:
-    linear-gradient(135deg, rgba(62, 41, 31, 0.92), rgba(35, 27, 29, 0.94)),
-    repeating-linear-gradient(0deg, rgba(255, 244, 224, 0.018) 0 1px, transparent 1px 26px);
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+    linear-gradient(135deg, color-mix(in srgb, var(--surface-strong) 96%, transparent), color-mix(in srgb, var(--paper-2) 86%, transparent)),
+    repeating-linear-gradient(0deg, rgba(85, 50, 28, 0.025) 0 1px, transparent 1px 26px);
+  box-shadow: var(--shadow);
 }
 
 .library-catalog-ribbon {
   position: absolute;
   top: 0;
-  right: clamp(1rem, 3vw, 2.5rem);
+  right: clamp(1rem, 3vw, 2.2rem);
   transform: translateY(-1px);
-  padding: 0.5rem 0.85rem 0.75rem;
+  padding: 0.55rem 0.88rem 0.78rem;
   border-radius: 0 0 0.8rem 0.8rem;
-  background: linear-gradient(180deg, #7f1d1d, #5f1b22);
+  background: linear-gradient(180deg, #8a3042, #5f1b29);
   color: #fff7e8;
   font-size: 0.6rem;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   box-shadow: 0 8px 20px rgba(79, 24, 26, 0.22);
@@ -27326,207 +28303,245 @@ export function useTestSession() {
 
 .library-tag {
   display: inline-flex;
+  max-width: 100%;
   align-items: center;
-  border: 1px solid rgba(146, 95, 53, 0.27);
-  border-radius: 9999px;
-  padding: 0.4rem 0.7rem;
-  background: rgba(255, 246, 228, 0.62);
-  color: #765035;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.42rem 0.72rem;
+  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  color: var(--ink-soft) !important;
   font-size: 0.7rem;
   font-weight: 800;
+  line-height: 1.35;
 }
 
-.library-result-dark .library-tag {
-  border-color: rgba(223, 184, 126, 0.18);
-  background: rgba(82, 54, 40, 0.45);
-  color: #e6c58f;
+.library-note-card,
+.library-signal-strip,
+.library-evidence-card,
+.library-floating-nav,
+.library-insight-card,
+.library-shelf-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 12px 30px rgba(70, 41, 24, 0.08);
 }
 
 .library-note-card {
-  border: 1px solid rgba(151, 103, 62, 0.25);
-  border-radius: 1.3rem;
+  border-radius: 1.25rem;
   padding: 1rem;
-  background: rgba(255, 249, 237, 0.72);
-  box-shadow: 0 12px 28px rgba(81, 49, 29, 0.08);
-  transform: rotate(-0.35deg);
-}
-
-.library-note-card:nth-child(2) {
-  transform: rotate(0.4deg);
-}
-
-.library-result-dark .library-note-card {
-  background: rgba(39, 29, 25, 0.68);
-  border-color: rgba(217, 178, 116, 0.16);
 }
 
 .library-note-purple {
-  border-color: rgba(105, 63, 103, 0.25);
-  background: rgba(248, 239, 250, 0.72);
+  border-color: color-mix(in srgb, var(--plum) 28%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, var(--plum) 8%);
 }
 
-.library-result-dark .library-note-purple {
-  border-color: rgba(192, 132, 252, 0.15);
-  background: rgba(43, 29, 47, 0.64);
-}
-
-.library-signal-strip {
-  border: 1px solid rgba(137, 98, 65, 0.22);
-  border-radius: 1.4rem;
+.library-signal-strip,
+.library-evidence-card {
+  border-radius: 1.35rem;
   padding: 1rem;
-  background: rgba(247, 235, 215, 0.56);
-}
-
-.library-result-dark .library-signal-strip {
-  background: rgba(26, 20, 18, 0.5);
-  border-color: rgba(211, 177, 124, 0.14);
 }
 
 .library-signal-chip {
-  border-left: 3px solid #9b6139;
-  border-radius: 0.8rem;
-  padding: 0.65rem 0.75rem;
-  background: rgba(255, 250, 241, 0.7);
-  color: #5c4738;
+  display: inline-flex;
+  max-width: 100%;
+  border-left: 3px solid var(--gold);
+  border-radius: 0.75rem;
+  padding: 0.62rem 0.75rem;
+  background: color-mix(in srgb, var(--surface-strong) 92%, transparent);
+  color: var(--ink-soft) !important;
   font-size: 0.72rem;
-  line-height: 1.35rem;
+  line-height: 1.4;
 }
 
-.library-result-dark .library-signal-chip {
-  background: rgba(50, 37, 30, 0.6);
-  color: #cbb8a5;
-  border-left-color: #d0a36b;
+.library-evidence-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold) !important;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.library-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.9rem;
+}
+
+.library-evidence-grid > div {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  padding: 0.75rem;
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+}
+
+.library-evidence-grid strong {
+  display: block;
+  color: var(--ink) !important;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.library-evidence-grid span {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted) !important;
+  font-size: 0.62rem;
+  line-height: 1.35;
+}
+
+.library-evidence-note {
+  margin-top: 0.75rem;
+  color: var(--muted) !important;
+  font-size: 0.68rem;
+  line-height: 1.55;
 }
 
 .library-floating-nav {
   position: sticky;
   top: 6.2rem;
   align-self: start;
-  border: 1px solid rgba(133, 92, 58, 0.23);
-  border-radius: 1.35rem;
-  padding: 0.75rem;
-  background: rgba(250, 242, 229, 0.82);
+  border-radius: 1.5rem;
+  padding: 0.95rem;
   backdrop-filter: blur(18px);
-  box-shadow: 0 18px 42px rgba(64, 39, 24, 0.1);
 }
 
-.library-result-dark .library-floating-nav {
-  background: rgba(31, 24, 21, 0.82);
-  border-color: rgba(211, 175, 116, 0.14);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
+.library-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
 }
 
 .library-nav-tab {
-  display: inline-flex;
-  min-width: max-content;
-  align-items: center;
-  gap: 0.65rem;
-  border: 1px solid transparent;
-  border-radius: 0.95rem;
-  padding: 0.55rem 0.65rem;
-  color: #6f5a49;
-  font-size: 0.74rem;
-  font-weight: 800;
-  transition: 180ms ease;
-}
-
-.library-result-dark .library-nav-tab {
-  color: #bba999;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 5.1rem;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.75rem;
+  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  color: var(--ink-soft) !important;
+  transition: 160ms ease;
 }
 
 .library-nav-tab:hover {
-  border-color: rgba(153, 103, 61, 0.24);
-  background: rgba(255, 247, 231, 0.52);
-}
-
-.library-result-dark .library-nav-tab:hover {
-  background: rgba(72, 48, 37, 0.36);
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
 }
 
 .library-nav-tab-active {
-  border-color: rgba(142, 88, 51, 0.28);
-  background: rgba(244, 225, 195, 0.78);
-  color: #4a3021;
-  transform: translateX(2px);
-  box-shadow: 0 7px 18px rgba(84, 49, 29, 0.08);
+  border-color: var(--line-strong);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--paper-2) 90%, white), color-mix(in srgb, var(--surface-strong) 92%, var(--burgundy) 8%));
+  color: var(--ink) !important;
+  box-shadow: 0 10px 24px rgba(84, 49, 29, 0.1);
 }
 
+.library-page-dark .library-nav-tab-active,
 .library-result-dark .library-nav-tab-active {
-  background: rgba(88, 55, 40, 0.58);
-  color: #f2dbc0;
-  border-color: rgba(222, 178, 116, 0.2);
+  background: linear-gradient(135deg, rgba(92, 58, 44, 0.96), rgba(69, 45, 38, 0.98));
 }
 
-.library-nav-icon {
-  display: inline-flex;
-  height: 2rem;
-  width: 2rem;
+.library-nav-icon-wrap {
+  display: flex;
+  height: 2.15rem;
+  width: 2.15rem;
   flex: none;
   align-items: center;
   justify-content: center;
   border-radius: 0.75rem;
-  color: #fff8ed;
-  box-shadow: 0 6px 14px rgba(71, 40, 25, 0.16);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--burgundy) 12%, transparent), color-mix(in srgb, var(--gold) 18%, transparent));
+  color: var(--gold) !important;
+}
+
+.library-chapter-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.library-chapter-progress > span {
+  flex: none;
+  color: var(--muted) !important;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.library-chapter-progress > div {
+  width: min(14rem, 100%);
+  height: 0.28rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink-soft) 14%, transparent);
+}
+
+.library-chapter-progress i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--burgundy), var(--gold));
+  transition: width 220ms ease;
 }
 
 .library-section-heading {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  border-bottom: 1px solid rgba(133, 91, 55, 0.2);
-  padding: 0.25rem 0 1.1rem;
-}
-
-.library-result-dark .library-section-heading {
-  border-bottom-color: rgba(214, 179, 121, 0.13);
-}
-
-.library-section-icon {
-  display: flex;
-  height: 3.25rem;
-  width: 3.25rem;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  border-radius: 1.1rem;
-  color: #fff8ed;
-  box-shadow: 0 12px 22px rgba(66, 34, 21, 0.17);
+  border-bottom: 1px solid var(--line);
+  padding: 0.1rem 0 1rem;
 }
 
 .library-insight-card {
-  border: 1px solid rgba(141, 98, 62, 0.24);
-  border-radius: 1.4rem;
-  padding: 1.15rem;
-  background: rgba(255, 249, 238, 0.72);
-  box-shadow: 0 14px 34px rgba(78, 48, 29, 0.08);
+  border-radius: 1.45rem;
+  padding: 1.2rem;
   transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
 .library-insight-card:hover {
-  border-color: rgba(154, 95, 53, 0.42);
+  border-color: var(--line-strong);
   transform: translateY(-2px);
-  box-shadow: 0 19px 40px rgba(78, 48, 29, 0.12);
+  box-shadow: 0 19px 42px rgba(78, 48, 29, 0.12);
 }
 
-.library-result-dark .library-insight-card {
-  background: rgba(43, 32, 27, 0.68);
-  border-color: rgba(218, 179, 117, 0.14);
-  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.18);
+.library-copy-block {
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.84rem;
+  line-height: 1.7;
 }
 
-.library-result-dark .library-insight-card:hover {
-  border-color: rgba(222, 176, 111, 0.26);
+.library-copy-block strong {
+  color: var(--ink) !important;
+}
+
+.library-copy-block-purple {
+  border: 1px solid color-mix(in srgb, var(--plum) 24%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 92%, var(--plum) 8%);
+}
+
+.library-copy-block-cream {
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface-strong) 94%, var(--gold) 6%);
+}
+
+.library-copy-block-warn {
+  border: 1px solid color-mix(in srgb, #a95a35 30%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 92%, #a95a35 8%);
 }
 
 .library-shelf-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(137, 94, 58, 0.24);
   border-radius: 1.4rem;
-  padding: 1.1rem;
-  background:
-    linear-gradient(180deg, rgba(255, 250, 240, 0.86), rgba(241, 222, 194, 0.7));
-  box-shadow: 0 15px 36px rgba(77, 47, 29, 0.09);
+  padding: 1.1rem 1.1rem 1.4rem;
 }
 
 .library-shelf-card::after {
@@ -27541,52 +28556,586 @@ export function useTestSession() {
   opacity: 0.65;
 }
 
-.library-result-dark .library-shelf-card {
-  background: linear-gradient(180deg, rgba(54, 39, 31, 0.86), rgba(33, 25, 22, 0.84));
-  border-color: rgba(214, 173, 113, 0.15);
+.library-shelf-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.7rem;
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+  color: var(--gold) !important;
 }
 
 .library-book-spine {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
   min-height: 2.7rem;
   border-left: 5px solid hsl(calc(18 + var(--spine-index) * 23), 38%, 38%);
   border-radius: 0.25rem 0.75rem 0.75rem 0.25rem;
   padding: 0.55rem 0.7rem;
-  background: rgba(255, 252, 245, 0.72);
-  color: #4e3a2d;
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+  color: var(--ink-soft) !important;
   font-size: 0.76rem;
   font-weight: 700;
-  line-height: 1.25rem;
+  line-height: 1.35;
   box-shadow: 0 4px 9px rgba(74, 42, 24, 0.06);
 }
 
-.library-result-dark .library-book-spine {
-  background: rgba(70, 49, 38, 0.58);
-  color: #e7d8c5;
+.library-next-chapter {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-strong) 94%, transparent), color-mix(in srgb, var(--paper-2) 78%, transparent));
+  color: var(--ink) !important;
+  text-align: left;
+  transition: 160ms ease;
 }
 
-.library-book-number {
-  font-family: "JetBrains Mono", monospace;
+.library-next-chapter:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+.library-next-chapter small {
+  display: block;
+  color: var(--gold) !important;
   font-size: 0.62rem;
-  color: #9b795c;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.library-next-chapter strong {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--ink) !important;
+  font-size: 0.95rem;
 }
 
 .library-boundary-note {
-  border: 1px dashed rgba(131, 91, 58, 0.28);
+  border: 1px dashed var(--line-strong);
   border-radius: 1.2rem;
   padding: 1rem;
-  background: rgba(245, 233, 215, 0.45);
-  color: #766354;
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  color: var(--muted) !important;
   font-size: 0.72rem;
-  line-height: 1.35rem;
+  line-height: 1.55;
 }
 
-.library-result-dark .library-boundary-note {
-  border-color: rgba(209, 171, 112, 0.18);
-  background: rgba(26, 20, 18, 0.45);
-  color: #a99583;
+.library-boundary-note strong {
+  color: var(--ink-soft) !important;
+}
+
+/* Model A reader */
+.model-a-reader {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  padding: 1.2rem;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+.model-a-reader-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+.model-a-reader-icon {
+  display: flex;
+  height: 2.6rem;
+  width: 2.6rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.9rem;
+  background: linear-gradient(135deg, var(--burgundy), var(--gold));
+  color: #fff8ed;
+}
+
+.model-a-reader-kicker,
+.model-a-reader-section > span,
+.model-a-reader-grid span {
+  color: var(--gold) !important;
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.model-a-reader-header h4 {
+  margin-top: 0.25rem;
+  color: var(--ink) !important;
+  font-size: 1.25rem;
+}
+
+.model-a-reader-header p {
+  margin-top: 0.2rem;
+  color: var(--muted) !important;
+  font-size: 0.7rem;
+}
+
+.model-a-reader-close {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--muted) !important;
+}
+
+.model-a-reader-close:hover {
+  background: color-mix(in srgb, var(--ink-soft) 10%, transparent);
+  color: var(--ink) !important;
+}
+
+.model-a-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.model-a-status-row span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.38rem 0.65rem;
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+  color: var(--ink-soft) !important;
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+
+.model-a-reader-section {
+  margin-top: 1rem;
+}
+
+.model-a-reader-section p,
+.model-a-reader-grid p,
+.model-a-reflection p {
+  margin-top: 0.4rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.model-a-reader-highlight {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.9rem;
+  background: color-mix(in srgb, var(--surface-strong) 90%, var(--gold) 10%);
+}
+
+.model-a-reader-grid {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.model-a-reader-grid > div {
+  border-left: 3px solid var(--gold);
+  padding-left: 0.8rem;
+}
+
+.model-a-reflection {
+  margin-top: 1rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: 1rem;
+  padding: 0.9rem;
+}
+
+.model-a-reflection strong {
+  color: var(--burgundy) !important;
+  font-size: 0.75rem;
+}
+
+/* Comparison and relations */
+.library-comparison-section,
+.library-relation-section {
+  border-radius: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.library-section-titlebar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--gold) !important;
+}
+
+.library-section-titlebar span,
+.library-catalog-select > span,
+.library-drawer-label,
+.library-book-page-label,
+.library-relation-name > span {
+  color: var(--gold) !important;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.library-section-titlebar h3 {
+  margin-top: 0.3rem;
+  color: var(--ink) !important;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+}
+
+.library-section-titlebar p {
+  margin-top: 0.55rem;
+  max-width: 46rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.library-catalog-select {
+  display: block;
+  max-width: 24rem;
+  margin-top: 1.4rem;
+}
+
+.library-catalog-select > span {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.library-open-book {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.35rem;
+  background: var(--paper-2);
+  box-shadow: var(--shadow);
+}
+
+.library-book-page {
+  min-width: 0;
+  padding: clamp(1.15rem, 3vw, 2rem);
+  background:
+    repeating-linear-gradient(0deg, rgba(98, 59, 33, 0.025) 0 1px, transparent 1px 25px),
+    linear-gradient(135deg, color-mix(in srgb, var(--surface-strong) 98%, transparent), color-mix(in srgb, var(--paper-2) 92%, transparent));
+}
+
+.library-book-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+}
+
+.library-book-page-header strong {
+  color: var(--burgundy) !important;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 2.4rem;
+}
+
+.library-book-page-header h4 {
+  color: var(--ink) !important;
+  font-size: 1.25rem;
+}
+
+.library-book-page-header p,
+.library-book-page-header > span {
+  color: var(--muted) !important;
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.library-comparison-list {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.library-comparison-list > div {
+  border-left: 3px solid var(--gold);
+  padding-left: 0.8rem;
+}
+
+.library-comparison-list b {
+  color: var(--gold) !important;
+  font-size: 0.72rem;
+}
+
+.library-comparison-list p {
+  margin-top: 0.25rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.76rem;
+  line-height: 1.65;
+}
+
+.library-empty-catalogue {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.4rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  color: var(--gold) !important;
+}
+
+.library-empty-catalogue strong {
+  color: var(--ink) !important;
+  font-size: 0.85rem;
+}
+
+.library-empty-catalogue p {
+  margin-top: 0.2rem;
+  color: var(--muted) !important;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.library-relation-layout {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.library-type-drawer,
+.library-relation-record {
+  position: relative;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 1.35rem;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+}
+
+.library-type-tab {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  padding: 0.55rem 0.35rem;
+  background: var(--surface);
+  color: var(--ink-soft) !important;
+  text-align: center;
+  transition: 160ms ease;
+}
+
+.library-type-tab strong {
+  display: block;
+  color: var(--ink) !important;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+}
+
+.library-type-tab span {
+  display: block;
+  overflow: hidden;
+  margin-top: 0.15rem;
+  color: var(--muted) !important;
+  font-size: 0.55rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.library-type-tab:hover {
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
+}
+
+.library-type-tab-active {
+  border-color: transparent !important;
+  background: linear-gradient(135deg, #7a3142, #9b6139) !important;
+  color: #fff8eb !important;
+  box-shadow: 0 8px 18px rgba(91, 39, 44, 0.18);
+}
+
+.library-type-tab-active strong,
+.library-type-tab-active span {
+  color: #fff8eb !important;
+}
+
+.library-record-stamp {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  transform: rotate(2deg);
+  border: 2px solid color-mix(in srgb, var(--burgundy) 45%, transparent);
+  padding: 0.3rem 0.5rem;
+  color: var(--burgundy) !important;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.library-relation-pair {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: 5rem;
+  color: var(--burgundy) !important;
+}
+
+.library-relation-pair > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.library-relation-pair strong {
+  color: var(--burgundy) !important;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.library-relation-pair span {
+  color: var(--muted) !important;
+  font-size: 0.67rem;
+}
+
+.library-relation-name {
+  margin-top: 1.4rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+
+.library-relation-name h4 {
+  margin-top: 0.25rem;
+  color: var(--ink) !important;
+  font-size: 2rem;
+}
+
+.library-relation-copy {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.library-relation-copy > div {
+  border-left: 3px solid var(--gold);
+  padding-left: 0.8rem;
+}
+
+.library-relation-copy b {
+  color: var(--gold) !important;
+  font-size: 0.72rem;
+}
+
+.library-relation-copy p {
+  margin-top: 0.3rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.76rem;
+  line-height: 1.7;
+}
+
+.library-relation-note {
+  margin-top: 1rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: 0.9rem;
+  padding: 0.75rem;
+  color: var(--muted) !important;
+  font-size: 0.68rem;
+  line-height: 1.55;
+}
+
+.library-retest-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-radius: 1.4rem;
+  padding: 1.2rem;
+}
+
+.library-retest-card span {
+  color: var(--gold) !important;
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.library-retest-card h4 {
+  margin-top: 0.25rem;
+  color: var(--ink) !important;
+  font-size: 1.4rem;
+}
+
+.library-retest-card p {
+  margin-top: 0.35rem;
+  max-width: 40rem;
+  color: var(--ink-soft) !important;
+  font-size: 0.73rem;
+  line-height: 1.6;
+}
+
+.library-retest-card button {
+  flex: none;
+  border-radius: 0.85rem;
+  padding: 0.72rem 1rem;
+  background: var(--walnut);
+  color: #fff4e4 !important;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+@media (min-width: 768px) {
+  .library-open-book {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .library-open-book::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: var(--line);
+    box-shadow: 0 0 18px rgba(74, 38, 20, 0.24);
+  }
+
+  .model-a-reader-grid,
+  .library-relation-copy {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .library-retest-card {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1100px) {
+  .result-hero-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr);
+  }
+
+  .library-relation-layout {
+    grid-template-columns: minmax(18rem, 0.7fr) minmax(0, 1.3fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .library-nav-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 1279px) {
@@ -27595,512 +29144,441 @@ export function useTestSession() {
   }
 }
 
-@media print {
-  .no-print {
-    display: none !important;
+@media (max-width: 767px) {
+  .library-result-page {
+    border-radius: 1.2rem;
+    padding: 0;
   }
-  body {
-    background-color: white !important;
-    color: black !important;
+
+  .library-result-shell,
+  .library-catalog-hero,
+  .library-comparison-section,
+  .library-relation-section {
+    border-radius: 1.25rem;
+  }
+
+  .library-result-shell {
+    padding: 0.75rem;
+  }
+
+  .library-catalog-hero {
+    padding: 1rem;
+  }
+
+  .library-catalog-ribbon {
+    right: 0.75rem;
+  }
+
+  .library-nav-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .library-nav-tab {
+    min-height: auto;
+  }
+
+  .result-book-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 3.5rem;
+  }
+
+  .result-type-book {
+    min-height: auto;
+    border-left-width: 0.45rem;
+    border-radius: 0.5rem 1.35rem 1.35rem 0.5rem;
+  }
+
+  .result-type-monogram {
+    width: 6.8rem;
+  }
+
+  .library-book-page-header,
+  .library-section-titlebar {
+    flex-direction: column;
+  }
+
+  .library-book-page-header > span {
+    align-self: flex-start;
+  }
+
+  .library-relation-pair {
+    padding-right: 0;
+  }
+
+  .library-record-stamp {
+    position: static;
+    display: inline-block;
+    margin-bottom: 0.9rem;
+  }
+
+  .library-evidence-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-img {
-  content-visibility: auto;
+@media (max-width: 420px) {
+  .library-evidence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-book-meta,
+  .result-book-highlights {
+    align-items: stretch;
+  }
+
+  .result-book-meta span,
+  .result-book-highlights span {
+    width: 100%;
+    border-radius: 0.8rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-delay: 0s !important;
-    animation-duration: 0s !important;
+  .library-result-page *,
+  .library-result-page *::before,
+  .library-result-page *::after {
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0s !important;
     scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
-
-/* App-wide library palette and subtle bookshelf texture */
-.library-app-shell {
-  position: relative;
-  isolation: isolate;
-  min-height: 100vh;
-  background-image:
-    linear-gradient(180deg, rgba(78, 48, 31, 0.025), transparent 22%),
-    repeating-linear-gradient(90deg, rgba(111, 73, 44, 0.018) 0 1px, transparent 1px 42px);
-}
-
-.library-app-shell::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 8% 8%, rgba(127, 29, 29, 0.08), transparent 24%),
-    radial-gradient(circle at 91% 12%, rgba(76, 29, 149, 0.06), transparent 23%),
-    linear-gradient(180deg, transparent, rgba(89, 58, 36, 0.035));
-}
-
-.library-app-shell [class*="text-emerald-"] {
-  color: #b77945 !important;
-}
-
-.library-app-shell [class*="hover:text-emerald-"]:hover {
-  color: #d19a63 !important;
-}
-
-.library-app-shell [class*="text-teal-"] {
-  color: #8b5b7f !important;
-}
-
-.library-app-shell [class*="bg-emerald-500"] {
-  background-color: #b77945 !important;
-}
-
-.library-app-shell [class*="hover:bg-emerald-"]:hover {
-  background-color: #9a6039 !important;
-}
-
-.library-app-shell [class*="border-emerald-"] {
-  border-color: rgba(183, 121, 69, 0.42) !important;
-}
-
-.library-app-shell [class*="from-emerald-"] {
-  --tw-gradient-from: #b77945 var(--tw-gradient-from-position) !important;
-  --tw-gradient-to: rgb(183 121 69 / 0) var(--tw-gradient-to-position) !important;
-}
-
-.library-app-shell [class*="to-teal-"] {
-  --tw-gradient-to: #7a4e70 var(--tw-gradient-to-position) !important;
-}
-
-.library-app-shell [class*="ring-emerald-"] {
-  --tw-ring-color: rgba(183, 121, 69, 0.48) !important;
-}
-
-.library-app-shell header {
-  box-shadow: 0 8px 30px rgba(50, 31, 22, 0.08);
-}
-
-.library-page-light .text-white {
-  color: #2f2119 !important;
-}
-
-.library-page-light .text-slate-100,
-.library-page-light .text-slate-200,
-.library-page-light .text-slate-300 {
-  color: #4f3d31 !important;
-}
-
-.library-page-light .text-slate-400,
-.library-page-light .text-slate-500 {
-  color: #7a6756 !important;
-}
-
-.library-page-light [class*="bg-slate-950"],
-.library-page-light [class*="bg-slate-900"] {
-  background-color: rgba(255, 249, 239, 0.82) !important;
-}
-
-.library-page-light [class*="border-slate-8"],
-.library-page-light [class*="border-slate-9"] {
-  border-color: rgba(132, 92, 58, 0.22) !important;
-}
-
-.library-page-light select,
-.library-page-light input {
-  color: #2f2119 !important;
-  background: rgba(255, 250, 242, 0.94) !important;
-}
-
-.library-page-dark select,
-.library-page-dark input {
-  color: #f8ead8 !important;
-}
-
-.library-result-page button,
-.library-result-page select,
-.library-result-page input {
-  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-}
-
-/* v2.1.2 — Result desk, open-book comparison, and relation catalogue */
-.result-library-intro {
-  max-width: 54rem;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.result-library-intro h2 {
-  margin-top: 0.85rem;
-  color: #2b1e18;
-  font-size: clamp(2rem, 5vw, 4.2rem);
-  line-height: 1;
-  letter-spacing: -0.035em;
-}
-
-.library-page-dark .result-library-intro h2 { color: #fff4e4; }
-
-.result-library-intro p {
-  margin: 1rem auto 0;
-  max-width: 42rem;
-  color: #6a5546;
-  font-size: 0.9rem;
-  line-height: 1.8;
-}
-
-.library-page-dark .result-library-intro p { color: #cbb8a2; }
-
-.result-library-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  border: 1px solid rgba(148, 98, 57, 0.26);
-  border-radius: 999px;
-  padding: 0.48rem 0.8rem;
-  background: rgba(255, 247, 231, 0.8);
-  color: #8b5835;
-  font-size: 0.67rem;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  box-shadow: 0 8px 24px rgba(80, 46, 25, 0.07);
-}
-
-.library-page-dark .result-library-kicker {
-  background: rgba(67, 45, 35, 0.72);
-  border-color: rgba(226, 184, 123, 0.17);
-  color: #e0bb83;
-}
-
-.result-hero-grid {
-  display: grid;
-  gap: 1.25rem;
-  align-items: stretch;
-}
-
-@media (min-width: 1100px) {
-  .result-hero-grid { grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr); }
-}
-
-.result-type-book {
-  position: relative;
-  overflow: hidden;
-  min-height: 31rem;
-  border: 1px solid rgba(121, 77, 48, 0.32);
-  border-left: 0.7rem solid #5b2d2d;
-  border-radius: 0.5rem 1.8rem 1.8rem 0.5rem;
-  padding: clamp(1.4rem, 4vw, 2.8rem);
-  background:
-    linear-gradient(135deg, rgba(255, 249, 236, 0.97), rgba(236, 214, 181, 0.9)),
-    repeating-linear-gradient(0deg, rgba(90, 54, 31, 0.025) 0 1px, transparent 1px 26px);
-  color: #2d201a;
-  box-shadow: 0 28px 70px rgba(66, 37, 20, 0.15), inset 15px 0 30px rgba(80, 45, 26, 0.055);
-}
-
-.result-type-book::after {
-  content: "";
-  position: absolute;
-  right: -4rem;
-  bottom: -5rem;
-  width: 15rem;
-  height: 15rem;
-  border-radius: 50%;
-  background: rgba(111, 56, 81, 0.1);
-  filter: blur(12px);
-}
-
-.library-page-dark .result-type-book {
-  border-color: rgba(219, 174, 109, 0.16);
-  border-left-color: #7d3d48;
-  background: linear-gradient(135deg, rgba(64, 43, 34, 0.97), rgba(34, 27, 28, 0.97));
-  color: #f8ead7;
-  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.32), inset 15px 0 30px rgba(0, 0, 0, 0.14);
-}
-
-.result-book-ribbon {
-  position: absolute;
-  top: 0;
-  right: 2rem;
-  padding: 0.7rem 0.9rem 1rem;
-  border-radius: 0 0 0.8rem 0.8rem;
-  background: linear-gradient(180deg, #7e2634, #5f1e2a);
-  color: #fff6e8;
-  font-size: 0.64rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.result-book-edition {
-  color: #8d6547;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-}
-
-.library-page-dark .result-book-edition { color: #cba77b; }
-
-.result-book-title-row {
-  display: flex;
-  align-items: center;
-  gap: clamp(1rem, 3vw, 2rem);
-  margin-top: clamp(2.5rem, 8vw, 5rem);
-}
-
-.result-type-monogram {
-  display: grid;
-  flex: 0 0 auto;
-  width: clamp(6.2rem, 16vw, 9.2rem);
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid rgba(111, 62, 42, 0.24);
-  border-radius: 1.4rem 0.5rem 1.4rem 0.5rem;
-  background: rgba(255, 250, 239, 0.62);
-  color: #6f3040;
-  font-family: "DM Serif Display", Georgia, serif;
-  font-size: clamp(2.5rem, 7vw, 4.8rem);
-  box-shadow: 0 14px 35px rgba(68, 38, 23, 0.1);
-}
-
-.library-page-dark .result-type-monogram {
-  border-color: rgba(225, 179, 116, 0.15);
-  background: rgba(30, 22, 21, 0.48);
-  color: #e5b4bf;
-}
-
-.result-book-title-row h3 {
-  color: inherit;
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 1;
-}
-
-.result-book-title-row p {
-  margin-top: 0.7rem;
-  color: #70594a;
-  font-size: 0.8rem;
-  line-height: 1.6;
-}
-
-.library-page-dark .result-book-title-row p { color: #c9b59d; }
-
-.result-book-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin-top: 2rem;
-}
-
-.result-book-meta span {
-  border: 1px solid rgba(133, 88, 53, 0.2);
-  border-radius: 999px;
-  padding: 0.4rem 0.7rem;
-  background: rgba(255, 250, 240, 0.54);
-  color: #6d4b35;
-  font-size: 0.7rem;
-  font-weight: 800;
-}
-
-.library-page-dark .result-book-meta span {
-  border-color: rgba(222, 178, 116, 0.15);
-  background: rgba(35, 26, 23, 0.54);
-  color: #ddc4a3;
-}
-
-.result-book-description {
-  position: relative;
-  z-index: 1;
-  margin-top: 1.6rem;
-  max-width: 50rem;
-  color: #4d3a30;
-  font-size: 0.9rem;
-  line-height: 1.9;
-}
-
-.library-page-dark .result-book-description { color: #e4d4bf; }
-
-.result-confidence-card {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  gap: 0.8rem;
-  margin-top: 1.7rem;
-  border: 1px solid rgba(123, 78, 47, 0.2);
-  border-radius: 1.1rem;
-  padding: 1rem;
-  background: rgba(255, 251, 243, 0.62);
-  color: #5d4434;
-}
-
-.library-page-dark .result-confidence-card {
-  border-color: rgba(226, 181, 119, 0.13);
-  background: rgba(27, 21, 19, 0.48);
-  color: #e0cdb4;
-}
-
-.result-confidence-title { font-size: 0.75rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
-.result-confidence-card p { margin-top: 0.3rem; font-size: 0.74rem; line-height: 1.55; }
-.result-side-stack { display: grid; gap: 1.25rem; }
-
-.result-candidate-catalogue,
-.result-export-card {
-  border: 1px solid rgba(137, 91, 57, 0.23);
-  border-radius: 1.5rem;
-  padding: 1.2rem;
-  background: rgba(255, 249, 238, 0.76);
-  box-shadow: 0 18px 45px rgba(72, 42, 25, 0.09);
-}
-
-.library-page-dark .result-candidate-catalogue,
-.library-page-dark .result-export-card {
-  border-color: rgba(218, 177, 114, 0.14);
-  background: rgba(39, 30, 27, 0.72);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
-}
-
-.result-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: #8a5735; }
-.library-page-dark .result-panel-heading { color: #d8ad76; }
-.result-panel-heading span { font-size: 0.62rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
-.result-panel-heading h3 { margin-top: 0.15rem; color: #2d201a; font-size: 1.35rem; }
-.library-page-dark .result-panel-heading h3 { color: #fff2e1; }
-.result-panel-copy { margin-top: 0.85rem; color: #6d5848; font-size: 0.76rem; line-height: 1.6; }
-.library-page-dark .result-panel-copy { color: #c9b59e; }
-
-.result-candidate-card { display: flex; align-items: center; gap: 0.8rem; border: 1px solid rgba(135, 91, 57, 0.18); border-radius: 1rem; padding: 0.75rem; background: rgba(255, 252, 246, 0.66); }
-.library-page-dark .result-candidate-card { border-color: rgba(219, 176, 112, 0.12); background: rgba(27, 21, 19, 0.42); }
-.result-candidate-rank { color: #a27958; font-family: "JetBrains Mono", monospace; font-size: 0.66rem; }
-.result-candidate-card strong { color: #5e2d39; font-size: 1rem; }
-.library-page-dark .result-candidate-card strong { color: #efbdc7; }
-.result-candidate-card span { margin-left: 0.45rem; color: #695447; font-size: 0.72rem; }
-.library-page-dark .result-candidate-card span { color: #cbb8a2; }
-.result-candidate-card b { color: #744b31; font-size: 0.72rem; }
-.library-page-dark .result-candidate-card b { color: #e0bc8b; }
-.result-candidate-track { margin-top: 0.45rem; height: 0.3rem; overflow: hidden; border-radius: 999px; background: rgba(111, 75, 50, 0.12); }
-.result-candidate-track div { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #7e2f3e, #b77945, #7a4f74); }
-
-.result-form-field { display: block; }
-.result-form-field > span { display: block; margin-bottom: 0.4rem; color: #75563e; font-size: 0.67rem; font-weight: 800; }
-.library-page-dark .result-form-field > span { color: #d5b58d; }
-.result-form-field input { width: 100%; border: 1px solid rgba(137, 91, 57, 0.24) !important; border-radius: 0.8rem; padding: 0.7rem 0.8rem; background: rgba(255, 252, 245, 0.82) !important; color: #2f2119 !important; font-size: 0.78rem; }
-.library-page-dark .result-form-field input { background: rgba(25, 20, 18, 0.7) !important; color: #fff1df !important; }
-.result-upload-field { display: flex; min-height: 4.2rem; cursor: pointer; align-items: center; justify-content: center; gap: 0.55rem; border: 1px dashed rgba(137, 91, 57, 0.32); border-radius: 0.9rem; color: #795638; font-size: 0.72rem; font-weight: 800; }
-.library-page-dark .result-upload-field { border-color: rgba(221, 178, 114, 0.2); color: #d4b489; }
-.result-remove-photo { margin-top: 0.6rem; color: #8a4050; font-size: 0.7rem; font-weight: 800; }
-.result-download-button { display: flex; width: 100%; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1rem; border-radius: 0.9rem; padding: 0.8rem 1rem; background: linear-gradient(135deg, #733344, #9b6139); color: #fff7ea; font-size: 0.8rem; font-weight: 900; box-shadow: 0 12px 25px rgba(100, 47, 49, 0.18); }
-.result-download-button:hover { filter: brightness(1.07); transform: translateY(-1px); }
-
-.library-comparison-section,
-.library-relation-section {
-  border: 1px solid rgba(137, 91, 57, 0.24);
-  border-radius: 2rem;
-  padding: clamp(1rem, 3vw, 2rem);
-  background: rgba(250, 242, 229, 0.68);
-  box-shadow: 0 20px 55px rgba(68, 40, 24, 0.08);
-}
-.library-page-dark .library-comparison-section,
-.library-page-dark .library-relation-section { border-color: rgba(217, 176, 113, 0.13); background: rgba(31, 24, 22, 0.66); box-shadow: 0 22px 58px rgba(0, 0, 0, 0.2); }
-
-.library-section-titlebar { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; color: #8b5937; }
-.library-page-dark .library-section-titlebar { color: #d8ad76; }
-.library-section-titlebar span { font-size: 0.66rem; font-weight: 900; letter-spacing: 0.16em; text-transform: uppercase; }
-.library-section-titlebar h3 { margin-top: 0.3rem; color: #2b1e18; font-size: clamp(1.7rem, 4vw, 2.6rem); }
-.library-page-dark .library-section-titlebar h3 { color: #fff3e2; }
-.library-section-titlebar p { margin-top: 0.55rem; max-width: 46rem; color: #6b5547; font-size: 0.8rem; line-height: 1.65; }
-.library-page-dark .library-section-titlebar p { color: #c8b49d; }
-
-.library-catalog-select { display: block; max-width: 23rem; margin-top: 1.4rem; }
-.library-catalog-select span { display: block; margin-bottom: 0.45rem; color: #77583f; font-size: 0.68rem; font-weight: 900; }
-.library-page-dark .library-catalog-select span { color: #d5b58c; }
-.library-catalog-select select { width: 100%; border: 1px solid rgba(137, 91, 57, 0.25) !important; border-radius: 0.85rem; padding: 0.75rem 0.8rem; background: rgba(255, 251, 243, 0.86) !important; color: #30221a !important; font-size: 0.8rem; }
-.library-page-dark .library-catalog-select select { background: rgba(25, 20, 18, 0.72) !important; color: #fff2e0 !important; }
-
-.library-open-book { position: relative; display: grid; gap: 0; margin-top: 1.5rem; border: 1px solid rgba(128, 83, 52, 0.24); border-radius: 1.3rem; overflow: hidden; background: #f7ead5; box-shadow: 0 22px 48px rgba(68, 39, 22, 0.13); }
-@media (min-width: 768px) { .library-open-book { grid-template-columns: 1fr 1fr; } .library-open-book::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(105, 65, 39, 0.18); box-shadow: 0 0 18px rgba(74, 38, 20, 0.24); } }
-.library-page-dark .library-open-book { border-color: rgba(218, 176, 112, 0.14); background: #2d211d; }
-.library-book-page { padding: clamp(1.2rem, 3vw, 2rem); background: repeating-linear-gradient(0deg, rgba(98, 59, 33, 0.025) 0 1px, transparent 1px 25px), linear-gradient(135deg, rgba(255, 251, 242, 0.98), rgba(242, 225, 199, 0.92)); }
-.library-page-dark .library-book-page { background: repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 25px), linear-gradient(135deg, rgba(57, 42, 34, 0.97), rgba(37, 29, 27, 0.97)); }
-.library-book-page-label { color: #9a6a49; font-size: 0.64rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
-.library-book-page-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-top: 0.7rem; border-bottom: 1px solid rgba(131, 85, 52, 0.18); padding-bottom: 1rem; }
-.library-book-page-header strong { color: #742f40; font-size: 2.4rem; font-family: "DM Serif Display", Georgia, serif; }
-.library-page-dark .library-book-page-header strong { color: #e9b8c2; }
-.library-book-page-header h4 { color: #2f211a; font-size: 1.25rem; }
-.library-page-dark .library-book-page-header h4 { color: #fff2e0; }
-.library-book-page-header p, .library-book-page-header > span { color: #76604f; font-size: 0.68rem; line-height: 1.5; }
-.library-page-dark .library-book-page-header p, .library-page-dark .library-book-page-header > span { color: #c7b39d; }
-.library-comparison-list { margin-top: 1rem; display: grid; gap: 0.85rem; }
-.library-comparison-list > div { border-left: 3px solid #9a6139; padding-left: 0.8rem; }
-.library-comparison-list b { color: #65432e; font-size: 0.72rem; }
-.library-page-dark .library-comparison-list b { color: #e2bd8c; }
-.library-comparison-list p { margin-top: 0.25rem; color: #574438; font-size: 0.75rem; line-height: 1.65; }
-.library-page-dark .library-comparison-list p { color: #d7c4ae; }
-.library-empty-catalogue { display: flex; align-items: center; gap: 1rem; margin-top: 1.4rem; border: 1px dashed rgba(137, 91, 57, 0.28); border-radius: 1.2rem; padding: 1.2rem; color: #7b5a41; }
-.library-page-dark .library-empty-catalogue { border-color: rgba(218, 176, 112, 0.16); color: #d2b28b; }
-.library-empty-catalogue strong { color: #3a2a22; font-size: 0.85rem; }
-.library-page-dark .library-empty-catalogue strong { color: #f7e8d4; }
-.library-empty-catalogue p { margin-top: 0.2rem; font-size: 0.72rem; line-height: 1.5; }
-
-.library-relation-layout { display: grid; gap: 1rem; margin-top: 1.5rem; }
-@media (min-width: 1100px) { .library-relation-layout { grid-template-columns: minmax(18rem, 0.7fr) minmax(0, 1.3fr); } }
-.library-type-drawer, .library-relation-record { position: relative; border: 1px solid rgba(132, 87, 54, 0.22); border-radius: 1.35rem; padding: 1rem; background: rgba(255, 250, 241, 0.72); }
-.library-page-dark .library-type-drawer, .library-page-dark .library-relation-record { border-color: rgba(218, 176, 112, 0.13); background: rgba(42, 32, 28, 0.7); }
-.library-drawer-label { margin-bottom: 0.8rem; color: #8b5937; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
-.library-page-dark .library-drawer-label { color: #d9ae77; }
-.library-type-tab { min-width: 0; border: 1px solid rgba(135, 89, 55, 0.18); border-radius: 0.8rem; padding: 0.55rem 0.35rem; background: rgba(255, 252, 245, 0.66); color: #604837; text-align: center; transition: 160ms ease; }
-.library-page-dark .library-type-tab { border-color: rgba(217, 175, 111, 0.11); background: rgba(27, 21, 19, 0.42); color: #d8c3a9; }
-.library-type-tab strong { display: block; font-family: "JetBrains Mono", monospace; font-size: 0.75rem; }
-.library-type-tab span { display: block; overflow: hidden; margin-top: 0.15rem; font-size: 0.55rem; text-overflow: ellipsis; white-space: nowrap; }
-.library-type-tab:hover { transform: translateY(-1px); border-color: rgba(126, 47, 62, 0.38); }
-.library-type-tab-active { border-color: #7c3343 !important; background: linear-gradient(135deg, #7a3142, #9b6139) !important; color: #fff8eb !important; box-shadow: 0 8px 18px rgba(91, 39, 44, 0.18); }
-.library-record-stamp { position: absolute; top: 1rem; right: 1rem; transform: rotate(3deg); border: 2px solid rgba(122, 48, 64, 0.35); padding: 0.3rem 0.5rem; color: #7a3040; font-size: 0.58rem; font-weight: 900; letter-spacing: 0.14em; }
-.library-page-dark .library-record-stamp { border-color: rgba(233, 184, 194, 0.3); color: #e2aeb8; }
-.library-relation-pair { display: flex; align-items: center; gap: 1rem; padding-right: 5rem; color: #8a4050; }
-.library-page-dark .library-relation-pair { color: #e0aab5; }
-.library-relation-pair > div { display: flex; flex-direction: column; }
-.library-relation-pair strong { font-family: "DM Serif Display", Georgia, serif; font-size: 2.2rem; line-height: 1; }
-.library-relation-pair span { color: #6d5848; font-size: 0.67rem; }
-.library-page-dark .library-relation-pair span { color: #c9b59d; }
-.library-relation-name { margin-top: 1.4rem; border-top: 1px solid rgba(135, 89, 55, 0.18); padding-top: 1rem; }
-.library-relation-name span { color: #8b5937; font-size: 0.64rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
-.library-relation-name h4 { margin-top: 0.25rem; color: #2c1f19; font-size: 2rem; }
-.library-page-dark .library-relation-name h4 { color: #fff1df; }
-.library-relation-copy { display: grid; gap: 0.9rem; margin-top: 1rem; }
-@media (min-width: 768px) { .library-relation-copy { grid-template-columns: 1fr 1fr; } }
-.library-relation-copy > div { border-left: 3px solid #9b6139; padding-left: 0.8rem; }
-.library-relation-copy b { color: #68462f; font-size: 0.72rem; }
-.library-page-dark .library-relation-copy b { color: #e1bb89; }
-.library-relation-copy p { margin-top: 0.3rem; color: #574438; font-size: 0.76rem; line-height: 1.7; }
-.library-page-dark .library-relation-copy p { color: #d8c4ad; }
-.library-relation-note { margin-top: 1rem; border: 1px dashed rgba(133, 88, 54, 0.22); border-radius: 0.9rem; padding: 0.75rem; color: #76604f; font-size: 0.68rem; line-height: 1.55; }
-.library-page-dark .library-relation-note { border-color: rgba(217, 175, 111, 0.14); color: #bca992; }
-
-.library-retest-card { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 1rem; border: 1px solid rgba(132, 87, 54, 0.22); border-radius: 1.4rem; padding: 1.2rem; background: linear-gradient(135deg, rgba(255,249,238,0.78), rgba(240,221,193,0.62)); }
-@media (min-width: 640px) { .library-retest-card { flex-direction: row; align-items: center; } }
-.library-page-dark .library-retest-card { border-color: rgba(216, 175, 112, 0.13); background: linear-gradient(135deg, rgba(48,36,30,0.76), rgba(31,25,24,0.76)); }
-.library-retest-card span { color: #8b5937; font-size: 0.64rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; }
-.library-page-dark .library-retest-card span { color: #d6aa73; }
-.library-retest-card h4 { margin-top: 0.25rem; color: #2b1e18; font-size: 1.4rem; }
-.library-page-dark .library-retest-card h4 { color: #fff2e0; }
-.library-retest-card p { margin-top: 0.35rem; max-width: 40rem; color: #6a5547; font-size: 0.73rem; line-height: 1.6; }
-.library-page-dark .library-retest-card p { color: #c7b39c; }
-.library-retest-card button { flex: none; border-radius: 0.85rem; padding: 0.7rem 1rem; background: #3f2b24; color: #fff4e4; font-size: 0.75rem; font-weight: 900; }
-.library-page-dark .library-retest-card button { background: #8f5940; }
 ````
 
 ---
 
-## `src/main.tsx`
+## `src/results/modelAEditorial.ts`
 
-````tsx
-import {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
+````ts
+import { TIM_MODELS } from "../constants/socionicsData";
+import type { InformationElement, ModelAPosition, TIM } from "../types/socionics";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+export interface PositionEditorial {
+  position: ModelAPosition;
+  element: InformationElement;
+  title: string;
+  block: "Ego" | "Super-ego" | "Super-id" | "Id";
+  status: string;
+  meaning: string;
+  inPractice: string;
+  evidence: string;
+  caution: string;
+  reflection: string;
+}
+
+export interface TypeComparisonSnapshot {
+  type: TIM;
+  base: PositionEditorial;
+  creative: PositionEditorial;
+  vulnerable: PositionEditorial;
+  suggestive: PositionEditorial;
+}
+
+const ELEMENT_COPY: Record<InformationElement, {
+  name: string;
+  focus: string;
+  behavior: string;
+  overload: string;
+  support: string;
+}> = {
+  Ne: {
+    name: "Kemungkinan dan potensi",
+    focus: "kemungkinan lain, bakat laten, variasi, dan jalan yang belum dicoba",
+    behavior: "membuka alternatif, menghubungkan ide, dan melihat potensi sebelum semuanya terbukti",
+    overload: "terlalu banyak pilihan, sulit menutup opsi, atau tergoda oleh ide baru sebelum yang lama selesai",
+    support: "orang yang membuka pilihan tanpa memaksa keputusan terlalu cepat",
+  },
+  Ni: {
+    name: "Arah waktu dan perkembangan",
+    focus: "arah perubahan, timing, konsekuensi, dan makna dari rangkaian kejadian",
+    behavior: "membaca ke mana situasi bergerak, menunggu momen yang tepat, dan merangkum banyak kejadian menjadi satu arah",
+    overload: "terlalu lama menunggu, terlalu yakin pada satu tafsir, atau melihat pertanda lebih cepat daripada bukti",
+    support: "orang yang membantu mengubah pembacaan arah menjadi langkah nyata",
+  },
+  Se: {
+    name: "Tekanan, batas, dan tindakan",
+    focus: "siapa memegang kendali, apa yang perlu ditegaskan, dan tindakan langsung yang mengubah keadaan",
+    behavior: "memasang batas, mengambil posisi, menggerakkan orang, dan bertindak saat situasi menuntut keputusan",
+    overload: "menekan terlalu keras, membaca banyak hal sebagai adu kekuatan, atau sulit memberi ruang pada cara yang lebih halus",
+    support: "orang yang memberi arah tegas tanpa merendahkan atau mengambil alih seluruh keputusan",
+  },
+  Si: {
+    name: "Kenyamanan dan kualitas pengalaman",
+    focus: "kondisi tubuh, ritme, rasa nyaman, kualitas inderawi, dan detail yang membuat hidup terasa layak dijalani",
+    behavior: "menata suasana, memperbaiki kenyamanan, menjaga tempo, dan menyadari perubahan kecil pada tubuh atau lingkungan",
+    overload: "terlalu lama bertahan di zona nyaman, menghindari dorongan yang perlu, atau terlalu sibuk mengatur detail kecil",
+    support: "orang yang membantu menjaga ritme, tubuh, dan suasana tanpa membuatmu merasa dikontrol",
+  },
+  Te: {
+    name: "Fakta, hasil, dan cara kerja",
+    focus: "apa yang terbukti bekerja, data yang bisa dipakai, hasil nyata, dan langkah yang paling efisien",
+    behavior: "menguji cara, membandingkan hasil, mencari bukti, dan memperbaiki proses supaya lebih efektif",
+    overload: "menilai semuanya hanya dari hasil, mengabaikan proses manusia, atau memaksa efisiensi pada situasi yang butuh pemahaman",
+    support: "orang yang memberi fakta jelas, contoh nyata, dan langkah praktis tanpa membuatmu merasa bodoh",
+  },
+  Ti: {
+    name: "Struktur, aturan, dan konsistensi",
+    focus: "bagaimana bagian saling terhubung, aturan bekerja, definisi dibedakan, dan sistem tetap konsisten",
+    behavior: "merapikan konsep, membuat kategori, memeriksa kontradiksi, dan menyusun kerangka yang mudah dipahami",
+    overload: "terlalu kaku pada definisi, lama menyusun sistem, atau sulit bergerak sebelum semuanya terasa konsisten",
+    support: "orang yang memberi kerangka jelas dan membantu memisahkan masalah tanpa menghakimi",
+  },
+  Fe: {
+    name: "Suasana dan ekspresi emosi",
+    focus: "energi kelompok, perubahan mood, ekspresi, dan cara emosi bergerak dari satu orang ke orang lain",
+    behavior: "menghidupkan suasana, menyesuaikan ekspresi, membaca energi ruangan, dan membuat emosi lebih terlihat",
+    overload: "menaikkan intensitas terlalu cepat, merasa perlu mengatur mood semua orang, atau kehilangan batas emosi pribadi",
+    support: "orang yang membantu menamai dan menyalurkan emosi tanpa menjadikannya pertunjukan",
+  },
+  Fi: {
+    name: "Kedekatan, nilai, dan batas personal",
+    focus: "siapa yang dipercaya, seberapa dekat hubungan, apa yang terasa tulus, dan batas etis antarorang",
+    behavior: "menilai kedekatan, menjaga loyalitas, memilih kata dengan hati-hati, dan mengubah jarak saat rasa percaya berubah",
+    overload: "terlalu cepat menyimpulkan niat orang, menyimpan penilaian terlalu lama, atau menutup hubungan tanpa memberi konteks",
+    support: "orang yang menunjukkan ketulusan secara konsisten dan menghormati batas personal",
+  },
+};
+
+const POSITION_COPY: Record<ModelAPosition, {
+  title: string;
+  block: PositionEditorial["block"];
+  status: string;
+  meaning: string;
+  evidence: string;
+  cautionPrefix: string;
+  reflection: string;
+}> = {
+  Base: {
+    title: "Base / Leading",
+    block: "Ego",
+    status: "Kuat, sadar, dan dihargai",
+    meaning: "Ini biasanya menjadi orientasi paling spontan. Kamu cenderung melihat dunia melalui aspek ini dan merasa cukup berhak memberi penilaian atau arah tanpa harus menunggu izin.",
+    evidence: "Carilah otomatisitas, kedalaman, rasa punya otoritas, dan kebiasaan memperbaiki keadaan pada aspek ini tanpa diminta.",
+    cautionPrefix: "Saat dipakai berlebihan, kekuatan ini bisa berubah menjadi",
+    reflection: "Apakah kamu tetap memakai pola ini saat santai, tidak sedang tampil, dan tidak sedang mengejar pujian?",
+  },
+  Creative: {
+    title: "Creative",
+    block: "Ego",
+    status: "Kuat, sadar, dan dihargai",
+    meaning: "Ini adalah alat fleksibel untuk membantu tujuan fungsi Base. Kamu biasanya bisa menyesuaikan kadar, gaya, dan timing pemakaiannya sesuai kebutuhan situasi.",
+    evidence: "Carilah keluwesan, kemampuan membantu orang lain, dan kemudahan memakai aspek ini tanpa menjadikannya identitas utama.",
+    cautionPrefix: "Saat terlalu aktif, fungsi ini bisa membuatmu",
+    reflection: "Apakah kamu memakai kemampuan ini sebagai alat, bukan sebagai hal yang harus terus dibuktikan?",
+  },
+  Role: {
+    title: "Role / Peran",
+    block: "Super-ego",
+    status: "Lebih lemah, sadar, dan tidak terlalu dihargai",
+    meaning: "Ini sering muncul sebagai performa sosial: hal yang kamu lakukan karena terasa pantas, perlu, atau dituntut. Kamu bisa terlihat cukup mampu, tetapi kualitasnya mudah turun saat situasi baru atau kompleks.",
+    evidence: "Carilah bahasa 'aku seharusnya', skrip sosial, rasa harus terlihat mampu, dan kelelahan setelah mempertahankan performa terlalu lama.",
+    cautionPrefix: "Kalau dipaksa terus, area ini bisa membuatmu",
+    reflection: "Apakah kamu melakukan ini karena memang ingin, atau karena takut terlihat tidak pantas?",
+  },
+  Vulnerable: {
+    title: "Vulnerable / PoLR",
+    block: "Super-ego",
+    status: "Lemah, sadar, dan tidak dihargai",
+    meaning: "Ini bukan sekadar skor rendah. Area ini lebih tepat dikenali dari rasa sakit spesifik, kaku, malu, defensif, beku, atau ingin menghindar saat tuntutannya meningkat.",
+    evidence: "Carilah aversion, freeze, shame, avoidance, dan kesulitan menyesuaikan diri yang terasa tidak sebanding dengan usaha.",
+    cautionPrefix: "Tekanan berlebihan di sini bisa membuatmu",
+    reflection: "Apa yang biasanya kamu lakukan: menyerang balik, membeku, menghindar, atau pura-pura tidak peduli?",
+  },
+  Suggestive: {
+    title: "Suggestive",
+    block: "Super-id",
+    status: "Lemah, vital, dan dihargai",
+    meaning: "Ini adalah saluran penerimaan. Bantuan yang tepat pada aspek ini dapat terasa menenangkan, meyakinkan, atau membuat hidup jauh lebih mudah.",
+    evidence: "Carilah relief, trust, admiration, dan kecenderungan membiarkan orang kompeten membantu tanpa merasa direndahkan.",
+    cautionPrefix: "Kebutuhan ini bisa menjadi tidak sehat kalau kamu",
+    reflection: "Bantuan seperti apa yang langsung membuat tubuh atau pikiranmu terasa lebih ringan?",
+  },
+  Mobilizing: {
+    title: "Mobilizing / Activating",
+    block: "Super-id",
+    status: "Lebih lemah, vital, dan dihargai",
+    meaning: "Ini adalah area aspirasi dan kebanggaan sensitif. Kamu ingin berkembang di sini dan bisa sangat tersentuh oleh pujian yang tepat, tetapi performanya belum selalu stabil.",
+    evidence: "Carilah proyek pengembangan diri, pujian yang paling menggerakkan, lonjakan usaha, dan kebanggaan yang masih rapuh.",
+    cautionPrefix: "Kalau terlalu ingin membuktikan diri, kamu bisa",
+    reflection: "Pujian tentang kemampuan apa yang paling lama kamu ingat?",
+  },
+  Ignoring: {
+    title: "Ignoring",
+    block: "Id",
+    status: "Kuat, vital, dan tidak dihargai",
+    meaning: "Kamu biasanya mampu memakai aspek ini, tetapi tidak ingin menjadikannya pusat identitas. Kamu akan menggunakannya saat perlu lalu mengembalikan fokus ke orientasi Base.",
+    evidence: "Carilah sikap 'aku bisa, tetapi bukan itu intinya', kemampuan nyata, dan kebiasaan menutup topik saat aspek ini mengambil terlalu banyak ruang.",
+    cautionPrefix: "Karena terasa bukan inti, kamu bisa",
+    reflection: "Kemampuan apa yang sering dipuji orang lain tetapi kamu anggap biasa saja?",
+  },
+  Demonstrative: {
+    title: "Demonstrative",
+    block: "Id",
+    status: "Kuat, vital, dan tidak dihargai",
+    meaning: "Ini adalah kompetensi latar yang sangat otomatis. Kamu bisa memakainya untuk menjaga keadaan atau membantu orang tanpa merasa sedang menunjukkan kemampuan khusus.",
+    evidence: "Carilah tindakan tepat tanpa banyak penjelasan, kemampuan tinggi yang diremehkan, dan rasa heran saat orang lain menganggapnya sulit.",
+    cautionPrefix: "Karena terlalu otomatis, kamu bisa",
+    reflection: "Apa yang kamu lakukan dengan mudah sampai lupa bahwa orang lain belum tentu bisa?",
+  },
+};
+
+export function getPositionEditorial(type: TIM, position: ModelAPosition): PositionEditorial {
+  const element = TIM_MODELS[type].positions[position];
+  const elementCopy = ELEMENT_COPY[element];
+  const positionCopy = POSITION_COPY[position];
+
+  let inPractice = `Dalam praktik, perhatianmu cenderung tertuju pada ${elementCopy.focus}. Kamu biasanya ${elementCopy.behavior}.`;
+  let caution = `${positionCopy.cautionPrefix} ${elementCopy.overload}.`;
+
+  if (position === "Role") {
+    inPractice = `Dalam situasi formal, kamu bisa berusaha terlihat mampu pada ${elementCopy.focus}, tetapi responsnya lebih bergantung pada aturan, contoh, atau persiapan.`;
+  } else if (position === "Vulnerable") {
+    inPractice = `Tuntutan pada ${elementCopy.focus} dapat terasa jauh lebih berat daripada yang terlihat dari luar. Kamu mungkin butuh waktu, konteks yang aman, atau bantuan yang sangat konkret.`;
+  } else if (position === "Suggestive") {
+    inPractice = `Kamu biasanya merasa lebih lega saat orang tepercaya membantu lewat ${elementCopy.support}.`;
+  } else if (position === "Mobilizing") {
+    inPractice = `Kamu ingin berkembang pada ${elementCopy.focus} dan mudah termotivasi saat kemajuan kecilmu benar-benar diperhatikan.`;
+  } else if (position === "Ignoring") {
+    inPractice = `Kamu bisa menangani ${elementCopy.focus}, tetapi cepat menganggapnya bukan hal utama dan mengarahkan kembali perhatian ke prioritas lain.`;
+  } else if (position === "Demonstrative") {
+    inPractice = `Kamu sering ${elementCopy.behavior} secara otomatis, terutama untuk menjaga kelancaran situasi, tanpa merasa perlu membicarakannya panjang lebar.`;
+  }
+
+  return {
+    position,
+    element,
+    title: positionCopy.title,
+    block: positionCopy.block,
+    status: positionCopy.status,
+    meaning: positionCopy.meaning,
+    inPractice,
+    evidence: positionCopy.evidence,
+    caution,
+    reflection: positionCopy.reflection,
+  };
+}
+
+export function getTypeComparisonSnapshot(type: TIM): TypeComparisonSnapshot {
+  return {
+    type,
+    base: getPositionEditorial(type, "Base"),
+    creative: getPositionEditorial(type, "Creative"),
+    vulnerable: getPositionEditorial(type, "Vulnerable"),
+    suggestive: getPositionEditorial(type, "Suggestive"),
+  };
+}
+
+const RELATION_COPY: Record<string, { name: string; summary: string; strength: string; friction: string; advice: string }> = {
+  duality: {
+    name: "Duality / Saling Melengkapi",
+    summary: "Kekuatan satu pihak cenderung menyentuh area yang dihargai tetapi lebih lemah pada pihak lain.",
+    strength: "Bisa terasa melegakan karena bantuan datang pada area yang memang dicari.",
+    friction: "Kecocokan tidak otomatis muncul kalau komunikasi, batas, dan kedewasaan tidak ada.",
+    advice: "Jelaskan kebutuhan secara langsung. Jangan berharap pasangan membaca semua kebutuhan tanpa konteks.",
+  },
+  activation: {
+    name: "Activation / Aktivasi",
+    summary: "Interaksi biasanya terasa hidup, cepat, dan saling mendorong untuk bergerak.",
+    strength: "Bagus untuk ide, aktivitas, dan kolaborasi yang butuh energi awal.",
+    friction: "Tempo yang tinggi dapat melelahkan kalau tidak ada waktu tenang.",
+    advice: "Selingi aktivitas dengan jeda dan pembagian peran yang jelas.",
+  },
+  mirror: {
+    name: "Mirror / Cermin",
+    summary: "Keduanya menghargai elemen yang sama, tetapi menempatkan prioritasnya secara berbeda.",
+    strength: "Diskusi dapat tajam, saling mengoreksi, dan mudah menemukan titik temu konsep.",
+    friction: "Perbedaan antara orientasi utama dan alat pendukung bisa menimbulkan debat soal mana yang lebih penting.",
+    advice: "Gunakan perbedaan sudut pandang untuk memperbaiki ide, bukan untuk menentukan siapa yang paling benar.",
+  },
+  identity: {
+    name: "Identity / Identitas",
+    summary: "Struktur Model A sama, sehingga pola pikir dan titik rawan sering terasa familiar.",
+    strength: "Pemahaman awal bisa cepat karena bahasa dan prioritas mirip.",
+    friction: "Keduanya juga membawa kelemahan yang sama, jadi tidak selalu saling menutup kekurangan.",
+    advice: "Cari masukan dari luar saat kalian mulai mengulang blind spot yang sama.",
+  },
+  kindred: {
+    name: "Kindred / Sekerabat",
+    summary: "Orientasi Base sama, tetapi cara menjalankan dan mewujudkannya berbeda.",
+    strength: "Biasanya mudah memahami apa yang sama-sama dianggap penting.",
+    friction: "Metode dan prioritas praktis dapat berbeda cukup jauh.",
+    advice: "Pisahkan kesamaan tujuan dari perbedaan cara kerja.",
+  },
+  business: {
+    name: "Business / Mitra Kerja",
+    summary: "Ada kesamaan alat kerja, tetapi pusat perhatian dan nilai utama berbeda.",
+    strength: "Bisa efektif untuk tugas konkret dan pembagian peran yang jelas.",
+    friction: "Hubungan dapat terasa fungsional tetapi kurang menyentuh kebutuhan personal.",
+    advice: "Jangan hanya membahas tugas. Beri ruang untuk ekspektasi dan batas relasi.",
+  },
+  semi_duality: {
+    name: "Semi-Duality / Semi-Dualitas",
+    summary: "Ada rasa saling melengkapi, tetapi tidak semua kebutuhan tertangani dengan mulus.",
+    strength: "Daya tarik dan rasa nyaman bisa muncul cukup cepat.",
+    friction: "Harapan tinggi mudah berubah menjadi bingung saat dukungan datang dalam bentuk yang kurang pas.",
+    advice: "Sebutkan bantuan yang kamu butuhkan secara spesifik.",
+  },
+  mirage: {
+    name: "Mirage / Relasi Santai",
+    summary: "Interaksi sering terasa ringan dan nyaman, terutama saat tidak banyak tekanan.",
+    strength: "Bagus untuk kebersamaan santai dan dukungan emosional ringan.",
+    friction: "Koordinasi target besar bisa lemah kalau keduanya terlalu membiarkan.",
+    advice: "Saat ada tujuan bersama, buat tenggat dan pembagian tanggung jawab yang konkret.",
+  },
+  contrary: {
+    name: "Contrary / Kontras",
+    summary: "Keduanya memakai elemen yang mirip, tetapi arah perhatian dan ritmenya berbeda.",
+    strength: "Bisa membuka sudut pandang yang sebelumnya tidak terlihat.",
+    friction: "Argumen mudah terasa saling mematahkan walau topiknya sama.",
+    advice: "Periksa dulu apakah kalian berbeda kesimpulan atau hanya berbeda urutan berpikir.",
+  },
+  quasi_identity: {
+    name: "Quasi-Identity / Identitas Semu",
+    summary: "Di permukaan tampak mirip, tetapi struktur prioritasnya berbeda.",
+    strength: "Keduanya dapat tertarik pada topik yang sama.",
+    friction: "Definisi, tujuan, dan cara menyimpulkan sering bergeser tanpa disadari.",
+    advice: "Gunakan contoh konkret dan ulangi definisi sebelum debat makin jauh.",
+  },
+  superego: {
+    name: "Super-Ego",
+    summary: "Hubungan dapat terasa formal karena masing-masing menyentuh area adaptasi pihak lain.",
+    strength: "Ada peluang belajar disiplin dan sudut pandang yang berbeda.",
+    friction: "Keduanya mudah merasa sedang dinilai atau harus tampil benar.",
+    advice: "Kurangi koreksi publik dan jangan mengubah perbedaan menjadi penilaian karakter.",
+  },
+  conflict: {
+    name: "Conflict / Konflik",
+    summary: "Kekuatan utama satu pihak mudah menyentuh titik paling sensitif pihak lain.",
+    strength: "Hubungan ini bisa memperlihatkan blind spot dengan sangat jelas.",
+    friction: "Tanpa batas dan komunikasi yang matang, interaksi cepat terasa melelahkan atau menyerang.",
+    advice: "Jaga jarak sehat, hindari memaksa cara sendiri, dan gunakan aturan komunikasi yang konkret.",
+  },
+  benefit: {
+    name: "Benefit / Manfaat Asimetris",
+    summary: "Aliran perhatian dan kekaguman cenderung terasa tidak seimbang.",
+    strength: "Salah satu pihak dapat memberi inspirasi atau arah yang sangat berarti.",
+    friction: "Pihak lain bisa merasa kurang dilihat atau terus mengejar pengakuan.",
+    advice: "Periksa apakah kontribusi, penghargaan, dan keputusan dibagi secara adil.",
+  },
+  supervision: {
+    name: "Supervision / Pengawasan Asimetris",
+    summary: "Satu pihak mudah melihat kelemahan yang sangat sensitif pada pihak lain.",
+    strength: "Dapat berguna dalam konteks belajar yang aman dan jelas.",
+    friction: "Koreksi berulang mudah terasa seperti audit pribadi atau penghinaan.",
+    advice: "Batasi area koreksi, minta izin sebelum memberi kritik, dan hindari nada menggurui.",
+  },
+};
+
+export function getRelationEditorial(code: string) {
+  return RELATION_COPY[code] ?? {
+    name: code,
+    summary: "Hubungan ini memiliki pola pertukaran informasi yang khas dalam teori Socionics.",
+    strength: "Ada area yang dapat saling membantu.",
+    friction: "Ada pula perbedaan prioritas yang perlu dibicarakan secara langsung.",
+    advice: "Gunakan hasil ini sebagai hipotesis, bukan kepastian tentang kualitas hubungan.",
+  };
+}
 ````
 
 ---
@@ -28108,7 +29586,8 @@ createRoot(document.getElementById('root')!).render(
 ## `src/results/resultExperience.ts`
 
 ````ts
-import { TIM_MODELS, TIM_PROFILES } from "../constants/socionicsData";
+import { TIM_MODELS } from "../constants/socionicsData";
+import { getPositionEditorial } from "./modelAEditorial";
 import type {
   AssessmentResult,
   Club,
@@ -28853,8 +30332,14 @@ const recommendationGroups = (curated: CuratedProfile): RecommendationGroup[] =>
 
 export const buildResultExperience = (type: TIM, result: AssessmentResult): ResultExperience => {
   const model = TIM_MODELS[type];
-  const profile = TIM_PROFILES[type];
   const editorial = TYPE_EDITORIAL[type];
+  const basePosition = getPositionEditorial(type, "Base");
+  const creativePosition = getPositionEditorial(type, "Creative");
+  const rolePosition = getPositionEditorial(type, "Role");
+  const vulnerablePosition = getPositionEditorial(type, "Vulnerable");
+  const suggestivePosition = getPositionEditorial(type, "Suggestive");
+  const mobilizingPosition = getPositionEditorial(type, "Mobilizing");
+  const demonstrativePosition = getPositionEditorial(type, "Demonstrative");
   const curated = CURATED[type];
   const base = ELEMENT_LENS[model.positions.Base];
   const creative = ELEMENT_LENS[model.positions.Creative];
@@ -28883,7 +30368,7 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
         },
         {
           title: "Cara orang sering membaca kamu",
-          expert: `${profile.description} Pola ini paling masuk akal bila terlihat lintas situasi, bukan hanya saat kamu sedang stres atau menjalankan peran tertentu.`,
+          expert: `${editorial.expert} Pola ini paling layak dipercaya bila terlihat berulang di beberapa konteks, bukan hanya saat kamu sedang stres atau menjalankan peran tertentu.`,
           simple: `Kesan terkuatmu biasanya datang dari kombinasi ${model.positions.Base} dan ${model.positions.Creative}: ${base.algorithm}, lalu ${creative.gift.toLowerCase()}.`,
           warning: "Kesan orang tidak selalu sama dengan motif batinmu. Gunakan contoh perilaku nyata sebelum menerima atau menolak bagian ini.",
         },
@@ -28899,13 +30384,13 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
           title: `Fokus utama: ${model.positions.Base}`,
           expert: `Base ${model.positions.Base} membuat perhatianmu cenderung ${base.algorithm}. ${base.sees}.`,
           simple: editorial.simple,
-          misunderstood: `Orang bisa hanya melihat hasil akhirnya, padahal orientasi dasarnya adalah: ${profile.orientasiBase}`,
+          misunderstood: `Orang bisa hanya melihat hasil akhirnya. Di baliknya, ${basePosition.inPractice.toLowerCase()}`,
           warning: base.blindSpot,
         },
         {
           title: `Alat fleksibel: ${model.positions.Creative}`,
           expert: `Creative ${model.positions.Creative} biasanya menjadi alat yang mudah kamu sesuaikan untuk membantu tujuan fungsi Base.`,
-          simple: profile.caraCreative,
+          simple: creativePosition.inPractice,
           warning: `Kekuatan ini bisa berlebihan kalau kamu merasa harus selalu memperbaiki keadaan untuk orang lain.`,
           actions: ["Tanya apa tujuan sebenarnya sebelum bergerak.", "Pisahkan kemampuan yang kamu punya dari hal yang memang perlu kamu kerjakan."],
         },
@@ -28939,27 +30424,27 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
         {
           title: "Marah dan defensif",
           expert: `${base.blocked}. Tekanan pada Vulnerable ${model.positions.Vulnerable} juga dapat membuatmu kaku, malu, atau ingin menghindar.`,
-          simple: profile.tuntutanPolr,
+          simple: vulnerablePosition.inPractice,
           misunderstood: "Respons defensif tidak selalu berarti kamu tidak peduli. Kadang kamu tidak punya cara yang cukup fleksibel untuk menghadapi tuntutan itu.",
           actions: ["Tunda respons saat harga diri sedang panas.", "Sebut kebutuhan atau batas dalam satu kalimat konkret."],
         },
         {
           title: "Takut, malu, dan rasa tidak cukup",
           expert: `Role ${model.positions.Role} sering menjadi area performa sosial, sedangkan Vulnerable ${model.positions.Vulnerable} lebih mudah terasa seperti titik yang tidak boleh disentuh.`,
-          simple: profile.roleTampilan,
+          simple: rolePosition.inPractice,
           warning: role.blocked,
           actions: ["Bedakan tidak terlatih dengan tidak mampu.", "Minta instruksi atau dukungan spesifik, bukan menutupi semua kebingungan."],
         },
         {
           title: "Cinta, lega, dan rasa diterima",
           expert: `Kamu cenderung memberi lewat Creative ${model.positions.Creative}, tetapi merasa sangat terbantu saat Suggestive ${model.positions.Suggestive} datang dari orang yang dipercaya.`,
-          simple: profile.bantuanSuggestive,
+          simple: suggestivePosition.inPractice,
           actions: ["Jelaskan bentuk bantuan yang terasa melegakan.", "Jangan menguji kasih sayang lewat tebakan atau situasi buatan."],
         },
         {
           title: "Iri dan ambisi tersembunyi",
           expert: `Mobilizing ${model.positions.Mobilizing} sering menjadi area yang ingin berkembang dan mudah tersentuh oleh pengakuan yang tepat.`,
-          simple: profile.areaMobilizing,
+          simple: mobilizingPosition.inPractice,
           warning: mobilizing.blindSpot,
           actions: ["Ubah iri menjadi daftar kemampuan yang ingin dilatih.", "Cari mentor, bukan hanya pembanding."],
         },
@@ -29050,18 +30535,18 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
           title: "Blind spot utama",
           expert: editorial.blindspot,
           simple: base.blindSpot,
-          warning: profile.tuntutanPolr,
+          warning: vulnerablePosition.inPractice,
         },
         {
           title: "Topeng sosial",
           expert: `Role ${model.positions.Role} dapat membuatmu terlihat lebih nyaman pada area ini daripada yang sebenarnya kamu rasakan.`,
-          simple: profile.roleTampilan,
+          simple: rolePosition.inPractice,
           warning: `Kalau dipertahankan terlalu lama, performa ini bisa berubah menjadi lelah, kaku, atau mudah tersinggung.`,
         },
         {
           title: "Kekuatan yang sering kamu remehkan",
           expert: `Demonstrative ${model.positions.Demonstrative} biasanya berjalan cukup otomatis tetapi tidak selalu dianggap penting oleh pemiliknya.`,
-          simple: profile.kemampuanDemonstrative,
+          simple: demonstrativePosition.inPractice,
           actions: ["Catat pujian yang sering kamu anggap berlebihan.", "Gunakan kemampuan ini sebagai dukungan, bukan identitas yang harus dibuktikan."],
         },
         {
@@ -29072,8 +30557,8 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
         },
         {
           title: "Bukti yang dapat menyangkal hasil",
-          expert: profile.buktiMenyangkal,
-          simple: profile.refleksi,
+          expert: `Hasil ini perlu diragukan bila pola ${model.positions.Base} tidak muncul spontan di beberapa konteks, sementara kandidat kedua lebih konsisten menjelaskan cara kamu bertindak, menerima bantuan, dan bereaksi saat tertekan.`,
+          simple: `Bandingkan tipe utama dengan kandidat kedua. Cari contoh nyata selama dua minggu: apa yang muncul tanpa persiapan, apa yang hanya kamu tampilkan karena tuntutan, dan bantuan apa yang benar-benar membuatmu lega.`,
           warning: "Kalau bukti lawan lebih kuat dan konsisten lintas konteks, pertahankan kandidat kedua atau ulangi observasi sebelum menetapkan tipe.",
         },
       ],
@@ -29723,6 +31208,30 @@ export interface AssessmentResult {
     completionTimeSeconds: number;
     inconsistencyScore: number;
   };
+}
+````
+
+---
+
+## `src/utils/editorialText.ts`
+
+````ts
+export function polishEditorialText(input?: string | null): string {
+  if (!input) return "";
+
+  const cleaned = input
+    .replace(/\s+/g, " ")
+    .replace(/\bAnda\b/g, "Kamu")
+    .replace(/\banda\b/g, "kamu")
+    .replace(/\bKetika\b/g, "Saat")
+    .replace(/\bketika\b/g, "saat")
+    .trim();
+
+  return cleaned.replace(/^([a-zà-ÿ])/, (match) => match.toUpperCase());
+}
+
+export function polishEditorialList(items?: string[] | null): string[] {
+  return (items ?? []).map((item) => polishEditorialText(item)).filter(Boolean);
 }
 ````
 

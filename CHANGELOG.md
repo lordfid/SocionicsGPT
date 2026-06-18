@@ -1,5 +1,31 @@
 # Changelog
 
+## 2.2.0 — Result experience refinement
+
+### UI/UX dan keterbacaan
+
+- Memisahkan tema hasil ke `src/resultTheme.css` sebagai lapisan CSS final yang bersih.
+- Menghapus tumpukan CSS hasil lama dari `src/index.css` agar konflik warna dan layout tidak berulang.
+- Meningkatkan kontras dark mode dan light mode pada cover, paragraf, chip, kartu, callout, dan navigasi.
+- Mengubah navigasi bab menjadi grid responsif yang tidak memotong judul pada layar kecil.
+- Menambahkan indikator bab, progress bar, dan tombol menuju bab berikutnya.
+- Menambahkan panel kualitas bukti: cakupan, konsistensi respons, holdout, jarak kandidat, dan unresolved pair.
+- Menata ulang cover utama, Top 3, rekomendasi, perbandingan, relasi, dan panel Model A.
+
+### Bahasa hasil
+
+- Menambahkan `polishEditorialText()` untuk kapitalisasi awal, konsistensi `kamu`, dan pembersihan spasi.
+- Menghapus ketergantungan halaman hasil pada profil lama yang terlalu puitis dan bertele-tele.
+- Menulis ulang penjelasan delapan posisi Model A berdasarkan fungsi posisi: otomatisitas, fleksibilitas, performa peran, pain, relief, aspirasi, kompetensi yang diabaikan, dan latar otomatis.
+- Menulis ulang 14 pola hubungan antar-tipe menjadi ringkasan, kekuatan, gesekan, dan saran praktis.
+- Mengganti deskripsi comparison dengan pembacaan Base, Creative, PoLR, dan Suggestive yang lebih langsung.
+
+### Audit dan pengujian
+
+- Menambahkan `audit:result-copy` untuk memeriksa kapitalisasi, kata `Anda`, metafora terlarang, dan panjang copy pada seluruh 16 TIM.
+- Menambahkan `audit:result-render` untuk smoke-render 16 TIM × 2 tema, 128 posisi Model A, dan 14 relasi.
+- Menjalankan instalasi bersih, lint, audit instrumen, audit bahasa, audit copy hasil, smoke render, dan production build.
+
 ## 2.1.2 — Library result stage 2
 
 - Mendesain ulang cover hasil utama menjadi sampul buku editorial.
