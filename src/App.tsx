@@ -26,7 +26,8 @@ import {
   X,
   Menu,
   Lock,
-  HelpCircle
+  HelpCircle,
+  LibraryBig
 } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -37,7 +38,7 @@ import { calculateResult } from "./scoring/engine";
 import { TIM, TIMProfile, InformationElement, MeasurementChannel, ModelAPosition, Quadra, TestSession } from "./types/socionics";
 import { getCasualVersion, getOptionDetail } from "./utils/optionDetails";
 import { runInstrumentAudit } from "./audit/instrumentAudit";
-import ResultPortal from "./components/ResultPortal";
+const ResultPortal = React.lazy(() => import("./components/ResultPortal"));
 
 // Option Scale Wording by ScaleType
 const SCALE_OPTIONS_MAP: Record<string, { val: number; label: string }[]> = {
@@ -292,23 +293,23 @@ export default function App() {
     ctx.clearRect(0, 0, 1080, 1920);
 
     // Outer Background
-    ctx.fillStyle = theme === "dark" ? "#0b1329" : "#f8fafc";
+    ctx.fillStyle = theme === "dark" ? "#1f1714" : "#f8efe1";
     ctx.fillRect(0, 0, 1080, 1920);
 
     // Gradient corner lighting
     const grad = ctx.createRadialGradient(540, 960, 50, 540, 960, 1000);
-    grad.addColorStop(0, theme === "dark" ? "#132b4f" : "#ecfdf5");
-    grad.addColorStop(1, theme === "dark" ? "#030712" : "#f1f5f9");
+    grad.addColorStop(0, theme === "dark" ? "#5a322b" : "#f2d6ad");
+    grad.addColorStop(1, theme === "dark" ? "#17100e" : "#f8efe1");
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 1080, 1920);
 
     // Frame borders
-    ctx.strokeStyle = theme === "dark" ? "#10b981" : "#059669";
+    ctx.strokeStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
     ctx.lineWidth = 20;
     ctx.strokeRect(40, 40, 1000, 1840);
 
     // Inner subtle guidelines
-    ctx.strokeStyle = theme === "dark" ? "rgba(16, 185, 129, 0.2)" : "rgba(5, 150, 105, 0.2)";
+    ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.24)" : "rgba(139, 94, 52, 0.22)";
     ctx.lineWidth = 3;
     ctx.strokeRect(60, 60, 960, 1800);
 
@@ -316,16 +317,16 @@ export default function App() {
     ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
     ctx.font = "bold 64px Space Grotesk";
     ctx.textAlign = "center";
-    ctx.fillText("KARTU COGNITIVE TIPOLOGI", 540, 160);
+    ctx.fillText("KARTU KATALOG TIPOLOGI", 540, 160);
 
     ctx.font = "bold 28px JetBrains Mono";
-    ctx.fillStyle = theme === "dark" ? "#10b981" : "#059669";
+    ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
     ctx.fillText("SOCIONICS DALAM DIRIKU • MODEL A", 540, 215);
 
     // Sub Title
     ctx.fillStyle = "rgba(100, 116, 139, 0.7)";
     ctx.font = "22px Inter";
-    ctx.fillText("Aplikasi Asesmen Mandiri - Bukan Identitas Resmi Negara", 540, 255);
+    ctx.fillText("Katalog hasil reflektif • bukan diagnosis klinis", 540, 255);
 
     ctx.lineWidth = 4;
     ctx.strokeStyle = "rgba(100, 116, 139, 0.3)";
@@ -342,7 +343,7 @@ export default function App() {
       const ph = 300;
 
       // Card Photo Inner Shadow Border
-      ctx.strokeStyle = theme === "dark" ? "rgba(16, 185, 129, 0.4)" : "rgba(5, 150, 105, 0.4)";
+      ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.48)" : "rgba(139, 94, 52, 0.42)";
       ctx.lineWidth = 6;
       ctx.strokeRect(px - 10, py - 10, pw + 20, ph + 20);
 
@@ -355,10 +356,10 @@ export default function App() {
         img.src = cardImage;
       } else {
         // Fallback Vector
-        ctx.fillStyle = theme === "dark" ? "#111827" : "#e2e8f0";
+        ctx.fillStyle = theme === "dark" ? "#2d211c" : "#ead9bd";
         ctx.fillRect(px, py, pw, ph);
 
-        ctx.fillStyle = theme === "dark" ? "#10b981" : "#059669";
+        ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
         ctx.font = "bold 110px Space Grotesk";
         ctx.fillText(top1.type, 540, 500);
 
@@ -376,7 +377,7 @@ export default function App() {
       ctx.fillText(cardNickname ? cardNickname.toUpperCase() : "PARTICIPANT", 540, 710);
 
       // Main TIM Title
-      ctx.fillStyle = theme === "dark" ? "#10b981" : "#059669";
+      ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
       ctx.font = "bold 88px Space Grotesk";
       ctx.fillText(`${top1.type} • ${topModel.name}`, 540, 830);
 
@@ -385,9 +386,9 @@ export default function App() {
       ctx.fillText(topModel.fullName, 540, 890);
 
       // Metadata Pill Box
-      ctx.fillStyle = theme === "dark" ? "rgba(16, 185, 129, 0.1)" : "rgba(5, 150, 105, 0.1)";
+      ctx.fillStyle = theme === "dark" ? "rgba(214, 183, 124, 0.11)" : "rgba(139, 94, 52, 0.10)";
       ctx.fillRect(150, 930, 780, 120);
-      ctx.strokeStyle = theme === "dark" ? "rgba(16, 185, 129, 0.3)" : "rgba(5, 150, 105, 0.3)";
+      ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.30)" : "rgba(139, 94, 52, 0.28)";
       ctx.strokeRect(150, 930, 780, 120);
 
       ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
@@ -431,7 +432,7 @@ export default function App() {
         ctx.font = "20px JetBrains Mono";
         ctx.fillText(pos.title, x + 15, y + 40);
 
-        ctx.fillStyle = theme === "dark" ? "#10b981" : "#059669";
+        ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
         ctx.font = "bold 38px Space Grotesk";
         ctx.fillText(`${el} (${ELEMENTS_METADATA[el].name.split(" ")[0]})`, x + 15, y + 80);
       });
@@ -445,7 +446,7 @@ export default function App() {
       ctx.fillStyle = "rgba(100, 116, 139, 0.7)";
       ctx.font = "20px JetBrains Mono";
       const timestamp = new Date(session!.lastUpdatedAt).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" });
-      ctx.fillText(`Timestamp: ${timestamp}  |  Scoring Engine v2.0.0`, 540, 1770);
+      ctx.fillText(`Tanggal: ${timestamp}  |  Scoring Engine v2.1.0`, 540, 1770);
     };
 
     drawPortrait();
@@ -476,7 +477,7 @@ export default function App() {
   const availableTIMs = Object.keys(TIM_MODELS) as TIM[];
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"}`}>
+    <div className={`library-app-shell min-h-screen ${theme === "dark" ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"}`}>
       
       {/* GLOBAL BACKGROUND CANVAS RENDERER FOR CARDS */}
       <canvas ref={cardCanvasRef} width="1080" height="1920" className="hidden" />
@@ -486,7 +487,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 md:py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2 md:space-x-3 cursor-pointer" onClick={() => setCurrentPage("landing")}>
             <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-emerald-500 flex items-center justify-center text-white font-bold">
-              <Brain className="w-5 h-5 md:w-6 md:h-6" />
+              <LibraryBig className="w-5 h-5 md:w-6 md:h-6" />
             </div>
             <div>
               <span className="text-base md:text-xl font-display font-bold tracking-tight">Socionics Dalam Diriku</span>
@@ -1104,17 +1105,17 @@ export default function App() {
 
         {/* DETAILED RESULTS DASHBOARD */}
         {currentPage === "result" && calculatedOutput && (
-          <div className="space-y-12">
+          <div className={`library-result-page ${theme === "dark" ? "library-page-dark" : "library-page-light"} space-y-12`}>
             
-            {/* Dossier top badge */}
+            {/* Editorial result header */}
             <div className="text-center space-y-4">
               <div className="inline-flex items-center space-x-1.5 text-xs bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-3.5 py-1 rounded-full font-mono">
                 <Target className="w-4 h-4 animate-spin-slow" />
-                <span>INTERPRETASI MODEL A SELESAI</span>
+                <span>HASIL MODEL A SIAP DIBACA</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Pintu Pertama: Peta Dirimu</h2>
+              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Katalog Hasil Socionics Kamu</h2>
               <p className="text-sm text-slate-400 max-w-xl mx-auto">
-                Kamu sudah melewati rangkaian panjang. Sekarang hasilnya bukan cuma nama tipe, tetapi empat pintu untuk membaca cara pikir, emosi, dunia, relasi, dan kemungkinan hidupmu.
+                Kamu sudah menyelesaikan tes. Sekarang baca hasilnya per bagian: cara berpikir, emosi, relasi, pandangan dunia, blind spot, dan rekomendasi personal.
               </p>
             </div>
 
@@ -1126,7 +1127,7 @@ export default function App() {
                 <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-emerald-500/10 blur-3xl" />
                 
                 <div className="space-y-2">
-                  <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Kandidat Tipe Utama (Most Likely match):</span>
+                  <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Kandidat tipe utama:</span>
                   <div className="flex flex-col sm:flex-row sm:items-baseline sm:space-x-4">
                     <span className="text-5xl sm:text-6xl font-display font-extrabold text-white tracking-tight">
                       {calculatedOutput.top3[0].type}
@@ -1174,7 +1175,7 @@ export default function App() {
                   <Shield className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                   <div className="space-y-1">
                     <div className="text-xs font-bold text-white uppercase tracking-wider">
-                      Tingkat Keyakinan Tes: <span className="text-emerald-400">{calculatedOutput.confidence.toUpperCase()}</span>
+                      Tingkat keyakinan tes: <span className="text-emerald-400">{calculatedOutput.confidence.toUpperCase()}</span>
                     </div>
                     <p className="text-xs text-slate-400 leading-relaxed">{calculatedOutput.confidenceExplanation}</p>
                   </div>
@@ -1186,28 +1187,28 @@ export default function App() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm uppercase tracking-wider font-display">
                     <Download className="w-4 h-4" />
-                    <span>Ekspor Kartu Identitas Tipologi</span>
+                    <span>Buat kartu hasil</span>
                   </div>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Sediakan nama panggilan Anda dan unggah foto opsional (semua diproses murni di browser Anda harian) untuk menghasilkan kartu infografis.
+                    Masukkan nama panggilan dan foto opsional. Semua diproses langsung di browser kamu.
                   </p>
 
                   <div className="space-y-2">
-                    <label className="block text-[10px] uppercase font-mono font-bold">Nama Panggilan</label>
+                    <label className="block text-[10px] uppercase font-mono font-bold">Nama panggilan</label>
                     <input
                       type="text"
                       id="nickname-input-privacy"
                       name="random_tipologi_nickname_field"
                       autoComplete="off"
                       className="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-emerald-500 outline-none text-white font-mono"
-                      placeholder="Contoh: Pengembara atau Anda"
+                      placeholder="Contoh: Alfidda"
                       value={cardNickname}
                       onChange={(e) => setCardNickname(e.target.value)}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="block text-[10px] uppercase font-mono font-bold">Unggah Foto Mandiri:</label>
+                    <label className="block text-[10px] uppercase font-mono font-bold">Unggah foto opsional</label>
                     <div className="border border-dashed border-slate-800 rounded p-4 text-center cursor-pointer hover:border-slate-700 hover:bg-slate-900/45 transition">
                       <input
                         type="file"
@@ -1218,14 +1219,14 @@ export default function App() {
                       />
                       <label htmlFor="cardFilePortrait" className="cursor-pointer space-y-1 block">
                         <Upload className="w-5 h-5 mx-auto text-slate-500" />
-                        <span className="block text-[10px] text-slate-400 font-mono mt-1">Cari File Gambar (.jpg/.png)</span>
+                        <span className="block text-[10px] text-slate-400 font-mono mt-1">Pilih gambar (.jpg/.png)</span>
                       </label>
                     </div>
                   </div>
 
                   {cardImage && (
                     <div className="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800">
-                      <span className="text-[10px] font-mono text-emerald-400">Gambar Terbaca (Selesai)</span>
+                      <span className="text-[10px] font-mono text-emerald-400">Gambar siap dipakai</span>
                       <button onClick={() => setCardImage(null)} className="text-[10px] text-rose-400 hover:underline">Hapus</button>
                     </div>
                   )}
@@ -1243,19 +1244,27 @@ export default function App() {
 
 
             {/* FOUR-DOOR RESULT EXPERIENCE */}
-            <ResultPortal
-              primaryType={calculatedOutput.top3[0].type}
-              result={calculatedOutput}
-              theme={theme}
-            />
+            <React.Suspense
+              fallback={(
+                <div className="library-result-shell flex min-h-56 items-center justify-center text-sm text-[#8b6b4e]">
+                  Menyiapkan katalog hasil kamu...
+                </div>
+              )}
+            >
+              <ResultPortal
+                primaryType={calculatedOutput.top3[0].type}
+                result={calculatedOutput}
+                theme={theme}
+              />
+            </React.Suspense>
 
             {/* INTERACTIVE MODEL A GRID */}
             <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
               <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Visualisasi Arsitektur Mental:</span>
-                <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Grid Interaktif Model A</h3>
+                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Model A kamu:</span>
+                <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Susunan Delapan Posisi Model A</h3>
                 <p className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-550"}`}>
-                  Klik di masing-masing kotak fungsi posisi Model A untuk menampilkan keterlaksanaan energinya dalam diri Anda menurut hasil asesmen.
+                  Klik satu posisi untuk membaca fungsi, kekuatan, kebutuhan, dan sisi rawannya.
                 </p>
               </div>
 
@@ -1470,15 +1479,15 @@ export default function App() {
             {/* MODEL COMPARISON FEATURE */}
             <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
               <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Analisis Korelasi Lanjutan:</span>
+                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Perbandingan tipe:</span>
                 <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Bandingkan Dengan Tipe Lain</h3>
                 <p className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-550"}`}>
-                  Pilih tipe sekunder untuk mengevaluasi perbedaan struktur pengolah informasinya (Model A) terhadap kandidat utama Anda.
+                  Pilih tipe lain untuk melihat perbedaan Base, Creative, PoLR, dan kebutuhan Suggestive.
                 </p>
               </div>
 
               <div className="space-y-4 max-w-sm">
-                <label className="block text-xs font-mono">Pilih Tipe Pembanding:</label>
+                <label className="block text-xs font-mono">Pilih tipe pembanding</label>
                 <select
                   value={compareTIM}
                   onChange={(e) => setCompareTIM(e.target.value as TIM)}
@@ -1496,15 +1505,15 @@ export default function App() {
                   {/* Tipe Utama */}
                   <div className="space-y-4">
                     <div className="border-b border-slate-800 pb-2">
-                      <span className="text-xs text-slate-500 font-mono">Tipe Utama Anda:</span>
+                      <span className="text-xs text-slate-500 font-mono">Tipe utama kamu:</span>
                       <h4 className="text-xl font-bold font-display text-emerald-400">
                         {calculatedOutput.top3[0].type} ({TIM_MODELS[calculatedOutput.top3[0].type].name})
                       </h4>
                     </div>
                     <div className="space-y-2 text-xs text-slate-300">
                       <div><strong>Orientasi Base:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].orientasiBase}</div>
-                      <div><strong>Tuntutan PoLR / Kelemahan:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].tuntutanPolr}</div>
-                      <div><strong>Sugesti Relief:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].bantuanSuggestive}</div>
+                      <div><strong>Tuntutan PoLR:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].tuntutanPolr}</div>
+                      <div><strong>Bantuan yang terasa melegakan:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].bantuanSuggestive}</div>
                     </div>
                   </div>
 
@@ -1518,8 +1527,8 @@ export default function App() {
                     </div>
                     <div className="space-y-2 text-xs text-slate-300">
                       <div><strong>Orientasi Base:</strong> {TIM_PROFILES[compareTIM].orientasiBase}</div>
-                      <div><strong>Tuntutan PoLR / Kelemahan:</strong> {TIM_PROFILES[compareTIM].tuntutanPolr}</div>
-                      <div><strong>Sugesti Relief:</strong> {TIM_PROFILES[compareTIM].bantuanSuggestive}</div>
+                      <div><strong>Tuntutan PoLR:</strong> {TIM_PROFILES[compareTIM].tuntutanPolr}</div>
+                      <div><strong>Bantuan yang terasa melegakan:</strong> {TIM_PROFILES[compareTIM].bantuanSuggestive}</div>
                     </div>
                   </div>
                 </div>
@@ -1529,16 +1538,16 @@ export default function App() {
             {/* DYNAMIC INTERTYPE RELATIONS CALCULATOR */}
             <div className="space-y-6 border-t border-slate-900 pt-10">
               <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Evaluasi Dinamika Komunikasi:</span>
+                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Relasi antar-tipe:</span>
                 <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white">Analisis Hubungan Antar-Tipe</h3>
                 <p className="text-xs text-slate-400">
-                  Hitung jenis dinamika interaksi informasi Model A antara tipe utama Anda dengan salah satu dari 15 tipe lainnya.
+                  Pilih tipe seseorang untuk membaca pola komunikasi, titik nyaman, dan gesekan yang mungkin muncul.
                 </p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-6 items-start">
                 <div className="space-y-4">
-                  <label className="block text-xs font-mono">Pilih Tipe Mitra:</label>
+                  <label className="block text-xs font-mono">Pilih tipe orang lain</label>
                   <div className="grid grid-cols-3 gap-2">
                     {availableTIMs.map((t) => {
                       const isActive = intertypeTarget === t;
@@ -1582,7 +1591,7 @@ export default function App() {
                         </p>
                         <hr className="border-slate-800/80" />
                         <div className="space-y-2">
-                          <div className="text-xs font-bold text-slate-300 uppercase tracking-wide">Dampak Aliran Metabolisme Informasi:</div>
+                          <div className="text-xs font-bold text-slate-300 uppercase tracking-wide">Dampak dalam interaksi:</div>
                           <p className="text-xs text-slate-300 leading-relaxed font-sans mt-1">
                             {relMeta.impact}
                           </p>
@@ -1596,13 +1605,13 @@ export default function App() {
 
             {/* RE-TEST BOX */}
             <div className="p-8 rounded-2xl border border-slate-900 bg-slate-900/20 text-center space-y-4 pt-10 border-t">
-              <h4 className="font-display font-bold text-xl">Ulangi Tes Model A?</h4>
+              <h4 className="font-display font-bold text-xl">Mau mengulang tes?</h4>
               <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Sesi tes sebelumnya akan dihapus dari peranti lokal Anda secara permanen. Mode tes, skor jawaban baru, dan holdouts verification akan diacak ulang.
+                Jawaban lama akan dihapus dari perangkat kamu. Pertanyaan dan urutan sesi baru akan dibuat ulang.
               </p>
               <button
                 onClick={() => {
-                  if (window.confirm("Ingin menghapus data dan mengulang tes dari awal?")) {
+                  if (window.confirm("Hapus hasil ini dan mulai tes dari awal?")) {
                     resetSession();
                     setCurrentPage("landing");
                   }
