@@ -32,12 +32,14 @@ import {
 import { motion } from "motion/react";
 
 import { useTestSession } from "./hooks/useTestSession";
-import { TIM_MODELS, TIM_PROFILES, QUADRA_DATA, INTERTYPE_MAP, INTERTYPE_RELATIONS_METADATA, ELEMENTS_METADATA } from "./constants/socionicsData";
+import { TIM_MODELS, QUADRA_DATA, INTERTYPE_MAP, ELEMENTS_METADATA } from "./constants/socionicsData";
 import { ALL_QUESTIONS } from "./data/questions";
 import { calculateResult } from "./scoring/engine";
 import { TIM, TIMProfile, InformationElement, MeasurementChannel, ModelAPosition, Quadra, TestSession } from "./types/socionics";
 import { getCasualVersion, getOptionDetail } from "./utils/optionDetails";
 import { runInstrumentAudit } from "./audit/instrumentAudit";
+import { polishEditorialText } from "./utils/editorialText";
+import { getPositionEditorial, getRelationEditorial, getTypeComparisonSnapshot } from "./results/modelAEditorial";
 const ResultPortal = React.lazy(() => import("./components/ResultPortal"));
 
 // Option Scale Wording by ScaleType
@@ -263,6 +265,24 @@ export default function App() {
       questionIds: session.questionIds,
     });
   }, [session]);
+
+  const resultHeroPreview = useMemo(() => {
+    if (!calculatedOutput) return null;
+    const type = calculatedOutput.top3[0].type;
+    const base = getPositionEditorial(type, "Base");
+    const creative = getPositionEditorial(type, "Creative");
+    const vulnerable = getPositionEditorial(type, "Vulnerable");
+    const suggestive = getPositionEditorial(type, "Suggestive");
+    return {
+      expert: `${base.inPractice} ${creative.inPractice}`,
+      signals: [
+        `Base ${base.element}: ${base.title}`,
+        `Creative ${creative.element}: ${creative.title}`,
+        `PoLR ${vulnerable.element}: area sensitif`,
+        `Suggestive ${suggestive.element}: bantuan yang dicari`,
+      ],
+    };
+  }, [calculatedOutput]);
 
   // Card Uploader assets
   const [cardNickname, setCardNickname] = useState("");
@@ -1128,6 +1148,7 @@ export default function App() {
                 <div className="result-book-title-row">
                   <div className="result-type-monogram">{calculatedOutput.top3[0].type}</div>
                   <div>
+                    <div className="result-book-code">{calculatedOutput.top3[0].type}</div>
                     <h3>{TIM_MODELS[calculatedOutput.top3[0].type].name}</h3>
                     <p>{TIM_MODELS[calculatedOutput.top3[0].type].fullName}</p>
                   </div>
@@ -1136,20 +1157,26 @@ export default function App() {
                 <div className="result-book-meta">
                   <span>Quadra {TIM_MODELS[calculatedOutput.top3[0].type].quadra}</span>
                   <span>{TIM_MODELS[calculatedOutput.top3[0].type].club}</span>
-                  <span>{calculatedOutput.top3[0].fitScore}% kecocokan relatif</span>
+                  <span>{calculatedOutput.top3[0].fitScore}% Kecocokan Relatif</span>
                 </div>
 
                 <p className="result-book-description">
-                  {TIM_PROFILES[calculatedOutput.top3[0].type].description}
+                  {polishEditorialText(resultHeroPreview?.expert ?? "Hasil utama ini merangkum pola Model A yang paling konsisten dengan jawabanmu.")}
                 </p>
+
+                <div className="result-book-highlights">
+                  {(resultHeroPreview?.signals ?? []).slice(0, 4).map((signal) => (
+                    <span key={signal}>{polishEditorialText(signal)}</span>
+                  ))}
+                </div>
 
                 <div className="result-confidence-card">
                   <Shield className="h-5 w-5" />
                   <div>
                     <div className="result-confidence-title">
-                      Keyakinan hasil: {calculatedOutput.confidence.toUpperCase()}
+                      Tingkat Keyakinan Tes: {calculatedOutput.confidence.toUpperCase()}
                     </div>
-                    <p>{calculatedOutput.confidenceExplanation}</p>
+                    <p>{polishEditorialText(calculatedOutput.confidenceExplanation)}</p>
                   </div>
                 </div>
               </article>
@@ -1312,161 +1339,74 @@ export default function App() {
                   })}
                 </div>
 
-                {/* Position detail reader card with conditional toggle */}
-                {activeModelAPos ? (
-                  <div className={`p-6 rounded-2xl border flex flex-col justify-between ${
-                    theme === "dark" ? "border-slate-800 bg-slate-900/30 text-slate-100" : "border-slate-200 bg-white text-slate-800 shadow-sm"
-                  }`}>
-                    <div className="space-y-4">
-                      <div className={`flex justify-between items-center border-b pb-3 ${theme === "dark" ? "border-slate-800" : "border-slate-150"}`}>
-                        <div className="flex items-center space-x-2">
-                          <Info className="w-4 h-4 text-emerald-500" />
-                          <h4 className={`text-base font-bold font-display ${theme === "dark" ? "text-emerald-400" : "text-emerald-600"}`}>
-                            Rincian Posisi {activeModelAPos}
-                          </h4>
+                {/* Position detail reader card */}
+                {activeModelAPos ? (() => {
+                  const detail = getPositionEditorial(calculatedOutput.top3[0].type, activeModelAPos);
+                  return (
+                    <article className={`model-a-reader ${theme === "dark" ? "model-a-reader-dark" : "model-a-reader-light"}`}>
+                      <header className="model-a-reader-header">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <div className="model-a-reader-icon">
+                            <Info className="h-5 w-5" />
+                          </div>
+                          <div className="min-w-0">
+                            <div className="model-a-reader-kicker">Posisi {detail.position} · {detail.block}</div>
+                            <h4>{detail.title} — {detail.element}</h4>
+                            <p>{ELEMENTS_METADATA[detail.element].name}</p>
+                          </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <span className={`text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded ${
-                            theme === "dark" ? "bg-slate-800 text-slate-300" : "bg-slate-100 text-slate-705"
-                          }`}>
-                            Tipe utama {calculatedOutput.top3[0].type}
-                          </span>
-                          <button
-                            onClick={() => setActiveModelAPos(null)}
-                            className={`p-1 rounded-full transition cursor-pointer hover:bg-slate-800/80 ${
-                              theme === "dark" ? "text-slate-400 hover:text-slate-200" : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-                            }`}
-                            title="Sembunyikan Informasi"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveModelAPos(null)}
+                          className="model-a-reader-close"
+                          aria-label="Tutup rincian posisi"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </header>
+
+                      <div className="model-a-status-row">
+                        <span>{detail.status}</span>
+                        <span>Tipe {calculatedOutput.top3[0].type}</span>
+                      </div>
+
+                      <div className="model-a-reader-section">
+                        <span>Artinya dalam Model A</span>
+                        <p>{detail.meaning}</p>
+                      </div>
+
+                      <div className="model-a-reader-section model-a-reader-highlight">
+                        <span>Seperti apa dalam keseharian</span>
+                        <p>{detail.inPractice}</p>
+                      </div>
+
+                      <div className="model-a-reader-grid">
+                        <div>
+                          <span>Bukti yang perlu dicari</span>
+                          <p>{detail.evidence}</p>
+                        </div>
+                        <div>
+                          <span>Yang perlu dijaga</span>
+                          <p>{detail.caution}</p>
                         </div>
                       </div>
 
-                      <div className={`space-y-4 text-xs sm:text-sm leading-relaxed font-sans ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>
-                        {/* Detailed explanatory text built on real model dynamics */}
-                        {activeModelAPos === "Base" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Arah Orientasi Utama:</strong> Element ini kuat dan sangat Anda hargai (Ego). Berfungsi sebagai motor spontan hidup pertama Anda dalam memproses semua data eksternal.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].orientasiBase}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Creative" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Alat Pendukung Utama:</strong> Berfungsi melengkapi dan mewujudkan target dari Base Anda. Sangat fleksibel, kreatif, serta adaptif harian.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].caraCreative}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Role" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Sosok Penyesuai Sosial:</strong> Berfungsi adaptasi sekunder saat bertatap muka di lingkungan formal yang belum akrab. Lemah dan menguras energi mental jika dituntut bekerja konstan lama.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].roleTampilan}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Vulnerable" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>PoLR (Point of Least Resistance):</strong> Titik kelemahan terdalam Anda yang tidak dihargai (Super-Ego). Kritik atau tekanan pada fungsi ini memicu rasa bingung, benci, lelah batin, defensif, atau aksi menyendiri.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs border ${
-                              theme === "dark" ? "bg-rose-500/5 border-rose-500/15 text-rose-300" : "bg-rose-50/70 border-rose-200 text-rose-800"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].tuntutanPolr}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Suggestive" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Titik Receptor Kenyamanan:</strong> Sangat Anda hargai namun bernilai lemah (Super-Id). Datangnya informasi elemen ini dari orang tepercaya di hadapan Anda memulihkan ketenangan jiwa batin seketika harian.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs border ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-emerald-300/90" : "bg-emerald-50/70 border-emerald-200 text-emerald-850"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].bantuanSuggestive}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Mobilizing" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Gairah Pembuktian/Pujian:</strong> Ingin terus dikembangkan secara bertahap namun kinerjanya fluktuatif (Super-Id). Sanjungan atas kemajuan kecil pada fungsi ini mendatangkan kebahagiaan batin yang besar.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].areaMobilizing}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Ignoring" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Kompetensi Dikesampingkan:</strong> Kuat secara otomatis namun tidak dihargai (Id). Sebenarnya mampu Anda lakukan secara prima untuk memitigasi krisis harian, tetapi dijauhi / dihentikan secepatnya karena dinilai di luar esensi identitas.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].kompetensiIgnoring}
-                            </p>
-                          </div>
-                        )}
-
-                        {activeModelAPos === "Demonstrative" && (
-                          <div className="space-y-2">
-                            <p>
-                              <strong>Latar Belakang Otomatis:</strong> Sangat kuat di bawah alam sadar Anda (Id). Beroperasi terus-menerus mengawal kelancaran aktivitas tanpa menuntut sanjungan atau pamer di panggung.
-                            </p>
-                            <p className={`p-3 rounded font-mono text-xs ${
-                              theme === "dark" ? "bg-slate-950/60 border border-slate-800 text-slate-300" : "bg-slate-50 border border-slate-150 text-slate-650"
-                            }`}>
-                              {TIM_PROFILES[calculatedOutput.top3[0].type].kemampuanDemonstrative}
-                            </p>
-                          </div>
-                        )}
+                      <div className="model-a-reflection">
+                        <strong>Pertanyaan refleksi</strong>
+                        <p>{detail.reflection}</p>
                       </div>
-                    </div>
-
-                    <div className={`text-xs font-mono text-right pt-4 border-t mt-4 ${
-                      theme === "dark" ? "text-slate-500 border-slate-800" : "text-slate-400 border-slate-150"
-                    }`}>
-                      Asesmen didukung dynamic context tags.
-                    </div>
-                  </div>
-                ) : (
+                    </article>
+                  );
+                })() : (
                   <div className={`p-8 rounded-2xl border flex flex-col items-center justify-center text-center space-y-3 ${
                     theme === "dark" ? "border-slate-800 bg-slate-900/10 text-slate-400" : "border-slate-200 bg-slate-50 text-slate-500 shadow-sm"
                   }`}>
                     <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-1">
                       <Target className="w-6 h-6 animate-pulse" />
                     </div>
-                    <h4 className="font-display font-semibold text-base">Detail Posisi Belum Dipilih</h4>
+                    <h4 className="font-display font-semibold text-base">Pilih Salah Satu Posisi</h4>
                     <p className="text-xs max-w-xs leading-relaxed">
-                      Silakan klik salah satu kotak fungsi posisi Model A di sebelah kiri untuk membaca analisa dan peran kustom pengolahan informasi Anda secara rinci.
+                      Klik salah satu posisi Model A untuk membaca artinya, contoh keseharian, bukti yang perlu dicari, dan sisi yang perlu dijaga.
                     </p>
                   </div>
                 )}
@@ -1496,38 +1436,41 @@ export default function App() {
 
               {compareTIM ? (
                 <div className="library-open-book">
-                  {[calculatedOutput.top3[0].type, compareTIM].map((type, index) => (
-                    <article key={type} className="library-book-page">
-                      <div className="library-book-page-label">{index === 0 ? "Tipe utama kamu" : "Tipe pembanding"}</div>
-                      <div className="library-book-page-header">
-                        <div>
-                          <strong>{type}</strong>
-                          <h4>{TIM_MODELS[type].name}</h4>
-                          <p>{TIM_MODELS[type].fullName}</p>
+                  {[calculatedOutput.top3[0].type, compareTIM].map((type, index) => {
+                    const snapshot = getTypeComparisonSnapshot(type);
+                    return (
+                      <article key={type} className="library-book-page">
+                        <div className="library-book-page-label">{index === 0 ? "Tipe utama kamu" : "Tipe pembanding"}</div>
+                        <div className="library-book-page-header">
+                          <div>
+                            <strong>{type}</strong>
+                            <h4>{TIM_MODELS[type].name}</h4>
+                            <p>{TIM_MODELS[type].fullName}</p>
+                          </div>
+                          <span>Quadra {TIM_MODELS[type].quadra}</span>
                         </div>
-                        <span>Quadra {TIM_MODELS[type].quadra}</span>
-                      </div>
 
-                      <div className="library-comparison-list">
-                        <div>
-                          <b>Base · {TIM_MODELS[type].positions.Base}</b>
-                          <p>{TIM_PROFILES[type].orientasiBase}</p>
+                        <div className="library-comparison-list">
+                          <div>
+                            <b>Base · {snapshot.base.element}</b>
+                            <p>{snapshot.base.inPractice}</p>
+                          </div>
+                          <div>
+                            <b>Creative · {snapshot.creative.element}</b>
+                            <p>{snapshot.creative.inPractice}</p>
+                          </div>
+                          <div>
+                            <b>PoLR · {snapshot.vulnerable.element}</b>
+                            <p>{snapshot.vulnerable.inPractice}</p>
+                          </div>
+                          <div>
+                            <b>Suggestive · {snapshot.suggestive.element}</b>
+                            <p>{snapshot.suggestive.inPractice}</p>
+                          </div>
                         </div>
-                        <div>
-                          <b>Creative · {TIM_MODELS[type].positions.Creative}</b>
-                          <p>{TIM_PROFILES[type].gayaCreative}</p>
-                        </div>
-                        <div>
-                          <b>PoLR · {TIM_MODELS[type].positions.Vulnerable}</b>
-                          <p>{TIM_PROFILES[type].tuntutanPolr}</p>
-                        </div>
-                        <div>
-                          <b>Suggestive · {TIM_MODELS[type].positions.Suggestive}</b>
-                          <p>{TIM_PROFILES[type].bantuanSuggestive}</p>
-                        </div>
-                      </div>
-                    </article>
-                  ))}
+                      </article>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="library-empty-catalogue">
@@ -1577,11 +1520,7 @@ export default function App() {
                   {(() => {
                     const self = calculatedOutput.top3[0].type;
                     const relationCode = INTERTYPE_MAP[self][intertypeTarget];
-                    const relation = INTERTYPE_RELATIONS_METADATA[relationCode] || {
-                      name: relationCode,
-                      description: "",
-                      impact: "",
-                    };
+                    const relation = getRelationEditorial(relationCode);
 
                     return (
                       <>
@@ -1606,16 +1545,24 @@ export default function App() {
                         <div className="library-relation-copy">
                           <div>
                             <b>Gambaran singkat</b>
-                            <p>{relation.description}</p>
+                            <p>{relation.summary}</p>
                           </div>
                           <div>
-                            <b>Dampak dalam interaksi</b>
-                            <p>{relation.impact}</p>
+                            <b>Potensi kekuatan</b>
+                            <p>{relation.strength}</p>
+                          </div>
+                          <div>
+                            <b>Gesekan yang mungkin muncul</b>
+                            <p>{relation.friction}</p>
+                          </div>
+                          <div>
+                            <b>Saran praktis</b>
+                            <p>{relation.advice}</p>
                           </div>
                         </div>
 
                         <div className="library-relation-note">
-                          Hubungan nyata tetap dipengaruhi kedewasaan, nilai, pengalaman, komunikasi, dan batas pribadi. Socionics hanya memberi peta kecenderungan.
+                          Hubungan nyata tetap dipengaruhi kedewasaan, pengalaman, komunikasi, dan batas pribadi. Gunakan bagian ini sebagai hipotesis, bukan penentu kualitas hubungan.
                         </div>
                       </>
                     );
