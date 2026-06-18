@@ -62,7 +62,6 @@ export const CHANNEL_LABELS: Record<string, string> = {
 };
 
 // Relation codes dictionary map relative to ILE
-// We'll calculate the symmetric or asymmetric relationship dynamically
 export const RELATION_DEFS: Record<string, IntertypeRelation> = {
   e: {
     code: "e",
@@ -194,179 +193,50 @@ export const RELATION_DEFS: Record<string, IntertypeRelation> = {
   }
 };
 
-// Precise 16x16 Intertype Relation Matrix index
-// ROW is Client Type, COLUMN is Partner Type
-// This maps directly to standard, audited Socionics tables
-export const INTERTYPE_MATRIX: Record<string, Record<string, string>> = {
-  ILE: { ILE: "e", SEI: "d", ESE: "a", LII: "m", SLE: "l", IEI: "i", EIE: "b", LSI: "s", SEE: "S", ILI: "q", LIE: "x", ESI: "c", LSE: "B", EII: "g", IEE: "k", SLI: "h" },
-  SEI: { ILE: "d", SEI: "e", ESE: "m", LII: "a", SLE: "i", IEI: "l", EIE: "s", LSI: "b", SEE: "q", ILI: "S", LIE: "c", ESI: "x", LSE: "g", EII: "B", IEE: "h", SLI: "k" },
-  ESE: { ILE: "a", SEI: "m", ESE: "e", LII: "d", SLE: "B", IEI: "g", EIE: "l", LSI: "i", SEE: "b", ILI: "s", LIE: "h", ESI: "k", LSE: "q", EII: "S", IEE: "c", SLI: "x" },
-  LII: { ILE: "m", SEI: "a", ESE: "d", LII: "e", SLE: "g", IEI: "B", EIE: "i", LSI: "l", SEE: "s", ILI: "b", LIE: "k", ESI: "h", LSE: "S", EII: "q", IEE: "x", SLI: "c" },
-  SLE: { ILE: "l", SEI: "i", ESE: "b", LII: "s", SLE: "e", IEI: "d", EIE: "a", LSI: "m", SEE: "k", ILI: "h", LIE: "B", ESI: "g", LSE: "l", EII: "c", IEE: "S", SLI: "q" }, // wait, adjust for symmetry we will map it below
-};
-
-// Since typing out the entire 256 matrix is error-prone, let's write an algebraic generator based on the binary traits of the 16 types.
-// This is mathematically pristine and elegant, direct from Ibrahim Tencer's paper!
-export interface BinaryType {
-  E: number; // Extraverted
-  N: number; // Intuitive
-  T: number; // Logical
-  R: number; // Rational (J)
-}
-
-export const BINARY_MAP: Record<string, BinaryType> = {
-  ILE: { E: 1, N: 1, T: 1, R: 0 },
-  SEI: { E: 0, N: 0, T: 0, R: 0 },
-  ESE: { E: 1, N: 0, T: 0, R: 1 },
-  LII: { E: 0, N: 1, T: 1, R: 1 },
-  SLE: { E: 1, N: 0, T: 1, R: 0 },
-  IEI: { E: 0, N: 1, T: 0, R: 0 },
-  EIE: { E: 1, N: 1, T: 0, R: 1 },
-  LSI: { E: 0, N: 0, T: 1, R: 1 },
-  SEE: { E: 1, N: 0, T: 0, R: 0 },
-  ILI: { E: 0, N: 1, T: 1, R: 0 },
-  LIE: { E: 1, N: 1, T: 1, R: 1 },
-  ESI: { E: 0, N: 0, T: 0, R: 1 },
-  LSE: { E: 1, N: 0, T: 1, R: 1 },
-  EII: { E: 0, N: 1, T: 0, R: 1 },
-  IEE: { E: 1, N: 1, T: 0, R: 0 },
-  SLI: { E: 0, N: 0, T: 1, R: 0 }
-};
-
-// Comprehensive algebraic solver function based on classical Socionics mappings
+// Comprehensive lookup mapping from the unique (pos_F1, pos_F2) coordinate pair
+// where pos_F1 is the 0-indexed position of type1's Lead in type2's Model A,
+// and pos_F2 is the position of type1's Creative in type2's Model A.
+// This is the absolute group-theoretic formulation of Model A intertype relations.
 export const getRelation = (type1: string, type2: string): IntertypeRelation => {
   if (type1 === type2) return RELATION_DEFS.e;
 
-  const b1 = BINARY_MAP[type1];
-  const b2 = BINARY_MAP[type2];
+  const m1 = MODEL_A_MAP[type1];
+  const m2 = MODEL_A_MAP[type2];
 
-  if (!b1 || !b2) return RELATION_DEFS.e;
+  if (!m1 || !m2) return RELATION_DEFS.e;
 
-  // Let's determine the differences
-  const diffE = b1.E ^ b2.E; // Extroversion difference
-  const diffN = b1.N ^ b2.N; // Intuition difference
-  const diffT = b1.T ^ b2.T; // Logic difference
-  const diffR = b1.R ^ b2.R; // Rationality difference
+  const f1 = m1[0];
+  const f2 = m1[1];
 
-  // Is same quadra?
-  // Alpha: ILE, SEI, ESE, LII (valuing Ne, Ti, Fe, Si)
-  // Beta: SLE, IEI, EIE, LSI (valuing Se, Ti, Fe, Ni)
-  // Gamma: SEE, ILI, LIE, ESI (valuing Se, Fi, Te, Ni)
-  // Delta: LSE, EII, IEE, SLI (valuing Ne, Fi, Te, Si)
-  const getQuadra = (t: string): string => {
-    if (["ILE", "SEI", "ESE", "LII"].includes(t)) return "Alpha";
-    if (["SLE", "IEI", "EIE", "LSI"].includes(t)) return "Beta";
-    if (["SEE", "ILI", "LIE", "ESI"].includes(t)) return "Gamma";
-    return "Delta";
+  const pos1 = m2.indexOf(f1);
+  const pos2 = m2.indexOf(f2);
+
+  if (pos1 === -1 || pos2 === -1) {
+    return RELATION_DEFS.g; // Absolute fallback boundary
+  }
+
+  // Pure bijective coordination of all 16 intertype relations in Socionics
+  const coordinateKey = `${pos1},${pos2}`;
+  
+  const relationCodeMap: Record<string, string> = {
+    "0,1": "e", // Identity
+    "4,5": "d", // Duality
+    "5,4": "a", // Activation
+    "1,0": "m", // Mirror
+    "1,2": "g", // Superego
+    "3,2": "c", // Conflictor
+    "6,7": "q", // Quasi-Identical
+    "7,6": "x", // Contrary / Extinguishment
+    "0,3": "k", // Kindred / Comparative
+    "4,7": "h", // Setengah Dual / Semidual
+    "2,1": "l", // Lookalike / Business
+    "6,5": "i", // Illusionary / Mirage
+    "7,4": "b", // Beneficiary (Partner is your beneficiary/receiver)
+    "5,6": "B", // Benefactor (Partner is your benefactor/transmitter)
+    "3,0": "s", // Supervisee (Partner is your supervisee/revisee)
+    "2,3": "S"  // Supervisor (Partner is your supervisor/reviser)
   };
 
-  const q1 = getQuadra(type1);
-  const q2 = getQuadra(type2);
-  const sameQuadra = q1 === q2;
-
-  // Soniocs D4 x Z2 Group Lookup
-  // Let's implement the perfect mapping for all 256 relationships using an exact matrix solver:
-  const types = ["ILE", "SEI", "ESE", "LII", "SLE", "IEI", "EIE", "LSI", "SEE", "ILI", "LIE", "ESI", "LSE", "EII", "IEE", "SLI"];
-  const matrix: Record<string, string[]> = {
-    // Columns match the types array in order
-    ILE: ["e", "d", "a", "m", "l", "i", "b", "s", "S", "q", "x", "c", "B", "g", "k", "h"],
-    SEI: ["d", "e", "m", "a", "i", "l", "s", "b", "q", "S", "c", "x", "g", "B", "h", "k"],
-    ESE: ["a", "m", "e", "d", "B", "g", "l", "i", "b", "s", "h", "k", "q", "S", "c", "x"],
-    LII: ["m", "a", "d", "e", "g", "B", "i", "l", "s", "b", "k", "h", "S", "q", "x", "c"],
-    SLE: ["l", "i", "B", "g", "e", "d", "a", "m", "k", "h", "b", "s", "l", "c", "S", "q"],
-    IEI: ["i", "l", "g", "B", "d", "e", "m", "a", "h", "k", "s", "b", "c", "l", "q", "S"],
-    EIE: ["B", "g", "l", "i", "a", "m", "e", "d", "b", "s", "h", "k", "S", "q", "x", "c"], // Adjusted to match standard
-    LSI: ["s", "b", "i", "l", "m", "a", "d", "e", "q", "S", "c", "x", "g", "B", "h", "k"],
-    SEE: ["s", "q", "B", "S", "k", "h", "B", "q", "e", "d", "a", "m", "l", "i", "b", "s"], // fallback direct
-  };
-
-  // We write an explicit key-based resolver that is 100% compliant with standard Socionics intertype tables:
-  const index1 = types.indexOf(type1);
-  const index2 = types.indexOf(type2);
-
-  // Exact audited table keys for absolute precision:
-  const getRelationCodeDirect = (t1: string, t2: string): string => {
-    // Symmetrical Relations
-    if (t1 === t2) return "e";
-    const same = (a: string, b: string) => (t1 === a && t2 === b) || (t1 === b && t2 === a);
-
-    // Duals
-    if (same("ILE", "SEI") || same("ESE", "LII") || same("SLE", "IEI") || same("LSI", "EIE") || same("SEE", "ILI") || same("ESI", "LIE") || same("LSE", "EII") || same("IEE", "SLI")) return "d";
-    // Activators
-    if (same("ILE", "ESE") || same("SEI", "LII") || same("SLE", "EIE") || same("IEI", "LSI") || same("SEE", "LIE") || same("ILI", "ESI") || same("LSE", "IEE") || same("EII", "SLI")) return "a";
-    // Mirrors
-    if (same("ILE", "LII") || same("SEI", "ESE") || same("SLE", "LSI") || same("IEI", "EIE") || same("SEE", "ESI") || same("ILI", "LIE") || same("LSE", "SLI") || same("EII", "IEE")) return "m";
-    // Superegos
-    if (same("ILE", "EII") || same("SEI", "LSE") || same("ESE", "SLI") || same("LII", "IEE") || same("SLE", "ESI") || same("IEI", "LIE") || same("EIE", "ILI") || same("LSI", "SEE")) return "g";
-    // Conflictors
-    if (same("ILE", "ESI") || same("SEI", "LIE") || same("ESE", "ILI") || same("LII", "SEE") || same("SLE", "EII") || same("IEI", "LSE") || same("EIE", "SLI") || same("LSI", "IEE")) return "c";
-    // Quasi-Identical
-    if (same("ILE", "IEE") || same("SEI", "SLI") || same("ESE", "LSE") || same("LII", "EII") || same("SLE", "SEE") || same("IEI", "ILI") || same("EIE", "LIE") || same("LSI", "ESI")) return "q";
-    // Contrary (Extinguishment)
-    if (same("ILE", "ILI") || same("SEI", "SEE") || same("ESE", "ESI") || same("LII", "LIE") || same("SLE", "IEE") || same("IEI", "SLI") || same("EIE", "EII") || same("LSI", "LSE")) return "x";
-    // Kindred (Comparative)
-    if (same("ILE", "IEE") || same("SEI", "EII") || same("ESE", "LSE") || same("LII", "SLI") || same("SLE", "SEE") || same("IEI", "ESI") || same("EIE", "LIE") || same("LSI", "ILI")) return "k";
-    // Lookalike (Business)
-    if (same("ILE", "SLE") || same("SEI", "IEI") || same("ESE", "EIE") || same("LII", "LSI") || same("SEE", "IEE") || same("ILI", "EII") || same("LIE", "LSE") || same("ESI", "SLI")) return "l";
-    // Semi-dual
-    if (same("ILE", "SLI") || same("SEI", "IEE") || same("ESE", "EII") || same("LII", "LSE") || same("SLE", "ELI") || same("IEI", "SEE") || same("EIE", "ESI") || same("LSI", "LIE")) return "h";
-    // Illusionary (Mirage)
-    if (same("ILE", "IEI") || same("SEI", "ILE") || same("ESE", "LSI") || same("LII", "EIE") || same("SLE", "SLI") || same("IEI", "IEE") || same("SEE", "EII") || same("ILI", "LSE")) return "i";
-
-    // Asymmetric Relations: Supervision
-    // Supervisor leads vulnerable:
-    // ILE (Fi vuln / ESI lead -> ESI is supervisor of ILE)
-    if (t1 === "ILE" && t2 === "ESI") return "S"; if (t1 === "ESI" && t2 === "ILE") return "s";
-    if (t1 === "LSI" && t2 === "ILE") return "S"; if (t1 === "ILE" && t2 === "LSI") return "s";
-    if (t1 === "IEI" && t2 === "LSI") return "S"; if (t1 === "LSI" && t2 === "IEI") return "s";
-    if (t1 === "ESI" && t2 === "IEI") return "S"; if (t1 === "IEI" && t2 === "ESI") return "s";
-    
-    if (t1 === "SEI" && t2 === "LSE") return "S"; if (t1 === "LSE" && t2 === "SEI") return "s";
-    if (t1 === "EII" && t2 === "SEI") return "S"; if (t1 === "SEI" && t2 === "EII") return "s";
-    if (t1 === "LIE" && t2 === "EII") return "S"; if (t1 === "EII" && t2 === "LIE") return "s";
-    if (t1 === "LSE" && t2 === "LIE") return "S"; if (t1 === "LIE" && t2 === "LSE") return "s";
-
-    if (t1 === "ESE" && t2 === "ILI") return "S"; if (t1 === "ILI" && t2 === "ESE") return "s";
-    if (t1 === "IEE" && t2 === "ESE") return "S"; if (t1 === "ESE" && t2 === "IEE") return "s";
-    if (t1 === "SLE" && t2 === "IEE") return "S"; if (t1 === "IEE" && t2 === "SLE") return "s";
-    if (t1 === "ILI" && t2 === "SLE") return "S"; if (t1 === "SLE" && t2 === "ILI") return "s";
-
-    if (t1 === "LII" && t2 === "SEE") return "S"; if (t1 === "SEE" && t2 === "LII") return "s";
-    if (t1 === "SLI" && t2 === "LII") return "S"; if (t1 === "LII" && t2 === "SLI") return "s";
-    if (t1 === "EIE" && t2 === "SLI") return "S"; if (t1 === "SLI" && t2 === "EIE") return "s";
-    if (t1 === "SEE" && t2 === "EIE") return "S"; if (t1 === "EIE" && t2 === "SEE") return "s";
-
-    // Asymmetric Relations: Beneficari (Request)
-    // Benefactor suggestive matches receiver:
-    if (t1 === "ILE" && t2 === "SLI") return "B"; if (t1 === "SLI" && t2 === "ILE") return "b";
-    if (t1 === "SLI" && t2 === "ESI") return "B"; if (t1 === "ESI" && t2 === "SLI") return "b";
-    if (t1 === "ESI" && t2 === "IEI") return "B"; if (t1 === "IEI" && t2 === "ESI") return "b";
-    if (t1 === "IEI" && t2 === "ILE") return "B"; if (t1 === "ILE" && t2 === "IEI") return "b";
-
-    if (t1 === "SEI" && t2 === "ILE") return "B"; if (t1 === "ILE" && t2 === "SEI") return "b";
-    if (t1 === "LSE" && t2 === "SLI") return "B"; if (t1 === "SLI" && t2 === "LSE") return "b";
-    if (t1 === "EII" && t2 === "LSE") return "B"; if (t1 === "LSE" && t2 === "EII") return "b";
-    if (t1 === "LIE" && t2 === "EII") return "B"; if (t1 === "EII" && t2 === "LIE") return "b";
-
-    if (t1 === "ESE" && t2 === "LII") return "B"; if (t1 === "LII" && t2 === "ESE") return "b";
-    if (t1 === "IEE" && t2 === "LSE") return "B"; if (t1 === "LSE" && t2 === "IEE") return "b";
-    if (t1 === "SLE" && t2 === "EIE") return "B"; if (t1 === "EIE" && t2 === "SLE") return "b";
-    if (t1 === "ILI" && t2 === "SLE") return "B"; if (t1 === "SLE" && t2 === "ILI") return "b";
-
-    // Standard Fallbacks based on binary group theory
-    if (diffE === 0 && diffN === 0 && diffT === 0 && diffR === 1) return "m"; // Mirror
-    if (diffE === 1 && diffN === 1 && diffT === 1 && diffR === 1) return "d"; // Dual
-    if (diffE === 1 && diffN === 1 && diffT === 1 && diffR === 0) return "a"; // Activator
-    if (diffE === 0 && diffN === 1 && diffT === 1 && diffR === 1) return "q"; // Quasi-identical
-    if (diffE === 1 && diffN === 0 && diffT === 0 && diffR === 1) return "x"; // Contrary
-    if (diffE === 0 && diffN === 0 && diffT === 1 && diffR === 0) return "k"; // Kindred
-    if (diffE === 0 && diffN === 1 && diffT === 0 && diffR === 0) return "l"; // Lookalike
-    if (diffE === 1 && diffN === 0 && diffT === 1 && diffR === 0) return "h"; // Semidual
-    if (diffE === 1 && diffN === 1 && diffT === 0 && diffR === 0) return "i"; // Illusionary
-
-    return "g"; // Superego fallback
-  };
-
-  const code = getRelationCodeDirect(type1, type2);
-  return RELATION_DEFS[code] || RELATION_DEFS.g;
+  const relCode = relationCodeMap[coordinateKey] || "g";
+  return RELATION_DEFS[relCode] || RELATION_DEFS.g;
 };
