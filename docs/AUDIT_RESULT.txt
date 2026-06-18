@@ -1,5 +1,4 @@
-
-> socionics-dalam-diriku@2.0.1 audit
+> socionics-dalam-diriku@2.0.3 audit
 > tsx scripts/audit.ts
 
 {
@@ -21,4 +20,21 @@
     "allLow": "tidak cukup bukti",
     "allHigh": "tidak cukup bukti"
   }
+}
+
+> socionics-dalam-diriku@2.0.3 audit:language
+> tsx scripts/auditLanguage.ts
+
+{
+  "status": "passed",
+  "itemsChecked": 256,
+  "optionExplanationsChecked": 1280,
+  "rules": [
+    "Versi Kasual memakai aku",
+    "tidak ada saya/Anda pada copy pertanyaan",
+    "Artinya dan Reaksi tidak kosong",
+    "lima gradasi unik",
+    "larangan frasa generik",
+    "Reaksi tidak menyalin kalimat asli atau responseFocus"
+  ]
 }
