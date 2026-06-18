@@ -1,7 +1,8 @@
 {
   "name": "Socionics Dalam Diriku",
-  "description": "Aplikasi refleksi Socionics Model A dengan hasil editorial bertema perpustakaan, bank 256 item, holdout, tie-break adaptif, dan penyimpanan lokal.",
+  "description": "Sebuah aplikasi asesmen kepribadian berbasis Teori Socionics Model A secara presisi dan eksplisit.",
   "requestFramePermissions": [],
-  "majorCapabilities": [],
-  "version": "2.1.2"
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
