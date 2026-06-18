@@ -1,4 +1,5 @@
-import { TIM_MODELS, TIM_PROFILES } from "../constants/socionicsData";
+import { TIM_MODELS } from "../constants/socionicsData";
+import { getPositionEditorial } from "./modelAEditorial";
 import type {
   AssessmentResult,
   Club,
@@ -743,8 +744,14 @@ const recommendationGroups = (curated: CuratedProfile): RecommendationGroup[] =>
 
 export const buildResultExperience = (type: TIM, result: AssessmentResult): ResultExperience => {
   const model = TIM_MODELS[type];
-  const profile = TIM_PROFILES[type];
   const editorial = TYPE_EDITORIAL[type];
+  const basePosition = getPositionEditorial(type, "Base");
+  const creativePosition = getPositionEditorial(type, "Creative");
+  const rolePosition = getPositionEditorial(type, "Role");
+  const vulnerablePosition = getPositionEditorial(type, "Vulnerable");
+  const suggestivePosition = getPositionEditorial(type, "Suggestive");
+  const mobilizingPosition = getPositionEditorial(type, "Mobilizing");
+  const demonstrativePosition = getPositionEditorial(type, "Demonstrative");
   const curated = CURATED[type];
   const base = ELEMENT_LENS[model.positions.Base];
   const creative = ELEMENT_LENS[model.positions.Creative];
@@ -773,7 +780,7 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
         },
         {
           title: "Cara orang sering membaca kamu",
-          expert: `${profile.description} Pola ini paling masuk akal bila terlihat lintas situasi, bukan hanya saat kamu sedang stres atau menjalankan peran tertentu.`,
+          expert: `${editorial.expert} Pola ini paling layak dipercaya bila terlihat berulang di beberapa konteks, bukan hanya saat kamu sedang stres atau menjalankan peran tertentu.`,
           simple: `Kesan terkuatmu biasanya datang dari kombinasi ${model.positions.Base} dan ${model.positions.Creative}: ${base.algorithm}, lalu ${creative.gift.toLowerCase()}.`,
           warning: "Kesan orang tidak selalu sama dengan motif batinmu. Gunakan contoh perilaku nyata sebelum menerima atau menolak bagian ini.",
         },
@@ -789,13 +796,13 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
           title: `Fokus utama: ${model.positions.Base}`,
           expert: `Base ${model.positions.Base} membuat perhatianmu cenderung ${base.algorithm}. ${base.sees}.`,
           simple: editorial.simple,
-          misunderstood: `Orang bisa hanya melihat hasil akhirnya, padahal orientasi dasarnya adalah: ${profile.orientasiBase}`,
+          misunderstood: `Orang bisa hanya melihat hasil akhirnya. Di baliknya, ${basePosition.inPractice.toLowerCase()}`,
           warning: base.blindSpot,
         },
         {
           title: `Alat fleksibel: ${model.positions.Creative}`,
           expert: `Creative ${model.positions.Creative} biasanya menjadi alat yang mudah kamu sesuaikan untuk membantu tujuan fungsi Base.`,
-          simple: profile.caraCreative,
+          simple: creativePosition.inPractice,
           warning: `Kekuatan ini bisa berlebihan kalau kamu merasa harus selalu memperbaiki keadaan untuk orang lain.`,
           actions: ["Tanya apa tujuan sebenarnya sebelum bergerak.", "Pisahkan kemampuan yang kamu punya dari hal yang memang perlu kamu kerjakan."],
         },
@@ -829,27 +836,27 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
         {
           title: "Marah dan defensif",
           expert: `${base.blocked}. Tekanan pada Vulnerable ${model.positions.Vulnerable} juga dapat membuatmu kaku, malu, atau ingin menghindar.`,
-          simple: profile.tuntutanPolr,
+          simple: vulnerablePosition.inPractice,
           misunderstood: "Respons defensif tidak selalu berarti kamu tidak peduli. Kadang kamu tidak punya cara yang cukup fleksibel untuk menghadapi tuntutan itu.",
           actions: ["Tunda respons saat harga diri sedang panas.", "Sebut kebutuhan atau batas dalam satu kalimat konkret."],
         },
         {
           title: "Takut, malu, dan rasa tidak cukup",
           expert: `Role ${model.positions.Role} sering menjadi area performa sosial, sedangkan Vulnerable ${model.positions.Vulnerable} lebih mudah terasa seperti titik yang tidak boleh disentuh.`,
-          simple: profile.roleTampilan,
+          simple: rolePosition.inPractice,
           warning: role.blocked,
           actions: ["Bedakan tidak terlatih dengan tidak mampu.", "Minta instruksi atau dukungan spesifik, bukan menutupi semua kebingungan."],
         },
         {
           title: "Cinta, lega, dan rasa diterima",
           expert: `Kamu cenderung memberi lewat Creative ${model.positions.Creative}, tetapi merasa sangat terbantu saat Suggestive ${model.positions.Suggestive} datang dari orang yang dipercaya.`,
-          simple: profile.bantuanSuggestive,
+          simple: suggestivePosition.inPractice,
           actions: ["Jelaskan bentuk bantuan yang terasa melegakan.", "Jangan menguji kasih sayang lewat tebakan atau situasi buatan."],
         },
         {
           title: "Iri dan ambisi tersembunyi",
           expert: `Mobilizing ${model.positions.Mobilizing} sering menjadi area yang ingin berkembang dan mudah tersentuh oleh pengakuan yang tepat.`,
-          simple: profile.areaMobilizing,
+          simple: mobilizingPosition.inPractice,
           warning: mobilizing.blindSpot,
           actions: ["Ubah iri menjadi daftar kemampuan yang ingin dilatih.", "Cari mentor, bukan hanya pembanding."],
         },
@@ -940,18 +947,18 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
           title: "Blind spot utama",
           expert: editorial.blindspot,
           simple: base.blindSpot,
-          warning: profile.tuntutanPolr,
+          warning: vulnerablePosition.inPractice,
         },
         {
           title: "Topeng sosial",
           expert: `Role ${model.positions.Role} dapat membuatmu terlihat lebih nyaman pada area ini daripada yang sebenarnya kamu rasakan.`,
-          simple: profile.roleTampilan,
+          simple: rolePosition.inPractice,
           warning: `Kalau dipertahankan terlalu lama, performa ini bisa berubah menjadi lelah, kaku, atau mudah tersinggung.`,
         },
         {
           title: "Kekuatan yang sering kamu remehkan",
           expert: `Demonstrative ${model.positions.Demonstrative} biasanya berjalan cukup otomatis tetapi tidak selalu dianggap penting oleh pemiliknya.`,
-          simple: profile.kemampuanDemonstrative,
+          simple: demonstrativePosition.inPractice,
           actions: ["Catat pujian yang sering kamu anggap berlebihan.", "Gunakan kemampuan ini sebagai dukungan, bukan identitas yang harus dibuktikan."],
         },
         {
@@ -962,8 +969,8 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
         },
         {
           title: "Bukti yang dapat menyangkal hasil",
-          expert: profile.buktiMenyangkal,
-          simple: profile.refleksi,
+          expert: `Hasil ini perlu diragukan bila pola ${model.positions.Base} tidak muncul spontan di beberapa konteks, sementara kandidat kedua lebih konsisten menjelaskan cara kamu bertindak, menerima bantuan, dan bereaksi saat tertekan.`,
+          simple: `Bandingkan tipe utama dengan kandidat kedua. Cari contoh nyata selama dua minggu: apa yang muncul tanpa persiapan, apa yang hanya kamu tampilkan karena tuntutan, dan bantuan apa yang benar-benar membuatmu lega.`,
           warning: "Kalau bukti lawan lebih kuat dan konsisten lintas konteks, pertahankan kandidat kedua atau ulangi observasi sebelum menetapkan tipe.",
         },
       ],
