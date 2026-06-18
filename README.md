@@ -19,6 +19,16 @@ Aplikasi ini bukan diagnosis klinis dan bukan alat psikologi profesional. Versi 
 - Audit otomatis memeriksa duplikasi, cakupan, sampling 10.000 seed, canonical pair, dan pemulihan 16 synthetic type vectors.
 - Klaim Cronbach alpha/reliabilitas hard-coded dihapus.
 
+
+## Bahasa peserta dan paket editorial
+
+- Pertanyaan utama ditampilkan sebagai **Versi Kasual** dengan sudut pandang `aku`.
+- Kalimat sumber formal tetap dapat dibuka melalui panel **Lihat kalimat asli**.
+- **Artinya** menjelaskan proses batin, bukan mengulang pertanyaan.
+- **Reaksi** berisi tindakan nyata yang bisa divisualkan.
+- Jalankan `npm run audit:language` untuk memeriksa aturan bahasa.
+- Jalankan `npm run export:editorial` untuk membuat `docs/EDITORIAL_COPY_ALL_256.txt`.
+
 ## Menjalankan proyek
 
 ```bash

@@ -1,26 +1,25 @@
-PERBAIKAN DEPLOY LAMBAT — SocionicsGPT
+SOCIONICS DALAM DIRIKU v2.0.3 — LANGUAGE INTEGRATED
 
-HASIL PEMERIKSAAN:
-- .npmrc saat ini sudah benar.
-- vercel.json saat ini secara struktur sudah benar.
-- package-lock.json justru tidak ada.
-- Tanpa package-lock.json, npm harus menghitung ulang versi dependency saat setiap deployment.
-- File dalam paket ini menambahkan package-lock.json bersih dari registry publik dan mengubah instalasi menjadi npm ci.
+Yang sudah disatukan ke ZIP ini:
+- perbaikan penyimpanan jawaban;
+- pertanyaan utama Versi Kasual;
+- panel kalimat asli;
+- Artinya sebagai proses batin;
+- Reaksi sebagai tindakan nyata;
+- audit bahasa otomatis;
+- ekspor editorial seluruh 256 item;
+- package-lock publik dan konfigurasi Vercel.
 
-LANGKAH:
-1. Upload/replace tiga file ini di ROOT repository, sejajar dengan package.json:
-   - package-lock.json
-   - .npmrc
-   - vercel.json
-2. Jangan taruh di dalam src/.
-3. Di Vercel pilih Redeploy tanpa build cache untuk percobaan pertama.
-4. Deployment berikutnya dapat memakai cache normal.
+Sebelum upload:
+1. Ekstrak ZIP.
+2. Upload isi folder SocionicsGPT-main ke root repository.
+3. Jangan upload folder pembungkus ganda.
+4. Di Vercel gunakan:
+   Framework: Vite
+   Install: npm ci --no-audit --no-fund
+   Build: npm run build
+   Output: dist
 
-PENGATURAN:
-- Framework: Vite
-- Root Directory: ./
-- Build Command: npm run build
-- Output Directory: dist
-
-CATATAN:
-package-lock.json ini berasal dari dependency tree proyek v2.0.1 yang sama, tetapi seluruh URL registry internal sudah diganti menjadi https://registry.npmjs.org/.
+Pemeriksaan lokal:
+npm ci
+npm run check
