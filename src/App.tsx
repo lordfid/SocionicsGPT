@@ -1108,108 +1108,111 @@ export default function App() {
           <div className={`library-result-page ${theme === "dark" ? "library-page-dark" : "library-page-light"} space-y-12`}>
             
             {/* Editorial result header */}
-            <div className="text-center space-y-4">
-              <div className="inline-flex items-center space-x-1.5 text-xs bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-3.5 py-1 rounded-full font-mono">
-                <Target className="w-4 h-4 animate-spin-slow" />
-                <span>HASIL MODEL A SIAP DIBACA</span>
+            <div className="result-library-intro">
+              <div className="result-library-kicker">
+                <LibraryBig className="h-4 w-4" />
+                <span>HASIL MODEL A · EDISI KATALOG</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Katalog Hasil Socionics Kamu</h2>
-              <p className="text-sm text-slate-400 max-w-xl mx-auto">
-                Kamu sudah menyelesaikan tes. Sekarang baca hasilnya per bagian: cara berpikir, emosi, relasi, pandangan dunia, blind spot, dan rekomendasi personal.
+              <h2>Katalog Hasil Socionics Kamu</h2>
+              <p>
+                Hasil ini disusun seperti koleksi bacaan: mulai dari tipe utama, lanjut ke cara berpikir, emosi, relasi, pandangan dunia, blind spot, dan rekomendasi.
               </p>
             </div>
 
-            {/* TOP 3 candidates layout */}
-            <div className="grid lg:grid-cols-3 gap-8">
-              
-              {/* Main candidate display */}
-              <div className="lg:col-span-2 p-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 space-y-6 shadow-2xl relative overflow-hidden">
-                <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-emerald-500/10 blur-3xl" />
-                
-                <div className="space-y-2">
-                  <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Kandidat tipe utama:</span>
-                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:space-x-4">
-                    <span className="text-5xl sm:text-6xl font-display font-extrabold text-white tracking-tight">
-                      {calculatedOutput.top3[0].type}
-                    </span>
-                    <span className="text-2xl sm:text-3xl font-display font-medium text-emerald-400">
-                      {TIM_MODELS[calculatedOutput.top3[0].type].name}
-                    </span>
+            {/* Main result cover + candidate catalogue */}
+            <div className="result-hero-grid">
+              <article className="result-type-book">
+                <div className="result-book-ribbon">Kandidat utama</div>
+                <div className="result-book-edition">SOCIONICS DALAM DIRIKU · MODEL A</div>
+
+                <div className="result-book-title-row">
+                  <div className="result-type-monogram">{calculatedOutput.top3[0].type}</div>
+                  <div>
+                    <h3>{TIM_MODELS[calculatedOutput.top3[0].type].name}</h3>
+                    <p>{TIM_MODELS[calculatedOutput.top3[0].type].fullName}</p>
                   </div>
-                  <p className="text-sm font-mono text-slate-400">
-                    {TIM_MODELS[calculatedOutput.top3[0].type].fullName} | Quadra {TIM_MODELS[calculatedOutput.top3[0].type].quadra} | {calculatedOutput.top3[0].fitScore}% Kecocokan Relatif
-                  </p>
                 </div>
 
-                <div className="border-t border-slate-800 pt-6">
-                  <p className="text-sm text-slate-300 leading-relaxed font-sans">
-                    {TIM_PROFILES[calculatedOutput.top3[0].type].description}
-                  </p>
+                <div className="result-book-meta">
+                  <span>Quadra {TIM_MODELS[calculatedOutput.top3[0].type].quadra}</span>
+                  <span>{TIM_MODELS[calculatedOutput.top3[0].type].club}</span>
+                  <span>{calculatedOutput.top3[0].fitScore}% kecocokan relatif</span>
                 </div>
 
-                {/* Top 3 relative matching table bar chart */}
-                <div className="space-y-3.5 border-t border-slate-800 pt-6">
-                  <span className="text-xs uppercase tracking-wider text-slate-400 font-mono font-bold">Kecocokan Relatif Top 3 Model Kandidat:</span>
-                  <div className="space-y-2.5">
-                    {calculatedOutput.top3.map((cand) => (
-                      <div key={cand.type} className="space-y-1">
-                        <div className="flex justify-between text-xs font-mono">
-                          <span className="font-bold text-slate-300">
-                            {cand.type} ({TIM_MODELS[cand.type].name})
-                          </span>
-                          <span>{cand.fitScore}%</span>
-                        </div>
-                        <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
-                          <div
-                            className="bg-emerald-500 h-full rounded-full"
-                            style={{ width: `${cand.fitScore}%` }}
-                          />
+                <p className="result-book-description">
+                  {TIM_PROFILES[calculatedOutput.top3[0].type].description}
+                </p>
+
+                <div className="result-confidence-card">
+                  <Shield className="h-5 w-5" />
+                  <div>
+                    <div className="result-confidence-title">
+                      Keyakinan hasil: {calculatedOutput.confidence.toUpperCase()}
+                    </div>
+                    <p>{calculatedOutput.confidenceExplanation}</p>
+                  </div>
+                </div>
+              </article>
+
+              <div className="result-side-stack">
+                <section className="result-candidate-catalogue">
+                  <div className="result-panel-heading">
+                    <div>
+                      <span>Rak kandidat</span>
+                      <h3>Tiga tipe terdekat</h3>
+                    </div>
+                    <Target className="h-5 w-5" />
+                  </div>
+
+                  <div className="space-y-3">
+                    {calculatedOutput.top3.map((candidate, index) => (
+                      <div key={candidate.type} className="result-candidate-card">
+                        <div className="result-candidate-rank">0{index + 1}</div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-baseline justify-between gap-3">
+                            <div className="min-w-0">
+                              <strong>{candidate.type}</strong>
+                              <span>{TIM_MODELS[candidate.type].name}</span>
+                            </div>
+                            <b>{candidate.fitScore}%</b>
+                          </div>
+                          <div className="result-candidate-track">
+                            <div style={{ width: `${candidate.fitScore}%` }} />
+                          </div>
                         </div>
                       </div>
                     ))}
                   </div>
-                </div>
+                </section>
 
-                {/* Confidence banner */}
-                <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/60 flex items-start space-x-3">
-                  <Shield className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <div className="text-xs font-bold text-white uppercase tracking-wider">
-                      Tingkat keyakinan tes: <span className="text-emerald-400">{calculatedOutput.confidence.toUpperCase()}</span>
+                <section className="result-export-card">
+                  <div className="result-panel-heading">
+                    <div>
+                      <span>Kartu katalog</span>
+                      <h3>Simpan hasilmu</h3>
                     </div>
-                    <p className="text-xs text-slate-400 leading-relaxed">{calculatedOutput.confidenceExplanation}</p>
+                    <Download className="h-5 w-5" />
                   </div>
-                </div>
-              </div>
 
-              {/* CARD GENERATOR EXPORTER CONTROLLER */}
-              <div className="p-6 rounded-2xl border border-slate-800 bg-slate-950 space-y-6 flex flex-col justify-between shadow-xl">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm uppercase tracking-wider font-display">
-                    <Download className="w-4 h-4" />
-                    <span>Buat kartu hasil</span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Masukkan nama panggilan dan foto opsional. Semua diproses langsung di browser kamu.
+                  <p className="result-panel-copy">
+                    Tambahkan nama panggilan dan foto opsional. Semuanya diproses langsung di browser kamu.
                   </p>
 
-                  <div className="space-y-2">
-                    <label className="block text-[10px] uppercase font-mono font-bold">Nama panggilan</label>
-                    <input
-                      type="text"
-                      id="nickname-input-privacy"
-                      name="random_tipologi_nickname_field"
-                      autoComplete="off"
-                      className="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-emerald-500 outline-none text-white font-mono"
-                      placeholder="Contoh: Alfidda"
-                      value={cardNickname}
-                      onChange={(e) => setCardNickname(e.target.value)}
-                    />
-                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
+                    <label className="result-form-field">
+                      <span>Nama panggilan</span>
+                      <input
+                        type="text"
+                        id="nickname-input-privacy"
+                        name="random_tipologi_nickname_field"
+                        autoComplete="off"
+                        placeholder="Contoh: Alfidda"
+                        value={cardNickname}
+                        onChange={(e) => setCardNickname(e.target.value)}
+                      />
+                    </label>
 
-                  <div className="space-y-2">
-                    <label className="block text-[10px] uppercase font-mono font-bold">Unggah foto opsional</label>
-                    <div className="border border-dashed border-slate-800 rounded p-4 text-center cursor-pointer hover:border-slate-700 hover:bg-slate-900/45 transition">
+                    <label className="result-upload-field" htmlFor="cardFilePortrait">
                       <input
                         type="file"
                         accept="image/*"
@@ -1217,33 +1220,27 @@ export default function App() {
                         id="cardFilePortrait"
                         onChange={handleImageUpload}
                       />
-                      <label htmlFor="cardFilePortrait" className="cursor-pointer space-y-1 block">
-                        <Upload className="w-5 h-5 mx-auto text-slate-500" />
-                        <span className="block text-[10px] text-slate-400 font-mono mt-1">Pilih gambar (.jpg/.png)</span>
-                      </label>
-                    </div>
+                      <Upload className="h-5 w-5" />
+                      <span>{cardImage ? "Foto sudah dipilih" : "Pilih foto opsional"}</span>
+                    </label>
                   </div>
 
                   {cardImage && (
-                    <div className="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800">
-                      <span className="text-[10px] font-mono text-emerald-400">Gambar siap dipakai</span>
-                      <button onClick={() => setCardImage(null)} className="text-[10px] text-rose-400 hover:underline">Hapus</button>
-                    </div>
+                    <button type="button" onClick={() => setCardImage(null)} className="result-remove-photo">
+                      Hapus foto yang dipilih
+                    </button>
                   )}
-                </div>
 
-                <button
-                  onClick={handleDownloadCard}
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-lg text-sm transition flex items-center justify-center space-x-2"
-                >
-                  <Download className="w-4 h-4 shrink-0" />
-                  <span>Unduh Kartu PNG</span>
-                </button>
+                  <button type="button" onClick={handleDownloadCard} className="result-download-button">
+                    <Download className="h-4 w-4" />
+                    <span>Unduh Kartu PNG</span>
+                  </button>
+                </section>
               </div>
             </div>
 
 
-            {/* FOUR-DOOR RESULT EXPERIENCE */}
+            {/* EDITORIAL CATALOGUE RESULT EXPERIENCE */}
             <React.Suspense
               fallback={(
                 <div className="library-result-shell flex min-h-56 items-center justify-center text-sm text-[#8b6b4e]">
@@ -1477,150 +1474,175 @@ export default function App() {
             </div>
 
             {/* MODEL COMPARISON FEATURE */}
-            <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
-              <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Perbandingan tipe:</span>
-                <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Bandingkan Dengan Tipe Lain</h3>
-                <p className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-550"}`}>
-                  Pilih tipe lain untuk melihat perbedaan Base, Creative, PoLR, dan kebutuhan Suggestive.
-                </p>
+            <section className="library-comparison-section">
+              <div className="library-section-titlebar">
+                <div>
+                  <span>Perbandingan tipe</span>
+                  <h3>Bandingkan Dengan Tipe Lain</h3>
+                  <p>Pilih satu tipe untuk membandingkan pusat perhatian, titik rawan, dan bentuk bantuan yang terasa paling melegakan.</p>
+                </div>
+                <BookOpen className="h-7 w-7" />
               </div>
 
-              <div className="space-y-4 max-w-sm">
-                <label className="block text-xs font-mono">Pilih tipe pembanding</label>
-                <select
-                  value={compareTIM}
-                  onChange={(e) => setCompareTIM(e.target.value as TIM)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm focus:ring-1 focus:ring-emerald-500 outline-none text-white text-semibold font-mono"
-                >
+              <label className="library-catalog-select">
+                <span>Pilih tipe pembanding</span>
+                <select value={compareTIM} onChange={(e) => setCompareTIM(e.target.value as TIM)}>
                   <option value="">-- Pilih Tipe --</option>
-                  {availableTIMs.filter((t) => t !== calculatedOutput.top3[0].type).map((t) => (
-                    <option key={t} value={t}>{t} - {TIM_MODELS[t].name}</option>
+                  {availableTIMs.filter((type) => type !== calculatedOutput.top3[0].type).map((type) => (
+                    <option key={type} value={type}>{type} - {TIM_MODELS[type].name}</option>
                   ))}
                 </select>
-              </div>
+              </label>
 
-              {compareTIM && (
-                <div className="grid md:grid-cols-2 gap-6 p-6 rounded-2xl border border-slate-800 bg-slate-900/10">
-                  {/* Tipe Utama */}
-                  <div className="space-y-4">
-                    <div className="border-b border-slate-800 pb-2">
-                      <span className="text-xs text-slate-500 font-mono">Tipe utama kamu:</span>
-                      <h4 className="text-xl font-bold font-display text-emerald-400">
-                        {calculatedOutput.top3[0].type} ({TIM_MODELS[calculatedOutput.top3[0].type].name})
-                      </h4>
-                    </div>
-                    <div className="space-y-2 text-xs text-slate-300">
-                      <div><strong>Orientasi Base:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].orientasiBase}</div>
-                      <div><strong>Tuntutan PoLR:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].tuntutanPolr}</div>
-                      <div><strong>Bantuan yang terasa melegakan:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].bantuanSuggestive}</div>
-                    </div>
-                  </div>
+              {compareTIM ? (
+                <div className="library-open-book">
+                  {[calculatedOutput.top3[0].type, compareTIM].map((type, index) => (
+                    <article key={type} className="library-book-page">
+                      <div className="library-book-page-label">{index === 0 ? "Tipe utama kamu" : "Tipe pembanding"}</div>
+                      <div className="library-book-page-header">
+                        <div>
+                          <strong>{type}</strong>
+                          <h4>{TIM_MODELS[type].name}</h4>
+                          <p>{TIM_MODELS[type].fullName}</p>
+                        </div>
+                        <span>Quadra {TIM_MODELS[type].quadra}</span>
+                      </div>
 
-                  {/* Tipe Pembanding */}
-                  <div className="space-y-4">
-                    <div className="border-b border-slate-800 pb-2">
-                      <span className="text-xs text-slate-500 font-mono">Tipe Pembanding:</span>
-                      <h4 className="text-xl font-bold font-display text-teal-400">
-                        {compareTIM} ({TIM_MODELS[compareTIM].name})
-                      </h4>
-                    </div>
-                    <div className="space-y-2 text-xs text-slate-300">
-                      <div><strong>Orientasi Base:</strong> {TIM_PROFILES[compareTIM].orientasiBase}</div>
-                      <div><strong>Tuntutan PoLR:</strong> {TIM_PROFILES[compareTIM].tuntutanPolr}</div>
-                      <div><strong>Bantuan yang terasa melegakan:</strong> {TIM_PROFILES[compareTIM].bantuanSuggestive}</div>
-                    </div>
+                      <div className="library-comparison-list">
+                        <div>
+                          <b>Base · {TIM_MODELS[type].positions.Base}</b>
+                          <p>{TIM_PROFILES[type].orientasiBase}</p>
+                        </div>
+                        <div>
+                          <b>Creative · {TIM_MODELS[type].positions.Creative}</b>
+                          <p>{TIM_PROFILES[type].gayaCreative}</p>
+                        </div>
+                        <div>
+                          <b>PoLR · {TIM_MODELS[type].positions.Vulnerable}</b>
+                          <p>{TIM_PROFILES[type].tuntutanPolr}</p>
+                        </div>
+                        <div>
+                          <b>Suggestive · {TIM_MODELS[type].positions.Suggestive}</b>
+                          <p>{TIM_PROFILES[type].bantuanSuggestive}</p>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className="library-empty-catalogue">
+                  <BookOpen className="h-8 w-8" />
+                  <div>
+                    <strong>Belum ada tipe pembanding.</strong>
+                    <p>Pilih satu tipe dari daftar di atas. Perbandingan akan tampil seperti dua halaman buku yang dibuka berdampingan.</p>
                   </div>
                 </div>
               )}
-            </div>
+            </section>
 
             {/* DYNAMIC INTERTYPE RELATIONS CALCULATOR */}
-            <div className="space-y-6 border-t border-slate-900 pt-10">
-              <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Relasi antar-tipe:</span>
-                <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white">Analisis Hubungan Antar-Tipe</h3>
-                <p className="text-xs text-slate-400">
-                  Pilih tipe seseorang untuk membaca pola komunikasi, titik nyaman, dan gesekan yang mungkin muncul.
-                </p>
+            <section className="library-relation-section">
+              <div className="library-section-titlebar">
+                <div>
+                  <span>Relasi antar-tipe</span>
+                  <h3>Analisis Hubungan Antar-Tipe</h3>
+                  <p>Pilih tipe seseorang untuk membaca pola komunikasi, titik nyaman, dan gesekan yang mungkin muncul.</p>
+                </div>
+                <Users className="h-7 w-7" />
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6 items-start">
-                <div className="space-y-4">
-                  <label className="block text-xs font-mono">Pilih tipe orang lain</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {availableTIMs.map((t) => {
-                      const isActive = intertypeTarget === t;
-                      const relCode = INTERTYPE_MAP[calculatedOutput.top3[0].type][t];
+              <div className="library-relation-layout">
+                <div className="library-type-drawer">
+                  <div className="library-drawer-label">Laci tipe</div>
+                  <div className="grid grid-cols-4 gap-2 sm:grid-cols-8 xl:grid-cols-4">
+                    {availableTIMs.map((type) => {
+                      const isActive = intertypeTarget === type;
                       return (
                         <button
-                          key={t}
-                          onClick={() => setIntertypeTarget(t)}
-                          className={`py-2 rounded font-mono text-xs border uppercase font-bold transition ${
-                            isActive
-                              ? "bg-emerald-500 text-slate-950 border-emerald-500"
-                              : "border-slate-800 bg-slate-900/30 text-slate-300 hover:bg-slate-850"
-                          }`}
+                          key={type}
+                          type="button"
+                          onClick={() => setIntertypeTarget(type)}
+                          className={`library-type-tab ${isActive ? "library-type-tab-active" : ""}`}
+                          title={`${type} - ${TIM_MODELS[type].name}`}
                         >
-                          {t}
+                          <strong>{type}</strong>
+                          <span>{TIM_MODELS[type].name}</span>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Calculation breakdown result */}
-                <div className="md:col-span-2 p-6 rounded-2xl border border-slate-800 bg-slate-900/30 space-y-4">
+                <div className="library-relation-record">
                   {(() => {
                     const self = calculatedOutput.top3[0].type;
-                    const relCode = INTERTYPE_MAP[self][intertypeTarget];
-                    const relMeta = INTERTYPE_RELATIONS_METADATA[relCode] || { name: relCode, description: "", impact: "" };
+                    const relationCode = INTERTYPE_MAP[self][intertypeTarget];
+                    const relation = INTERTYPE_RELATIONS_METADATA[relationCode] || {
+                      name: relationCode,
+                      description: "",
+                      impact: "",
+                    };
 
                     return (
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-baseline border-b border-slate-800 pb-3">
-                          <h4 className="text-lg font-bold font-display text-white">
-                            Interaksi: <span className="text-emerald-400">{relMeta.name}</span>
-                          </h4>
-                          <span className="text-[10px] font-mono text-slate-400 uppercase">
-                            {self} bertemu {intertypeTarget}
-                          </span>
+                      <>
+                        <div className="library-record-stamp">CATATAN RELASI</div>
+                        <div className="library-relation-pair">
+                          <div>
+                            <strong>{self}</strong>
+                            <span>{TIM_MODELS[self].name}</span>
+                          </div>
+                          <Heart className="h-5 w-5" />
+                          <div>
+                            <strong>{intertypeTarget}</strong>
+                            <span>{TIM_MODELS[intertypeTarget].name}</span>
+                          </div>
                         </div>
-                        <p className="text-xs text-slate-400 leading-relaxed font-mono italic">
-                          {relMeta.description}
-                        </p>
-                        <hr className="border-slate-800/80" />
-                        <div className="space-y-2">
-                          <div className="text-xs font-bold text-slate-300 uppercase tracking-wide">Dampak dalam interaksi:</div>
-                          <p className="text-xs text-slate-300 leading-relaxed font-sans mt-1">
-                            {relMeta.impact}
-                          </p>
+
+                        <div className="library-relation-name">
+                          <span>Jenis hubungan</span>
+                          <h4>{relation.name}</h4>
                         </div>
-                      </div>
+
+                        <div className="library-relation-copy">
+                          <div>
+                            <b>Gambaran singkat</b>
+                            <p>{relation.description}</p>
+                          </div>
+                          <div>
+                            <b>Dampak dalam interaksi</b>
+                            <p>{relation.impact}</p>
+                          </div>
+                        </div>
+
+                        <div className="library-relation-note">
+                          Hubungan nyata tetap dipengaruhi kedewasaan, nilai, pengalaman, komunikasi, dan batas pribadi. Socionics hanya memberi peta kecenderungan.
+                        </div>
+                      </>
                     );
                   })()}
                 </div>
               </div>
-            </div>
+            </section>
 
             {/* RE-TEST BOX */}
-            <div className="p-8 rounded-2xl border border-slate-900 bg-slate-900/20 text-center space-y-4 pt-10 border-t">
-              <h4 className="font-display font-bold text-xl">Mau mengulang tes?</h4>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Jawaban lama akan dihapus dari perangkat kamu. Pertanyaan dan urutan sesi baru akan dibuat ulang.
-              </p>
+            <section className="library-retest-card">
+              <div>
+                <span>Mulai dari halaman pertama lagi</span>
+                <h4>Mau mengulang tes?</h4>
+                <p>Jawaban lama akan dihapus dari perangkat kamu. Sesi baru akan memakai susunan pertanyaan yang dibuat ulang.</p>
+              </div>
               <button
+                type="button"
                 onClick={() => {
                   if (window.confirm("Hapus hasil ini dan mulai tes dari awal?")) {
                     resetSession();
                     setCurrentPage("landing");
                   }
                 }}
-                className="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 hover:border-slate-700 font-bold px-6 py-2 rounded-lg text-sm transition"
               >
                 Mulai Ulang Tes
               </button>
-            </div>
+            </section>
           </div>
         )}
 
