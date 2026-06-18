@@ -70,3 +70,15 @@
 - Memperbaiki skip pada item yang sebelumnya dijawab: jawaban lama kini dihapus sebelum item dicatat sebagai dilewati.
 - Menambahkan lexical near-duplicate gate ke audit instrumen.
 - Memastikan tulisan internal seperti `Seeded ID` tidak tampil di UI peserta.
+## 2.0.4 — Four-Door Result Experience
+
+- Mempertahankan fitur **Bandingkan Dengan Tipe Lain** dan **Analisis Hubungan Antar-Tipe**.
+- Menambahkan hasil berbentuk empat pintu interaktif:
+  - Pintu A: mesin batin, Base, Creative, Role, Demonstrative, ritme, dan bukti penyangkal.
+  - Pintu B: peta sukacita, marah, takut, sedih, malu, iri, muak, cinta, bosan, dan regulasi.
+  - Pintu C: cara melihat aturan, politik, agama, ekonomi, masyarakat, kekuasaan, dan kontribusi publik.
+  - Pintu D: nasihat, sirkel, hadiah, buku, film, musik, pekerjaan, destinasi, kosakata, dan eksperimen hidup.
+- Setiap kartu hasil memiliki bagian **Vibe**, **Artinya**, pembacaan utama, sisi rawan, dan eksperimen.
+- Menambahkan rekomendasi berbeda untuk seluruh 16 TIM.
+- Menampilkan sinyal terkuat dari channel profile aktual peserta.
+- Menambahkan batas interpretasi agar hasil mendalam tidak disalahartikan sebagai diagnosis, ramalan ideologi, atau keputusan hidup mutlak.

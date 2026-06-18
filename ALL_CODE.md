@@ -1,33 +1,33 @@
-# ALL CODE — Socionics Dalam Diriku v2.0.3
+# ALL CODE — Socionics Dalam Diriku v2.0.4
 
-Dokumen ini menggabungkan kode sumber, konfigurasi utama, audit, serta dokumentasi penting dari proyek terbaru. `node_modules`, hasil build `dist`, dan `package-lock.json` tidak disalin ke dokumen ini agar tetap bisa dibaca.
+Dokumen ini menggabungkan seluruh kode sumber, konfigurasi, audit, dokumentasi, dan pengalaman hasil empat pintu. `node_modules`, `dist`, dan `package-lock.json` tidak disalin agar tetap terbaca.
 
-## KONTRAK BAHASA PESERTA — FROZEN
+## Perubahan utama v2.0.4
 
-1. **Versi Kasual** menjadi pertanyaan utama: sudut pandang `aku`, satu tarikan napas, bahasa obrolan sehari-hari.
-2. **Artinya** menjelaskan proses batin, arah perhatian, alarm, keraguan, kenyamanan, relief, atau kebutuhan pengakuan.
-3. **Reaksi** wajib berupa tindakan fisik atau perilaku nyata yang bisa divisualkan.
-4. Reaksi dilarang menyalin kalimat asli, Versi Kasual, atau `responseFocus`.
-5. Kalimat formal lama tetap tersedia lewat panel **Lihat kalimat asli**.
-6. Auto-next wajib memakai `savedSession` agar jawaban yang baru disimpan tidak ditimpa state lama.
-7. `npm run audit:language` wajib lulus sebelum rilis.
-8. `npm run export:editorial` menghasilkan seluruh 256 item dan 1.280 pasangan Artinya/Reaksi ke `docs/EDITORIAL_COPY_ALL_256.txt`.
+- Hasil tes sekarang membuka empat pintu: Cermin, Cuaca Emosi, Observatorium Dunia, dan Laboratorium Hidup.
+- Fitur Bandingkan Dengan Tipe Lain dan Analisis Hubungan Antar-Tipe tetap dipertahankan.
+- Setiap kartu hasil memiliki Vibe, Artinya, pembacaan, sisi rawan, dan eksperimen.
+- Seluruh 16 TIM memiliki rekomendasi buku, film, musik, pekerjaan, destinasi, kosakata, hadiah, sirkel, dan eksperimen.
+- Interpretasi politik/agama/ekonomi diberi batas tegas dan tidak diperlakukan sebagai prediksi ideologi.
 
 ## Daftar file
 
 - `.env.example`
 - `.gitignore`
 - `.npmrc`
+- `BACA_DULU.txt`
 - `CHANGELOG.md`
 - `README.md`
 - `docs/AUDIT_RESULT.txt`
 - `docs/COVERAGE_REPORT.md`
 - `docs/DEPLOYMENT.md`
+- `docs/EDITORIAL_COPY_ALL_256.txt`
 - `docs/FAIRNESS_AUDIT.md`
 - `docs/LANGUAGE_AUDIT_RESULT.txt`
 - `docs/LANGUAGE_INTEGRATION_REPORT.md`
 - `docs/QUESTION_WRITING_GUIDE.md`
 - `docs/REBUILD_REPORT.md`
+- `docs/RESULT_EXPERIENCE_GUIDE.md`
 - `docs/SCORING_GUIDE.md`
 - `docs/VALIDATION_ROADMAP.md`
 - `index.html`
@@ -38,6 +38,7 @@ Dokumen ini menggabungkan kode sumber, konfigurasi utama, audit, serta dokumenta
 - `scripts/exportEditorialCopy.ts`
 - `src/App.tsx`
 - `src/audit/instrumentAudit.ts`
+- `src/components/ResultPortal.tsx`
 - `src/constants/socionicsData.ts`
 - `src/data/coreQuestions.ts`
 - `src/data/holdoutQuestions.ts`
@@ -46,6 +47,7 @@ Dokumen ini menggabungkan kode sumber, konfigurasi utama, audit, serta dokumenta
 - `src/hooks/useTestSession.ts`
 - `src/index.css`
 - `src/main.tsx`
+- `src/results/resultExperience.ts`
 - `src/scoring/engine.ts`
 - `src/session/sessionState.ts`
 - `src/types/socionics.ts`
@@ -53,7 +55,6 @@ Dokumen ini menggabungkan kode sumber, konfigurasi utama, audit, serta dokumenta
 - `tsconfig.json`
 - `vercel.json`
 - `vite.config.ts`
-- `docs/EDITORIAL_COPY_ALL_256.txt` — file editor 884 KB; tidak ditempel penuh di ALL_CODE karena dapat dibuat ulang lewat `npm run export:editorial`.
 
 ---
 
@@ -88,6 +89,38 @@ registry=https://registry.npmjs.org/
 fund=false
 audit=false
 prefer-offline=true
+````
+
+---
+
+## `BACA_DULU.txt`
+
+````text
+SOCIONICS DALAM DIRIKU v2.0.3 — LANGUAGE INTEGRATED
+
+Yang sudah disatukan ke ZIP ini:
+- perbaikan penyimpanan jawaban;
+- pertanyaan utama Versi Kasual;
+- panel kalimat asli;
+- Artinya sebagai proses batin;
+- Reaksi sebagai tindakan nyata;
+- audit bahasa otomatis;
+- ekspor editorial seluruh 256 item;
+- package-lock publik dan konfigurasi Vercel.
+
+Sebelum upload:
+1. Ekstrak ZIP.
+2. Upload isi folder SocionicsGPT-main ke root repository.
+3. Jangan upload folder pembungkus ganda.
+4. Di Vercel gunakan:
+   Framework: Vite
+   Install: npm ci --no-audit --no-fund
+   Build: npm run build
+   Output: dist
+
+Pemeriksaan lokal:
+npm ci
+npm run check
 ````
 
 ---
@@ -167,6 +200,18 @@ prefer-offline=true
 - Memperbaiki skip pada item yang sebelumnya dijawab: jawaban lama kini dihapus sebelum item dicatat sebagai dilewati.
 - Menambahkan lexical near-duplicate gate ke audit instrumen.
 - Memastikan tulisan internal seperti `Seeded ID` tidak tampil di UI peserta.
+## 2.0.4 — Four-Door Result Experience
+
+- Mempertahankan fitur **Bandingkan Dengan Tipe Lain** dan **Analisis Hubungan Antar-Tipe**.
+- Menambahkan hasil berbentuk empat pintu interaktif:
+  - Pintu A: mesin batin, Base, Creative, Role, Demonstrative, ritme, dan bukti penyangkal.
+  - Pintu B: peta sukacita, marah, takut, sedih, malu, iri, muak, cinta, bosan, dan regulasi.
+  - Pintu C: cara melihat aturan, politik, agama, ekonomi, masyarakat, kekuasaan, dan kontribusi publik.
+  - Pintu D: nasihat, sirkel, hadiah, buku, film, musik, pekerjaan, destinasi, kosakata, dan eksperimen hidup.
+- Setiap kartu hasil memiliki bagian **Vibe**, **Artinya**, pembacaan utama, sisi rawan, dan eksperimen.
+- Menambahkan rekomendasi berbeda untuk seluruh 16 TIM.
+- Menampilkan sinyal terkuat dari channel profile aktual peserta.
+- Menambahkan batas interpretasi agar hasil mendalam tidak disalahartikan sebagai diagnosis, ramalan ideologi, atau keputusan hidup mutlak.
 ````
 
 ---
@@ -239,6 +284,16 @@ Perintah tersebut menjalankan TypeScript, audit instrumen, synthetic recovery te
 ## Batas klaim
 
 Versi ini jauh lebih konsisten secara arsitektur dan content coverage dibanding versi awal, tetapi reliabilitas, validitas konstruk, differential item functioning, calibration, dan invariance tetap membutuhkan data peserta nyata. Lihat `docs/VALIDATION_ROADMAP.md`.
+## Pengalaman hasil empat pintu
+
+Versi 2.0.4 memperluas halaman hasil menjadi pengalaman eksplorasi interaktif tanpa menghapus fitur perbandingan tipe dan relasi antar-tipe.
+
+- **Pintu A — Ruang Cermin:** algoritma inti, cara mengubah dunia, topeng sosial, kompetensi latar, ritme, dan bukti penyangkal.
+- **Pintu B — Ruang Cuaca:** pemicu dan makna sukacita, marah, takut, sedih, malu, iri, muak, cinta, dan bosan.
+- **Pintu C — Observatorium Dunia:** lensa aturan, politik, agama, ekonomi, sosial, kekuasaan, dan kontribusi publik. Bagian ini tidak meramalkan ideologi atau keyakinan.
+- **Pintu D — Laboratorium Hidup:** nasihat, sirkel, hadiah, buku, film, musik, pekerjaan, destinasi, kosakata, dan eksperimen tujuh hari.
+
+Setiap kartu menggunakan struktur **Vibe → Artinya → Pembacaan → Sisi rawan/Eksperimen**. Rekomendasi diperlakukan sebagai moodboard dan bahan eksplorasi, bukan resep hidup atau diagnosis.
 ````
 
 ---
@@ -412,6 +467,18963 @@ Anda juga dapat membuka aplikasi secara langsung dari piringan penyimpanan lokal
    npx http-server dist
    ```
 3. Data jawaban Anda tetap aman dan andal tersimpan di `localStorage` peranti masing-masing.
+````
+
+---
+
+## `docs/EDITORIAL_COPY_ALL_256.txt`
+
+````text
+PAKET EDITORIAL — SOCIONICS DALAM DIRIKU
+Versi: 2.0.3
+Jumlah item: 256
+
+Yang boleh direvisi: VERSI KASUAL, ARTINYA, REAKSI, CATATAN EDITOR.
+Yang jangan diubah: ID, jenis, elemen, kanal, konteks, skala, dan label pilihan.
+
+========================================================================================
+[[ITEM_START]] 001/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_producer_01
+JENIS: CORE
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: new_situation
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Aplikasi baru dengan banyak menu
+
+RESPONS/SIKAP ASLI:
+Saat mencoba aplikasi yang belum dikenal, saya cepat melihat beberapa cara berbeda untuk memakainya, termasuk fungsi yang mungkin tidak terpikir oleh orang lain.
+
+FOKUS RESPONS INTERNAL:
+melihat beberapa kemungkinan penggunaan yang berbeda
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas nyoba aplikasi yang belum dikenal, aku cepat melihat beberapa cara berbeda untuk memakainya, termasuk fungsi yang mungkin nggak kepikiran oleh orang lain.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aplikasi baru dengan banyak menu, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aplikasi baru dengan banyak menu, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aplikasi baru dengan banyak menu, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aplikasi baru dengan banyak menu, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aplikasi baru dengan banyak menu, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_producer_01
+
+========================================================================================
+[[ITEM_START]] 002/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_producer_02
+JENIS: CORE
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: group
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Obrolan kelompok mulai buntu
+
+RESPONS/SIKAP ASLI:
+Ketika pembahasan mentok pada satu jalan, pikiran saya spontan membuka beberapa arah lain yang masih mungkin dicoba.
+
+FOKUS RESPONS INTERNAL:
+membuka beberapa kemungkinan ketika pembahasan buntu
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas pembahasan mentok pada satu jalan, kepalaku spontan membuka beberapa arah lain yang masih mungkin dicoba.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan kelompok mulai buntu, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan kelompok mulai buntu, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan kelompok mulai buntu, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan kelompok mulai buntu, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan kelompok mulai buntu, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_producer_02
+
+========================================================================================
+[[ITEM_START]] 003/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_producer_03
+JENIS: CORE
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: private
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Barang lama yang tidak terpakai
+
+RESPONS/SIKAP ASLI:
+Melihat benda yang hendak dibuang sering membuat saya langsung membayangkan fungsi lain yang masih bisa diberikan kepadanya.
+
+FOKUS RESPONS INTERNAL:
+membayangkan fungsi baru dari sesuatu yang sudah ada
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Melihat benda yang hendak dibuang sering bikin aku langsung membayangkan fungsi lain yang masih bisa diberikan kepadanya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi barang lama yang nggak terpakai, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi barang lama yang nggak terpakai, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi barang lama yang nggak terpakai, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi barang lama yang nggak terpakai, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi barang lama yang nggak terpakai, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_producer_03
+
+========================================================================================
+[[ITEM_START]] 004/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_flexible_01
+JENIS: CORE
+ELEMEN: Ne
+KANAL: flexible
+KONTEKS: work
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Rencana kerja utama gagal
+
+RESPONS/SIKAP ASLI:
+Jika cara pertama tidak bisa dipakai, saya relatif nyaman berpindah di antara beberapa alternatif sampai menemukan jalan yang paling masuk akal.
+
+FOKUS RESPONS INTERNAL:
+berpindah di antara alternatif untuk menyelesaikan masalah
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau cara pertama nggak bisa dipakai, aku lumayan nyaman berpindah di antara beberapa alternatif sampai nemuin jalan yang paling masuk akal.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi rencana kerja utama gagal, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi rencana kerja utama gagal, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi rencana kerja utama gagal, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi rencana kerja utama gagal, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi rencana kerja utama gagal, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_flexible_01
+
+========================================================================================
+[[ITEM_START]] 005/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_flexible_02
+JENIS: CORE
+ELEMEN: Ne
+KANAL: flexible
+KONTEKS: friendship
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman bingung memilih langkah
+
+RESPONS/SIKAP ASLI:
+Saya mudah menyesuaikan jenis saran: kadang memberi pilihan aman, kadang pilihan berani, tergantung kemungkinan yang paling cocok bagi teman itu.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan pilihan dengan kebutuhan orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman bingung milih langkah, aku mudah menyesuaikan jenis saran: kadang ngasih pilihan aman, kadang pilihan berani, tergantung kemungkinan yang paling cocok bagi teman itu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung milih langkah, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung milih langkah, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung milih langkah, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung milih langkah, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung milih langkah, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_flexible_02
+
+========================================================================================
+[[ITEM_START]] 006/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_flexible_03
+JENIS: CORE
+ELEMEN: Ne
+KANAL: flexible
+KONTEKS: study
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tugas masih sangat terbuka
+
+RESPONS/SIKAP ASLI:
+Saya cukup nyaman memperlebar pilihan di awal, lalu mempersempitnya setelah tujuan tugas mulai jelas.
+
+FOKUS RESPONS INTERNAL:
+membuka lalu menyaring kemungkinan sesuai tujuan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi tugas masih sangat terbuka, aku cukup nyaman memperlebar pilihan di awal, lalu mempersempitnya setelah tujuan tugas mulai jelas.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tugas masih sangat terbuka, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tugas masih sangat terbuka, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tugas masih sangat terbuka, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tugas masih sangat terbuka, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tugas masih sangat terbuka, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_flexible_03
+
+========================================================================================
+[[ITEM_START]] 007/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_mask_01
+JENIS: CORE
+ELEMEN: Ne
+KANAL: mask
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Rapat menuntut ide yang unik
+
+RESPONS/SIKAP ASLI:
+Saya pernah memaksa diri melempar banyak gagasan agar terlihat kreatif, meskipun sebenarnya kepala saya sudah lelah dan ingin memakai cara yang pasti.
+
+FOKUS RESPONS INTERNAL:
+menampilkan kreativitas karena tuntutan suasana
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi rapat menuntut ide yang unik, aku pernah memaksa diri melempar banyak gagasan agar terlihat kreatif, walau sebenarnya kepalaku sudah lelah dan ingin memakai cara yang pasti.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat menuntut ide yang unik, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat menuntut ide yang unik, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat menuntut ide yang unik, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat menuntut ide yang unik, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat menuntut ide yang unik, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_mask_01
+
+========================================================================================
+[[ITEM_START]] 008/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_mask_02
+JENIS: CORE
+ELEMEN: Ne
+KANAL: mask
+KONTEKS: public
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta menjadi orang paling inovatif
+
+RESPONS/SIKAP ASLI:
+Ketika orang berharap saya selalu punya terobosan, saya berusaha terlihat penuh ide walau prosesnya terasa seperti pertunjukan.
+
+FOKUS RESPONS INTERNAL:
+berusaha tampak penuh kemungkinan demi citra
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas orang berharap aku selalu punya terobosan, aku berusaha terlihat penuh ide walau prosesnya terasa seperti pertunjukan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta menjadi orang paling inovatif, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta menjadi orang paling inovatif, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta menjadi orang paling inovatif, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta menjadi orang paling inovatif, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta menjadi orang paling inovatif, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_mask_02
+
+========================================================================================
+[[ITEM_START]] 009/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_mask_03
+JENIS: CORE
+ELEMEN: Ne
+KANAL: mask
+KONTEKS: study
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Presentasi harus terlihat berbeda
+
+RESPONS/SIKAP ASLI:
+Saya kadang menambahkan ide yang tidak biasa hanya agar tugas tampak kreatif, bukan karena ide itu benar-benar muncul dengan alami.
+
+FOKUS RESPONS INTERNAL:
+menambahkan kebaruan karena merasa seharusnya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas presentasi harus terlihat berbeda, aku kadang menambahkan ide yang nggak biasa hanya agar tugas tampak kreatif, bukan karena ide itu benar-benar muncul dengan alami.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus terlihat berbeda, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus terlihat berbeda, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus terlihat berbeda, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus terlihat berbeda, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus terlihat berbeda, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_mask_03
+
+========================================================================================
+[[ITEM_START]] 010/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_threat_01
+JENIS: CORE
+ELEMEN: Ne
+KANAL: threat
+KONTEKS: time_pressure
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta memberi banyak alternatif saat itu juga
+
+RESPONS/SIKAP ASLI:
+Ketika harus menghasilkan beberapa pilihan dalam hitungan detik dan semuanya dinilai, pikiran saya dapat mendadak buntu atau defensif.
+
+FOKUS RESPONS INTERNAL:
+menghadapi tuntutan menghasilkan banyak alternatif secara cepat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus menghasilkan beberapa pilihan dalam hitungan detik dan semuanya dinilai, kepalaku bisa mendadak buntu atau defensif.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta ngasih banyak alternatif pas itu juga, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta ngasih banyak alternatif pas itu juga, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta ngasih banyak alternatif pas itu juga, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta ngasih banyak alternatif pas itu juga, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta ngasih banyak alternatif pas itu juga, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_threat_01
+
+========================================================================================
+[[ITEM_START]] 011/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_threat_02
+JENIS: CORE
+ELEMEN: Ne
+KANAL: threat
+KONTEKS: work
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Semua usulan ditolak dan diminta mencari lagi
+
+RESPONS/SIKAP ASLI:
+Saya merasa makin tertekan ketika setiap pilihan dibantah tetapi saya tetap dituntut terus menciptakan kemungkinan baru.
+
+FOKUS RESPONS INTERNAL:
+terus menghasilkan kemungkinan setelah berulang kali ditolak
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas semua usulan ditolak dan diminta nyari lagi, aku ngerasa makin tertekan pas setiap pilihan dibantah tetapi aku tetap dituntut terus menciptakan kemungkinan baru.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas semua usulan ditolak dan diminta nyari lagi, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas semua usulan ditolak dan diminta nyari lagi, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas semua usulan ditolak dan diminta nyari lagi, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas semua usulan ditolak dan diminta nyari lagi, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas semua usulan ditolak dan diminta nyari lagi, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_threat_02
+
+========================================================================================
+[[ITEM_START]] 012/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_threat_03
+JENIS: CORE
+ELEMEN: Ne
+KANAL: threat
+KONTEKS: new_situation
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tidak ada petunjuk dan jawaban pasti
+
+RESPONS/SIKAP ASLI:
+Situasi yang sepenuhnya terbuka tanpa pegangan dapat membuat saya gelisah karena saya harus menciptakan jalan dari nol.
+
+FOKUS RESPONS INTERNAL:
+menemukan kemungkinan tanpa pegangan yang jelas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau nggak ada petunjuk atau jawaban pasti, aku gampang gelisah karena harus bikin jalan dari nol.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku nggak dikasih petunjuk atau jawaban pasti, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku nggak dikasih petunjuk atau jawaban pasti, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku nggak dikasih petunjuk atau jawaban pasti, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku nggak dikasih petunjuk atau jawaban pasti, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku nggak dikasih petunjuk atau jawaban pasti, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_threat_03
+
+========================================================================================
+[[ITEM_START]] 013/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_receiver_01
+JENIS: CORE
+ELEMEN: Ne
+KANAL: receiver
+KONTEKS: friendship
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Masalah terasa tidak punya jalan keluar
+
+RESPONS/SIKAP ASLI:
+Saya merasa sangat terbantu ketika seseorang menunjukkan sudut pandang baru yang membuat pilihan yang tadinya tertutup kembali terlihat.
+
+FOKUS RESPONS INTERNAL:
+menerima sudut pandang baru dari orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas masalah terasa nggak punya jalan keluar, aku ngerasa sangat terbantu pas seseorang nunjukin sudut pandang baru yang bikin pilihan yang tadinya tertutup kembali terlihat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas masalah terasa nggak punya jalan keluar, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas masalah terasa nggak punya jalan keluar, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas masalah terasa nggak punya jalan keluar, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas masalah terasa nggak punya jalan keluar, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas masalah terasa nggak punya jalan keluar, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_receiver_01
+
+========================================================================================
+[[ITEM_START]] 014/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_receiver_02
+JENIS: CORE
+ELEMEN: Ne
+KANAL: receiver
+KONTEKS: work
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Proyek tersangkut pada cara lama
+
+RESPONS/SIKAP ASLI:
+Orang yang datang membawa alternatif segar membuat beban saya terasa lebih ringan dan memberi energi untuk mencoba lagi.
+
+FOKUS RESPONS INTERNAL:
+menerima alternatif segar saat cara lama buntu
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi proyek tersangkut pada cara lama, orang yang datang membawa alternatif segar bikin beban aku terasa lebih ringan dan ngasih energi untuk nyoba lagi.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi proyek tersangkut pada cara lama, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi proyek tersangkut pada cara lama, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi proyek tersangkut pada cara lama, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi proyek tersangkut pada cara lama, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi proyek tersangkut pada cara lama, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_receiver_02
+
+========================================================================================
+[[ITEM_START]] 015/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_receiver_03
+JENIS: CORE
+ELEMEN: Ne
+KANAL: receiver
+KONTEKS: private
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Merasa kemampuan diri mentok
+
+RESPONS/SIKAP ASLI:
+Saya lega ketika seseorang bisa melihat potensi yang belum saya sadari dan menunjukkan apa lagi yang mungkin saya kembangkan.
+
+FOKUS RESPONS INTERNAL:
+menerima pembacaan potensi yang belum terlihat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ngerasa kemampuan diri mentok, aku lega pas seseorang bisa melihat potensi yang belum aku sadari dan nunjukin apa lagi yang mungkin aku kembangkan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ngerasa kemampuan diri mentok, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ngerasa kemampuan diri mentok, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ngerasa kemampuan diri mentok, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ngerasa kemampuan diri mentok, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ngerasa kemampuan diri mentok, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_receiver_03
+
+========================================================================================
+[[ITEM_START]] 016/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_aspiration_01
+JENIS: CORE
+ELEMEN: Ne
+KANAL: aspiration
+KONTEKS: public
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mendapat komentar tentang cara berpikir
+
+RESPONS/SIKAP ASLI:
+Pujian bahwa saya mampu melihat kemungkinan yang tidak biasa terasa sangat berarti dan ingin saya buktikan lagi.
+
+FOKUS RESPONS INTERNAL:
+diakui karena melihat kemungkinan yang tidak biasa
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mendapat komentar tentang cara mikir, pujian bahwa aku mampu melihat kemungkinan yang nggak biasa terasa sangat berarti dan ingin aku buktikan lagi.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat komentar tentang cara mikir, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat komentar tentang cara mikir, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat komentar tentang cara mikir, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat komentar tentang cara mikir, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat komentar tentang cara mikir, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_aspiration_01
+
+========================================================================================
+[[ITEM_START]] 017/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_aspiration_02
+JENIS: CORE
+ELEMEN: Ne
+KANAL: aspiration
+KONTEKS: study
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Belajar bidang baru
+
+RESPONS/SIKAP ASLI:
+Saya ingin menjadi orang yang lebih terbuka terhadap banyak kemungkinan tanpa cepat menutup ide yang belum dikenal.
+
+FOKUS RESPONS INTERNAL:
+berkembang dalam menjelajahi kemungkinan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi belajar bidang baru, aku pengin tetap terbuka sama banyak kemungkinan tanpa buru-buru menutup ide yang belum kukenal.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas aku lagi belajar bidang baru, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas aku lagi belajar bidang baru, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas aku lagi belajar bidang baru, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas aku lagi belajar bidang baru, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas aku lagi belajar bidang baru, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_aspiration_02
+
+========================================================================================
+[[ITEM_START]] 018/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_aspiration_03
+JENIS: CORE
+ELEMEN: Ne
+KANAL: aspiration
+KONTEKS: work
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mengusulkan jalan yang belum dicoba
+
+RESPONS/SIKAP ASLI:
+Pengakuan bahwa hubungan ide yang saya lihat ternyata berguna dapat membuat saya sangat bersemangat.
+
+FOKUS RESPONS INTERNAL:
+dihargai karena menghubungkan ide secara orisinal
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mengusulkan jalan yang belum dicoba, pengakuan bahwa hubungan ide yang aku lihat ternyata berguna bisa bikin aku sangat bersemangat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mengusulkan jalan yang belum dicoba, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mengusulkan jalan yang belum dicoba, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mengusulkan jalan yang belum dicoba, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mengusulkan jalan yang belum dicoba, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mengusulkan jalan yang belum dicoba, kamu menyimpan idenya, membuka catatan baru, lalu kepikiran mengembangkan kemungkinan itu lagi setelah obrolan selesai, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_aspiration_03
+
+========================================================================================
+[[ITEM_START]] 019/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_dismissive_01
+JENIS: CORE
+ELEMEN: Ne
+KANAL: dismissive
+KONTEKS: decision
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada terlalu banyak pilihan
+
+RESPONS/SIKAP ASLI:
+Saya bisa memikirkan beberapa alternatif, tetapi setelah satu jalan terasa cukup, saya cenderung menutup pilihan lain agar urusan tidak melebar.
+
+FOKUS RESPONS INTERNAL:
+mampu melihat alternatif tetapi memilih segera menutupnya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada terlalu banyak pilihan, aku bisa mikirin beberapa alternatif, tetapi setelah satu jalan terasa cukup, aku biasanya menutup pilihan lain agar urusan nggak melebar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada terlalu banyak pilihan, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada terlalu banyak pilihan, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada terlalu banyak pilihan, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada terlalu banyak pilihan, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada terlalu banyak pilihan, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_dismissive_01
+
+========================================================================================
+[[ITEM_START]] 020/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_dismissive_02
+JENIS: CORE
+ELEMEN: Ne
+KANAL: dismissive
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sesi curah gagasan terlalu panjang
+
+RESPONS/SIKAP ASLI:
+Saya mampu ikut menghasilkan ide, namun cepat merasa pembahasan kemungkinan tanpa keputusan nyata sudah tidak penting.
+
+FOKUS RESPONS INTERNAL:
+menghentikan eksplorasi kemungkinan yang terlalu lama
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi sesi curah gagasan terlalu panjang, aku mampu ikut menghasilkan ide, tapi cepat ngerasa pembahasan kemungkinan tanpa keputusan nyata sudah nggak penting.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi sesi curah gagasan terlalu panjang, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi sesi curah gagasan terlalu panjang, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi sesi curah gagasan terlalu panjang, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi sesi curah gagasan terlalu panjang, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi sesi curah gagasan terlalu panjang, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_dismissive_02
+
+========================================================================================
+[[ITEM_START]] 021/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_dismissive_03
+JENIS: CORE
+ELEMEN: Ne
+KANAL: dismissive
+KONTEKS: private
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Muncul gagasan baru saat sibuk
+
+RESPONS/SIKAP ASLI:
+Ide baru sering sempat terlihat, tetapi saya menyisihkannya tanpa banyak rasa kehilangan agar fokus utama tidak terganggu.
+
+FOKUS RESPONS INTERNAL:
+menyisihkan kemungkinan yang tidak dianggap utama
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas muncul gagasan baru pas sibuk, ide baru sering sempat terlihat, tetapi aku menyisihkannya tanpa banyak rasa kehilangan agar fokus utama nggak terganggu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas muncul gagasan baru pas sibuk, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas muncul gagasan baru pas sibuk, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas muncul gagasan baru pas sibuk, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas muncul gagasan baru pas sibuk, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas muncul gagasan baru pas sibuk, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_dismissive_03
+
+========================================================================================
+[[ITEM_START]] 022/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_background_01
+JENIS: CORE
+ELEMEN: Ne
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Melihat cara orang melakukan sesuatu
+
+RESPONS/SIKAP ASLI:
+Tanpa sengaja saya sering menangkap bahwa benda, aturan, atau kebiasaan yang sama sebenarnya dapat dipakai dengan cara lain.
+
+FOKUS RESPONS INTERNAL:
+menangkap kemungkinan lain secara diam-diam
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi melihat cara orang melakukan sesuatu, tanpa sengaja aku sering menangkap bahwa benda, aturan, atau kebiasaan yang sama sebenarnya bisa dipakai dengan cara lain.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat cara orang melakukan sesuatu, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat cara orang melakukan sesuatu, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat cara orang melakukan sesuatu, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat cara orang melakukan sesuatu, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat cara orang melakukan sesuatu, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_background_01
+
+========================================================================================
+[[ITEM_START]] 023/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_background_02
+JENIS: CORE
+ELEMEN: Ne
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman menceritakan rencana
+
+RESPONS/SIKAP ASLI:
+Saya kadang langsung melihat beberapa arah yang bisa berkembang dari ceritanya, tetapi tidak selalu merasa perlu mengatakannya.
+
+FOKUS RESPONS INTERNAL:
+melihat cabang kemungkinan tanpa menjadikannya pusat perhatian
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman menceritakan rencana, aku kadang langsung melihat beberapa arah yang bisa berkembang dari ceritanya, tetapi nggak selalu ngerasa perlu mengatakannya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan rencana, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan rencana, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan rencana, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan rencana, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan rencana, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_background_02
+
+========================================================================================
+[[ITEM_START]] 024/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ne_background_03
+JENIS: CORE
+ELEMEN: Ne
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Alat yang tersedia tidak sesuai kebutuhan
+
+RESPONS/SIKAP ASLI:
+Saya sering menemukan kegunaan alternatif secara spontan dan langsung memakainya tanpa menganggap hal itu sebagai ide besar.
+
+FOKUS RESPONS INTERNAL:
+menggunakan alternatif dengan lancar tanpa mencari pengakuan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi alat yang tersedia nggak sesuai kebutuhan, aku sering nemuin kegunaan alternatif secara spontan dan langsung memakainya tanpa menganggap hal itu sebagai ide besar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi alat yang tersedia nggak sesuai kebutuhan, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi alat yang tersedia nggak sesuai kebutuhan, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi alat yang tersedia nggak sesuai kebutuhan, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi alat yang tersedia nggak sesuai kebutuhan, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi alat yang tersedia nggak sesuai kebutuhan, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ne_background_03
+
+========================================================================================
+[[ITEM_START]] 025/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_producer_01
+JENIS: CORE
+ELEMEN: Ni
+KANAL: producer
+KONTEKS: decision
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Beberapa kejadian terasa saling berkaitan
+
+RESPONS/SIKAP ASLI:
+Setelah melihat potongan yang terpisah, pikiran saya sering mengerucut pada satu arah tentang bagaimana situasi ini akan berkembang.
+
+FOKUS RESPONS INTERNAL:
+mengerucutkan kejadian menjadi satu arah perkembangan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Setelah melihat potongan yang terpisah, kepalaku sering mengerucut pada satu arah tentang bagaimana situasi ini akan berkembang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas beberapa kejadian terasa saling berkaitan, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas beberapa kejadian terasa saling berkaitan, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas beberapa kejadian terasa saling berkaitan, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas beberapa kejadian terasa saling berkaitan, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas beberapa kejadian terasa saling berkaitan, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_producer_01
+
+========================================================================================
+[[ITEM_START]] 026/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_producer_02
+JENIS: CORE
+ELEMEN: Ni
+KANAL: producer
+KONTEKS: private
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mengingat perjalanan beberapa bulan terakhir
+
+RESPONS/SIKAP ASLI:
+Saya spontan membaca fase yang sedang saya jalani dan merasakan apakah sesuatu sedang matang, menurun, atau belum waktunya.
+
+FOKUS RESPONS INTERNAL:
+merasakan fase dan kematangan suatu proses
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mengingat perjalanan beberapa bulan terakhir, aku spontan membaca fase yang sedang aku jalani dan merasakan apakah sesuatu sedang matang, menurun, atau belum waktunya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengingat perjalanan beberapa bulan terakhir, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengingat perjalanan beberapa bulan terakhir, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengingat perjalanan beberapa bulan terakhir, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengingat perjalanan beberapa bulan terakhir, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengingat perjalanan beberapa bulan terakhir, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_producer_02
+
+========================================================================================
+[[ITEM_START]] 027/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_producer_03
+JENIS: CORE
+ELEMEN: Ni
+KANAL: producer
+KONTEKS: group
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Banyak orang memberi pendapat berbeda
+
+RESPONS/SIKAP ASLI:
+Di tengah detail yang ramai, saya sering menangkap satu tema utama yang menjelaskan ke mana pembahasan sebenarnya bergerak.
+
+FOKUS RESPONS INTERNAL:
+menangkap tema dan arah di balik banyak detail
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi banyak orang ngasih pendapat berbeda, di tengah detail yang ramai, aku sering menangkap satu tema utama yang jelasin ke mana pembahasan sebenarnya bergerak.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi banyak orang ngasih pendapat berbeda, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi banyak orang ngasih pendapat berbeda, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi banyak orang ngasih pendapat berbeda, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi banyak orang ngasih pendapat berbeda, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi banyak orang ngasih pendapat berbeda, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_producer_03
+
+========================================================================================
+[[ITEM_START]] 028/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_flexible_01
+JENIS: CORE
+ELEMEN: Ni
+KANAL: flexible
+KONTEKS: work
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Waktu pelaksanaan perlu diubah
+
+RESPONS/SIKAP ASLI:
+Saya cukup nyaman menggeser urutan atau momentum tindakan supaya rencana utama tetap berjalan pada saat yang lebih tepat.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan waktu dan urutan demi tujuan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas waktu pelaksanaan perlu diubah, aku cukup nyaman menggeser urutan atau momentum tindakan supaya rencana utama tetap berjalan pada pas yang lebih tepat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas waktu pelaksanaan perlu diubah, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas waktu pelaksanaan perlu diubah, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas waktu pelaksanaan perlu diubah, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas waktu pelaksanaan perlu diubah, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas waktu pelaksanaan perlu diubah, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_flexible_01
+
+========================================================================================
+[[ITEM_START]] 029/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_flexible_02
+JENIS: CORE
+ELEMEN: Ni
+KANAL: flexible
+KONTEKS: friendship
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman ingin mengambil keputusan besar
+
+RESPONS/SIKAP ASLI:
+Saya bisa menyesuaikan cara menjelaskan kemungkinan perkembangan agar teman memahami kapan sebaiknya menunggu dan kapan bergerak.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan pembacaan arah untuk membantu keputusan orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman ingin mengambil keputusan besar, aku bisa menyesuaikan cara jelasin kemungkinan perkembangan agar teman memahami kapan sebaiknya nunggu dan kapan bergerak.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman ingin mengambil keputusan besar, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman ingin mengambil keputusan besar, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman ingin mengambil keputusan besar, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman ingin mengambil keputusan besar, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman ingin mengambil keputusan besar, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_flexible_02
+
+========================================================================================
+[[ITEM_START]] 030/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_flexible_03
+JENIS: CORE
+ELEMEN: Ni
+KANAL: flexible
+KONTEKS: new_situation
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Keadaan berubah perlahan
+
+RESPONS/SIKAP ASLI:
+Saya dapat memperbarui gambaran arah ketika tanda-tanda baru muncul, tanpa kehilangan benang merah keseluruhan.
+
+FOKUS RESPONS INTERNAL:
+memperbarui arah sambil menjaga tema utama
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas keadaan berubah perlahan, aku bisa memperbarui gambaran arah pas tanda-tanda baru muncul, tanpa kehilangan benang merah keseluruhan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas keadaan berubah perlahan, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas keadaan berubah perlahan, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas keadaan berubah perlahan, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas keadaan berubah perlahan, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas keadaan berubah perlahan, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_flexible_03
+
+========================================================================================
+[[ITEM_START]] 031/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_mask_01
+JENIS: CORE
+ELEMEN: Ni
+KANAL: mask
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta memberi visi lima tahun
+
+RESPONS/SIKAP ASLI:
+Saya pernah menyusun narasi masa depan yang terdengar meyakinkan karena jabatan menuntutnya, padahal saya belum benar-benar melihat arahnya.
+
+FOKUS RESPONS INTERNAL:
+menampilkan visi karena tuntutan peran
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta ngasih visi lima tahun, aku pernah menyusun narasi masa depan yang terdengar meyakinkan karena jabatan menuntutnya, padahal aku belum benar-benar melihat arahnya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta ngasih visi lima tahun, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta ngasih visi lima tahun, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta ngasih visi lima tahun, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta ngasih visi lima tahun, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diminta ngasih visi lima tahun, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_mask_01
+
+========================================================================================
+[[ITEM_START]] 032/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_mask_02
+JENIS: CORE
+ELEMEN: Ni
+KANAL: mask
+KONTEKS: public
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang menunggu ramalan yang pasti
+
+RESPONS/SIKAP ASLI:
+Saya kadang berbicara seolah tahu bagaimana semuanya akan berakhir agar terlihat berwawasan, meski batin saya masih ragu.
+
+FOKUS RESPONS INTERNAL:
+berusaha tampak mampu membaca arah
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang nunggu ramalan yang pasti, aku kadang berbicara seolah tahu bagaimana semuanya akan berakhir agar terlihat berwawasan, meski batin aku masih ragu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu ramalan yang pasti, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu ramalan yang pasti, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu ramalan yang pasti, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu ramalan yang pasti, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu ramalan yang pasti, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_mask_02
+
+========================================================================================
+[[ITEM_START]] 033/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_mask_03
+JENIS: CORE
+ELEMEN: Ni
+KANAL: mask
+KONTEKS: study
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Presentasi harus memuat prediksi
+
+RESPONS/SIKAP ASLI:
+Saya dapat memaksakan kesimpulan jangka panjang dari sedikit data hanya karena tugas mengharuskan ada proyeksi.
+
+FOKUS RESPONS INTERNAL:
+membuat proyeksi karena merasa seharusnya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas presentasi harus memuat prediksi, aku bisa memaksakan kesimpulan jangka panjang dari sedikit data hanya karena tugas mengharuskan ada proyeksi.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus memuat prediksi, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus memuat prediksi, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus memuat prediksi, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus memuat prediksi, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas presentasi harus memuat prediksi, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_mask_03
+
+========================================================================================
+[[ITEM_START]] 034/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_threat_01
+JENIS: CORE
+ELEMEN: Ni
+KANAL: threat
+KONTEKS: time_pressure
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus menentukan saat yang tepat seketika
+
+RESPONS/SIKAP ASLI:
+Saya dapat membeku ketika dituntut memastikan waktu dan arah perkembangan tanpa diberi ruang untuk mengamati lebih dulu.
+
+FOKUS RESPONS INTERNAL:
+menentukan waktu dan arah di bawah tekanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus menentukan pas yang tepat seketika, aku bisa membeku pas dituntut memastikan waktu dan arah perkembangan tanpa diberi ruang untuk mengamati lebih dulu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan pas yang tepat seketika, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan pas yang tepat seketika, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan pas yang tepat seketika, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan pas yang tepat seketika, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan pas yang tepat seketika, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_threat_01
+
+========================================================================================
+[[ITEM_START]] 035/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_threat_02
+JENIS: CORE
+ELEMEN: Ni
+KANAL: threat
+KONTEKS: work
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta menjamin hasil jangka panjang
+
+RESPONS/SIKAP ASLI:
+Tuntutan untuk menjelaskan secara pasti bagaimana keadaan akan berkembang membuat saya takut memberi arah yang keliru.
+
+FOKUS RESPONS INTERNAL:
+menjamin arah masa depan secara pasti
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta menjamin hasil jangka panjang, tuntutan untuk jelasin secara pasti bagaimana keadaan akan berkembang bikin aku takut ngasih arah yang keliru.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menjamin hasil jangka panjang, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menjamin hasil jangka panjang, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menjamin hasil jangka panjang, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menjamin hasil jangka panjang, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menjamin hasil jangka panjang, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_threat_02
+
+========================================================================================
+[[ITEM_START]] 036/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_threat_03
+JENIS: CORE
+ELEMEN: Ni
+KANAL: threat
+KONTEKS: conflict
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Semua orang mendesak keputusan sekarang
+
+RESPONS/SIKAP ASLI:
+Saya merasa terpojok ketika harus membaca momentum di tengah desakan yang tidak memberi waktu untuk memahami alurnya.
+
+FOKUS RESPONS INTERNAL:
+membaca momentum ketika didesak
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi semua orang mendesak keputusan sekarang, aku ngerasa terpojok pas harus membaca momentum di tengah desakan yang nggak ngasih waktu untuk memahami alurnya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang mendesak keputusan sekarang, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang mendesak keputusan sekarang, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang mendesak keputusan sekarang, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang mendesak keputusan sekarang, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang mendesak keputusan sekarang, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_threat_03
+
+========================================================================================
+[[ITEM_START]] 037/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_receiver_01
+JENIS: CORE
+ELEMEN: Ni
+KANAL: receiver
+KONTEKS: private
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Arah hidup terasa kabur
+
+RESPONS/SIKAP ASLI:
+Saya sangat lega ketika seseorang membantu merangkai kejadian yang berantakan menjadi satu arah yang terasa masuk akal.
+
+FOKUS RESPONS INTERNAL:
+menerima gambaran arah yang menyatukan kejadian
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas arah hidup terasa kabur, aku sangat lega pas seseorang membantu merangkai kejadian yang berantakan menjadi satu arah yang terasa masuk akal.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas arah hidup terasa kabur, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas arah hidup terasa kabur, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas arah hidup terasa kabur, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas arah hidup terasa kabur, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas arah hidup terasa kabur, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_receiver_01
+
+========================================================================================
+[[ITEM_START]] 038/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_receiver_02
+JENIS: CORE
+ELEMEN: Ni
+KANAL: receiver
+KONTEKS: work
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tidak tahu kapan harus bergerak
+
+RESPONS/SIKAP ASLI:
+Nasihat mengenai momentum—kapan menunggu dan kapan mulai—dapat membuat saya jauh lebih tenang.
+
+FOKUS RESPONS INTERNAL:
+menerima bantuan mengenai waktu yang tepat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau aku nggak tahu kapan harus bergerak, saran soal kapan menunggu dan kapan mulai bisa bikin aku jauh lebih tenang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu kapan harus bergerak, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu kapan harus bergerak, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu kapan harus bergerak, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu kapan harus bergerak, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu kapan harus bergerak, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_receiver_02
+
+========================================================================================
+[[ITEM_START]] 039/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_receiver_03
+JENIS: CORE
+ELEMEN: Ni
+KANAL: receiver
+KONTEKS: friendship
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Terjebak pada fase yang membingungkan
+
+RESPONS/SIKAP ASLI:
+Saya mudah percaya pada orang yang mampu menunjukkan bahwa keadaan ini adalah bagian dari proses yang masih berkembang.
+
+FOKUS RESPONS INTERNAL:
+menerima konteks perkembangan dari orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas terjebak pada fase yang membingungkan, aku mudah percaya pada orang yang mampu nunjukin bahwa keadaan ini adalah bagian dari proses yang masih berkembang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas terjebak pada fase yang membingungkan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas terjebak pada fase yang membingungkan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas terjebak pada fase yang membingungkan, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas terjebak pada fase yang membingungkan, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas terjebak pada fase yang membingungkan, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_receiver_03
+
+========================================================================================
+[[ITEM_START]] 040/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_aspiration_01
+JENIS: CORE
+ELEMEN: Ni
+KANAL: aspiration
+KONTEKS: public
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang menilai cara saya melihat keadaan
+
+RESPONS/SIKAP ASLI:
+Pujian bahwa saya mampu menangkap arah sebelum orang lain menyadarinya terasa sangat mengena.
+
+FOKUS RESPONS INTERNAL:
+diakui karena menangkap arah perkembangan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang menilai cara aku melihat keadaan, pujian bahwa aku mampu menangkap arah sebelum orang lain menyadarinya terasa sangat mengena.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai cara aku melihat keadaan, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai cara aku melihat keadaan, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai cara aku melihat keadaan, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai cara aku melihat keadaan, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai cara aku melihat keadaan, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_aspiration_01
+
+========================================================================================
+[[ITEM_START]] 041/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_aspiration_02
+JENIS: CORE
+ELEMEN: Ni
+KANAL: aspiration
+KONTEKS: study
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mempelajari sejarah atau tren
+
+RESPONS/SIKAP ASLI:
+Saya ingin lebih mahir memahami bagaimana satu fase berubah menjadi fase berikutnya tanpa terjebak pada detail terpisah.
+
+FOKUS RESPONS INTERNAL:
+berkembang dalam membaca perkembangan dari waktu ke waktu
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mempelajari sejarah atau tren, aku ingin lebih mahir memahami bagaimana satu fase berubah menjadi fase berikutnya tanpa terjebak pada detail terpisah.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari sejarah atau tren, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari sejarah atau tren, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari sejarah atau tren, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari sejarah atau tren, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari sejarah atau tren, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_aspiration_02
+
+========================================================================================
+[[ITEM_START]] 042/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_aspiration_03
+JENIS: CORE
+ELEMEN: Ni
+KANAL: aspiration
+KONTEKS: decision
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Rencana besar mulai terbentuk
+
+RESPONS/SIKAP ASLI:
+Saya ingin dipercaya sebagai orang yang tahu kapan sebuah langkah sudah matang untuk dijalankan.
+
+FOKUS RESPONS INTERNAL:
+diakui karena kepekaan terhadap momentum
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas rencana besar mulai terbentuk, aku ingin dipercaya sebagai orang yang tahu kapan sebuah langkah sudah matang untuk dijalankan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas rencana besar mulai terbentuk, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas rencana besar mulai terbentuk, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas rencana besar mulai terbentuk, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas rencana besar mulai terbentuk, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas rencana besar mulai terbentuk, kamu mengulang pujian itu di kepala, menandai momen penting, lalu makin berani mempercayai pembacaan arahmu, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_aspiration_03
+
+========================================================================================
+[[ITEM_START]] 043/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_dismissive_01
+JENIS: CORE
+ELEMEN: Ni
+KANAL: dismissive
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Arah masalah sudah terlihat
+
+RESPONS/SIKAP ASLI:
+Saya kadang sudah memperkirakan bagaimana situasi akan berkembang, tetapi memilih tidak membahasnya karena sekarang perlu tindakan konkret.
+
+FOKUS RESPONS INTERNAL:
+melihat arah tetapi sengaja tidak menjadikannya fokus
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas arah masalah sudah terlihat, aku kadang sudah memperkirakan bagaimana situasi akan berkembang, tetapi milih nggak membahasnya karena sekarang perlu tindakan konkret.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas arah masalah sudah terlihat, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas arah masalah sudah terlihat, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas arah masalah sudah terlihat, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas arah masalah sudah terlihat, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas arah masalah sudah terlihat, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_dismissive_01
+
+========================================================================================
+[[ITEM_START]] 044/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_dismissive_02
+JENIS: CORE
+ELEMEN: Ni
+KANAL: dismissive
+KONTEKS: private
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Pikiran mulai membentuk makna panjang
+
+RESPONS/SIKAP ASLI:
+Saya bisa mengikuti benang merah yang dalam, lalu sengaja memutusnya ketika merasa perenungan itu tidak lagi membantu.
+
+FOKUS RESPONS INTERNAL:
+menghentikan pembacaan makna yang dianggap tidak perlu
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas pikiran mulai membentuk makna panjang, aku bisa mengikuti benang merah yang dalam, lalu sengaja memutusnya pas ngerasa perenungan itu nggak lagi membantu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas pikiran mulai membentuk makna panjang, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas pikiran mulai membentuk makna panjang, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas pikiran mulai membentuk makna panjang, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas pikiran mulai membentuk makna panjang, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas pikiran mulai membentuk makna panjang, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_dismissive_02
+
+========================================================================================
+[[ITEM_START]] 045/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_dismissive_03
+JENIS: CORE
+ELEMEN: Ni
+KANAL: dismissive
+KONTEKS: group
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diskusi terus membahas kemungkinan masa depan
+
+RESPONS/SIKAP ASLI:
+Saya mampu melihat implikasi jangka panjang, tetapi cepat bosan jika kelompok terus berputar pada prediksi tanpa keputusan.
+
+FOKUS RESPONS INTERNAL:
+membatasi pembahasan arah yang terlalu panjang
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi diskusi terus membahas kemungkinan masa depan, aku mampu melihat implikasi jangka panjang, tetapi cepat bosan kalau kelompok terus berputar pada prediksi tanpa keputusan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi diskusi terus membahas kemungkinan masa depan, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi diskusi terus membahas kemungkinan masa depan, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi diskusi terus membahas kemungkinan masa depan, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi diskusi terus membahas kemungkinan masa depan, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi diskusi terus membahas kemungkinan masa depan, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_dismissive_03
+
+========================================================================================
+[[ITEM_START]] 046/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_background_01
+JENIS: CORE
+ELEMEN: Ni
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Jadwal berubah sedikit demi sedikit
+
+RESPONS/SIKAP ASLI:
+Saya sering menyesuaikan langkah sebelum masalah benar-benar muncul karena secara samar sudah merasakan arah perubahannya.
+
+FOKUS RESPONS INTERNAL:
+mengantisipasi arah secara diam-diam
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas jadwal berubah sedikit demi sedikit, aku sering menyesuaikan langkah sebelum masalah benar-benar muncul karena secara samar sudah merasakan arah perubahannya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas jadwal berubah sedikit demi sedikit, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas jadwal berubah sedikit demi sedikit, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas jadwal berubah sedikit demi sedikit, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas jadwal berubah sedikit demi sedikit, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas jadwal berubah sedikit demi sedikit, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_background_01
+
+========================================================================================
+[[ITEM_START]] 047/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_background_02
+JENIS: CORE
+ELEMEN: Ni
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Cerita teman berkembang dari waktu ke waktu
+
+RESPONS/SIKAP ASLI:
+Saya mudah mengingat alur ceritanya dan diam-diam menangkap fase apa yang sedang ia lewati.
+
+FOKUS RESPONS INTERNAL:
+mengikuti alur perkembangan tanpa banyak menjelaskan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi cerita teman berkembang dari waktu ke waktu, aku mudah mengingat alur ceritanya dan diam-diam menangkap fase apa yang sedang ia lewati.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi cerita teman berkembang dari waktu ke waktu, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi cerita teman berkembang dari waktu ke waktu, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi cerita teman berkembang dari waktu ke waktu, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi cerita teman berkembang dari waktu ke waktu, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi cerita teman berkembang dari waktu ke waktu, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_background_02
+
+========================================================================================
+[[ITEM_START]] 048/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ni_background_03
+JENIS: CORE
+ELEMEN: Ni
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Proyek panjang berjalan beberapa tahap
+
+RESPONS/SIKAP ASLI:
+Saya sering tahu bagian mana yang belum matang dan menunggu waktu yang lebih pas tanpa menganggapnya kemampuan khusus.
+
+FOKUS RESPONS INTERNAL:
+merasakan kematangan dan timing secara otomatis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas proyek panjang berjalan beberapa tahap, aku sering tahu bagian mana yang belum matang dan nunggu waktu yang lebih pas tanpa menganggapnya kemampuan khusus.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek panjang berjalan beberapa tahap, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek panjang berjalan beberapa tahap, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek panjang berjalan beberapa tahap, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek panjang berjalan beberapa tahap, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek panjang berjalan beberapa tahap, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ni_background_03
+
+========================================================================================
+[[ITEM_START]] 049/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_producer_01
+JENIS: CORE
+ELEMEN: Se
+KANAL: producer
+KONTEKS: conflict
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Batas pribadi dilanggar
+
+RESPONS/SIKAP ASLI:
+Ketika seseorang melewati batas yang jelas, saya spontan menegur dan menunjukkan sampai mana ia boleh bertindak.
+
+FOKUS RESPONS INTERNAL:
+menetapkan batas secara langsung
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas seseorang melewati batas yang jelas, aku spontan menegur dan nunjukin sampai mana ia boleh bertindak.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi batas pribadi dilanggar, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi batas pribadi dilanggar, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi batas pribadi dilanggar, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi batas pribadi dilanggar, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi batas pribadi dilanggar, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_producer_01
+
+========================================================================================
+[[ITEM_START]] 050/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_producer_02
+JENIS: CORE
+ELEMEN: Se
+KANAL: producer
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Hambatan nyata menghentikan pekerjaan
+
+RESPONS/SIKAP ASLI:
+Saya cenderung segera turun tangan, mengerahkan sumber yang ada, dan membuat keadaan kembali bergerak.
+
+FOKUS RESPONS INTERNAL:
+mengambil tindakan nyata terhadap hambatan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi hambatan nyata menghentikan pekerjaan, aku biasanya segera turun tangan, mengerahkan sumber yang ada, dan bikin keadaan kembali bergerak.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi hambatan nyata menghentikan pekerjaan, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi hambatan nyata menghentikan pekerjaan, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi hambatan nyata menghentikan pekerjaan, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi hambatan nyata menghentikan pekerjaan, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi hambatan nyata menghentikan pekerjaan, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_producer_02
+
+========================================================================================
+[[ITEM_START]] 051/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_producer_03
+JENIS: CORE
+ELEMEN: Se
+KANAL: producer
+KONTEKS: decision
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kesempatan hanya terbuka sebentar
+
+RESPONS/SIKAP ASLI:
+Saat peluang harus direbut sekarang, saya cepat menentukan langkah dan berani mengambil ruang yang tersedia.
+
+FOKUS RESPONS INTERNAL:
+merebut momentum melalui tindakan tegas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas peluang harus direbut sekarang, aku cepat menentukan langkah dan berani mengambil ruang yang tersedia.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kesempatan hanya terbuka sebentar, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kesempatan hanya terbuka sebentar, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kesempatan hanya terbuka sebentar, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kesempatan hanya terbuka sebentar, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kesempatan hanya terbuka sebentar, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_producer_03
+
+========================================================================================
+[[ITEM_START]] 052/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_flexible_01
+JENIS: CORE
+ELEMEN: Se
+KANAL: flexible
+KONTEKS: group
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tim butuh dorongan berbeda
+
+RESPONS/SIKAP ASLI:
+Saya cukup nyaman mengatur kadar tekanan: kadang tegas, kadang memberi ruang, sesuai kekuatan yang dibutuhkan kelompok.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan tekanan untuk menggerakkan orang
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas tim butuh dorongan berbeda, aku cukup nyaman mengatur kadar tekanan: kadang tegas, kadang ngasih ruang, sesuai kekuatan yang dibutuhkan kelompok.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas tim butuh dorongan berbeda, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas tim butuh dorongan berbeda, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas tim butuh dorongan berbeda, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas tim butuh dorongan berbeda, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas tim butuh dorongan berbeda, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_flexible_01
+
+========================================================================================
+[[ITEM_START]] 053/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_flexible_02
+JENIS: CORE
+ELEMEN: Se
+KANAL: flexible
+KONTEKS: work
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Negosiasi mulai keras
+
+RESPONS/SIKAP ASLI:
+Saya dapat menaikkan atau menurunkan ketegasan tanpa kehilangan tujuan utama yang ingin dicapai.
+
+FOKUS RESPONS INTERNAL:
+mengatur ketegasan sesuai tujuan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas negosiasi mulai keras, aku bisa menaikkan atau menurunkan ketegasan tanpa kehilangan tujuan utama yang ingin dicapai.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas negosiasi mulai keras, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas negosiasi mulai keras, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas negosiasi mulai keras, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas negosiasi mulai keras, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas negosiasi mulai keras, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_flexible_02
+
+========================================================================================
+[[ITEM_START]] 054/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_flexible_03
+JENIS: CORE
+ELEMEN: Se
+KANAL: flexible
+KONTEKS: family
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Anggota keluarga sulit mengambil tindakan
+
+RESPONS/SIKAP ASLI:
+Saya bisa mengambil alih sementara, lalu mengembalikan kendali ketika mereka sudah siap.
+
+FOKUS RESPONS INTERNAL:
+menggunakan kendali secara situasional
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi anggota keluarga sulit mengambil tindakan, aku bisa mengambil alih sementara, lalu mengembalikan kendali pas mereka sudah siap.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi anggota keluarga sulit mengambil tindakan, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi anggota keluarga sulit mengambil tindakan, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi anggota keluarga sulit mengambil tindakan, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi anggota keluarga sulit mengambil tindakan, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi anggota keluarga sulit mengambil tindakan, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_flexible_03
+
+========================================================================================
+[[ITEM_START]] 055/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_mask_01
+JENIS: CORE
+ELEMEN: Se
+KANAL: mask
+KONTEKS: public
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Peran mengharuskan tampil kuat
+
+RESPONS/SIKAP ASLI:
+Saya pernah memasang sikap keras dan dominan agar tidak diremehkan, meskipun mempertahankannya terasa melelahkan.
+
+FOKUS RESPONS INTERNAL:
+menampilkan kekuatan karena tuntutan citra
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi peran mengharuskan tampil kuat, aku pernah memasang sikap keras dan dominan agar nggak diremehkan, walau mempertahankannya terasa melelahkan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi peran mengharuskan tampil kuat, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi peran mengharuskan tampil kuat, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi peran mengharuskan tampil kuat, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi peran mengharuskan tampil kuat, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi peran mengharuskan tampil kuat, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_mask_01
+
+========================================================================================
+[[ITEM_START]] 056/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_mask_02
+JENIS: CORE
+ELEMEN: Se
+KANAL: mask
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Atasan mengharapkan pemimpin yang galak
+
+RESPONS/SIKAP ASLI:
+Saya dapat memaksa nada tegas dan memberi perintah hanya karena merasa itulah gaya yang dianggap pantas.
+
+FOKUS RESPONS INTERNAL:
+memainkan ketegasan karena tuntutan jabatan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi atasan mengharapkan pemimpin yang galak, aku bisa memaksa nada tegas dan ngasih perintah hanya karena ngerasa itulah gaya yang dianggap pantas.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi atasan mengharapkan pemimpin yang galak, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi atasan mengharapkan pemimpin yang galak, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi atasan mengharapkan pemimpin yang galak, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi atasan mengharapkan pemimpin yang galak, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi atasan mengharapkan pemimpin yang galak, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_mask_02
+
+========================================================================================
+[[ITEM_START]] 057/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_mask_03
+JENIS: CORE
+ELEMEN: Se
+KANAL: mask
+KONTEKS: conflict
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tidak ingin terlihat lemah
+
+RESPONS/SIKAP ASLI:
+Saya kadang membalas lebih keras daripada yang sebenarnya saya inginkan agar orang lain tidak menganggap saya mudah ditekan.
+
+FOKUS RESPONS INTERNAL:
+memperagakan perlawanan untuk melindungi citra
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas nggak ingin terlihat lemah, aku kadang membalas lebih keras daripada yang sebenarnya aku inginkan agar orang lain nggak menganggap aku mudah ditekan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas nggak ingin terlihat lemah, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas nggak ingin terlihat lemah, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas nggak ingin terlihat lemah, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas nggak ingin terlihat lemah, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas nggak ingin terlihat lemah, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_mask_03
+
+========================================================================================
+[[ITEM_START]] 058/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_threat_01
+JENIS: CORE
+ELEMEN: Se
+KANAL: threat
+KONTEKS: conflict
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus menghadapi orang yang agresif
+
+RESPONS/SIKAP ASLI:
+Konfrontasi langsung yang menuntut saya mempertahankan posisi dapat membuat tubuh saya kaku, defensif, atau ingin keluar.
+
+FOKUS RESPONS INTERNAL:
+menghadapi adu kekuatan langsung
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau harus menghadapi orang yang agresif dan mempertahankan posisiku saat itu juga, tubuhku bisa langsung kaku, defensif, atau pengin keluar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku berhadapan sama orang yang agresif, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku berhadapan sama orang yang agresif, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku berhadapan sama orang yang agresif, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku berhadapan sama orang yang agresif, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aku berhadapan sama orang yang agresif, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_threat_01
+
+========================================================================================
+[[ITEM_START]] 059/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_threat_02
+JENIS: CORE
+ELEMEN: Se
+KANAL: threat
+KONTEKS: public
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta memimpin dengan keras
+
+RESPONS/SIKAP ASLI:
+Saya sangat tertekan jika harus menguasai ruangan dan memberi instruksi tegas sementara semua mata menilai keberanian saya.
+
+FOKUS RESPONS INTERNAL:
+mengambil kendali di bawah penilaian orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta memimpin dengan keras, aku sangat tertekan kalau harus menguasai ruangan dan ngasih instruksi tegas sementara semua mata menilai keberanian aku.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memimpin dengan keras, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memimpin dengan keras, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memimpin dengan keras, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memimpin dengan keras, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memimpin dengan keras, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_threat_02
+
+========================================================================================
+[[ITEM_START]] 060/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_threat_03
+JENIS: CORE
+ELEMEN: Se
+KANAL: threat
+KONTEKS: time_pressure
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus bertindak sebelum sempat berpikir
+
+RESPONS/SIKAP ASLI:
+Desakan untuk segera menekan, merebut, atau memutuskan dapat membuat saya takut salah menggunakan kekuatan.
+
+FOKUS RESPONS INTERNAL:
+menggunakan kekuatan secara cepat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus bertindak sebelum sempat mikir, desakan untuk segera menekan, merebut, atau memutuskan bisa bikin aku takut salah pakai kekuatan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus bertindak sebelum sempat mikir, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus bertindak sebelum sempat mikir, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus bertindak sebelum sempat mikir, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus bertindak sebelum sempat mikir, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus bertindak sebelum sempat mikir, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_threat_03
+
+========================================================================================
+[[ITEM_START]] 061/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_receiver_01
+JENIS: CORE
+ELEMEN: Se
+KANAL: receiver
+KONTEKS: friendship
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada orang lain menekan saya
+
+RESPONS/SIKAP ASLI:
+Saya merasa sangat lega ketika teman dengan tenang memasang batas dan menghentikan tekanan itu tanpa banyak ragu.
+
+FOKUS RESPONS INTERNAL:
+menerima perlindungan dan batas yang tegas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada orang lain menekan aku, aku ngerasa sangat lega pas teman dengan tenang memasang batas dan menghentikan tekanan itu tanpa banyak ragu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ada orang lain menekan aku, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ada orang lain menekan aku, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ada orang lain menekan aku, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ada orang lain menekan aku, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ada orang lain menekan aku, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_receiver_01
+
+========================================================================================
+[[ITEM_START]] 062/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_receiver_02
+JENIS: CORE
+ELEMEN: Se
+KANAL: receiver
+KONTEKS: work
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Keadaan kacau tanpa pemimpin
+
+RESPONS/SIKAP ASLI:
+Kehadiran orang yang berani mengambil keputusan dan membagi tindakan membuat saya merasa lebih aman.
+
+FOKUS RESPONS INTERNAL:
+menerima arah tindakan yang tegas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi keadaan kacau tanpa pemimpin, kehadiran orang yang berani mengambil keputusan dan membagi tindakan bikin aku ngerasa lebih aman.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keadaan kacau tanpa pemimpin, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keadaan kacau tanpa pemimpin, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keadaan kacau tanpa pemimpin, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keadaan kacau tanpa pemimpin, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keadaan kacau tanpa pemimpin, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_receiver_02
+
+========================================================================================
+[[ITEM_START]] 063/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_receiver_03
+JENIS: CORE
+ELEMEN: Se
+KANAL: receiver
+KONTEKS: family
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Masalah nyata terus dibiarkan
+
+RESPONS/SIKAP ASLI:
+Saya terbantu ketika seseorang berhenti berdebat dan langsung mengurus bagian yang memang harus dibereskan.
+
+FOKUS RESPONS INTERNAL:
+menerima tindakan langsung dari orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi masalah nyata terus dibiarkan, aku terbantu pas seseorang berhenti berdebat dan langsung mengurus bagian yang memang harus dibereskan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi masalah nyata terus dibiarkan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi masalah nyata terus dibiarkan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi masalah nyata terus dibiarkan, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi masalah nyata terus dibiarkan, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi masalah nyata terus dibiarkan, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_receiver_03
+
+========================================================================================
+[[ITEM_START]] 064/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_aspiration_01
+JENIS: CORE
+ELEMEN: Se
+KANAL: aspiration
+KONTEKS: public
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mendapat penilaian tentang keberanian
+
+RESPONS/SIKAP ASLI:
+Pujian bahwa saya berani menjaga batas dan tidak mudah ditekan terasa sangat berarti.
+
+FOKUS RESPONS INTERNAL:
+diakui karena keberanian dan ketegasan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mendapat penilaian tentang keberanian, pujian bahwa aku berani menjaga batas dan nggak mudah ditekan terasa sangat berarti.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat penilaian tentang keberanian, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat penilaian tentang keberanian, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat penilaian tentang keberanian, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat penilaian tentang keberanian, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mendapat penilaian tentang keberanian, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_aspiration_01
+
+========================================================================================
+[[ITEM_START]] 065/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_aspiration_02
+JENIS: CORE
+ELEMEN: Se
+KANAL: aspiration
+KONTEKS: work
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Belajar memegang tanggung jawab
+
+RESPONS/SIKAP ASLI:
+Saya ingin lebih mampu mengambil keputusan sulit tanpa kehilangan wibawa ketika keadaan memanas.
+
+FOKUS RESPONS INTERNAL:
+berkembang dalam ketegasan dan kepemimpinan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi belajar memegang tanggung jawab, aku ingin lebih mampu mengambil keputusan sulit tanpa kehilangan wibawa pas keadaan memanas.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar memegang tanggung jawab, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar memegang tanggung jawab, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar memegang tanggung jawab, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar memegang tanggung jawab, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar memegang tanggung jawab, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_aspiration_02
+
+========================================================================================
+[[ITEM_START]] 066/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_aspiration_03
+JENIS: CORE
+ELEMEN: Se
+KANAL: aspiration
+KONTEKS: private
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Melatih keberanian diri
+
+RESPONS/SIKAP ASLI:
+Saya ingin membuktikan bahwa saya bisa berdiri untuk diri sendiri dan tidak selalu mundur saat menghadapi tekanan.
+
+FOKUS RESPONS INTERNAL:
+membangun keberanian mempertahankan diri
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi melatih keberanian diri, aku ingin membuktikan bahwa aku bisa berdiri untuk diri sendiri dan nggak selalu mundur pas ngadepin tekanan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi melatih keberanian diri, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi melatih keberanian diri, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi melatih keberanian diri, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi melatih keberanian diri, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi melatih keberanian diri, posturmu langsung lebih tegak, kamu mengambil peran lebih jelas, lalu ingin membuktikan bahwa kamu memang bisa memegang keadaan, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_aspiration_03
+
+========================================================================================
+[[ITEM_START]] 067/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_dismissive_01
+JENIS: CORE
+ELEMEN: Se
+KANAL: dismissive
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Masalah sudah bisa dikendalikan
+
+RESPONS/SIKAP ASLI:
+Saya mampu mengambil alih dan menekan hambatan, tetapi segera melepaskan kendali setelah hasil pokok tercapai.
+
+FOKUS RESPONS INTERNAL:
+mampu mengendalikan tetapi tidak ingin terus memegang kuasa
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi masalah sudah bisa dikendalikan, aku mampu mengambil alih dan menekan hambatan, tetapi segera melepaskan kendali setelah hasil pokok tercapai.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi masalah sudah bisa dikendalikan, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi masalah sudah bisa dikendalikan, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi masalah sudah bisa dikendalikan, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi masalah sudah bisa dikendalikan, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi masalah sudah bisa dikendalikan, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_dismissive_01
+
+========================================================================================
+[[ITEM_START]] 068/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_dismissive_02
+JENIS: CORE
+ELEMEN: Se
+KANAL: dismissive
+KONTEKS: conflict
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Perdebatan mulai menjadi perebutan posisi
+
+RESPONS/SIKAP ASLI:
+Saya bisa menunjukkan kekuatan bila perlu, namun menganggap adu dominasi berkepanjangan sebagai pemborosan energi.
+
+FOKUS RESPONS INTERNAL:
+membatasi penggunaan kekuatan yang berlebihan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas perdebatan mulai menjadi perebutan posisi, aku bisa nunjukin kekuatan bila perlu, tapi menganggap adu dominasi berkepanjangan sebagai pemborosan energi.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas perdebatan mulai menjadi perebutan posisi, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas perdebatan mulai menjadi perebutan posisi, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas perdebatan mulai menjadi perebutan posisi, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas perdebatan mulai menjadi perebutan posisi, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas perdebatan mulai menjadi perebutan posisi, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_dismissive_02
+
+========================================================================================
+[[ITEM_START]] 069/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_dismissive_03
+JENIS: CORE
+ELEMEN: Se
+KANAL: dismissive
+KONTEKS: group
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang menunggu saya terus memimpin
+
+RESPONS/SIKAP ASLI:
+Saya dapat mengarahkan kelompok, tetapi tidak suka jika semua urusan akhirnya bergantung pada kendali saya.
+
+FOKUS RESPONS INTERNAL:
+menggunakan kepemimpinan lalu mengembalikannya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang nunggu aku terus memimpin, aku bisa mengarahkan kelompok, tetapi nggak suka kalau semua urusan akhirnya bergantung pada kendali aku.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu aku terus memimpin, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu aku terus memimpin, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu aku terus memimpin, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu aku terus memimpin, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang nunggu aku terus memimpin, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_dismissive_03
+
+========================================================================================
+[[ITEM_START]] 070/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_background_01
+JENIS: CORE
+ELEMEN: Se
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ruang atau antrean mulai tidak tertib
+
+RESPONS/SIKAP ASLI:
+Saya sering secara otomatis mengambil posisi yang membuat batas lebih jelas tanpa perlu mengumumkan bahwa saya sedang mengatur.
+
+FOKUS RESPONS INTERNAL:
+menjaga batas fisik secara diam-diam
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas ruang atau antrean mulai nggak tertib, aku sering secara otomatis mengambil posisi yang bikin batas lebih jelas tanpa perlu mengumumkan bahwa aku sedang mengatur.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ruang atau antrean mulai nggak tertib, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ruang atau antrean mulai nggak tertib, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ruang atau antrean mulai nggak tertib, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ruang atau antrean mulai nggak tertib, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ruang atau antrean mulai nggak tertib, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_background_01
+
+========================================================================================
+[[ITEM_START]] 071/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_background_02
+JENIS: CORE
+ELEMEN: Se
+KANAL: background
+KONTEKS: family
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada urusan praktis yang terus tertunda
+
+RESPONS/SIKAP ASLI:
+Saya bisa langsung mengangkat, memindahkan, menghubungi, atau membereskan hal yang menghambat tanpa banyak bicara.
+
+FOKUS RESPONS INTERNAL:
+membereskan hambatan nyata secara otomatis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada urusan praktis yang terus tertunda, aku bisa langsung mengangkat, memindahkan, menghubungi, atau membereskan hal yang menghambat tanpa banyak bicara.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada urusan praktis yang terus tertunda, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada urusan praktis yang terus tertunda, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada urusan praktis yang terus tertunda, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada urusan praktis yang terus tertunda, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada urusan praktis yang terus tertunda, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_background_02
+
+========================================================================================
+[[ITEM_START]] 072/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_se_background_03
+JENIS: CORE
+ELEMEN: Se
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sumber daya terbatas
+
+RESPONS/SIKAP ASLI:
+Saya cepat melihat apa yang masih bisa digunakan dan mengalokasikannya agar pekerjaan tetap bergerak.
+
+FOKUS RESPONS INTERNAL:
+mengatur sumber daya dengan spontan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi sumber daya terbatas, aku cepat melihat apa yang masih bisa digunakan dan mengalokasikannya agar pekerjaan tetap bergerak.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi sumber daya terbatas, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi sumber daya terbatas, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi sumber daya terbatas, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi sumber daya terbatas, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi sumber daya terbatas, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_se_background_03
+
+========================================================================================
+[[ITEM_START]] 073/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_producer_01
+JENIS: CORE
+ELEMEN: Si
+KANAL: producer
+KONTEKS: body
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tubuh mulai memberi tanda halus
+
+RESPONS/SIKAP ASLI:
+Saya cepat menyadari perubahan kecil seperti tegang, terlalu panas, lapar, atau lelah sebelum keluhan itu menjadi berat.
+
+FOKUS RESPONS INTERNAL:
+menyadari kondisi tubuh secara spontan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas tubuh mulai ngasih tanda halus, aku cepat menyadari perubahan kecil seperti tegang, terlalu panas, lapar, atau lelah sebelum keluhan itu menjadi berat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai ngasih tanda halus, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai ngasih tanda halus, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai ngasih tanda halus, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai ngasih tanda halus, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai ngasih tanda halus, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_producer_01
+
+========================================================================================
+[[ITEM_START]] 074/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_producer_02
+JENIS: CORE
+ELEMEN: Si
+KANAL: producer
+KONTEKS: private
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ruangan terasa kurang enak ditempati
+
+RESPONS/SIKAP ASLI:
+Saya otomatis memperhatikan cahaya, suhu, posisi duduk, atau kebisingan lalu menyesuaikannya agar terasa lebih pas.
+
+FOKUS RESPONS INTERNAL:
+menyetel kenyamanan indrawi secara spontan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas ruangan terasa kurang enak ditempati, aku otomatis memperhatikan cahaya, suhu, posisi duduk, atau kebisingan lalu menyesuaikannya agar terasa lebih pas.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas ruangan terasa kurang enak ditempati, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas ruangan terasa kurang enak ditempati, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas ruangan terasa kurang enak ditempati, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas ruangan terasa kurang enak ditempati, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas ruangan terasa kurang enak ditempati, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_producer_02
+
+========================================================================================
+[[ITEM_START]] 075/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_producer_03
+JENIS: CORE
+ELEMEN: Si
+KANAL: producer
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Aktivitas berlangsung terlalu lama
+
+RESPONS/SIKAP ASLI:
+Saya spontan mengatur ritme, jeda, dan cara bergerak supaya tenaga tetap stabil dan tubuh tidak dipaksa berlebihan.
+
+FOKUS RESPONS INTERNAL:
+menjaga ritme dan keseimbangan fisik
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi aktivitas berlangsung terlalu lama, aku spontan mengatur ritme, jeda, dan cara bergerak supaya tenaga tetap stabil dan tubuh nggak dipaksa berlebihan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aktivitas berlangsung terlalu lama, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aktivitas berlangsung terlalu lama, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aktivitas berlangsung terlalu lama, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aktivitas berlangsung terlalu lama, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aktivitas berlangsung terlalu lama, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_producer_03
+
+========================================================================================
+[[ITEM_START]] 076/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_flexible_01
+JENIS: CORE
+ELEMEN: Si
+KANAL: flexible
+KONTEKS: work
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Pekerjaan panjang perlu tetap nyaman
+
+RESPONS/SIKAP ASLI:
+Saya mudah menyesuaikan pencahayaan, posisi, jeda, atau urutan kerja agar orang dapat bertahan tanpa kehilangan fokus.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan kondisi fisik demi tujuan kerja
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas pekerjaan panjang perlu tetap nyaman, aku mudah menyesuaikan pencahayaan, posisi, jeda, atau urutan kerja agar orang bisa bertahan tanpa kehilangan fokus.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas pekerjaan panjang perlu tetap nyaman, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas pekerjaan panjang perlu tetap nyaman, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas pekerjaan panjang perlu tetap nyaman, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas pekerjaan panjang perlu tetap nyaman, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas pekerjaan panjang perlu tetap nyaman, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_flexible_01
+
+========================================================================================
+[[ITEM_START]] 077/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_flexible_02
+JENIS: CORE
+ELEMEN: Si
+KANAL: flexible
+KONTEKS: friendship
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman tampak tidak nyaman
+
+RESPONS/SIKAP ASLI:
+Saya cukup luwes mengubah tempat, makanan, atau tempo kegiatan sesuai kebutuhan tubuh orang yang bersama saya.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan kenyamanan untuk orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman tampak nggak nyaman, aku cukup luwes ngubah tempat, makanan, atau tempo kegiatan sesuai kebutuhan tubuh orang yang bersama aku.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman tampak nggak nyaman, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman tampak nggak nyaman, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman tampak nggak nyaman, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman tampak nggak nyaman, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman tampak nggak nyaman, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_flexible_02
+
+========================================================================================
+[[ITEM_START]] 078/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_flexible_03
+JENIS: CORE
+ELEMEN: Si
+KANAL: flexible
+KONTEKS: body
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kondisi badan berubah
+
+RESPONS/SIKAP ASLI:
+Saya dapat mengganti intensitas aktivitas, makanan, atau istirahat berdasarkan sinyal tubuh saat itu.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan kebiasaan dengan kondisi tubuh
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas kondisi badan berubah, aku bisa mengganti intensitas aktivitas, makanan, atau istirahat berdasarkan sinyal tubuh pas itu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas kondisi badan berubah, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas kondisi badan berubah, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas kondisi badan berubah, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas kondisi badan berubah, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas kondisi badan berubah, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_flexible_03
+
+========================================================================================
+[[ITEM_START]] 079/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_mask_01
+JENIS: CORE
+ELEMEN: Si
+KANAL: mask
+KONTEKS: family
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diharapkan menjadi tuan rumah yang sempurna
+
+RESPONS/SIKAP ASLI:
+Saya pernah sibuk menata hidangan dan kenyamanan tamu karena takut dianggap tidak perhatian, walau sebenarnya sudah terkuras.
+
+FOKUS RESPONS INTERNAL:
+menampilkan perhatian fisik karena tuntutan kepantasan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diharapkan menjadi tuan rumah yang sempurna, aku pernah sibuk menata hidangan dan kenyamanan tamu karena takut dianggap nggak perhatian, walau sebenarnya sudah terkuras.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diharapkan menjadi tuan rumah yang sempurna, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diharapkan menjadi tuan rumah yang sempurna, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diharapkan menjadi tuan rumah yang sempurna, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diharapkan menjadi tuan rumah yang sempurna, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas diharapkan menjadi tuan rumah yang sempurna, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_mask_01
+
+========================================================================================
+[[ITEM_START]] 080/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_mask_02
+JENIS: CORE
+ELEMEN: Si
+KANAL: mask
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Lingkungan harus terlihat rapi dan nyaman
+
+RESPONS/SIKAP ASLI:
+Saya dapat memaksakan diri mengurus detail kenyamanan supaya tampak profesional, bukan karena saya menikmati prosesnya.
+
+FOKUS RESPONS INTERNAL:
+merawat kenyamanan demi citra profesional
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lingkungan harus terlihat rapi dan nyaman, aku bisa memaksakan diri mengurus detail kenyamanan supaya tampak profesional, bukan karena aku menikmati prosesnya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lingkungan harus terlihat rapi dan nyaman, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lingkungan harus terlihat rapi dan nyaman, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lingkungan harus terlihat rapi dan nyaman, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lingkungan harus terlihat rapi dan nyaman, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lingkungan harus terlihat rapi dan nyaman, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_mask_02
+
+========================================================================================
+[[ITEM_START]] 081/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_mask_03
+JENIS: CORE
+ELEMEN: Si
+KANAL: mask
+KONTEKS: public
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang menilai penampilan dan kerapian
+
+RESPONS/SIKAP ASLI:
+Saya kadang terlalu mengatur tampilan fisik agar terlihat pantas, meskipun perhatian pada detail itu terasa seperti beban.
+
+FOKUS RESPONS INTERNAL:
+menampilkan kerapian indrawi karena penilaian sosial
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang menilai penampilan dan kerapian, aku kadang terlalu mengatur tampilan fisik agar terlihat pantas, walau perhatian pada detail itu terasa seperti beban.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai penampilan dan kerapian, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai penampilan dan kerapian, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai penampilan dan kerapian, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai penampilan dan kerapian, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai penampilan dan kerapian, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_mask_03
+
+========================================================================================
+[[ITEM_START]] 082/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_threat_01
+JENIS: CORE
+ELEMEN: Si
+KANAL: threat
+KONTEKS: body
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta memantau banyak sensasi tubuh
+
+RESPONS/SIKAP ASLI:
+Tuntutan untuk terus menjelaskan apa yang terasa di tubuh dapat membuat saya bingung, kesal, atau ingin mengabaikannya.
+
+FOKUS RESPONS INTERNAL:
+memantau sensasi tubuh secara rinci di bawah tuntutan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta memantau banyak sensasi tubuh, tuntutan untuk terus jelasin apa yang terasa di tubuh bisa bikin aku bingung, kesal, atau ingin mengabaikannya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memantau banyak sensasi tubuh, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memantau banyak sensasi tubuh, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memantau banyak sensasi tubuh, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memantau banyak sensasi tubuh, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta memantau banyak sensasi tubuh, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_threat_01
+
+========================================================================================
+[[ITEM_START]] 083/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_threat_02
+JENIS: CORE
+ELEMEN: Si
+KANAL: threat
+KONTEKS: family
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang lain mengkritik cara saya makan dan beristirahat
+
+RESPONS/SIKAP ASLI:
+Komentar yang terus mengatur kenyamanan fisik saya dapat terasa sangat mengusik dan membuat saya defensif.
+
+FOKUS RESPONS INTERNAL:
+menghadapi tuntutan pada kebiasaan fisik pribadi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang lain mengkritik cara aku makan dan beristirahat, komentar yang terus mengatur kenyamanan fisik aku bisa terasa sangat mengusik dan bikin aku defensif.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi orang lain mengkritik cara aku makan dan beristirahat, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi orang lain mengkritik cara aku makan dan beristirahat, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi orang lain mengkritik cara aku makan dan beristirahat, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi orang lain mengkritik cara aku makan dan beristirahat, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi orang lain mengkritik cara aku makan dan beristirahat, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_threat_02
+
+========================================================================================
+[[ITEM_START]] 084/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_threat_03
+JENIS: CORE
+ELEMEN: Si
+KANAL: threat
+KONTEKS: work
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus menjamin semua orang selalu nyaman
+
+RESPONS/SIKAP ASLI:
+Saya tertekan ketika diminta mengendalikan setiap detail suhu, makanan, kebersihan, dan kenyamanan tanpa ada kesalahan.
+
+FOKUS RESPONS INTERNAL:
+bertanggung jawab atas seluruh detail kenyamanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus menjamin semua orang selalu nyaman, aku tertekan pas diminta mengendalikan setiap detail suhu, makanan, kebersihan, dan kenyamanan tanpa ada kesalahan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menjamin semua orang selalu nyaman, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menjamin semua orang selalu nyaman, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menjamin semua orang selalu nyaman, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menjamin semua orang selalu nyaman, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menjamin semua orang selalu nyaman, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_threat_03
+
+========================================================================================
+[[ITEM_START]] 085/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_receiver_01
+JENIS: CORE
+ELEMEN: Si
+KANAL: receiver
+KONTEKS: body
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kondisi fisik sedang menurun
+
+RESPONS/SIKAP ASLI:
+Saya merasa sangat lega ketika seseorang membantu menyiapkan makanan, obat, tempat istirahat, atau suasana yang benar-benar nyaman.
+
+FOKUS RESPONS INTERNAL:
+menerima perawatan fisik yang tepat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas kondisi fisik sedang menurun, aku ngerasa sangat lega pas seseorang membantu menyiapkan makanan, obat, tempat istirahat, atau suasana yang benar-benar nyaman.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kondisi fisik sedang menurun, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kondisi fisik sedang menurun, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kondisi fisik sedang menurun, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kondisi fisik sedang menurun, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kondisi fisik sedang menurun, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_receiver_01
+
+========================================================================================
+[[ITEM_START]] 086/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_receiver_02
+JENIS: CORE
+ELEMEN: Si
+KANAL: receiver
+KONTEKS: work
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ruangan membuat sulit berkonsentrasi
+
+RESPONS/SIKAP ASLI:
+Orang yang peka mengubah cahaya, suhu, atau posisi kerja dapat langsung membuat saya lebih tenang dan produktif.
+
+FOKUS RESPONS INTERNAL:
+menerima penyesuaian lingkungan yang nyaman
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ruangan bikin sulit berkonsentrasi, orang yang peka ngubah cahaya, suhu, atau posisi kerja bisa langsung bikin aku lebih tenang dan produktif.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ruangan bikin sulit berkonsentrasi, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ruangan bikin sulit berkonsentrasi, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ruangan bikin sulit berkonsentrasi, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ruangan bikin sulit berkonsentrasi, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi ruangan bikin sulit berkonsentrasi, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_receiver_02
+
+========================================================================================
+[[ITEM_START]] 087/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_receiver_03
+JENIS: CORE
+ELEMEN: Si
+KANAL: receiver
+KONTEKS: friendship
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Hari terasa melelahkan
+
+RESPONS/SIKAP ASLI:
+Ajakan untuk makan enak, beristirahat, atau menikmati suasana tenang sering membantu saya kembali merasa utuh.
+
+FOKUS RESPONS INTERNAL:
+menerima pengalaman indrawi yang menenangkan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas hari terasa melelahkan, ajakan untuk makan enak, beristirahat, atau menikmati suasana tenang sering membantu aku kembali ngerasa utuh.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa melelahkan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa melelahkan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa melelahkan, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa melelahkan, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa melelahkan, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_receiver_03
+
+========================================================================================
+[[ITEM_START]] 088/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_aspiration_01
+JENIS: CORE
+ELEMEN: Si
+KANAL: aspiration
+KONTEKS: public
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang menikmati suasana yang saya siapkan
+
+RESPONS/SIKAP ASLI:
+Pujian bahwa saya membuat tempat terasa nyaman dan enak ditempati memberi kepuasan yang cukup dalam.
+
+FOKUS RESPONS INTERNAL:
+diakui karena menciptakan kenyamanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang menikmati suasana yang aku siapkan, pujian bahwa aku bikin tempat terasa nyaman dan enak ditempati ngasih kepuasan yang cukup dalam.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menikmati suasana yang aku siapkan, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menikmati suasana yang aku siapkan, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menikmati suasana yang aku siapkan, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menikmati suasana yang aku siapkan, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menikmati suasana yang aku siapkan, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_aspiration_01
+
+========================================================================================
+[[ITEM_START]] 089/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_aspiration_02
+JENIS: CORE
+ELEMEN: Si
+KANAL: aspiration
+KONTEKS: body
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Belajar merawat diri
+
+RESPONS/SIKAP ASLI:
+Saya ingin lebih mahir membaca kebutuhan tubuh tanpa menunggu sampai kelelahan atau sakit.
+
+FOKUS RESPONS INTERNAL:
+berkembang dalam merawat keseimbangan tubuh
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi belajar merawat diri, aku ingin lebih mahir membaca kebutuhan tubuh tanpa nunggu sampai kelelahan atau sakit.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar merawat diri, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar merawat diri, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar merawat diri, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar merawat diri, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar merawat diri, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_aspiration_02
+
+========================================================================================
+[[ITEM_START]] 090/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_aspiration_03
+JENIS: CORE
+ELEMEN: Si
+KANAL: aspiration
+KONTEKS: family
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menyiapkan rumah untuk orang terdekat
+
+RESPONS/SIKAP ASLI:
+Saya ingin menjadi orang yang tahu cara membuat orang lain merasa diterima secara fisik dan tenang.
+
+FOKUS RESPONS INTERNAL:
+dihargai karena perhatian pada kenyamanan orang
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi menyiapkan rumah untuk orang terdekat, aku ingin menjadi orang yang tahu cara bikin orang lain ngerasa diterima secara fisik dan tenang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi menyiapkan rumah untuk orang terdekat, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi menyiapkan rumah untuk orang terdekat, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi menyiapkan rumah untuk orang terdekat, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi menyiapkan rumah untuk orang terdekat, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi menyiapkan rumah untuk orang terdekat, kamu tersenyum kecil, memperhatikan detail kenyamanan lagi, lalu makin percaya pada kepekaan tubuhmu, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_aspiration_03
+
+========================================================================================
+[[ITEM_START]] 091/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_dismissive_01
+JENIS: CORE
+ELEMEN: Si
+KANAL: dismissive
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tubuh mulai sedikit tidak nyaman
+
+RESPONS/SIKAP ASLI:
+Saya sering menyadari rasa lelah atau posisi yang kurang enak, tetapi menyingkirkannya agar pekerjaan utama tetap selesai.
+
+FOKUS RESPONS INTERNAL:
+menyadari ketidaknyamanan lalu mengabaikannya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas tubuh mulai sedikit nggak nyaman, aku sering menyadari rasa lelah atau posisi yang kurang enak, tetapi menyingkirkannya agar pekerjaan utama tetap selesai.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas tubuh mulai sedikit nggak nyaman, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas tubuh mulai sedikit nggak nyaman, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas tubuh mulai sedikit nggak nyaman, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas tubuh mulai sedikit nggak nyaman, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas tubuh mulai sedikit nggak nyaman, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_dismissive_01
+
+========================================================================================
+[[ITEM_START]] 092/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_dismissive_02
+JENIS: CORE
+ELEMEN: Si
+KANAL: dismissive
+KONTEKS: decision
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Pilihan nyaman bertentangan dengan target
+
+RESPONS/SIKAP ASLI:
+Saya bisa menemukan pilihan yang lebih enak bagi tubuh, namun tidak keberatan mengorbankannya ketika ada tujuan yang lebih penting.
+
+FOKUS RESPONS INTERNAL:
+mampu mengatur kenyamanan tetapi tidak memprioritaskannya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi pilihan nyaman bertentangan dengan target, aku bisa nemuin pilihan yang lebih enak bagi tubuh, tapi nggak keberatan mengorbankannya pas ada tujuan yang lebih penting.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi pilihan nyaman bertentangan dengan target, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi pilihan nyaman bertentangan dengan target, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi pilihan nyaman bertentangan dengan target, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi pilihan nyaman bertentangan dengan target, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi pilihan nyaman bertentangan dengan target, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_dismissive_02
+
+========================================================================================
+[[ITEM_START]] 093/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_dismissive_03
+JENIS: CORE
+ELEMEN: Si
+KANAL: dismissive
+KONTEKS: private
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Lingkungan belum benar-benar pas
+
+RESPONS/SIKAP ASLI:
+Saya tahu bagian mana yang perlu disesuaikan, tetapi dapat membiarkannya karena merasa detail kenyamanan tidak perlu dibesar-besarkan.
+
+FOKUS RESPONS INTERNAL:
+membatasi perhatian pada detail kenyamanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi lingkungan belum benar-benar pas, aku tahu bagian mana yang perlu disesuaikan, tetapi bisa membiarkannya karena ngerasa detail kenyamanan nggak perlu dibesar-besarkan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi lingkungan belum benar-benar pas, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi lingkungan belum benar-benar pas, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi lingkungan belum benar-benar pas, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi lingkungan belum benar-benar pas, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi lingkungan belum benar-benar pas, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_dismissive_03
+
+========================================================================================
+[[ITEM_START]] 094/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_background_01
+JENIS: CORE
+ELEMEN: Si
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Masuk ke ruangan baru
+
+RESPONS/SIKAP ASLI:
+Tanpa banyak berpikir saya sering memilih tempat duduk, suhu, atau posisi yang membuat aktivitas terasa lebih lancar.
+
+FOKUS RESPONS INTERNAL:
+menemukan kenyamanan yang pas secara otomatis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi masuk ke ruangan baru, tanpa banyak mikir aku sering milih tempat duduk, suhu, atau posisi yang bikin aktivitas terasa lebih lancar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi masuk ke ruangan baru, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi masuk ke ruangan baru, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi masuk ke ruangan baru, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi masuk ke ruangan baru, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi masuk ke ruangan baru, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_background_01
+
+========================================================================================
+[[ITEM_START]] 095/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_background_02
+JENIS: CORE
+ELEMEN: Si
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman tampak lelah saat berkunjung
+
+RESPONS/SIKAP ASLI:
+Saya kerap mengambilkan air, mengubah tempat duduk, atau memperlambat tempo tanpa menganggapnya perhatian khusus.
+
+FOKUS RESPONS INTERNAL:
+merawat kenyamanan orang secara diam-diam
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman tampak lelah pas berkunjung, aku kerap mengambilkan air, ngubah tempat duduk, atau memperlambat tempo tanpa menganggapnya perhatian khusus.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman tampak lelah pas berkunjung, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman tampak lelah pas berkunjung, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman tampak lelah pas berkunjung, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman tampak lelah pas berkunjung, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman tampak lelah pas berkunjung, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_background_02
+
+========================================================================================
+[[ITEM_START]] 096/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_si_background_03
+JENIS: CORE
+ELEMEN: Si
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Meja kerja mulai membuat badan pegal
+
+RESPONS/SIKAP ASLI:
+Saya spontan mengubah posisi alat atau ritme kerja agar tubuh tetap seimbang, lalu melanjutkan tanpa banyak membahasnya.
+
+FOKUS RESPONS INTERNAL:
+menyetel kondisi fisik sebagai kebiasaan latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas meja kerja mulai bikin badan pegal, aku spontan ngubah posisi alat atau ritme kerja agar tubuh tetap seimbang, lalu melanjutkan tanpa banyak membahasnya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas meja kerja mulai bikin badan pegal, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas meja kerja mulai bikin badan pegal, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas meja kerja mulai bikin badan pegal, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas meja kerja mulai bikin badan pegal, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas meja kerja mulai bikin badan pegal, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_si_background_03
+
+========================================================================================
+[[ITEM_START]] 097/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_producer_01
+JENIS: CORE
+ELEMEN: Te
+KANAL: producer
+KONTEKS: decision
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Membandingkan beberapa pilihan barang
+
+RESPONS/SIKAP ASLI:
+Saya spontan mencari informasi tentang harga, ketahanan, hasil nyata, dan cara pakai sebelum menentukan pilihan.
+
+FOKUS RESPONS INTERNAL:
+membandingkan fakta praktis untuk mengambil keputusan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi membandingkan beberapa pilihan barang, aku spontan nyari informasi tentang harga, ketahanan, hasil nyata, dan cara pakai sebelum menentukan pilihan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membandingkan beberapa pilihan barang, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membandingkan beberapa pilihan barang, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membandingkan beberapa pilihan barang, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membandingkan beberapa pilihan barang, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membandingkan beberapa pilihan barang, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_producer_01
+
+========================================================================================
+[[ITEM_START]] 098/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_producer_02
+JENIS: CORE
+ELEMEN: Te
+KANAL: producer
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Pekerjaan terasa lebih lambat dari seharusnya
+
+RESPONS/SIKAP ASLI:
+Saya cepat melihat langkah yang tidak perlu dan mencoba cara yang lebih ringkas agar hasil tetap tercapai.
+
+FOKUS RESPONS INTERNAL:
+meningkatkan kepraktisan dan efektivitas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas pekerjaan terasa lebih lambat dari seharusnya, aku cepat melihat langkah yang nggak perlu dan nyoba cara yang lebih ringkas agar hasil tetap tercapai.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan terasa lebih lambat dari seharusnya, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan terasa lebih lambat dari seharusnya, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan terasa lebih lambat dari seharusnya, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan terasa lebih lambat dari seharusnya, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan terasa lebih lambat dari seharusnya, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_producer_02
+
+========================================================================================
+[[ITEM_START]] 099/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_producer_03
+JENIS: CORE
+ELEMEN: Te
+KANAL: producer
+KONTEKS: new_situation
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus memakai alat yang belum dikenal
+
+RESPONS/SIKAP ASLI:
+Saya cenderung mencari petunjuk yang bisa langsung dicoba, lalu menguji apakah cara itu benar-benar bekerja.
+
+FOKUS RESPONS INTERNAL:
+mencari dan menguji cara yang dapat dipakai
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus memakai alat yang belum dikenal, aku biasanya nyari petunjuk yang bisa langsung dicoba, lalu menguji apakah cara itu benar-benar bekerja.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas harus memakai alat yang belum dikenal, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas harus memakai alat yang belum dikenal, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas harus memakai alat yang belum dikenal, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas harus memakai alat yang belum dikenal, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas harus memakai alat yang belum dikenal, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_producer_03
+
+========================================================================================
+[[ITEM_START]] 100/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_flexible_01
+JENIS: CORE
+ELEMEN: Te
+KANAL: flexible
+KONTEKS: work
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sumber daya berubah di tengah proyek
+
+RESPONS/SIKAP ASLI:
+Saya cukup nyaman mengganti metode, alat, atau urutan berdasarkan waktu dan biaya yang benar-benar tersedia.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan metode dengan sumber daya nyata
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas sumber daya berubah di tengah proyek, aku cukup nyaman mengganti metode, alat, atau urutan berdasarkan waktu dan biaya yang benar-benar tersedia.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas sumber daya berubah di tengah proyek, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas sumber daya berubah di tengah proyek, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas sumber daya berubah di tengah proyek, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas sumber daya berubah di tengah proyek, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas sumber daya berubah di tengah proyek, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_flexible_01
+
+========================================================================================
+[[ITEM_START]] 101/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_flexible_02
+JENIS: CORE
+ELEMEN: Te
+KANAL: flexible
+KONTEKS: friendship
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman meminta bantuan praktis
+
+RESPONS/SIKAP ASLI:
+Saya bisa mengubah penjelasan menjadi langkah sederhana yang sesuai kemampuan dan alat yang dimiliki teman itu.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan langkah praktis untuk orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman meminta bantuan praktis, aku bisa ngubah penjelasan menjadi langkah sederhana yang sesuai kemampuan dan alat yang dimiliki teman itu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman meminta bantuan praktis, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman meminta bantuan praktis, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman meminta bantuan praktis, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman meminta bantuan praktis, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman meminta bantuan praktis, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_flexible_02
+
+========================================================================================
+[[ITEM_START]] 102/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_flexible_03
+JENIS: CORE
+ELEMEN: Te
+KANAL: flexible
+KONTEKS: study
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teori perlu diterapkan
+
+RESPONS/SIKAP ASLI:
+Saya mudah memilih bagian informasi yang paling berguna lalu mengubahnya menjadi prosedur yang dapat dicoba.
+
+FOKUS RESPONS INTERNAL:
+mengubah informasi menjadi langkah yang berguna
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas teori perlu diterapkan, aku mudah milih bagian informasi yang paling berguna lalu mengubahnya menjadi prosedur yang bisa dicoba.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teori perlu diterapkan, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teori perlu diterapkan, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teori perlu diterapkan, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teori perlu diterapkan, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teori perlu diterapkan, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_flexible_03
+
+========================================================================================
+[[ITEM_START]] 103/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_mask_01
+JENIS: CORE
+ELEMEN: Te
+KANAL: mask
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Rapat penuh angka dan indikator
+
+RESPONS/SIKAP ASLI:
+Saya pernah menampilkan diri seolah sangat menguasai data dan produktivitas agar tampak kompeten, padahal saya sedang mengejar-ngejar pemahaman.
+
+FOKUS RESPONS INTERNAL:
+menampilkan kompetensi praktis demi citra
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi rapat penuh angka dan indikator, aku pernah menampilkan diri seolah sangat menguasai data dan produktivitas agar tampak kompeten, padahal aku sedang mengejar-ngejar pemahaman.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat penuh angka dan indikator, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat penuh angka dan indikator, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat penuh angka dan indikator, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat penuh angka dan indikator, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi rapat penuh angka dan indikator, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_mask_01
+
+========================================================================================
+[[ITEM_START]] 104/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_mask_02
+JENIS: CORE
+ELEMEN: Te
+KANAL: mask
+KONTEKS: public
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus terlihat selalu produktif
+
+RESPONS/SIKAP ASLI:
+Saya kadang membuat daftar, angka, atau laporan hanya supaya terlihat bekerja efektif, bukan karena alat itu benar-benar membantu.
+
+FOKUS RESPONS INTERNAL:
+memperagakan produktivitas karena tuntutan sosial
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus terlihat selalu produktif, aku kadang bikin daftar, angka, atau laporan hanya supaya terlihat bekerja efektif, bukan karena alat itu benar-benar membantu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu produktif, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu produktif, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu produktif, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu produktif, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu produktif, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_mask_02
+
+========================================================================================
+[[ITEM_START]] 105/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_mask_03
+JENIS: CORE
+ELEMEN: Te
+KANAL: mask
+KONTEKS: study
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tugas harus terlihat berbasis bukti
+
+RESPONS/SIKAP ASLI:
+Saya dapat menambahkan banyak sumber dan angka agar karya tampak meyakinkan meski belum sempat memeriksa kegunaan semuanya.
+
+FOKUS RESPONS INTERNAL:
+menampilkan bukti karena merasa seharusnya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas tugas harus terlihat berbasis bukti, aku bisa menambahkan banyak sumber dan angka agar karya tampak meyakinkan meski belum sempat memeriksa kegunaan semuanya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas tugas harus terlihat berbasis bukti, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas tugas harus terlihat berbasis bukti, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas tugas harus terlihat berbasis bukti, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas tugas harus terlihat berbasis bukti, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas tugas harus terlihat berbasis bukti, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_mask_03
+
+========================================================================================
+[[ITEM_START]] 106/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_threat_01
+JENIS: CORE
+ELEMEN: Te
+KANAL: threat
+KONTEKS: time_pressure
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus memberi angka dan fakta dengan cepat
+
+RESPONS/SIKAP ASLI:
+Saya dapat panik ketika dituntut menyebut data yang tepat saat itu juga dan takut memberikan informasi yang tidak akurat.
+
+FOKUS RESPONS INTERNAL:
+memberikan fakta tepat di bawah tekanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus ngasih angka dan fakta dengan cepat, aku bisa panik pas dituntut menyebut data yang tepat pas itu juga dan takut ngasih informasi yang nggak akurat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus ngasih angka dan fakta dengan cepat, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus ngasih angka dan fakta dengan cepat, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus ngasih angka dan fakta dengan cepat, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus ngasih angka dan fakta dengan cepat, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus ngasih angka dan fakta dengan cepat, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_threat_01
+
+========================================================================================
+[[ITEM_START]] 107/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_threat_02
+JENIS: CORE
+ELEMEN: Te
+KANAL: threat
+KONTEKS: work
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kinerja diukur terus-menerus
+
+RESPONS/SIKAP ASLI:
+Tuntutan untuk membuktikan efisiensi setiap langkah dengan angka dapat membuat saya defensif atau kehilangan fokus.
+
+FOKUS RESPONS INTERNAL:
+mempertanggungjawabkan efisiensi secara rinci
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas kinerja diukur terus-menerus, tuntutan untuk membuktikan efisiensi setiap langkah dengan angka bisa bikin aku defensif atau kehilangan fokus.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kinerja diukur terus-menerus, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kinerja diukur terus-menerus, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kinerja diukur terus-menerus, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kinerja diukur terus-menerus, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kinerja diukur terus-menerus, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_threat_02
+
+========================================================================================
+[[ITEM_START]] 108/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_threat_03
+JENIS: CORE
+ELEMEN: Te
+KANAL: threat
+KONTEKS: new_situation
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Alat rusak dan harus segera diperbaiki
+
+RESPONS/SIKAP ASLI:
+Saya tertekan ketika harus menemukan cara teknis yang bekerja tanpa petunjuk atau bantuan yang jelas.
+
+FOKUS RESPONS INTERNAL:
+menangani masalah teknis tanpa pegangan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas alat rusak dan harus segera diperbaiki, aku tertekan pas harus nemuin cara teknis yang bekerja tanpa petunjuk atau bantuan yang jelas.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas alat rusak dan harus segera diperbaiki, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas alat rusak dan harus segera diperbaiki, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas alat rusak dan harus segera diperbaiki, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas alat rusak dan harus segera diperbaiki, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas alat rusak dan harus segera diperbaiki, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_threat_03
+
+========================================================================================
+[[ITEM_START]] 109/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_receiver_01
+JENIS: CORE
+ELEMEN: Te
+KANAL: receiver
+KONTEKS: work
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tugas terasa membingungkan
+
+RESPONS/SIKAP ASLI:
+Saya sangat terbantu ketika seseorang memberi langkah yang sudah teruji, contoh nyata, dan urutan kerja yang jelas.
+
+FOKUS RESPONS INTERNAL:
+menerima prosedur praktis yang teruji
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas tugas terasa membingungkan, aku sangat terbantu pas seseorang ngasih langkah yang sudah teruji, contoh nyata, dan urutan kerja yang jelas.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas tugas terasa membingungkan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas tugas terasa membingungkan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas tugas terasa membingungkan, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas tugas terasa membingungkan, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas tugas terasa membingungkan, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_receiver_01
+
+========================================================================================
+[[ITEM_START]] 110/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_receiver_02
+JENIS: CORE
+ELEMEN: Te
+KANAL: receiver
+KONTEKS: decision
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Informasi saling bertentangan
+
+RESPONS/SIKAP ASLI:
+Orang yang menunjukkan sumber tepercaya dan membedakan mana fakta dengan dugaan membuat saya jauh lebih tenang.
+
+FOKUS RESPONS INTERNAL:
+menerima fakta yang dapat dipercaya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas informasi saling bertentangan, orang yang nunjukin sumber tepercaya dan membedakan mana fakta dengan dugaan bikin aku jauh lebih tenang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas informasi saling bertentangan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas informasi saling bertentangan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas informasi saling bertentangan, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas informasi saling bertentangan, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas informasi saling bertentangan, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_receiver_02
+
+========================================================================================
+[[ITEM_START]] 111/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_receiver_03
+JENIS: CORE
+ELEMEN: Te
+KANAL: receiver
+KONTEKS: private
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tidak tahu cara memakai sesuatu
+
+RESPONS/SIKAP ASLI:
+Demonstrasi langsung dari orang yang berpengalaman sering terasa lebih melegakan daripada penjelasan panjang.
+
+FOKUS RESPONS INTERNAL:
+menerima contoh penggunaan yang langsung bisa ditiru
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau aku nggak tahu cara memakai sesuatu, contoh langsung dari orang yang berpengalaman jauh lebih melegakan daripada penjelasan panjang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu cara memakai sesuatu, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu cara memakai sesuatu, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu cara memakai sesuatu, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu cara memakai sesuatu, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak tahu cara memakai sesuatu, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_receiver_03
+
+========================================================================================
+[[ITEM_START]] 112/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_aspiration_01
+JENIS: CORE
+ELEMEN: Te
+KANAL: aspiration
+KONTEKS: public
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Hasil kerja dinilai orang lain
+
+RESPONS/SIKAP ASLI:
+Pujian bahwa saya bekerja efektif dan menghasilkan sesuatu yang benar-benar berguna terasa sangat memuaskan.
+
+FOKUS RESPONS INTERNAL:
+diakui karena hasil praktis yang efektif
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas hasil kerja dinilai orang lain, pujian bahwa aku bekerja efektif dan menghasilkan sesuatu yang benar-benar berguna terasa sangat memuaskan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas hasil kerja dinilai orang lain, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas hasil kerja dinilai orang lain, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas hasil kerja dinilai orang lain, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas hasil kerja dinilai orang lain, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas hasil kerja dinilai orang lain, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_aspiration_01
+
+========================================================================================
+[[ITEM_START]] 113/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_aspiration_02
+JENIS: CORE
+ELEMEN: Te
+KANAL: aspiration
+KONTEKS: study
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mempelajari keterampilan baru
+
+RESPONS/SIKAP ASLI:
+Saya ingin menjadi lebih cakap memilih metode yang terbukti dan tidak membuang waktu pada cara yang tidak bekerja.
+
+FOKUS RESPONS INTERNAL:
+berkembang dalam keterampilan praktis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mempelajari keterampilan baru, aku ingin menjadi lebih cakap milih metode yang terbukti dan nggak membuang waktu pada cara yang nggak bekerja.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari keterampilan baru, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari keterampilan baru, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari keterampilan baru, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari keterampilan baru, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari keterampilan baru, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_aspiration_02
+
+========================================================================================
+[[ITEM_START]] 114/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_aspiration_03
+JENIS: CORE
+ELEMEN: Te
+KANAL: aspiration
+KONTEKS: work
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Proyek berhasil disederhanakan
+
+RESPONS/SIKAP ASLI:
+Pengakuan bahwa saya membuat proses lebih cepat atau lebih hemat dapat mendorong saya bekerja jauh lebih keras.
+
+FOKUS RESPONS INTERNAL:
+dihargai karena memperbaiki efisiensi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi proyek berhasil disederhanakan, pengakuan bahwa aku bikin proses lebih cepat atau lebih hemat bisa mendorong aku bekerja jauh lebih keras.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi proyek berhasil disederhanakan, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi proyek berhasil disederhanakan, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi proyek berhasil disederhanakan, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi proyek berhasil disederhanakan, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi proyek berhasil disederhanakan, kamu menyimpan hasilnya, membandingkan progres, lalu ingin mencoba metode yang lebih efektif lagi, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_aspiration_03
+
+========================================================================================
+[[ITEM_START]] 115/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_dismissive_01
+JENIS: CORE
+ELEMEN: Te
+KANAL: dismissive
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Proses sudah cukup berjalan
+
+RESPONS/SIKAP ASLI:
+Saya mampu terus mengoptimalkan angka dan langkah, tetapi memilih berhenti ketika hasilnya sudah memadai.
+
+FOKUS RESPONS INTERNAL:
+membatasi optimasi setelah hasil cukup
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas proses sudah cukup berjalan, aku mampu terus mengoptimalkan angka dan langkah, tetapi milih berhenti pas hasilnya sudah memadai.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas proses sudah cukup berjalan, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas proses sudah cukup berjalan, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas proses sudah cukup berjalan, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas proses sudah cukup berjalan, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas proses sudah cukup berjalan, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_dismissive_01
+
+========================================================================================
+[[ITEM_START]] 116/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_dismissive_02
+JENIS: CORE
+ELEMEN: Te
+KANAL: dismissive
+KONTEKS: decision
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada banyak data tambahan
+
+RESPONS/SIKAP ASLI:
+Saya bisa mencari fakta lebih jauh, namun sering menganggap tambahan informasi tidak penting jika keputusan sudah dapat dibuat.
+
+FOKUS RESPONS INTERNAL:
+menghentikan pencarian fakta yang dianggap berlebihan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada banyak data tambahan, aku bisa nyari fakta lebih jauh, tapi sering menganggap tambahan informasi nggak penting kalau keputusan sudah bisa dibuat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada banyak data tambahan, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada banyak data tambahan, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada banyak data tambahan, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada banyak data tambahan, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada banyak data tambahan, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_dismissive_02
+
+========================================================================================
+[[ITEM_START]] 117/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_dismissive_03
+JENIS: CORE
+ELEMEN: Te
+KANAL: dismissive
+KONTEKS: friendship
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang membahas cara paling efisien terlalu lama
+
+RESPONS/SIKAP ASLI:
+Saya memahami pembahasannya, tetapi cepat merasa hidup tidak perlu diubah menjadi perhitungan untung-rugi terus-menerus.
+
+FOKUS RESPONS INTERNAL:
+mampu berpikir praktis tetapi menolak menjadikannya pusat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang membahas cara paling efisien terlalu lama, aku memahami pembahasannya, tetapi cepat ngerasa hidup nggak perlu diubah menjadi perhitungan untung-rugi terus-menerus.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang membahas cara paling efisien terlalu lama, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang membahas cara paling efisien terlalu lama, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang membahas cara paling efisien terlalu lama, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang membahas cara paling efisien terlalu lama, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang membahas cara paling efisien terlalu lama, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_dismissive_03
+
+========================================================================================
+[[ITEM_START]] 118/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_background_01
+JENIS: CORE
+ELEMEN: Te
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menjalani kegiatan harian
+
+RESPONS/SIKAP ASLI:
+Saya sering merapikan urutan langkah atau memilih alat yang lebih berguna tanpa sadar bahwa orang lain menganggapnya efisien.
+
+FOKUS RESPONS INTERNAL:
+menyederhanakan cara kerja secara otomatis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi menjalani kegiatan harian, aku sering merapikan urutan langkah atau milih alat yang lebih berguna tanpa sadar bahwa orang lain menganggapnya efisien.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menjalani kegiatan harian, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menjalani kegiatan harian, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menjalani kegiatan harian, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menjalani kegiatan harian, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menjalani kegiatan harian, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_background_01
+
+========================================================================================
+[[ITEM_START]] 119/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_background_02
+JENIS: CORE
+ELEMEN: Te
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman kesulitan melakukan hal praktis
+
+RESPONS/SIKAP ASLI:
+Saya biasanya langsung menunjukkan cara yang lebih mudah atau membantu memperbaikinya tanpa banyak teori.
+
+FOKUS RESPONS INTERNAL:
+memberi solusi praktis secara diam-diam
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman kesulitan melakukan hal praktis, aku biasanya langsung nunjukin cara yang lebih mudah atau membantu memperbaikinya tanpa banyak teori.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman kesulitan melakukan hal praktis, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman kesulitan melakukan hal praktis, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman kesulitan melakukan hal praktis, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman kesulitan melakukan hal praktis, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman kesulitan melakukan hal praktis, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_background_02
+
+========================================================================================
+[[ITEM_START]] 120/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_te_background_03
+JENIS: CORE
+ELEMEN: Te
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada informasi yang perlu diperiksa
+
+RESPONS/SIKAP ASLI:
+Saya spontan mengecek sumber, hasil, atau cara kerja sebelum meneruskannya, lalu menganggap itu hal biasa.
+
+FOKUS RESPONS INTERNAL:
+memverifikasi kegunaan dan fakta sebagai kebiasaan latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas ada informasi yang perlu diperiksa, aku spontan mengecek sumber, hasil, atau cara kerja sebelum meneruskannya, lalu menganggap itu hal biasa.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ada informasi yang perlu diperiksa, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ada informasi yang perlu diperiksa, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ada informasi yang perlu diperiksa, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ada informasi yang perlu diperiksa, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas ada informasi yang perlu diperiksa, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_te_background_03
+
+========================================================================================
+[[ITEM_START]] 121/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_producer_01
+JENIS: CORE
+ELEMEN: Ti
+KANAL: producer
+KONTEKS: study
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Membaca penjelasan yang rumit
+
+RESPONS/SIKAP ASLI:
+Saya spontan mencari definisi, hubungan antarbagian, dan aturan yang membuat keseluruhan penjelasan konsisten.
+
+FOKUS RESPONS INTERNAL:
+menyusun struktur logis dari informasi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi membaca penjelasan yang rumit, aku spontan nyari definisi, hubungan antarbagian, dan aturan yang bikin keseluruhan penjelasan konsisten.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca penjelasan yang rumit, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca penjelasan yang rumit, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca penjelasan yang rumit, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca penjelasan yang rumit, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca penjelasan yang rumit, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_producer_01
+
+========================================================================================
+[[ITEM_START]] 122/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_producer_02
+JENIS: CORE
+ELEMEN: Ti
+KANAL: producer
+KONTEKS: group
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang memakai istilah yang berbeda-beda
+
+RESPONS/SIKAP ASLI:
+Saya cepat menyadari bahwa pembahasan kacau karena arti kata atau kategori belum disepakati.
+
+FOKUS RESPONS INTERNAL:
+menjernihkan definisi dan kategori
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang memakai istilah yang berbeda-beda, aku cepat menyadari bahwa pembahasan kacau karena arti kata atau kategori belum disepakati.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi orang memakai istilah yang berbeda-beda, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi orang memakai istilah yang berbeda-beda, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi orang memakai istilah yang berbeda-beda, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi orang memakai istilah yang berbeda-beda, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi orang memakai istilah yang berbeda-beda, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_producer_02
+
+========================================================================================
+[[ITEM_START]] 123/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_producer_03
+JENIS: CORE
+ELEMEN: Ti
+KANAL: producer
+KONTEKS: decision
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Aturan menghasilkan keputusan yang janggal
+
+RESPONS/SIKAP ASLI:
+Saya cenderung memeriksa apakah prinsip yang dipakai benar-benar konsisten untuk semua kasus.
+
+FOKUS RESPONS INTERNAL:
+memeriksa konsistensi aturan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi aturan menghasilkan keputusan yang janggal, aku biasanya memeriksa apakah prinsip yang dipakai benar-benar konsisten untuk semua kasus.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan menghasilkan keputusan yang janggal, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan menghasilkan keputusan yang janggal, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan menghasilkan keputusan yang janggal, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan menghasilkan keputusan yang janggal, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan menghasilkan keputusan yang janggal, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_producer_03
+
+========================================================================================
+[[ITEM_START]] 124/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_flexible_01
+JENIS: CORE
+ELEMEN: Ti
+KANAL: flexible
+KONTEKS: work
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sistem lama tidak lagi cocok
+
+RESPONS/SIKAP ASLI:
+Saya cukup nyaman menata ulang kategori atau hubungan aturan agar sistem tetap jelas tanpa kehilangan inti.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan kerangka untuk menjaga kejelasan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi sistem lama nggak lagi cocok, aku cukup nyaman menata ulang kategori atau hubungan aturan agar sistem tetap jelas tanpa kehilangan inti.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi sistem lama nggak lagi cocok, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi sistem lama nggak lagi cocok, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi sistem lama nggak lagi cocok, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi sistem lama nggak lagi cocok, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi sistem lama nggak lagi cocok, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_flexible_01
+
+========================================================================================
+[[ITEM_START]] 125/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_flexible_02
+JENIS: CORE
+ELEMEN: Ti
+KANAL: flexible
+KONTEKS: friendship
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman bingung memahami persoalan
+
+RESPONS/SIKAP ASLI:
+Saya bisa mengganti cara menjelaskan—memakai analogi, urutan, atau batas konsep—hingga hubungan masalahnya terlihat.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan struktur penjelasan untuk orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman bingung memahami persoalan, aku bisa mengganti cara jelasin—memakai analogi, urutan, atau batas konsep—hingga hubungan masalahnya terlihat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung memahami persoalan, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung memahami persoalan, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung memahami persoalan, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung memahami persoalan, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman bingung memahami persoalan, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_flexible_02
+
+========================================================================================
+[[ITEM_START]] 126/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_flexible_03
+JENIS: CORE
+ELEMEN: Ti
+KANAL: flexible
+KONTEKS: study
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Banyak konsep perlu dihubungkan
+
+RESPONS/SIKAP ASLI:
+Saya mudah memilih kerangka yang berbeda sesuai pertanyaan yang sedang ingin dijawab.
+
+FOKUS RESPONS INTERNAL:
+menggunakan kerangka secara fleksibel
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas banyak konsep perlu dihubungkan, aku mudah milih kerangka yang berbeda sesuai pertanyaan yang sedang ingin dijawab.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas banyak konsep perlu dihubungkan, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas banyak konsep perlu dihubungkan, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas banyak konsep perlu dihubungkan, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas banyak konsep perlu dihubungkan, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas banyak konsep perlu dihubungkan, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_flexible_03
+
+========================================================================================
+[[ITEM_START]] 127/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_mask_01
+JENIS: CORE
+ELEMEN: Ti
+KANAL: mask
+KONTEKS: public
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Lingkungan menghargai orang yang sangat logis
+
+RESPONS/SIKAP ASLI:
+Saya pernah berbicara dengan istilah formal dan aturan kaku agar tampak rasional, meskipun sebenarnya saya belum nyaman dengan kerangkanya.
+
+FOKUS RESPONS INTERNAL:
+menampilkan logika formal demi citra
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi lingkungan menghargai orang yang sangat logis, aku pernah berbicara dengan istilah formal dan aturan kaku agar tampak rasional, walau sebenarnya aku belum nyaman dengan kerangkanya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi lingkungan menghargai orang yang sangat logis, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi lingkungan menghargai orang yang sangat logis, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi lingkungan menghargai orang yang sangat logis, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi lingkungan menghargai orang yang sangat logis, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi lingkungan menghargai orang yang sangat logis, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_mask_01
+
+========================================================================================
+[[ITEM_START]] 128/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_mask_02
+JENIS: CORE
+ELEMEN: Ti
+KANAL: mask
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus membuat prosedur yang tampak rapi
+
+RESPONS/SIKAP ASLI:
+Saya kadang menyusun bagan dan kategori hanya supaya pekerjaan terlihat terstruktur, bukan karena sistem itu benar-benar membantu.
+
+FOKUS RESPONS INTERNAL:
+memperagakan keteraturan karena tuntutan peran
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus bikin prosedur yang tampak rapi, aku kadang menyusun bagan dan kategori hanya supaya pekerjaan terlihat terstruktur, bukan karena sistem itu benar-benar membantu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus bikin prosedur yang tampak rapi, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus bikin prosedur yang tampak rapi, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus bikin prosedur yang tampak rapi, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus bikin prosedur yang tampak rapi, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus bikin prosedur yang tampak rapi, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_mask_02
+
+========================================================================================
+[[ITEM_START]] 129/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_mask_03
+JENIS: CORE
+ELEMEN: Ti
+KANAL: mask
+KONTEKS: study
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Dosen menuntut definisi yang sangat ketat
+
+RESPONS/SIKAP ASLI:
+Saya dapat memaksakan bahasa teoritis agar terlihat menguasai materi walau prosesnya terasa berat dan tidak alami.
+
+FOKUS RESPONS INTERNAL:
+menampilkan ketepatan konsep karena merasa seharusnya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi dosen menuntut definisi yang sangat ketat, aku bisa memaksakan bahasa teoritis agar terlihat menguasai materi walau prosesnya terasa berat dan nggak alami.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi dosen menuntut definisi yang sangat ketat, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi dosen menuntut definisi yang sangat ketat, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi dosen menuntut definisi yang sangat ketat, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi dosen menuntut definisi yang sangat ketat, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi dosen menuntut definisi yang sangat ketat, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_mask_03
+
+========================================================================================
+[[ITEM_START]] 130/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_threat_01
+JENIS: CORE
+ELEMEN: Ti
+KANAL: threat
+KONTEKS: time_pressure
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus membuktikan konsistensi saat itu juga
+
+RESPONS/SIKAP ASLI:
+Saya dapat nge-blank ketika didesak menjelaskan setiap definisi dan hubungan logis tanpa waktu menyusun pikiran.
+
+FOKUS RESPONS INTERNAL:
+membuktikan struktur logis di bawah tekanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus membuktikan konsistensi pas itu juga, aku bisa nge-blank pas didesak jelasin setiap definisi dan hubungan logis tanpa waktu menyusun pikiran.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus membuktikan konsistensi pas itu juga, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus membuktikan konsistensi pas itu juga, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus membuktikan konsistensi pas itu juga, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus membuktikan konsistensi pas itu juga, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus membuktikan konsistensi pas itu juga, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_threat_01
+
+========================================================================================
+[[ITEM_START]] 131/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_threat_02
+JENIS: CORE
+ELEMEN: Ti
+KANAL: threat
+KONTEKS: work
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Aturan saling bertentangan dan saya diminta memutuskan
+
+RESPONS/SIKAP ASLI:
+Situasi yang menuntut saya membangun sistem sempurna dari aturan yang kacau dapat membuat saya sangat tertekan.
+
+FOKUS RESPONS INTERNAL:
+merapikan aturan yang saling bertentangan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas aturan saling bertentangan dan aku diminta memutuskan, situasi yang menuntut aku membangun sistem sempurna dari aturan yang kacau bisa bikin aku sangat tertekan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aturan saling bertentangan dan aku diminta memutuskan, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aturan saling bertentangan dan aku diminta memutuskan, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aturan saling bertentangan dan aku diminta memutuskan, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aturan saling bertentangan dan aku diminta memutuskan, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas aturan saling bertentangan dan aku diminta memutuskan, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_threat_02
+
+========================================================================================
+[[ITEM_START]] 132/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_threat_03
+JENIS: CORE
+ELEMEN: Ti
+KANAL: threat
+KONTEKS: public
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kesalahan kecil dalam penalaran disorot
+
+RESPONS/SIKAP ASLI:
+Koreksi terus-menerus terhadap istilah dan logika saya dapat memicu malu, defensif, atau keinginan berhenti bicara.
+
+FOKUS RESPONS INTERNAL:
+menghadapi penilaian atas ketepatan logika
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau kesalahan kecil dalam penalaranku terus disorot, aku bisa malu, defensif, dan akhirnya pengin berhenti bicara.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kesalahan kecil dalam penalaranku disorot, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kesalahan kecil dalam penalaranku disorot, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kesalahan kecil dalam penalaranku disorot, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kesalahan kecil dalam penalaranku disorot, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas kesalahan kecil dalam penalaranku disorot, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_threat_03
+
+========================================================================================
+[[ITEM_START]] 133/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_receiver_01
+JENIS: CORE
+ELEMEN: Ti
+KANAL: receiver
+KONTEKS: study
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Materi terasa berantakan
+
+RESPONS/SIKAP ASLI:
+Saya merasa lega ketika seseorang menyusun konsep ke dalam kerangka yang jelas sehingga hubungan antarbagian mudah diikuti.
+
+FOKUS RESPONS INTERNAL:
+menerima kerangka yang menjernihkan konsep
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas materi terasa berantakan, aku ngerasa lega pas seseorang menyusun konsep ke dalam kerangka yang jelas sampai hubungan antarbagian mudah diikuti.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas materi terasa berantakan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas materi terasa berantakan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas materi terasa berantakan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas materi terasa berantakan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas materi terasa berantakan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_receiver_01
+
+========================================================================================
+[[ITEM_START]] 134/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_receiver_02
+JENIS: CORE
+ELEMEN: Ti
+KANAL: receiver
+KONTEKS: work
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Aturan kerja membingungkan
+
+RESPONS/SIKAP ASLI:
+Orang yang mampu merumuskan batas, peran, dan alur secara konsisten membuat saya jauh lebih tenang.
+
+FOKUS RESPONS INTERNAL:
+menerima aturan dan struktur yang jelas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas aturan kerja membingungkan, orang yang mampu merumuskan batas, peran, dan alur secara konsisten bikin aku jauh lebih tenang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aturan kerja membingungkan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aturan kerja membingungkan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aturan kerja membingungkan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aturan kerja membingungkan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aturan kerja membingungkan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_receiver_02
+
+========================================================================================
+[[ITEM_START]] 135/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_receiver_03
+JENIS: CORE
+ELEMEN: Ti
+KANAL: receiver
+KONTEKS: decision
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Banyak pendapat tidak sejalan
+
+RESPONS/SIKAP ASLI:
+Saya terbantu ketika seseorang menunjukkan prinsip inti yang dapat dipakai untuk membandingkan semua pilihan secara adil.
+
+FOKUS RESPONS INTERNAL:
+menerima prinsip pembanding yang konsisten
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi banyak pendapat nggak sejalan, aku terbantu pas seseorang nunjukin prinsip inti yang bisa dipakai untuk membandingkan semua pilihan secara adil.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi banyak pendapat nggak sejalan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi banyak pendapat nggak sejalan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi banyak pendapat nggak sejalan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi banyak pendapat nggak sejalan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi banyak pendapat nggak sejalan, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_receiver_03
+
+========================================================================================
+[[ITEM_START]] 136/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_aspiration_01
+JENIS: CORE
+ELEMEN: Ti
+KANAL: aspiration
+KONTEKS: public
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Cara berpikir saya dinilai
+
+RESPONS/SIKAP ASLI:
+Pujian bahwa penjelasan saya jernih, konsisten, dan sulit dibantah terasa sangat berarti.
+
+FOKUS RESPONS INTERNAL:
+diakui karena kejernihan dan konsistensi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas cara mikir aku dinilai, pujian bahwa penjelasan aku jernih, konsisten, dan sulit dibantah terasa sangat berarti.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas cara mikir aku dinilai, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas cara mikir aku dinilai, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas cara mikir aku dinilai, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas cara mikir aku dinilai, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas cara mikir aku dinilai, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_aspiration_01
+
+========================================================================================
+[[ITEM_START]] 137/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_aspiration_02
+JENIS: CORE
+ELEMEN: Ti
+KANAL: aspiration
+KONTEKS: study
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mempelajari teori baru
+
+RESPONS/SIKAP ASLI:
+Saya ingin lebih mahir membangun kerangka yang rapi tanpa tersesat dalam istilah yang tidak perlu.
+
+FOKUS RESPONS INTERNAL:
+berkembang dalam menyusun kerangka logis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mempelajari teori baru, aku ingin lebih mahir membangun kerangka yang rapi tanpa tersesat dalam istilah yang nggak perlu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari teori baru, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari teori baru, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari teori baru, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari teori baru, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi mempelajari teori baru, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_aspiration_02
+
+========================================================================================
+[[ITEM_START]] 138/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_aspiration_03
+JENIS: CORE
+ELEMEN: Ti
+KANAL: aspiration
+KONTEKS: work
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sistem yang saya buat dipakai orang lain
+
+RESPONS/SIKAP ASLI:
+Pengakuan bahwa aturan yang saya susun membuat pekerjaan lebih mudah dipahami dapat sangat membanggakan.
+
+FOKUS RESPONS INTERNAL:
+dihargai karena menciptakan struktur yang jelas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi sistem yang aku buat dipakai orang lain, pengakuan bahwa aturan yang aku susun bikin pekerjaan lebih mudah dipahami bisa sangat membanggakan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi sistem yang aku buat dipakai orang lain, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi sistem yang aku buat dipakai orang lain, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi sistem yang aku buat dipakai orang lain, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi sistem yang aku buat dipakai orang lain, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi sistem yang aku buat dipakai orang lain, kamu merapikan catatan, memperbaiki modelnya, lalu ingin menunjukkan bahwa susunannya bisa tetap konsisten, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_aspiration_03
+
+========================================================================================
+[[ITEM_START]] 139/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_dismissive_01
+JENIS: CORE
+ELEMEN: Ti
+KANAL: dismissive
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Struktur sudah cukup jelas
+
+RESPONS/SIKAP ASLI:
+Saya bisa terus menyempurnakan kategori dan aturan, tetapi memilih berhenti ketika sistem sudah dapat dipakai.
+
+FOKUS RESPONS INTERNAL:
+membatasi penyempurnaan struktur yang berlebihan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi struktur sudah cukup jelas, aku bisa terus menyempurnakan kategori dan aturan, tetapi milih berhenti pas sistem sudah bisa dipakai.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi struktur sudah cukup jelas, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi struktur sudah cukup jelas, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi struktur sudah cukup jelas, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi struktur sudah cukup jelas, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi struktur sudah cukup jelas, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_dismissive_01
+
+========================================================================================
+[[ITEM_START]] 140/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_dismissive_02
+JENIS: CORE
+ELEMEN: Ti
+KANAL: dismissive
+KONTEKS: friendship
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Percakapan berubah menjadi debat definisi
+
+RESPONS/SIKAP ASLI:
+Saya mampu mengikuti rincian logikanya, namun cepat merasa hubungan nyata lebih penting daripada memenangkan struktur argumen.
+
+FOKUS RESPONS INTERNAL:
+mampu menganalisis tetapi mengesampingkannya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas percakapan berubah menjadi debat definisi, aku mampu mengikuti rincian logikanya, tapi cepat ngerasa hubungan nyata lebih penting daripada memenangkan struktur argumen.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas percakapan berubah menjadi debat definisi, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas percakapan berubah menjadi debat definisi, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas percakapan berubah menjadi debat definisi, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas percakapan berubah menjadi debat definisi, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas percakapan berubah menjadi debat definisi, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_dismissive_02
+
+========================================================================================
+[[ITEM_START]] 141/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_dismissive_03
+JENIS: CORE
+ELEMEN: Ti
+KANAL: dismissive
+KONTEKS: decision
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada ketidakkonsistenan kecil
+
+RESPONS/SIKAP ASLI:
+Saya sering melihat celah logis, tetapi tidak selalu merasa perlu memperbaikinya bila tidak mengubah hasil utama.
+
+FOKUS RESPONS INTERNAL:
+mengetahui inkonsistensi tanpa menjadikannya pusat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada ketidakkonsistenan kecil, aku sering melihat celah logis, tetapi nggak selalu ngerasa perlu memperbaikinya bila nggak ngubah hasil utama.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada ketidakkonsistenan kecil, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada ketidakkonsistenan kecil, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada ketidakkonsistenan kecil, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada ketidakkonsistenan kecil, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada ketidakkonsistenan kecil, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_dismissive_03
+
+========================================================================================
+[[ITEM_START]] 142/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_background_01
+JENIS: CORE
+ELEMEN: Ti
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menyimpan barang atau informasi
+
+RESPONS/SIKAP ASLI:
+Saya otomatis membuat kelompok dan batas yang masuk akal agar sesuatu mudah ditemukan kembali.
+
+FOKUS RESPONS INTERNAL:
+mengelompokkan secara otomatis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi menyimpan barang atau informasi, aku otomatis bikin kelompok dan batas yang masuk akal agar sesuatu mudah ditemukan kembali.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menyimpan barang atau informasi, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menyimpan barang atau informasi, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menyimpan barang atau informasi, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menyimpan barang atau informasi, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi menyimpan barang atau informasi, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_background_01
+
+========================================================================================
+[[ITEM_START]] 143/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_background_02
+JENIS: CORE
+ELEMEN: Ti
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Instruksi dari beberapa orang bertabrakan
+
+RESPONS/SIKAP ASLI:
+Saya sering diam-diam menyusun ulang hubungan tugas di kepala sampai tahu aturan mana yang mengikat bagian lain.
+
+FOKUS RESPONS INTERNAL:
+merapikan struktur dalam pikiran
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi instruksi dari beberapa orang bertabrakan, aku sering diam-diam menyusun ulang hubungan tugas di kepala sampai tahu aturan mana yang mengikat bagian lain.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi instruksi dari beberapa orang bertabrakan, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi instruksi dari beberapa orang bertabrakan, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi instruksi dari beberapa orang bertabrakan, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi instruksi dari beberapa orang bertabrakan, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi instruksi dari beberapa orang bertabrakan, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_background_02
+
+========================================================================================
+[[ITEM_START]] 144/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_ti_background_03
+JENIS: CORE
+ELEMEN: Ti
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman menceritakan masalah panjang
+
+RESPONS/SIKAP ASLI:
+Saya mudah menangkap bagian yang tidak konsisten atau premis yang hilang, meski tidak selalu mengoreksinya.
+
+FOKUS RESPONS INTERNAL:
+mendeteksi ketidakkonsistenan sebagai kebiasaan latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman menceritakan masalah panjang, aku mudah menangkap bagian yang nggak konsisten atau premis yang hilang, meski nggak selalu mengoreksinya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan masalah panjang, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan masalah panjang, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan masalah panjang, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan masalah panjang, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menceritakan masalah panjang, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_ti_background_03
+
+========================================================================================
+[[ITEM_START]] 145/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_producer_01
+JENIS: CORE
+ELEMEN: Fe
+KANAL: producer
+KONTEKS: group
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Suasana kelompok berubah
+
+RESPONS/SIKAP ASLI:
+Saya cepat menangkap perubahan energi ruangan dan spontan menyesuaikan ekspresi agar suasana bergerak ke arah tertentu.
+
+FOKUS RESPONS INTERNAL:
+membaca dan menggerakkan suasana kelompok
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas suasana kelompok berubah, aku cepat menangkap perubahan energi ruangan dan spontan menyesuaikan ekspresi agar suasana bergerak ke arah tertentu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana kelompok berubah, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana kelompok berubah, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana kelompok berubah, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana kelompok berubah, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana kelompok berubah, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_producer_01
+
+========================================================================================
+[[ITEM_START]] 146/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_producer_02
+JENIS: CORE
+ELEMEN: Fe
+KANAL: producer
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Obrolan mulai canggung
+
+RESPONS/SIKAP ASLI:
+Saya sering langsung memberi respons, cerita, atau candaan yang membuat emosi bersama kembali mengalir.
+
+FOKUS RESPONS INTERNAL:
+mencairkan suasana secara spontan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas obrolan mulai canggung, aku sering langsung ngasih respons, cerita, atau candaan yang bikin emosi bersama kembali mengalir.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan mulai canggung, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan mulai canggung, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan mulai canggung, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan mulai canggung, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas obrolan mulai canggung, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_producer_02
+
+========================================================================================
+[[ITEM_START]] 147/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_producer_03
+JENIS: CORE
+ELEMEN: Fe
+KANAL: producer
+KONTEKS: public
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menyampaikan hal yang penting
+
+RESPONS/SIKAP ASLI:
+Saya mudah memberi tekanan emosi pada suara dan ekspresi supaya orang benar-benar merasakan pesan yang disampaikan.
+
+FOKUS RESPONS INTERNAL:
+mengekspresikan emosi untuk memberi dampak
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi menyampaikan hal yang penting, aku mudah ngasih tekanan emosi pada suara dan ekspresi supaya orang benar-benar merasakan pesan yang disampaikan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menyampaikan hal yang penting, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menyampaikan hal yang penting, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menyampaikan hal yang penting, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menyampaikan hal yang penting, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menyampaikan hal yang penting, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_producer_03
+
+========================================================================================
+[[ITEM_START]] 148/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_flexible_01
+JENIS: CORE
+ELEMEN: Fe
+KANAL: flexible
+KONTEKS: work
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tim membutuhkan semangat yang berbeda
+
+RESPONS/SIKAP ASLI:
+Saya cukup nyaman mengubah nada—lebih hangat, lebih serius, atau lebih bersemangat—sesuai energi yang dibutuhkan pekerjaan.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan ekspresi dengan kebutuhan kelompok
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi tim membutuhkan semangat yang berbeda, aku cukup nyaman ngubah nada—lebih hangat, lebih serius, atau lebih bersemangat—sesuai energi yang dibutuhkan pekerjaan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tim membutuhkan semangat yang berbeda, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tim membutuhkan semangat yang berbeda, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tim membutuhkan semangat yang berbeda, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tim membutuhkan semangat yang berbeda, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi tim membutuhkan semangat yang berbeda, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_flexible_01
+
+========================================================================================
+[[ITEM_START]] 149/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_flexible_02
+JENIS: CORE
+ELEMEN: Fe
+KANAL: flexible
+KONTEKS: friendship
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman sedang sedih
+
+RESPONS/SIKAP ASLI:
+Saya bisa ikut lembut, menghibur, atau mengalihkan suasana berdasarkan respons emosional yang paling membantu saat itu.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan emosi untuk membantu orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas teman sedang sedih, aku bisa ikut lembut, menghibur, atau mengalihkan suasana berdasarkan respons emosional yang paling membantu pas itu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teman sedang sedih, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teman sedang sedih, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teman sedang sedih, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teman sedang sedih, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas teman sedang sedih, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_flexible_02
+
+========================================================================================
+[[ITEM_START]] 150/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_flexible_03
+JENIS: CORE
+ELEMEN: Fe
+KANAL: flexible
+KONTEKS: group
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Acara mulai kehilangan arah
+
+RESPONS/SIKAP ASLI:
+Saya mudah menaikkan atau menurunkan intensitas suasana agar kelompok tetap terlibat tanpa menjadi terlalu gaduh.
+
+FOKUS RESPONS INTERNAL:
+mengatur intensitas suasana secara fleksibel
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas acara mulai kehilangan arah, aku mudah menaikkan atau menurunkan intensitas suasana agar kelompok tetap terlibat tanpa menjadi terlalu gaduh.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas acara mulai kehilangan arah, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas acara mulai kehilangan arah, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas acara mulai kehilangan arah, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas acara mulai kehilangan arah, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas acara mulai kehilangan arah, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_flexible_03
+
+========================================================================================
+[[ITEM_START]] 151/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_mask_01
+JENIS: CORE
+ELEMEN: Fe
+KANAL: mask
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus terlihat selalu antusias
+
+RESPONS/SIKAP ASLI:
+Saya pernah memaksa senyum dan energi ceria agar tampak profesional, meskipun suasana hati saya sebenarnya jauh berbeda.
+
+FOKUS RESPONS INTERNAL:
+menampilkan emosi positif karena tuntutan peran
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus terlihat selalu antusias, aku pernah memaksa senyum dan energi ceria agar tampak profesional, walau suasana hati aku sebenarnya jauh berbeda.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu antusias, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu antusias, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu antusias, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu antusias, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat selalu antusias, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_mask_01
+
+========================================================================================
+[[ITEM_START]] 152/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_mask_02
+JENIS: CORE
+ELEMEN: Fe
+KANAL: mask
+KONTEKS: family
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diharapkan menjaga suasana tetap damai
+
+RESPONS/SIKAP ASLI:
+Saya kadang memainkan ekspresi hangat supaya orang lain tidak curiga ada masalah, walau hal itu menguras tenaga.
+
+FOKUS RESPONS INTERNAL:
+memperagakan kehangatan demi kepantasan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi diharapkan menjaga suasana tetap damai, aku kadang memainkan ekspresi hangat supaya orang lain nggak curiga ada masalah, walau hal itu menguras tenaga.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan menjaga suasana tetap damai, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan menjaga suasana tetap damai, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan menjaga suasana tetap damai, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan menjaga suasana tetap damai, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan menjaga suasana tetap damai, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_mask_02
+
+========================================================================================
+[[ITEM_START]] 153/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_mask_03
+JENIS: CORE
+ELEMEN: Fe
+KANAL: mask
+KONTEKS: public
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Semua orang menunggu saya menghibur
+
+RESPONS/SIKAP ASLI:
+Saya dapat tampil heboh dan ekspresif karena merasa wajib menghidupkan acara, bukan karena energi itu muncul alami.
+
+FOKUS RESPONS INTERNAL:
+memainkan peran penghidup suasana
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi semua orang nunggu aku menghibur, aku bisa tampil heboh dan ekspresif karena ngerasa wajib menghidupkan acara, bukan karena energi itu muncul alami.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu aku menghibur, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu aku menghibur, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu aku menghibur, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu aku menghibur, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu aku menghibur, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_mask_03
+
+========================================================================================
+[[ITEM_START]] 154/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_threat_01
+JENIS: CORE
+ELEMEN: Fe
+KANAL: threat
+KONTEKS: public
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta tampil ekspresif di depan banyak orang
+
+RESPONS/SIKAP ASLI:
+Tuntutan untuk menunjukkan emosi yang jelas dapat membuat saya kaku, malu, atau ingin menghilang dari perhatian.
+
+FOKUS RESPONS INTERNAL:
+menampilkan emosi di bawah sorotan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta tampil ekspresif di depan banyak orang, tuntutan untuk nunjukin emosi yang jelas bisa bikin aku kaku, malu, atau ingin menghilang dari perhatian.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tampil ekspresif di depan banyak orang, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tampil ekspresif di depan banyak orang, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tampil ekspresif di depan banyak orang, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tampil ekspresif di depan banyak orang, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tampil ekspresif di depan banyak orang, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_threat_01
+
+========================================================================================
+[[ITEM_START]] 155/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_threat_02
+JENIS: CORE
+ELEMEN: Fe
+KANAL: threat
+KONTEKS: conflict
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus mengendalikan suasana yang memanas
+
+RESPONS/SIKAP ASLI:
+Saya tertekan ketika semua orang berharap saya mengubah emosi kelompok sementara saya sendiri belum tahu harus bereaksi bagaimana.
+
+FOKUS RESPONS INTERNAL:
+mengelola emosi kelompok saat konflik
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus mengendalikan suasana yang memanas, aku tertekan pas semua orang berharap aku ngubah emosi kelompok sementara aku sendiri belum tahu harus bereaksi bagaimana.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengendalikan suasana yang memanas, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengendalikan suasana yang memanas, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengendalikan suasana yang memanas, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengendalikan suasana yang memanas, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengendalikan suasana yang memanas, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_threat_02
+
+========================================================================================
+[[ITEM_START]] 156/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_threat_03
+JENIS: CORE
+ELEMEN: Fe
+KANAL: threat
+KONTEKS: work
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ekspresi saya terus dinilai
+
+RESPONS/SIKAP ASLI:
+Kritik bahwa saya terlalu datar, terlalu kuat, atau salah suasana dapat membuat saya defensif dan sangat sadar diri.
+
+FOKUS RESPONS INTERNAL:
+menghadapi penilaian atas ekspresi emosional
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas ekspresi aku terus dinilai, kritik bahwa aku terlalu datar, terlalu kuat, atau salah suasana bisa bikin aku defensif dan sangat sadar diri.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas ekspresi aku terus dinilai, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas ekspresi aku terus dinilai, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas ekspresi aku terus dinilai, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas ekspresi aku terus dinilai, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas ekspresi aku terus dinilai, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_threat_03
+
+========================================================================================
+[[ITEM_START]] 157/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_receiver_01
+JENIS: CORE
+ELEMEN: Fe
+KANAL: receiver
+KONTEKS: friendship
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Hari terasa muram
+
+RESPONS/SIKAP ASLI:
+Saya merasa sangat terbantu ketika seseorang membawa kehangatan, tawa, atau ekspresi yang membuat emosi saya kembali bergerak.
+
+FOKUS RESPONS INTERNAL:
+menerima energi emosional yang menghidupkan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas hari terasa muram, aku ngerasa sangat terbantu pas seseorang membawa kehangatan, tawa, atau ekspresi yang bikin emosi aku kembali bergerak.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa muram, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa muram, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa muram, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa muram, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hari terasa muram, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_receiver_01
+
+========================================================================================
+[[ITEM_START]] 158/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_receiver_02
+JENIS: CORE
+ELEMEN: Fe
+KANAL: receiver
+KONTEKS: group
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Suasana tidak jelas dan semua diam
+
+RESPONS/SIKAP ASLI:
+Orang yang berani menyatakan perasaan ruangan dan memberi nada yang tepat membuat saya jauh lebih lega.
+
+FOKUS RESPONS INTERNAL:
+menerima arah suasana dari orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi suasana nggak jelas dan semua diam, orang yang berani menyatakan perasaan ruangan dan ngasih nada yang tepat bikin aku jauh lebih lega.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi suasana nggak jelas dan semua diam, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi suasana nggak jelas dan semua diam, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi suasana nggak jelas dan semua diam, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi suasana nggak jelas dan semua diam, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi suasana nggak jelas dan semua diam, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_receiver_02
+
+========================================================================================
+[[ITEM_START]] 159/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_receiver_03
+JENIS: CORE
+ELEMEN: Fe
+KANAL: receiver
+KONTEKS: private
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sulit keluar dari perasaan sendiri
+
+RESPONS/SIKAP ASLI:
+Musik, cerita, atau kehadiran orang yang ekspresif sering membantu saya memahami dan melepaskan emosi.
+
+FOKUS RESPONS INTERNAL:
+menerima pemantik ekspresi emosional
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi sulit keluar dari perasaan sendiri, musik, cerita, atau kehadiran orang yang ekspresif sering membantu aku memahami dan melepaskan emosi.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit keluar dari perasaan sendiri, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit keluar dari perasaan sendiri, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit keluar dari perasaan sendiri, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit keluar dari perasaan sendiri, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit keluar dari perasaan sendiri, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_receiver_03
+
+========================================================================================
+[[ITEM_START]] 160/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_aspiration_01
+JENIS: CORE
+ELEMEN: Fe
+KANAL: aspiration
+KONTEKS: public
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang bereaksi pada kehadiran saya
+
+RESPONS/SIKAP ASLI:
+Pujian bahwa saya punya ekspresi kuat atau mampu menghidupkan suasana terasa sangat menyenangkan.
+
+FOKUS RESPONS INTERNAL:
+diakui karena dampak emosional
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang bereaksi pada kehadiran aku, pujian bahwa aku punya ekspresi kuat atau mampu menghidupkan suasana terasa sangat menyenangkan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang bereaksi pada kehadiran aku, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang bereaksi pada kehadiran aku, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang bereaksi pada kehadiran aku, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang bereaksi pada kehadiran aku, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang bereaksi pada kehadiran aku, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_aspiration_01
+
+========================================================================================
+[[ITEM_START]] 161/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_aspiration_02
+JENIS: CORE
+ELEMEN: Fe
+KANAL: aspiration
+KONTEKS: work
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Belajar berbicara di depan orang
+
+RESPONS/SIKAP ASLI:
+Saya ingin lebih mampu membawa energi yang membuat orang mendengarkan dan ikut merasakan pesan saya.
+
+FOKUS RESPONS INTERNAL:
+berkembang dalam ekspresi dan pengaruh suasana
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi belajar berbicara di depan orang, aku ingin lebih mampu membawa energi yang bikin orang mendengarkan dan ikut merasakan pesan aku.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar berbicara di depan orang, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar berbicara di depan orang, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar berbicara di depan orang, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar berbicara di depan orang, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi belajar berbicara di depan orang, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_aspiration_02
+
+========================================================================================
+[[ITEM_START]] 162/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_aspiration_03
+JENIS: CORE
+ELEMEN: Fe
+KANAL: aspiration
+KONTEKS: friendship
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman menikmati kebersamaan
+
+RESPONS/SIKAP ASLI:
+Pengakuan bahwa saya membuat kelompok terasa lebih hangat dapat menyentuh bagian diri yang ingin saya kembangkan.
+
+FOKUS RESPONS INTERNAL:
+dihargai karena menciptakan kehangatan bersama
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman menikmati kebersamaan, pengakuan bahwa aku bikin kelompok terasa lebih hangat bisa menyentuh bagian diri yang ingin aku kembangkan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi teman menikmati kebersamaan, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi teman menikmati kebersamaan, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi teman menikmati kebersamaan, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi teman menikmati kebersamaan, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi teman menikmati kebersamaan, wajahmu langsung cerah, nada suaramu naik, lalu kamu ingin menghidupkan suasana itu sekali lagi, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_aspiration_03
+
+========================================================================================
+[[ITEM_START]] 163/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_dismissive_01
+JENIS: CORE
+ELEMEN: Fe
+KANAL: dismissive
+KONTEKS: group
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Suasana sudah cukup hidup
+
+RESPONS/SIKAP ASLI:
+Saya bisa terus menjaga energi kelompok, tetapi memilih berhenti ketika ekspresi mulai terasa berlebihan atau mengganggu tujuan.
+
+FOKUS RESPONS INTERNAL:
+mampu menggerakkan suasana tetapi membatasinya
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi suasana sudah cukup hidup, aku bisa terus menjaga energi kelompok, tetapi milih berhenti pas ekspresi mulai terasa berlebihan atau mengganggu tujuan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi suasana sudah cukup hidup, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi suasana sudah cukup hidup, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi suasana sudah cukup hidup, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi suasana sudah cukup hidup, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi suasana sudah cukup hidup, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_dismissive_01
+
+========================================================================================
+[[ITEM_START]] 164/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_dismissive_02
+JENIS: CORE
+ELEMEN: Fe
+KANAL: dismissive
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Masalah berubah menjadi drama
+
+RESPONS/SIKAP ASLI:
+Saya memahami emosi yang sedang dimainkan, namun cepat menutupnya jika dianggap tidak membantu pekerjaan nyata.
+
+FOKUS RESPONS INTERNAL:
+mampu membaca emosi tetapi menolak drama berkepanjangan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas masalah berubah menjadi drama, aku memahami emosi yang sedang dimainkan, tapi cepat menutupnya kalau dianggap nggak membantu pekerjaan nyata.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah berubah menjadi drama, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah berubah menjadi drama, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah berubah menjadi drama, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah berubah menjadi drama, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah berubah menjadi drama, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_dismissive_02
+
+========================================================================================
+[[ITEM_START]] 165/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_dismissive_03
+JENIS: CORE
+ELEMEN: Fe
+KANAL: dismissive
+KONTEKS: friendship
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang meminta reaksi yang lebih besar
+
+RESPONS/SIKAP ASLI:
+Saya dapat menunjukkan emosi dengan jelas, tetapi tidak suka jika setiap hal harus dibesarkan agar dianggap penting.
+
+FOKUS RESPONS INTERNAL:
+menahan ekspresi yang dianggap tidak perlu
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang meminta reaksi yang lebih besar, aku bisa nunjukin emosi dengan jelas, tetapi nggak suka kalau setiap hal harus dibesarkan agar dianggap penting.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang meminta reaksi yang lebih besar, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang meminta reaksi yang lebih besar, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang meminta reaksi yang lebih besar, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang meminta reaksi yang lebih besar, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi orang meminta reaksi yang lebih besar, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_dismissive_03
+
+========================================================================================
+[[ITEM_START]] 166/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_background_01
+JENIS: CORE
+ELEMEN: Fe
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Berada di antara beberapa orang
+
+RESPONS/SIKAP ASLI:
+Saya sering otomatis menyesuaikan nada wajah dan suara dengan atmosfer sekitar tanpa sadar sedang melakukannya.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan ekspresi sebagai kebiasaan latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi berada di antara beberapa orang, aku sering otomatis menyesuaikan nada wajah dan suara dengan atmosfer sekitar tanpa sadar sedang melakukannya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berada di antara beberapa orang, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berada di antara beberapa orang, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berada di antara beberapa orang, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berada di antara beberapa orang, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berada di antara beberapa orang, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_background_01
+
+========================================================================================
+[[ITEM_START]] 167/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_background_02
+JENIS: CORE
+ELEMEN: Fe
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman mulai kehilangan semangat
+
+RESPONS/SIKAP ASLI:
+Saya kerap memberi respons kecil yang mengangkat suasana tanpa merasa sedang menjadi penghibur.
+
+FOKUS RESPONS INTERNAL:
+mengangkat emosi orang secara diam-diam
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas teman mulai kehilangan semangat, aku kerap ngasih respons kecil yang mengangkat suasana tanpa ngerasa sedang menjadi penghibur.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas teman mulai kehilangan semangat, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas teman mulai kehilangan semangat, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas teman mulai kehilangan semangat, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas teman mulai kehilangan semangat, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas teman mulai kehilangan semangat, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_background_02
+
+========================================================================================
+[[ITEM_START]] 168/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fe_background_03
+JENIS: CORE
+ELEMEN: Fe
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Rapat terasa terlalu tegang
+
+RESPONS/SIKAP ASLI:
+Saya bisa menyisipkan nada, humor, atau penekanan yang membuat orang kembali terlibat lalu melanjutkan seperti biasa.
+
+FOKUS RESPONS INTERNAL:
+mengatur suasana tanpa mencari perhatian
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas rapat terasa terlalu tegang, aku bisa menyisipkan nada, humor, atau penekanan yang bikin orang kembali terlibat lalu melanjutkan seperti biasa.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rapat terasa terlalu tegang, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rapat terasa terlalu tegang, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rapat terasa terlalu tegang, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rapat terasa terlalu tegang, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rapat terasa terlalu tegang, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fe_background_03
+
+========================================================================================
+[[ITEM_START]] 169/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_producer_01
+JENIS: CORE
+ELEMEN: Fi
+KANAL: producer
+KONTEKS: new_situation
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Bertemu orang baru
+
+RESPONS/SIKAP ASLI:
+Saya cepat membentuk rasa tentang seberapa dekat, tulus, atau aman hubungan dengan seseorang, meski belum banyak dibicarakan.
+
+FOKUS RESPONS INTERNAL:
+menilai jarak dan kualitas hubungan secara spontan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi bertemu orang baru, aku cepat membentuk rasa tentang seberapa dekat, tulus, atau aman hubungan dengan seseorang, meski belum banyak dibicarakan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bertemu orang baru, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bertemu orang baru, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bertemu orang baru, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bertemu orang baru, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bertemu orang baru, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_producer_01
+
+========================================================================================
+[[ITEM_START]] 170/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_producer_02
+JENIS: CORE
+ELEMEN: Fi
+KANAL: producer
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman mengatakan sesuatu yang berbeda dari biasanya
+
+RESPONS/SIKAP ASLI:
+Saya spontan memperhatikan apakah perubahan itu menunjukkan jarak, luka, ketulusan, atau batas baru di antara kami.
+
+FOKUS RESPONS INTERNAL:
+membaca perubahan hubungan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman mengatakan sesuatu yang berbeda dari biasanya, aku spontan memperhatikan apakah perubahan itu nunjukin jarak, luka, ketulusan, atau batas baru di antara kami.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman mengatakan sesuatu yang berbeda dari biasanya, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman mengatakan sesuatu yang berbeda dari biasanya, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman mengatakan sesuatu yang berbeda dari biasanya, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman mengatakan sesuatu yang berbeda dari biasanya, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman mengatakan sesuatu yang berbeda dari biasanya, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_producer_02
+
+========================================================================================
+[[ITEM_START]] 171/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_producer_03
+JENIS: CORE
+ELEMEN: Fi
+KANAL: producer
+KONTEKS: decision
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Pilihan dapat memengaruhi orang dekat
+
+RESPONS/SIKAP ASLI:
+Saya cenderung langsung mempertimbangkan siapa yang akan merasa dikhianati, dihargai, atau semakin dipercaya.
+
+FOKUS RESPONS INTERNAL:
+menilai dampak keputusan pada ikatan pribadi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi pilihan bisa memengaruhi orang dekat, aku biasanya langsung mempertimbangkan siapa yang akan ngerasa dikhianati, dihargai, atau semakin dipercaya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi pilihan bisa memengaruhi orang dekat, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi pilihan bisa memengaruhi orang dekat, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi pilihan bisa memengaruhi orang dekat, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi pilihan bisa memengaruhi orang dekat, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi pilihan bisa memengaruhi orang dekat, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_producer_03
+
+========================================================================================
+[[ITEM_START]] 172/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_flexible_01
+JENIS: CORE
+ELEMEN: Fi
+KANAL: flexible
+KONTEKS: friendship
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman membutuhkan kedekatan yang berbeda
+
+RESPONS/SIKAP ASLI:
+Saya cukup nyaman mengatur jarak: mendekat, memberi ruang, atau berbicara lebih jujur sesuai keadaan hubungan.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan kedekatan dengan kebutuhan hubungan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman membutuhkan kedekatan yang berbeda, aku cukup nyaman mengatur jarak: mendekat, ngasih ruang, atau berbicara lebih jujur sesuai keadaan hubungan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman membutuhkan kedekatan yang berbeda, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman membutuhkan kedekatan yang berbeda, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman membutuhkan kedekatan yang berbeda, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman membutuhkan kedekatan yang berbeda, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas lagi menghadapi teman membutuhkan kedekatan yang berbeda, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_flexible_01
+
+========================================================================================
+[[ITEM_START]] 173/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_flexible_02
+JENIS: CORE
+ELEMEN: Fi
+KANAL: flexible
+KONTEKS: work
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus memberi umpan balik pribadi
+
+RESPONS/SIKAP ASLI:
+Saya dapat memilih nada yang tetap jujur tanpa merusak kepercayaan yang sudah dibangun.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan kejujuran untuk menjaga hubungan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus ngasih umpan balik pribadi, aku bisa milih nada yang tetap jujur tanpa merusak kepercayaan yang sudah dibangun.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas harus ngasih umpan balik pribadi, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas harus ngasih umpan balik pribadi, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas harus ngasih umpan balik pribadi, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas harus ngasih umpan balik pribadi, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas harus ngasih umpan balik pribadi, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_flexible_02
+
+========================================================================================
+[[ITEM_START]] 174/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_flexible_03
+JENIS: CORE
+ELEMEN: Fi
+KANAL: flexible
+KONTEKS: family
+SKALA: comfort
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Dua orang dekat sedang berselisih
+
+RESPONS/SIKAP ASLI:
+Saya bisa mengubah pendekatan kepada masing-masing orang berdasarkan sejarah dan batas hubungan mereka.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan pendekatan berdasarkan ikatan personal
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas dua orang dekat sedang berselisih, aku bisa ngubah pendekatan kepada masing-masing orang berdasarkan sejarah dan batas hubungan mereka.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menguras tenaga
+
+ARTINYA:
+Menahan mode ini bikin kepalamu sibuk ngawasin diri sendiri. Kamu bisa melakukannya, tapi rasanya kayak terus main peran dan cepat menguras tenaga. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas dua orang dekat sedang berselisih, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup tidak nyaman
+
+ARTINYA:
+Kamu masih agak kaku di area ini. Sebagian perhatianmu habis buat memastikan kamu nggak salah, jadi responsnya susah terasa santai. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas dua orang dekat sedang berselisih, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Netral atau tergantung situasi
+
+ARTINYA:
+Rasa nyamannya fifty-fifty. Kadang mode ini mengalir, kadang kepalamu cepat capek tergantung tekanan dan siapa yang ada di situ. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas dua orang dekat sedang berselisih, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup nyaman
+
+ARTINYA:
+Kamu cukup santai memakai mode ini. Kepalamu masih punya ruang buat menyesuaikan respons tanpa merasa sedang memaksa diri. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas dua orang dekat sedang berselisih, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat nyaman
+
+ARTINYA:
+Mode ini terasa natural dan ringan. Saat memakainya, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, sementara energimu masih cukup buat memperhatikan hal lain. Kepalamu memakai pola ini sebagai alat yang bisa dinaik-turunkan sesuai tujuan.
+
+REAKSI:
+Pas dua orang dekat sedang berselisih, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_flexible_03
+
+========================================================================================
+[[ITEM_START]] 175/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_mask_01
+JENIS: CORE
+ELEMEN: Fi
+KANAL: mask
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus terlihat akrab dengan semua orang
+
+RESPONS/SIKAP ASLI:
+Saya pernah menunjukkan keramahan yang lebih dekat daripada yang benar-benar saya rasakan agar dianggap mudah bekerja sama.
+
+FOKUS RESPONS INTERNAL:
+menampilkan kedekatan karena tuntutan peran
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus terlihat akrab dengan semua orang, aku pernah nunjukin keramahan yang lebih dekat daripada yang benar-benar aku rasakan agar dianggap mudah bekerja sama.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat akrab dengan semua orang, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat akrab dengan semua orang, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat akrab dengan semua orang, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat akrab dengan semua orang, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas harus terlihat akrab dengan semua orang, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_mask_01
+
+========================================================================================
+[[ITEM_START]] 176/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_mask_02
+JENIS: CORE
+ELEMEN: Fi
+KANAL: mask
+KONTEKS: family
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diharapkan selalu tampak rukun
+
+RESPONS/SIKAP ASLI:
+Saya kadang menyembunyikan jarak atau kekecewaan dan memainkan sikap hangat demi menjaga penampilan hubungan.
+
+FOKUS RESPONS INTERNAL:
+memperagakan keharmonisan demi kepantasan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi diharapkan selalu tampak rukun, aku kadang menyembunyikan jarak atau kekecewaan dan memainkan sikap hangat demi menjaga penampilan hubungan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan selalu tampak rukun, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan selalu tampak rukun, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan selalu tampak rukun, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan selalu tampak rukun, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi diharapkan selalu tampak rukun, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_mask_02
+
+========================================================================================
+[[ITEM_START]] 177/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_mask_03
+JENIS: CORE
+ELEMEN: Fi
+KANAL: mask
+KONTEKS: public
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang menilai saya dari kesopanan
+
+RESPONS/SIKAP ASLI:
+Saya dapat memaksa perhatian personal dan kata-kata manis agar tampak tulus, walau batin saya tidak merasa dekat.
+
+FOKUS RESPONS INTERNAL:
+menampilkan ketulusan demi citra sosial
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang menilai aku dari kesopanan, aku bisa memaksa perhatian personal dan kata-kata manis agar tampak tulus, walau batin aku nggak ngerasa dekat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai aku dari kesopanan, kamu nggak mencoba memainkan mode itu dan memilih tampil apa adanya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai aku dari kesopanan, kamu baru mencoba setelah melihat orang lain, lalu gerak atau ucapanmu masih terasa hati-hati.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai aku dari kesopanan, kamu bisa memainkan perannya kalau perlu, tapi begitu tuntutannya turun kamu cepat melepasnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai aku dari kesopanan, kamu cukup lancar menjaga ekspresi, kata, atau tindakan supaya kelihatan mampu meski tetap ada rasa capek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Di balik responsnya ada self-monitoring: kamu mengecek apakah dirimu sudah kelihatan cukup mampu.
+
+REAKSI:
+Pas lagi menghadapi orang menilai aku dari kesopanan, kamu langsung memasang mode performa, mengontrol wajah dan pilihan kata, lalu mempertahankannya sampai situasi selesai.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_mask_03
+
+========================================================================================
+[[ITEM_START]] 178/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_threat_01
+JENIS: CORE
+ELEMEN: Fi
+KANAL: threat
+KONTEKS: conflict
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus menentukan siapa yang benar-benar setia
+
+RESPONS/SIKAP ASLI:
+Tekanan untuk menilai niat dan hubungan orang secara pasti dapat membuat saya takut salah, defensif, atau ingin menghindar.
+
+FOKUS RESPONS INTERNAL:
+menilai kesetiaan di bawah tekanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus menentukan siapa yang benar-benar setia, tekanan untuk menilai niat dan hubungan orang secara pasti bisa bikin aku takut salah, defensif, atau ingin menghindar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan siapa yang benar-benar setia, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan siapa yang benar-benar setia, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan siapa yang benar-benar setia, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan siapa yang benar-benar setia, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menentukan siapa yang benar-benar setia, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_threat_01
+
+========================================================================================
+[[ITEM_START]] 179/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_threat_02
+JENIS: CORE
+ELEMEN: Fi
+KANAL: threat
+KONTEKS: friendship
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta memilih salah satu teman
+
+RESPONS/SIKAP ASLI:
+Saya sangat tertekan ketika keputusan saya akan dibaca sebagai pengkhianatan atau penolakan pribadi.
+
+FOKUS RESPONS INTERNAL:
+menghadapi pilihan yang mengancam ikatan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta milih salah satu teman, aku sangat tertekan pas keputusan aku akan dibaca sebagai pengkhianatan atau penolakan pribadi.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta milih salah satu teman, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta milih salah satu teman, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta milih salah satu teman, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta milih salah satu teman, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta milih salah satu teman, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_threat_02
+
+========================================================================================
+[[ITEM_START]] 180/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_threat_03
+JENIS: CORE
+ELEMEN: Fi
+KANAL: threat
+KONTEKS: public
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Perasaan pribadi saya dipertanyakan
+
+RESPONS/SIKAP ASLI:
+Desakan untuk menjelaskan siapa yang saya sayangi, percaya, atau jauhi dapat membuat saya malu dan menutup diri.
+
+FOKUS RESPONS INTERNAL:
+membuka penilaian hubungan di bawah sorotan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau perasaan pribadiku dipertanyakan dan aku didesak menjelaskan siapa yang kusayangi, kupercaya, atau kujauhi, aku bisa malu dan langsung menutup diri.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas perasaan pribadiku dipertanyakan, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas perasaan pribadiku dipertanyakan, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas perasaan pribadiku dipertanyakan, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas perasaan pribadiku dipertanyakan, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas perasaan pribadiku dipertanyakan, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_threat_03
+
+========================================================================================
+[[ITEM_START]] 181/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_receiver_01
+JENIS: CORE
+ELEMEN: Fi
+KANAL: receiver
+KONTEKS: friendship
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tidak yakin pada posisi hubungan
+
+RESPONS/SIKAP ASLI:
+Saya merasa sangat lega ketika seseorang menyatakan dengan jelas bahwa ia percaya, tetap dekat, dan tidak menyimpan niat tersembunyi.
+
+FOKUS RESPONS INTERNAL:
+menerima kepastian dan ketulusan hubungan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau aku nggak yakin sama posisi sebuah hubungan, aku lega banget saat orang itu bilang dengan jelas bahwa ia percaya, tetap dekat, dan nggak menyimpan maksud lain.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak yakin sama posisi sebuah hubungan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak yakin sama posisi sebuah hubungan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak yakin sama posisi sebuah hubungan, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak yakin sama posisi sebuah hubungan, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku nggak yakin sama posisi sebuah hubungan, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_receiver_01
+
+========================================================================================
+[[ITEM_START]] 182/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_receiver_02
+JENIS: CORE
+ELEMEN: Fi
+KANAL: receiver
+KONTEKS: romance
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Muncul keraguan tentang perasaan
+
+RESPONS/SIKAP ASLI:
+Sikap yang konsisten dan jujur dari orang terdekat membuat hati saya jauh lebih tenang daripada janji yang samar.
+
+FOKUS RESPONS INTERNAL:
+menerima bukti kesetiaan dan kedekatan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas muncul keraguan tentang perasaan, sikap yang konsisten dan jujur dari orang terdekat bikin hati aku jauh lebih tenang daripada janji yang samar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas muncul keraguan tentang perasaan, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas muncul keraguan tentang perasaan, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas muncul keraguan tentang perasaan, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas muncul keraguan tentang perasaan, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas muncul keraguan tentang perasaan, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_receiver_02
+
+========================================================================================
+[[ITEM_START]] 183/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_receiver_03
+JENIS: CORE
+ELEMEN: Fi
+KANAL: receiver
+KONTEKS: work
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Hubungan tim terasa dingin
+
+RESPONS/SIKAP ASLI:
+Orang yang membantu menjernihkan salah paham personal tanpa mempermalukan siapa pun membuat saya merasa aman.
+
+FOKUS RESPONS INTERNAL:
+menerima mediasi hubungan yang tulus
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas hubungan tim terasa dingin, orang yang membantu menjernihkan salah paham personal tanpa mempermalukan siapa pun bikin aku ngerasa aman.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan tim terasa dingin, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan tim terasa dingin, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan tim terasa dingin, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan tim terasa dingin, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan tim terasa dingin, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_receiver_03
+
+========================================================================================
+[[ITEM_START]] 184/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_aspiration_01
+JENIS: CORE
+ELEMEN: Fi
+KANAL: aspiration
+KONTEKS: public
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang menilai karakter saya
+
+RESPONS/SIKAP ASLI:
+Pujian bahwa saya setia, tulus, dan tahu menjaga kepercayaan terasa sangat dalam bagi saya.
+
+FOKUS RESPONS INTERNAL:
+diakui karena ketulusan dan kesetiaan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi orang menilai karakter aku, pujian bahwa aku setia, tulus, dan tahu menjaga kepercayaan terasa sangat dalam buatku.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai karakter aku, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai karakter aku, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai karakter aku, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai karakter aku, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi orang menilai karakter aku, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_aspiration_01
+
+========================================================================================
+[[ITEM_START]] 185/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_aspiration_02
+JENIS: CORE
+ELEMEN: Fi
+KANAL: aspiration
+KONTEKS: friendship
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Membangun hubungan jangka panjang
+
+RESPONS/SIKAP ASLI:
+Saya ingin lebih mampu menjaga kedekatan tanpa kehilangan batas diri atau menyimpan luka terlalu lama.
+
+FOKUS RESPONS INTERNAL:
+berkembang dalam merawat hubungan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi membangun hubungan jangka panjang, aku ingin lebih mampu menjaga kedekatan tanpa kehilangan batas diri atau menyimpan luka terlalu lama.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi membangun hubungan jangka panjang, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi membangun hubungan jangka panjang, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi membangun hubungan jangka panjang, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi membangun hubungan jangka panjang, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas lagi menghadapi membangun hubungan jangka panjang, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_aspiration_02
+
+========================================================================================
+[[ITEM_START]] 186/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_aspiration_03
+JENIS: CORE
+ELEMEN: Fi
+KANAL: aspiration
+KONTEKS: family
+SKALA: recognition
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menjadi tempat aman bagi orang dekat
+
+RESPONS/SIKAP ASLI:
+Saya ingin dipercaya sebagai orang yang memahami batas pribadi dan tidak mempermainkan perasaan.
+
+FOKUS RESPONS INTERNAL:
+dihargai karena menjaga batas dan kepercayaan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas menjadi tempat aman bagi orang dekat, aku ingin dipercaya sebagai orang yang memahami batas pribadi dan nggak mempermainkan perasaan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak berarti
+
+ARTINYA:
+Pujian di area ini lewat begitu saja. Kepalamu nggak menjadikannya bukti penting tentang siapa dirimu atau ke mana kamu ingin berkembang. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas menjadi tempat aman bagi orang dekat, kamu cuma mengangguk atau bilang makasih lalu langsung pindah topik.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit berarti
+
+ARTINYA:
+Pujian itu enak didengar, tapi efeknya tipis dan cepat hilang. Kamu nggak merasa perlu mengejar pengalaman yang sama lagi. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas menjadi tempat aman bagi orang dekat, kamu tersenyum sebentar, menyimpan komentarnya, tapi nggak mengubah apa pun setelah itu.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menyenangkan
+
+ARTINYA:
+Pujian ini lumayan masuk. Kadang bikin semangatmu naik, kadang cuma terasa seperti komentar baik biasa. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas menjadi tempat aman bagi orang dekat, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, walau dorongannya bisa hilang lagi setelah beberapa waktu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat berarti
+
+ARTINYA:
+Pujian ini menyentuh bagian yang ingin tumbuh. Kepalamu menyimpannya sebagai bukti bahwa kamu mungkin memang bisa berkembang di sini. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas menjadi tempat aman bagi orang dekat, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, lalu kamu sengaja mencari kesempatan lain buat melatihnya.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Menyentuh kebutuhan terdalam
+
+ARTINYA:
+Pujian ini masuk sangat dalam. Kamu bisa replay kalimatnya berkali-kali karena area ini berkaitan dengan rasa bangga yang masih sensitif. Area ini dekat dengan rasa ingin berkembang, bangga, dan diakui tanpa merasa dipermalukan.
+
+REAKSI:
+Pas menjadi tempat aman bagi orang dekat, kamu mengingat kalimatnya lama, mengirim respons personal, lalu makin berani menjaga hubungan dengan cara yang terasa tulus, dan kalimat pujiannya masih terulang di kepalamu berhari-hari.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_aspiration_03
+
+========================================================================================
+[[ITEM_START]] 187/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_dismissive_01
+JENIS: CORE
+ELEMEN: Fi
+KANAL: dismissive
+KONTEKS: work
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Masalah personal mulai menguasai pekerjaan
+
+RESPONS/SIKAP ASLI:
+Saya mampu membaca ketegangan hubungan, tetapi sengaja mengesampingkannya ketika urusan objektif harus diselesaikan.
+
+FOKUS RESPONS INTERNAL:
+membaca hubungan tetapi tidak menjadikannya pusat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas masalah personal mulai menguasai pekerjaan, aku mampu membaca ketegangan hubungan, tetapi sengaja mengesampingkannya pas urusan objektif harus diselesaikan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah personal mulai menguasai pekerjaan, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah personal mulai menguasai pekerjaan, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah personal mulai menguasai pekerjaan, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah personal mulai menguasai pekerjaan, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas masalah personal mulai menguasai pekerjaan, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_dismissive_01
+
+========================================================================================
+[[ITEM_START]] 188/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_dismissive_02
+JENIS: CORE
+ELEMEN: Fi
+KANAL: dismissive
+KONTEKS: friendship
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Percakapan terus membahas siapa dekat dengan siapa
+
+RESPONS/SIKAP ASLI:
+Saya memahami nuansanya, namun cepat merasa pengukuran kedekatan yang berlebihan hanya memperumit hubungan.
+
+FOKUS RESPONS INTERNAL:
+membatasi analisis hubungan yang berlebihan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi percakapan terus membahas siapa dekat dengan siapa, aku memahami nuansanya, tapi cepat ngerasa pengukuran kedekatan yang berlebihan hanya memperumit hubungan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi percakapan terus membahas siapa dekat dengan siapa, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi percakapan terus membahas siapa dekat dengan siapa, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi percakapan terus membahas siapa dekat dengan siapa, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi percakapan terus membahas siapa dekat dengan siapa, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi percakapan terus membahas siapa dekat dengan siapa, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_dismissive_02
+
+========================================================================================
+[[ITEM_START]] 189/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_dismissive_03
+JENIS: CORE
+ELEMEN: Fi
+KANAL: dismissive
+KONTEKS: decision
+SKALA: frequency
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada rasa tidak enak kecil
+
+RESPONS/SIKAP ASLI:
+Saya dapat menangkap perubahan jarak, tetapi memilih tidak menindaklanjutinya jika tidak menyentuh kepercayaan utama.
+
+FOKUS RESPONS INTERNAL:
+mengetahui nuansa hubungan tanpa selalu merespons
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada rasa nggak enak kecil, aku bisa menangkap perubahan jarak, tetapi milih nggak menindaklanjutinya kalau nggak menyentuh kepercayaan utama.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak pernah
+
+ARTINYA:
+Pola ini hampir nggak pernah jadi cara harianmu. Kepalamu biasanya memilih jalur lain yang terasa lebih masuk akal atau lebih ringan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada rasa nggak enak kecil, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin, dan kamu memang nggak punya dorongan buat mengambil bagian itu.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Jarang
+
+ARTINYA:
+Pola ini muncul sesekali, biasanya karena keadaan memaksa. Begitu tekanannya hilang, kamu balik lagi ke kebiasaan yang lebih natural. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada rasa nggak enak kecil, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung, tapi kamu cepat menyerahkannya ke orang lain karena rasanya bukan urusan utama.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Kadang-kadang
+
+ARTINYA:
+Pola ini lumayan ada, tapi belum konsisten. Kadang kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, kadang kamu sama sekali nggak merasa perlu masuk ke mode itu. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada rasa nggak enak kecil, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar, lalu kamu menilai apakah bagian itu layak diteruskan atau cukup ditinggal.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sering
+
+ARTINYA:
+Pola ini cukup sering muncul dalam keseharianmu. Kepalamu gampang balik ke cara ini walau nggak selalu di setiap kesempatan. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada rasa nggak enak kecil, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal, kemudian setelah selesai kamu langsung pindah ke hal yang menurutmu lebih penting.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Hampir selalu
+
+ARTINYA:
+Pola ini sangat konsisten. Orang dekat kemungkinan sudah bisa nebak bahwa kepalamu bakal masuk ke cara ini lagi. Kemampuannya bisa ada, tapi kepalamu nggak menganggap bagian ini sebagai sesuatu yang pantas mengambil banyak ruang.
+
+REAKSI:
+Pas lagi menghadapi ada rasa nggak enak kecil, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah, lalu kamu merapikannya tanpa drama dan tetap menganggapnya bukan sesuatu yang perlu dibanggakan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_dismissive_03
+
+========================================================================================
+[[ITEM_START]] 190/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_background_01
+JENIS: CORE
+ELEMEN: Fi
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Berinteraksi dengan orang yang berbeda
+
+RESPONS/SIKAP ASLI:
+Saya otomatis menjaga kadar keterbukaan dan jarak yang terasa pantas untuk masing-masing hubungan.
+
+FOKUS RESPONS INTERNAL:
+mengatur jarak personal secara otomatis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi berinteraksi dengan orang yang berbeda, aku otomatis menjaga kadar keterbukaan dan jarak yang terasa pantas untuk masing-masing hubungan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berinteraksi dengan orang yang berbeda, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berinteraksi dengan orang yang berbeda, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berinteraksi dengan orang yang berbeda, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berinteraksi dengan orang yang berbeda, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi berinteraksi dengan orang yang berbeda, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_background_01
+
+========================================================================================
+[[ITEM_START]] 191/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_background_02
+JENIS: CORE
+ELEMEN: Fi
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman menyebut kejadian lama
+
+RESPONS/SIKAP ASLI:
+Saya sering mengingat nada, janji, dan perubahan kecil dalam hubungan tanpa sengaja menyimpannya sebagai daftar.
+
+FOKUS RESPONS INTERNAL:
+menyimpan nuansa hubungan sebagai kebiasaan latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman menyebut kejadian lama, aku sering mengingat nada, janji, dan perubahan kecil dalam hubungan tanpa sengaja menyimpannya sebagai daftar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menyebut kejadian lama, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menyebut kejadian lama, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menyebut kejadian lama, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menyebut kejadian lama, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi teman menyebut kejadian lama, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_background_02
+
+========================================================================================
+[[ITEM_START]] 192/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: core_fi_background_03
+JENIS: CORE
+ELEMEN: Fi
+KANAL: background
+KONTEKS: family
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada ketegangan yang belum diucapkan
+
+RESPONS/SIKAP ASLI:
+Saya kerap melakukan penyesuaian kecil agar batas dan rasa hormat tetap terjaga tanpa mengumumkan bahwa saya sedang memperbaiki hubungan.
+
+FOKUS RESPONS INTERNAL:
+merawat kepercayaan secara diam-diam
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada ketegangan yang belum diucapkan, aku kerap melakukan penyesuaian kecil agar batas dan rasa hormat tetap terjaga tanpa mengumumkan bahwa aku sedang memperbaiki hubungan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada ketegangan yang belum diucapkan, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada ketegangan yang belum diucapkan, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada ketegangan yang belum diucapkan, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada ketegangan yang belum diucapkan, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada ketegangan yang belum diucapkan, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] core_fi_background_03
+
+========================================================================================
+[[ITEM_START]] 193/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ne_01
+JENIS: HOLDOUT
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: new_situation
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Aturan permainan belum lengkap
+
+RESPONS/SIKAP ASLI:
+Sebelum orang lain selesai menjelaskan, saya sering sudah melihat beberapa kemungkinan tentang cara permainan itu bisa berkembang.
+
+FOKUS RESPONS INTERNAL:
+melihat beberapa kemungkinan dari aturan yang belum lengkap
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Sebelum orang lain selesai jelasin, aku sering sudah melihat beberapa kemungkinan tentang cara permainan itu bisa berkembang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan permainan belum lengkap, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan permainan belum lengkap, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan permainan belum lengkap, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan permainan belum lengkap, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan permainan belum lengkap, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ne_01
+
+========================================================================================
+[[ITEM_START]] 194/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ne_02
+JENIS: HOLDOUT
+ELEMEN: Ne
+KANAL: threat
+KONTEKS: public
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Semua orang menunggu ide yang belum pernah ada
+
+RESPONS/SIKAP ASLI:
+Tekanan untuk menjadi satu-satunya sumber ide baru dapat membuat pikiran saya mengecil dan takut semua pilihan terdengar bodoh.
+
+FOKUS RESPONS INTERNAL:
+menghasilkan kebaruan ketika semua orang menunggu
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi semua orang nunggu ide yang belum pernah ada, tekanan untuk menjadi satu-satunya sumber ide baru bisa bikin kepalaku mengecil dan takut semua pilihan terdengar bodoh.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu ide yang belum pernah ada, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu ide yang belum pernah ada, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu ide yang belum pernah ada, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu ide yang belum pernah ada, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas lagi menghadapi semua orang nunggu ide yang belum pernah ada, kamu membuka-tutup catatan, melontarkan ide setengah jadi, lalu mendadak buntu karena semua pilihan terasa jelek, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ne_02
+
+========================================================================================
+[[ITEM_START]] 195/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ne_03
+JENIS: HOLDOUT
+ELEMEN: Ne
+KANAL: receiver
+KONTEKS: study
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tidak memahami potensi sebuah topik
+
+RESPONS/SIKAP ASLI:
+Saya merasa terbuka kembali ketika seseorang menunjukkan hubungan tak terduga yang membuat topik itu punya lebih banyak jalan untuk dipelajari.
+
+FOKUS RESPONS INTERNAL:
+menerima hubungan baru yang membuka potensi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau aku belum menangkap potensi sebuah topik, pikiranku terasa kebuka lagi saat seseorang nunjukin hubungan tak terduga yang bikin topik itu punya banyak jalan buat dipelajari.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku belum menangkap potensi sebuah topik, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku belum menangkap potensi sebuah topik, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku belum menangkap potensi sebuah topik, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku belum menangkap potensi sebuah topik, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas aku belum menangkap potensi sebuah topik, bahumu turun, kamu langsung membuka catatan, lalu mulai menambahkan pilihan baru dari kemungkinan yang orang itu tunjukkan, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ne_03
+
+========================================================================================
+[[ITEM_START]] 196/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ne_04
+JENIS: HOLDOUT
+ELEMEN: Ne
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Melihat aturan yang dianggap tetap
+
+RESPONS/SIKAP ASLI:
+Saya kerap spontan menemukan pengecualian atau penggunaan lain, lalu menyimpannya di kepala tanpa merasa harus memperdebatkannya.
+
+FOKUS RESPONS INTERNAL:
+melihat pengecualian dan penggunaan lain secara latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi melihat aturan yang dianggap tetap, aku kerap spontan nemuin pengecualian atau penggunaan lain, lalu menyimpannya di kepala tanpa ngerasa harus memperdebatkannya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat aturan yang dianggap tetap, kamu tetap pakai satu cara, menutup catatan, atau nunggu orang lain yang membuka opsi baru, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat aturan yang dianggap tetap, kamu menatap layar sebentar, mencoret satu-dua kemungkinan, lalu berhenti buat menimbang mana yang paling aman, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat aturan yang dianggap tetap, kamu kadang bikin daftar alternatif, tapi di lain waktu langsung pilih cara pertama biar cepat selesai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat aturan yang dianggap tetap, kamu membuka beberapa tab, menulis tiga opsi, lalu cepat mencoba jalan yang paling menjanjikan, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka membuka cabang, celah, dan kemungkinan lain dari sesuatu yang kelihatannya sudah mentok, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi melihat aturan yang dianggap tetap, tanganmu otomatis bikin cabang di catatan, memindah-mindah benda, atau melempar beberapa kemungkinan sebelum orang lain selesai bicara, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ne_04
+
+========================================================================================
+[[ITEM_START]] 197/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ni_01
+JENIS: HOLDOUT
+ELEMEN: Ni
+KANAL: producer
+KONTEKS: decision
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sebuah keputusan terasa belum waktunya
+
+RESPONS/SIKAP ASLI:
+Saya sering merasakan bahwa langkah tertentu akan lebih tepat jika ditunda sampai rangkaian keadaan mencapai titik yang pas.
+
+FOKUS RESPONS INTERNAL:
+merasakan kematangan waktu sebelum bertindak
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas sebuah keputusan terasa belum waktunya, aku sering merasakan bahwa langkah tertentu akan lebih tepat kalau ditunda sampai rangkaian keadaan mencapai titik yang pas.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas sebuah keputusan terasa belum waktunya, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas sebuah keputusan terasa belum waktunya, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas sebuah keputusan terasa belum waktunya, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas sebuah keputusan terasa belum waktunya, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas sebuah keputusan terasa belum waktunya, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ni_01
+
+========================================================================================
+[[ITEM_START]] 198/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ni_02
+JENIS: HOLDOUT
+ELEMEN: Ni
+KANAL: threat
+KONTEKS: time_pressure
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta menetapkan kapan masalah akan selesai
+
+RESPONS/SIKAP ASLI:
+Saya dapat sangat tertekan ketika harus menjanjikan tanggal akhir padahal alur perubahan belum cukup terbaca.
+
+FOKUS RESPONS INTERNAL:
+menjamin waktu akhir ketika arah belum jelas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta menetapkan kapan masalah akan selesai, aku bisa sangat tertekan pas harus menjanjikan tanggal akhir padahal alur perubahan belum cukup terbaca.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menetapkan kapan masalah akan selesai, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menetapkan kapan masalah akan selesai, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menetapkan kapan masalah akan selesai, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menetapkan kapan masalah akan selesai, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta menetapkan kapan masalah akan selesai, kamu berkali-kali melihat jam atau timeline, mengulang prediksi di kepala, lalu makin takut salah membaca momennya, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ni_02
+
+========================================================================================
+[[ITEM_START]] 199/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ni_03
+JENIS: HOLDOUT
+ELEMEN: Ni
+KANAL: receiver
+KONTEKS: friendship
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kejadian buruk terasa tidak bermakna
+
+RESPONS/SIKAP ASLI:
+Saya lega ketika seseorang dapat menjelaskan bagaimana kejadian itu mungkin menjadi bagian dari perkembangan yang lebih panjang.
+
+FOKUS RESPONS INTERNAL:
+menerima makna perkembangan dari orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas kejadian buruk terasa nggak bermakna, aku lega pas seseorang bisa jelasin bagaimana kejadian itu mungkin menjadi bagian dari perkembangan yang lebih panjang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kejadian buruk terasa nggak bermakna, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kejadian buruk terasa nggak bermakna, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kejadian buruk terasa nggak bermakna, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kejadian buruk terasa nggak bermakna, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas kejadian buruk terasa nggak bermakna, kamu berhenti memaksa jawaban cepat, mengangguk pelan, lalu menyusun ulang langkah sesuai tempo yang dijelaskan orang itu, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ni_03
+
+========================================================================================
+[[ITEM_START]] 200/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ni_04
+JENIS: HOLDOUT
+ELEMEN: Ni
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Proyek mulai kehilangan momentum
+
+RESPONS/SIKAP ASLI:
+Saya sering mengubah tempo atau menunggu satu tahap tertentu tanpa menjelaskan panjang karena arah perlambatannya sudah terasa.
+
+FOKUS RESPONS INTERNAL:
+menyesuaikan momentum secara diam-diam
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas proyek mulai kehilangan momentum, aku sering ngubah tempo atau nunggu satu tahap tertentu tanpa jelasin panjang karena arah perlambatannya sudah terasa.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek mulai kehilangan momentum, kamu langsung jalan tanpa membaca tempo, jarang menengok urutan kejadian, dan baru sadar arahnya setelah semuanya keburu bergerak, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek mulai kehilangan momentum, kamu berhenti cukup lama, melihat jam atau timeline, lalu masih ragu apakah sekarang memang waktu yang pas, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek mulai kehilangan momentum, kamu kadang menunda dan mengamati arah, tapi di situasi lain langsung bergerak tanpa membaca momentumnya, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek mulai kehilangan momentum, kamu mengecilkan suara, menunggu beberapa detik, lalu memilih momen yang terasa paling pas untuk masuk, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu suka membaca tempo, arah perubahan, dan ke mana rangkaian kejadian ini bakal bergerak, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas proyek mulai kehilangan momentum, kamu otomatis mengubah tempo, menahan satu langkah, atau maju tepat saat rangkaian situasinya terasa matang, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ni_04
+
+========================================================================================
+[[ITEM_START]] 201/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_se_01
+JENIS: HOLDOUT
+ELEMEN: Se
+KANAL: producer
+KONTEKS: conflict
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Seseorang terus menggeser batas yang sudah disepakati
+
+RESPONS/SIKAP ASLI:
+Saya cenderung segera menghentikannya dengan sikap yang jelas daripada berharap ia menyadari sendiri.
+
+FOKUS RESPONS INTERNAL:
+menghentikan pelanggaran batas secara langsung
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi seseorang terus menggeser batas yang sudah disepakati, aku biasanya segera menghentikannya dengan sikap yang jelas daripada berharap ia menyadari sendiri.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang terus menggeser batas yang sudah disepakati, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang terus menggeser batas yang sudah disepakati, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang terus menggeser batas yang sudah disepakati, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang terus menggeser batas yang sudah disepakati, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang terus menggeser batas yang sudah disepakati, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_se_01
+
+========================================================================================
+[[ITEM_START]] 202/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_se_02
+JENIS: HOLDOUT
+ELEMEN: Se
+KANAL: threat
+KONTEKS: public
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus merebut kendali dari orang yang dominan
+
+RESPONS/SIKAP ASLI:
+Tubuh saya dapat menegang ketika harus beradu posisi secara terbuka dan semua orang melihat siapa yang akan mundur.
+
+FOKUS RESPONS INTERNAL:
+beradu posisi secara terbuka
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus merebut kendali dari orang yang dominan, tubuhku bisa menegang pas harus beradu posisi secara terbuka dan semua orang melihat siapa yang akan mundur.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus merebut kendali dari orang yang dominan, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus merebut kendali dari orang yang dominan, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus merebut kendali dari orang yang dominan, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus merebut kendali dari orang yang dominan, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus merebut kendali dari orang yang dominan, bahumu kaku, rahangmu mengeras, suaramu bisa mendadak mengecil atau justru naik karena kamu merasa sedang didesak, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_se_02
+
+========================================================================================
+[[ITEM_START]] 203/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_se_03
+JENIS: HOLDOUT
+ELEMEN: Se
+KANAL: receiver
+KONTEKS: family
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Keluarga menghadapi gangguan nyata
+
+RESPONS/SIKAP ASLI:
+Saya merasa aman ketika seseorang mengambil tindakan tegas, membagi peran, dan tidak membiarkan ancaman terus berlarut.
+
+FOKUS RESPONS INTERNAL:
+menerima perlindungan dan tindakan tegas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi keluarga ngadepin gangguan nyata, aku ngerasa aman pas seseorang mengambil tindakan tegas, membagi peran, dan nggak membiarkan ancaman terus berlarut.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keluarga ngadepin gangguan nyata, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keluarga ngadepin gangguan nyata, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keluarga ngadepin gangguan nyata, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keluarga ngadepin gangguan nyata, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi keluarga ngadepin gangguan nyata, posturmu lebih rileks, kamu mundur setengah langkah, lalu membiarkan orang yang tegas itu mengamankan batas dan membagi peran, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_se_03
+
+========================================================================================
+[[ITEM_START]] 204/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_se_04
+JENIS: HOLDOUT
+ELEMEN: Se
+KANAL: background
+KONTEKS: work
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Barang dan orang menghalangi jalur kerja
+
+RESPONS/SIKAP ASLI:
+Saya sering langsung memindahkan, mengatur, atau membuka ruang agar kegiatan kembali lancar tanpa banyak rapat.
+
+FOKUS RESPONS INTERNAL:
+membuka ruang dan menyingkirkan hambatan secara otomatis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi barang dan orang menghalangi jalur kerja, aku sering langsung memindahkan, mengatur, atau membuka ruang agar kegiatan kembali lancar tanpa banyak rapat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi barang dan orang menghalangi jalur kerja, kamu membiarkan posisi tetap berantakan, mengikuti arus, atau pura-pura sibuk sama HP supaya orang lain yang mengambil kendali, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi barang dan orang menghalangi jalur kerja, kamu melirik risih, menggeser badan sedikit, lalu berhenti buat mikir apakah perlu maju atau lebih aman diam, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi barang dan orang menghalangi jalur kerja, kamu kadang pasang badan atau bicara tegas, tapi di waktu lain memilih membiarkan orang lain mengatur, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi barang dan orang menghalangi jalur kerja, kamu langsung maju setengah langkah, menutup celah, memindahkan penghalang, atau memberi instruksi pendek, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, perhatianmu cepat menangkap batas, posisi, tekanan, dan siapa atau apa yang sedang menguasai ruang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi barang dan orang menghalangi jalur kerja, posturmu otomatis berubah, bahumu menghadap sumber gangguan, tanganmu mengatur jarak, dan orang lain langsung menangkap batasnya, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_se_04
+
+========================================================================================
+[[ITEM_START]] 205/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_si_01
+JENIS: HOLDOUT
+ELEMEN: Si
+KANAL: producer
+KONTEKS: body
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tubuh mulai kehilangan keseimbangan
+
+RESPONS/SIKAP ASLI:
+Saya biasanya cepat tahu apakah yang saya butuhkan adalah makan, tidur, bergerak, mengurangi suara, atau sekadar mengubah posisi.
+
+FOKUS RESPONS INTERNAL:
+membaca kebutuhan tubuh secara spontan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas tubuh mulai kehilangan keseimbangan, aku biasanya cepat tahu apakah yang aku butuhkan adalah makan, tidur, bergerak, mengurangi suara, atau sekadar ngubah posisi.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai kehilangan keseimbangan, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai kehilangan keseimbangan, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai kehilangan keseimbangan, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai kehilangan keseimbangan, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tubuh mulai kehilangan keseimbangan, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_si_01
+
+========================================================================================
+[[ITEM_START]] 206/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_si_02
+JENIS: HOLDOUT
+ELEMEN: Si
+KANAL: threat
+KONTEKS: work
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus mengawasi kenyamanan banyak orang
+
+RESPONS/SIKAP ASLI:
+Saya dapat kewalahan ketika setiap keluhan suhu, makanan, bau, dan posisi duduk menjadi tanggung jawab saya.
+
+FOKUS RESPONS INTERNAL:
+mengelola seluruh detail kenyamanan orang lain
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus mengawasi kenyamanan banyak orang, aku bisa kewalahan pas setiap keluhan suhu, makanan, bau, dan posisi duduk menjadi tanggung jawab aku.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengawasi kenyamanan banyak orang, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengawasi kenyamanan banyak orang, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengawasi kenyamanan banyak orang, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengawasi kenyamanan banyak orang, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus mengawasi kenyamanan banyak orang, kamu terus mengubah posisi, memegang kepala atau perut, lalu makin susah fokus karena semua sensasi terasa mengganggu, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_si_02
+
+========================================================================================
+[[ITEM_START]] 207/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_si_03
+JENIS: HOLDOUT
+ELEMEN: Si
+KANAL: receiver
+KONTEKS: romance
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Badan sedang benar-benar lelah
+
+RESPONS/SIKAP ASLI:
+Perhatian sederhana seperti menyiapkan tempat nyaman atau makanan yang pas dapat membuat saya merasa sangat dirawat.
+
+FOKUS RESPONS INTERNAL:
+menerima perawatan indrawi yang tepat
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas badan sedang benar-benar lelah, perhatian sederhana seperti menyiapkan tempat nyaman atau makanan yang pas bisa bikin aku ngerasa sangat dirawat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas badan sedang benar-benar lelah, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas badan sedang benar-benar lelah, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas badan sedang benar-benar lelah, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas badan sedang benar-benar lelah, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas badan sedang benar-benar lelah, napasmu melambat, kamu memperbaiki posisi duduk atau menerima minum, lalu tubuhmu terasa lebih gampang diajak lanjut, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_si_03
+
+========================================================================================
+[[ITEM_START]] 208/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_si_04
+JENIS: HOLDOUT
+ELEMEN: Si
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kegiatan bersama berlangsung lama
+
+RESPONS/SIKAP ASLI:
+Saya sering tanpa sadar mengusulkan jeda, tempat yang lebih enak, atau tempo yang lebih ringan sebelum orang lain menyadari kelelahan.
+
+FOKUS RESPONS INTERNAL:
+menjaga kenyamanan kelompok secara latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi kegiatan bersama berlangsung lama, aku sering tanpa sadar mengusulkan jeda, tempat yang lebih enak, atau tempo yang lebih ringan sebelum orang lain menyadari kelelahan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi kegiatan bersama berlangsung lama, kamu tetap duduk dalam posisi yang bikin pegal, membiarkan suara atau suhu mengganggu, lalu baru sadar setelah tubuhmu benar-benar protes, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi kegiatan bersama berlangsung lama, kamu mengusap leher, mengubah posisi beberapa kali, lalu masih butuh waktu buat tahu apa yang sebenarnya bikin nggak nyaman, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi kegiatan bersama berlangsung lama, kamu kadang meredupkan lampu atau mencari posisi enak, tapi di waktu lain mengabaikan sinyal tubuh sampai urusan selesai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi kegiatan bersama berlangsung lama, kamu cepat mengatur kursi, suhu, suara, makanan, atau ritme supaya badan kembali terasa enak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu peka pada rasa tubuh, ritme, suhu, suara, posisi, dan apakah keadaan terasa pas atau mengganggu, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi kegiatan bersama berlangsung lama, tanpa mikir panjang kamu langsung menggeser posisi, membuka jendela, mengambil air, atau menurunkan tempo sebelum rasa nggak nyaman membesar, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_si_04
+
+========================================================================================
+[[ITEM_START]] 209/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_te_01
+JENIS: HOLDOUT
+ELEMEN: Te
+KANAL: producer
+KONTEKS: decision
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menerima klaim yang terdengar meyakinkan
+
+RESPONS/SIKAP ASLI:
+Saya spontan ingin tahu sumbernya, contoh hasilnya, dan apakah informasi itu benar-benar dapat dipakai.
+
+FOKUS RESPONS INTERNAL:
+memeriksa fakta dan kegunaan klaim
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi menerima klaim yang terdengar meyakinkan, aku spontan ingin tahu sumbernya, contoh hasilnya, dan apakah informasi itu benar-benar bisa dipakai.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menerima klaim yang terdengar meyakinkan, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menerima klaim yang terdengar meyakinkan, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menerima klaim yang terdengar meyakinkan, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menerima klaim yang terdengar meyakinkan, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menerima klaim yang terdengar meyakinkan, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_te_01
+
+========================================================================================
+[[ITEM_START]] 210/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_te_02
+JENIS: HOLDOUT
+ELEMEN: Te
+KANAL: threat
+KONTEKS: time_pressure
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus memperbaiki alat tanpa petunjuk
+
+RESPONS/SIKAP ASLI:
+Saya dapat panik ketika hasil harus segera keluar tetapi saya tidak tahu prosedur mana yang terbukti bekerja.
+
+FOKUS RESPONS INTERNAL:
+menemukan prosedur yang bekerja di bawah tekanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus memperbaiki alat tanpa petunjuk, aku bisa panik pas hasil harus segera keluar tetapi aku nggak tahu prosedur mana yang terbukti bekerja.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus memperbaiki alat tanpa petunjuk, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus memperbaiki alat tanpa petunjuk, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus memperbaiki alat tanpa petunjuk, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus memperbaiki alat tanpa petunjuk, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus memperbaiki alat tanpa petunjuk, kamu bolak-balik mengecek angka, takut datanya salah, lalu menunda keputusan karena nggak yakin langkah mana yang benar-benar bekerja, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_te_02
+
+========================================================================================
+[[ITEM_START]] 211/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_te_03
+JENIS: HOLDOUT
+ELEMEN: Te
+KANAL: receiver
+KONTEKS: new_situation
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mencoba pekerjaan teknis pertama kali
+
+RESPONS/SIKAP ASLI:
+Saya sangat terbantu oleh orang yang menunjukkan satu contoh nyata, membiarkan saya mencoba, lalu memperbaiki langkah yang salah.
+
+FOKUS RESPONS INTERNAL:
+menerima demonstrasi praktis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi nyoba pekerjaan teknis pertama kali, aku sangat terbantu oleh orang yang nunjukin satu contoh nyata, membiarkan aku nyoba, lalu memperbaiki langkah yang salah.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi nyoba pekerjaan teknis pertama kali, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi nyoba pekerjaan teknis pertama kali, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi nyoba pekerjaan teknis pertama kali, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi nyoba pekerjaan teknis pertama kali, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi nyoba pekerjaan teknis pertama kali, kamu langsung mengikuti data atau langkah yang diberikan, mencentang satu-satu, lalu beban di kepalamu terasa turun, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_te_03
+
+========================================================================================
+[[ITEM_START]] 212/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_te_04
+JENIS: HOLDOUT
+ELEMEN: Te
+KANAL: background
+KONTEKS: private
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Rutinitas kecil terasa boros waktu
+
+RESPONS/SIKAP ASLI:
+Saya sering mengubah urutan atau alat secara otomatis sampai kegiatan itu selesai dengan lebih sedikit langkah.
+
+FOKUS RESPONS INTERNAL:
+menyederhanakan rutinitas secara latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas rutinitas kecil terasa boros waktu, aku sering ngubah urutan atau alat secara otomatis sampai kegiatan itu selesai dengan lebih sedikit langkah.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rutinitas kecil terasa boros waktu, kamu lanjut menebak, memakai cara lama, atau menunggu orang lain menunjukkan data dan langkah yang benar-benar bekerja, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rutinitas kecil terasa boros waktu, kamu membuka catatan atau mesin pencari, mengecek satu-dua angka, lalu masih lama menimbang apakah buktinya cukup, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rutinitas kecil terasa boros waktu, kamu kadang bikin daftar hasil dan membandingkan cara, tapi di waktu lain cukup mengikuti feeling atau kebiasaan, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rutinitas kecil terasa boros waktu, kamu langsung membuka data, membandingkan waktu atau biaya, lalu mencoba langkah yang paling masuk akal, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu otomatis nyari bukti yang bisa dipakai, langkah yang bekerja, dan hasil yang kelihatan nyata, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas rutinitas kecil terasa boros waktu, jarimu otomatis mencari angka, riwayat, contoh nyata, atau alat uji sebelum obrolannya keburu penuh asumsi, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_te_04
+
+========================================================================================
+[[ITEM_START]] 213/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ti_01
+JENIS: HOLDOUT
+ELEMEN: Ti
+KANAL: producer
+KONTEKS: study
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Dua penjelasan memakai aturan yang berbeda
+
+RESPONS/SIKAP ASLI:
+Saya cepat ingin menemukan prinsip mana yang berubah dan apakah keduanya masih dapat berada dalam satu kerangka yang konsisten.
+
+FOKUS RESPONS INTERNAL:
+mencari prinsip yang menyatukan aturan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi dua penjelasan memakai aturan yang berbeda, aku cepat ingin nemuin prinsip mana yang berubah dan apakah keduanya masih bisa berada dalam satu kerangka yang konsisten.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi dua penjelasan memakai aturan yang berbeda, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi dua penjelasan memakai aturan yang berbeda, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi dua penjelasan memakai aturan yang berbeda, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi dua penjelasan memakai aturan yang berbeda, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi dua penjelasan memakai aturan yang berbeda, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ti_01
+
+========================================================================================
+[[ITEM_START]] 214/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ti_02
+JENIS: HOLDOUT
+ELEMEN: Ti
+KANAL: threat
+KONTEKS: public
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta mempertahankan definisi di depan banyak orang
+
+RESPONS/SIKAP ASLI:
+Saya dapat merasa malu atau defensif ketika setiap kata saya dibedah sebelum sempat menyusun kerangka yang utuh.
+
+FOKUS RESPONS INTERNAL:
+mempertahankan definisi di bawah sorotan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta mempertahankan definisi di depan banyak orang, aku bisa ngerasa malu atau defensif pas setiap kata aku dibedah sebelum sempat menyusun kerangka yang utuh.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta mempertahankan definisi di depan banyak orang, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta mempertahankan definisi di depan banyak orang, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta mempertahankan definisi di depan banyak orang, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta mempertahankan definisi di depan banyak orang, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta mempertahankan definisi di depan banyak orang, kamu menghapus dan menulis ulang susunan, terpaku pada satu aturan, lalu nge-blank ketika ada pengecualian baru, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ti_02
+
+========================================================================================
+[[ITEM_START]] 215/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ti_03
+JENIS: HOLDOUT
+ELEMEN: Ti
+KANAL: receiver
+KONTEKS: work
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Pembagian tugas tidak jelas
+
+RESPONS/SIKAP ASLI:
+Saya lega ketika seseorang menetapkan batas peran dan menunjukkan bagaimana satu bagian terhubung dengan bagian lain.
+
+FOKUS RESPONS INTERNAL:
+menerima struktur peran yang jelas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi pembagian tugas nggak jelas, aku lega pas seseorang menetapkan batas peran dan nunjukin bagaimana satu bagian terhubung dengan bagian lain.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi pembagian tugas nggak jelas, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi pembagian tugas nggak jelas, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi pembagian tugas nggak jelas, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi pembagian tugas nggak jelas, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi pembagian tugas nggak jelas, kamu melihat bagan atau aturan yang dibuat orang itu, mengangguk, lalu bisa melanjutkan tanpa terus mengurai semuanya sendirian, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ti_03
+
+========================================================================================
+[[ITEM_START]] 216/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_ti_04
+JENIS: HOLDOUT
+ELEMEN: Ti
+KANAL: background
+KONTEKS: general
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mendengar argumen yang tampak lancar
+
+RESPONS/SIKAP ASLI:
+Saya sering otomatis menangkap lompatan logika atau kategori yang bercampur, meskipun tidak selalu menyela.
+
+FOKUS RESPONS INTERNAL:
+mendeteksi lompatan logika secara latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mendengar argumen yang tampak lancar, aku sering otomatis menangkap lompatan logika atau kategori yang bercampur, walau nggak selalu menyela.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi mendengar argumen yang tampak lancar, kamu membiarkan aturan tumpang tindih, mengikuti penjelasan seadanya, atau baru sadar ada kontradiksi setelah orang lain menunjukkannya, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi mendengar argumen yang tampak lancar, kamu mencoret-coret kotak dan panah, berhenti cukup lama, lalu masih mengecek apakah pembagiannya benar-benar konsisten, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi mendengar argumen yang tampak lancar, kamu kadang membuat kategori atau urutan, tapi di waktu lain membiarkan susunannya longgar selama masih bisa dipakai, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi mendengar argumen yang tampak lancar, kamu langsung memberi nama kategori, menggambar hubungan, atau merapikan aturan supaya bagian-bagiannya nggak saling tabrak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, otakmu suka memisahkan bagian, mencari hubungan yang konsisten, lalu menaruh semuanya di tempat yang masuk akal, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi mendengar argumen yang tampak lancar, tanganmu otomatis bikin tabel, garis, kelompok, dan urutan sampai pola yang tadinya kusut kelihatan rapi tanpa perlu banyak penjelasan, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_ti_04
+
+========================================================================================
+[[ITEM_START]] 217/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_fe_01
+JENIS: HOLDOUT
+ELEMEN: Fe
+KANAL: producer
+KONTEKS: group
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Energi ruangan turun setelah kabar buruk
+
+RESPONS/SIKAP ASLI:
+Saya sering spontan mengubah nada bicara atau memberi respons yang membantu kelompok menyalurkan emosi bersama.
+
+FOKUS RESPONS INTERNAL:
+menggerakkan emosi kelompok secara spontan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi energi ruangan turun setelah kabar buruk, aku sering spontan ngubah nada bicara atau ngasih respons yang membantu kelompok menyalurkan emosi bersama.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi energi ruangan turun setelah kabar buruk, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi energi ruangan turun setelah kabar buruk, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi energi ruangan turun setelah kabar buruk, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi energi ruangan turun setelah kabar buruk, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi energi ruangan turun setelah kabar buruk, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_fe_01
+
+========================================================================================
+[[ITEM_START]] 218/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_fe_02
+JENIS: HOLDOUT
+ELEMEN: Fe
+KANAL: threat
+KONTEKS: work
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diminta tetap ceria sepanjang hari
+
+RESPONS/SIKAP ASLI:
+Saya dapat merasa terperangkap ketika ekspresi saya harus terus disetel agar orang lain tidak kehilangan semangat.
+
+FOKUS RESPONS INTERNAL:
+mempertahankan ekspresi positif sebagai tuntutan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas diminta tetap ceria sepanjang hari, aku bisa ngerasa terperangkap pas ekspresi aku harus terus disetel agar orang lain nggak kehilangan semangat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tetap ceria sepanjang hari, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tetap ceria sepanjang hari, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tetap ceria sepanjang hari, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tetap ceria sepanjang hari, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas diminta tetap ceria sepanjang hari, senyummu kaku, nadamu jadi dibuat-buat, atau kamu menarik diri karena merasa semua orang sedang membaca ekspresimu, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_fe_02
+
+========================================================================================
+[[ITEM_START]] 219/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_fe_03
+JENIS: HOLDOUT
+ELEMEN: Fe
+KANAL: receiver
+KONTEKS: private
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sulit memahami perasaan sendiri
+
+RESPONS/SIKAP ASLI:
+Ekspresi terbuka dari orang lain sering membantu saya memberi nama pada emosi dan keluar dari keadaan yang datar.
+
+FOKUS RESPONS INTERNAL:
+menerima ekspresi yang membantu menggerakkan emosi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi sulit memahami perasaan sendiri, ekspresi terbuka dari orang lain sering membantu aku ngasih nama pada emosi dan keluar dari keadaan yang datar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit memahami perasaan sendiri, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit memahami perasaan sendiri, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit memahami perasaan sendiri, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit memahami perasaan sendiri, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas lagi menghadapi sulit memahami perasaan sendiri, wajahmu lebih hidup, kamu ikut tersenyum atau bicara lagi, lalu energi ruangan nggak terasa seberat tadi, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_fe_03
+
+========================================================================================
+[[ITEM_START]] 220/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_fe_04
+JENIS: HOLDOUT
+ELEMEN: Fe
+KANAL: background
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Percakapan menjadi terlalu tegang
+
+RESPONS/SIKAP ASLI:
+Saya kerap memberi satu nada ringan atau reaksi hangat yang membuat semua orang bernapas lagi tanpa merasa sedang tampil.
+
+FOKUS RESPONS INTERNAL:
+melunakkan suasana secara latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas percakapan menjadi terlalu tegang, aku kerap ngasih satu nada ringan atau reaksi hangat yang bikin semua orang bernapas lagi tanpa ngerasa sedang tampil.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas percakapan menjadi terlalu tegang, kamu tetap datar, membiarkan suasana menggantung, atau menunggu orang lain yang mengubah energi ruangan, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas percakapan menjadi terlalu tegang, kamu melirik wajah orang satu-satu, menyusun nada yang pas, lalu masih ragu apakah perlu ikut mencairkan suasana, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas percakapan menjadi terlalu tegang, kamu kadang bercanda atau menaikkan nada, tapi di waktu lain memilih diam dan membiarkan mood ruangan berjalan sendiri, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas percakapan menjadi terlalu tegang, kamu cepat mengubah intonasi, melempar satu kalimat ringan, atau menunjukkan ekspresi yang bikin energi ruangan ikut bergerak, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, pikiranmu cepat membaca suhu emosi, nada, ekspresi, dan energi yang sedang menular di antara orang-orang, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas percakapan menjadi terlalu tegang, wajah, suara, dan gesturmu otomatis menyesuaikan; kamu bisa bikin orang tertawa, tegang, atau ikut semangat tanpa perlu briefing, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_fe_04
+
+========================================================================================
+[[ITEM_START]] 221/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_fi_01
+JENIS: HOLDOUT
+ELEMEN: Fi
+KANAL: producer
+KONTEKS: friendship
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Seseorang meminta maaf setelah melukai kepercayaan
+
+RESPONS/SIKAP ASLI:
+Saya spontan menilai bukan hanya kata-katanya, tetapi juga perubahan sikap yang menunjukkan apakah hubungan benar-benar dapat dipulihkan.
+
+FOKUS RESPONS INTERNAL:
+menilai ketulusan pemulihan hubungan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi seseorang meminta maaf setelah melukai kepercayaan, aku spontan menilai bukan hanya kata-katanya, tetapi juga perubahan sikap yang nunjukin apakah hubungan benar-benar bisa dipulihkan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang meminta maaf setelah melukai kepercayaan, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang meminta maaf setelah melukai kepercayaan, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang meminta maaf setelah melukai kepercayaan, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, bahkan sebelum kamu sempat banyak mengatur diri. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang meminta maaf setelah melukai kepercayaan, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi seseorang meminta maaf setelah melukai kepercayaan, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_fi_01
+
+========================================================================================
+[[ITEM_START]] 222/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_fi_02
+JENIS: HOLDOUT
+ELEMEN: Fi
+KANAL: threat
+KONTEKS: conflict
+SKALA: threat
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Harus menyatakan siapa yang paling saya percaya
+
+RESPONS/SIKAP ASLI:
+Saya dapat merasa sangat terpojok ketika pilihan itu akan mengubah kedekatan dan dibaca sebagai penolakan pribadi.
+
+FOKUS RESPONS INTERNAL:
+menyatakan hierarki kepercayaan di bawah tekanan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas harus menyatakan siapa yang paling aku percaya, aku bisa ngerasa sangat terpojok pas pilihan itu akan ngubah kedekatan dan dibaca sebagai penolakan pribadi.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama sekali tidak mengganggu
+
+ARTINYA:
+Tuntutan ini nggak menyentuh alarm batinmu. Kepalamu tetap punya ruang buat berpikir, mencoba, dan salah tanpa merasa harga dirimu sedang diserang. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menyatakan siapa yang paling aku percaya, kamu tetap bernapas normal, menatap situasinya, lalu mengambil satu langkah tanpa sibuk membela diri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit mengganggu
+
+ARTINYA:
+Ada sedikit gesekan di kepala, tapi kamu masih gampang menenangkan diri dan kembali melihat pilihan yang tersedia. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menyatakan siapa yang paling aku percaya, kamu sempat mengerutkan dahi atau menarik napas, tapi beberapa detik kemudian tetap lanjut.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup menekan
+
+ARTINYA:
+Alarm batinmu mulai nyala. Sebagian pikiranmu sibuk takut salah atau dinilai, jadi ruang gerakmu terasa lebih sempit. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menyatakan siapa yang paling aku percaya, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, meski kamu masih bisa memaksa diri menyelesaikan bagian pentingnya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat menekan
+
+ARTINYA:
+Tuntutan ini gampang menyentuh titik sensitifmu. Kepalamu masuk mode bertahan, makin kaku, dan susah melihat pilihan dengan santai. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menyatakan siapa yang paling aku percaya, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, lalu kamu mulai mempersempit obrolan, mencari kepastian, atau ingin menyerahkan bagian itu.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Membuatku beku, defensif, malu, atau menghindar
+
+ARTINYA:
+Tuntutan ini langsung menekan tombol daruratmu. Pikiranmu bisa nge-blank, defensif, malu, atau cuma ingin secepatnya keluar dari situasi itu. Di sini yang bekerja bukan cuma kemampuan, tapi alarm batin saat tuntutannya terasa terlalu dekat.
+
+REAKSI:
+Pas harus menyatakan siapa yang paling aku percaya, kamu membaca ulang pesan, menjawab sangat pendek, menjaga jarak, atau menutup obrolan karena takut salah menilai kedekatan, kemudian kamu bisa menutup percakapan, menghindar, atau pergi supaya tekanannya berhenti.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_fi_02
+
+========================================================================================
+[[ITEM_START]] 223/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_fi_03
+JENIS: HOLDOUT
+ELEMEN: Fi
+KANAL: receiver
+KONTEKS: romance
+SKALA: relief
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Hubungan terasa tidak pasti
+
+RESPONS/SIKAP ASLI:
+Konsistensi kecil dan pernyataan jujur mengenai posisi hubungan dapat memberi rasa aman yang sangat besar.
+
+FOKUS RESPONS INTERNAL:
+menerima kepastian hubungan yang tulus
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Kalau hubungan terasa nggak pasti, konsistensi kecil dan ucapan jujur soal posisi hubungan bisa ngasih aku rasa aman yang besar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak membantu
+
+ARTINYA:
+Bantuan di area ini nggak banyak mengubah keadaan batinmu. Kepalamu tetap merasa lebih aman memegang bagian itu sendiri atau mencari bentuk bantuan lain. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan terasa nggak pasti, bantuan itu kamu dengar sebentar lalu kamu tetap mengerjakan semuanya dengan caramu sendiri.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Sedikit membantu
+
+ARTINYA:
+Ada sedikit rasa ringan, tapi nggak sampai bikin kepalamu benar-benar menyerahkan kendali atau merasa sangat terbantu. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan terasa nggak pasti, kamu mengambil satu bagian kecil dari bantuan itu, mengangguk, lalu kembali memegang sisanya sendiri.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Lumayan membantu
+
+ARTINYA:
+Bantuan ini lumayan menurunkan beban. Kamu masih bisa jalan sendiri, tapi kepalamu nggak perlu memegang semuanya seketat tadi. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan terasa nggak pasti, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, tapi kamu masih menjaga sebagian kendali di tanganmu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat membantu
+
+ARTINYA:
+Bantuan ini benar-benar berguna. Begitu orang yang tepat masuk, kepalamu lebih cepat tenang dan situasinya terasa jauh lebih bisa dijalani. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan terasa nggak pasti, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, dan kamu mulai mengikuti arah orang itu tanpa terlalu banyak menahan diri.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Sangat melegakan
+
+ARTINYA:
+Bantuan ini menyentuh kebutuhan yang dalam. Rasanya kayak ada bagian berat di kepalamu yang akhirnya dipegang orang yang ngerti caranya. Kepalamu lebih gampang melepas beban saat orang lain memegang bagian ini dengan cara yang pas.
+
+REAKSI:
+Pas hubungan terasa nggak pasti, bahumu melemas, kamu mulai bicara lebih jujur, lalu membiarkan orang itu menjaga jarak atau kedekatan dengan cara yang terasa aman, sampai perubahan di wajah, napas, atau posturmu kelihatan jelas.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_fi_03
+
+========================================================================================
+[[ITEM_START]] 224/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: holdout_fi_04
+JENIS: HOLDOUT
+ELEMEN: Fi
+KANAL: background
+KONTEKS: family
+SKALA: automaticity
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada jarak yang belum dibicarakan
+
+RESPONS/SIKAP ASLI:
+Saya sering mengubah cara mendekat, memberi ruang, atau menjaga kata-kata agar rasa hormat tetap ada tanpa membuatnya menjadi pembicaraan besar.
+
+FOKUS RESPONS INTERNAL:
+merawat jarak dan rasa hormat secara latar
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada jarak yang belum dibicarakan, aku sering ngubah cara mendekat, ngasih ruang, atau menjaga kata-kata agar rasa hormat tetap ada tanpa membuatnya menjadi pembicaraan besar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Tidak muncul secara alami
+
+ARTINYA:
+Proses ini bukan default otakmu. Dalam situasi seperti ini, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, tapi pola itu biasanya baru muncul setelah ada pemicu yang sangat jelas atau orang lain lebih dulu membuka jalannya. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada jarak yang belum dibicarakan, kamu tetap menjaga jarak yang sama ke semua orang, mengabaikan sinyal personal, atau baru sadar ada batas yang rusak setelah hubungan telanjur dingin, dan proses itu hampir nggak berjalan di belakang layar.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Harus kupikirkan cukup lama
+
+ARTINYA:
+Kamu sebenarnya bisa masuk ke mode ini, tapi kepalamu butuh pause, menyusun langkah, dan meyakinkan diri dulu sebelum responsnya keluar. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada jarak yang belum dibicarakan, kamu membaca ulang chat, memperhatikan nada, lalu lama menimbang apakah perlu mendekat, menjauh, atau bertanya langsung, tapi kamu masih perlu sadar penuh buat menjaga langkahnya.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Tergantung keadaan
+
+ARTINYA:
+Mode ini nyala-mati. Kadang kepalamu langsung masuk ke pola ini, kadang energi, orang, dan kondisi saat itu bikin kamu memilih jalur lain. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada jarak yang belum dibicarakan, kamu kadang mengajak bicara empat mata, tapi di waktu lain membiarkan kedekatan atau jaraknya tetap samar, dan kadang baru sadar belakangan bahwa kamu sempat melakukannya.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Cukup spontan
+
+ARTINYA:
+Pola ini cukup dekat dengan respons pertamamu. Begitu pemicunya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, bahkan sebelum kamu sempat banyak mengatur diri. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada jarak yang belum dibicarakan, kamu cepat memisahkan obrolan dari keramaian, menurunkan suara, lalu menyampaikan batas atau perhatian secara personal, sementara perhatian utamamu tetap ada di urusan lain.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Muncul hampir tanpa usaha
+
+ARTINYA:
+Pola ini sudah kayak autopilot. Begitu situasinya muncul, kepalamu peka pada kedekatan, ketulusan, rasa percaya, dan batas personal yang nggak selalu diucapkan, nyaris barengan dengan saat kamu sadar ada sesuatu yang perlu ditangani. Prosesnya cenderung jalan senyap di belakang layar dan sering baru kamu sadari setelah semuanya selesai.
+
+REAKSI:
+Pas lagi menghadapi ada jarak yang belum dibicarakan, tanpa banyak bicara kamu otomatis mengubah jarak, memilih kata, mengirim pesan pribadi, atau menghentikan kedekatan begitu rasa percaya berubah, bahkan sebelum kamu sadar tubuh atau tanganmu sudah lebih dulu bergerak.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] holdout_fi_04
+
+========================================================================================
+[[ITEM_START]] 225/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_ile_iee_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Membantu kelompok yang kehilangan arah
+
+RESPONS/SIKAP ASLI:
+Saya lebih terdorong membongkar cara kerja gagasan dan menemukan struktur yang konsisten daripada memetakan siapa yang cocok, tulus, atau perlu didekati secara personal.
+
+FOKUS RESPONS INTERNAL:
+struktur gagasan dibanding nuansa hubungan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas membantu kelompok yang kehilangan arah, aku lebih terdorong membongkar cara kerja gagasan dan nemuin struktur yang konsisten daripada memetakan siapa yang cocok, tulus, atau perlu didekati secara personal.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas membantu kelompok yang kehilangan arah, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas membantu kelompok yang kehilangan arah, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas membantu kelompok yang kehilangan arah, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas membantu kelompok yang kehilangan arah, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas membantu kelompok yang kehilangan arah, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_ile_iee_01
+
+========================================================================================
+[[ITEM_START]] 226/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_ile_iee_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menemukan kemungkinan baru
+
+RESPONS/SIKAP ASLI:
+Setelah ide muncul, saya lebih ingin menguji bagaimana bagian-bagiannya terhubung daripada membayangkan potensi orang yang dapat tumbuh melalui ide itu.
+
+FOKUS RESPONS INTERNAL:
+konsistensi sistem dibanding potensi personal
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Setelah ide muncul, aku lebih ingin menguji bagaimana bagian-bagiannya terhubung daripada membayangkan potensi orang yang bisa tumbuh melalui ide itu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin kemungkinan baru, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin kemungkinan baru, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin kemungkinan baru, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin kemungkinan baru, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin kemungkinan baru, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_ile_iee_02
+
+========================================================================================
+[[ITEM_START]] 227/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sei_sli_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Membuat keadaan lebih baik
+
+RESPONS/SIKAP ASLI:
+Saya lebih cepat memperhatikan suasana emosional dan kenyamanan bersama daripada mencari metode kerja yang paling hemat tenaga dan sumber daya.
+
+FOKUS RESPONS INTERNAL:
+kehangatan suasana dibanding efektivitas praktis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi bikin keadaan lebih baik, aku lebih cepat memperhatikan suasana emosional dan kenyamanan bersama daripada nyari metode kerja yang paling hemat tenaga dan sumber daya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bikin keadaan lebih baik, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bikin keadaan lebih baik, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bikin keadaan lebih baik, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bikin keadaan lebih baik, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi bikin keadaan lebih baik, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sei_sli_01
+
+========================================================================================
+[[ITEM_START]] 228/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sei_sli_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman berkunjung ketika ada pekerjaan
+
+RESPONS/SIKAP ASLI:
+Saya lebih terdorong membuat interaksi terasa ringan dan menyenangkan daripada segera mengoptimalkan alat serta langkah kerja.
+
+FOKUS RESPONS INTERNAL:
+suasana bersama dibanding optimasi cara kerja
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi teman berkunjung pas ada pekerjaan, aku lebih terdorong bikin interaksi terasa ringan dan menyenangkan daripada segera mengoptimalkan alat serta langkah kerja.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman berkunjung pas ada pekerjaan, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman berkunjung pas ada pekerjaan, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman berkunjung pas ada pekerjaan, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman berkunjung pas ada pekerjaan, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi teman berkunjung pas ada pekerjaan, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sei_sli_02
+
+========================================================================================
+[[ITEM_START]] 229/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_ese_eie_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menghidupkan sebuah acara
+
+RESPONS/SIKAP ASLI:
+Saya lebih berfokus pada kenyamanan nyata yang sedang dirasakan orang daripada membangun satu tema besar tentang arah acara dan dampaknya ke depan.
+
+FOKUS RESPONS INTERNAL:
+kenyamanan saat ini dibanding tema jangka panjang
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi menghidupkan sebuah acara, aku lebih berfokus pada kenyamanan nyata yang sedang dirasakan orang daripada membangun satu tema besar tentang arah acara dan dampaknya ke depan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menghidupkan sebuah acara, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menghidupkan sebuah acara, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menghidupkan sebuah acara, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menghidupkan sebuah acara, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menghidupkan sebuah acara, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_ese_eie_01
+
+========================================================================================
+[[ITEM_START]] 230/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_ese_eie_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kelompok sedang kehilangan semangat
+
+RESPONS/SIKAP ASLI:
+Saya lebih spontan memperbaiki suasana lewat perhatian konkret daripada mengarahkan emosi mereka menuju visi atau makna tertentu.
+
+FOKUS RESPONS INTERNAL:
+perawatan konkret dibanding pengarahan visi emosional
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas kelompok sedang kehilangan semangat, aku lebih spontan memperbaiki suasana lewat perhatian konkret daripada mengarahkan emosi mereka menuju visi atau makna tertentu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas kelompok sedang kehilangan semangat, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas kelompok sedang kehilangan semangat, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas kelompok sedang kehilangan semangat, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas kelompok sedang kehilangan semangat, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas kelompok sedang kehilangan semangat, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_ese_eie_02
+
+========================================================================================
+[[ITEM_START]] 231/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_lii_lsi_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Aturan tidak lagi cocok
+
+RESPONS/SIKAP ASLI:
+Saya lebih tertarik mencari kemungkinan kerangka baru daripada memperkuat batas dan menegakkan aturan yang sudah disepakati.
+
+FOKUS RESPONS INTERNAL:
+membuka kerangka baru dibanding menegakkan batas
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi aturan nggak lagi cocok, aku lebih tertarik nyari kemungkinan kerangka baru daripada memperkuat batas dan menegakkan aturan yang sudah disepakati.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan nggak lagi cocok, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan nggak lagi cocok, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan nggak lagi cocok, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan nggak lagi cocok, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi aturan nggak lagi cocok, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_lii_lsi_01
+
+========================================================================================
+[[ITEM_START]] 232/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_lii_lsi_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Sistem menghadapi pengecualian
+
+RESPONS/SIKAP ASLI:
+Saya lebih nyaman memperluas definisi agar pengecualian dapat dijelaskan daripada memutuskan secara tegas mana yang tetap boleh dan tidak boleh.
+
+FOKUS RESPONS INTERNAL:
+memperluas definisi dibanding menetapkan ketegasan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi sistem ngadepin pengecualian, aku lebih nyaman memperluas definisi agar pengecualian bisa dijelaskan daripada memutuskan secara tegas mana yang tetap boleh dan nggak boleh.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi sistem ngadepin pengecualian, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi sistem ngadepin pengecualian, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi sistem ngadepin pengecualian, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi sistem ngadepin pengecualian, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi sistem ngadepin pengecualian, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_lii_lsi_02
+
+========================================================================================
+[[ITEM_START]] 233/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sle_see_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Memimpin konflik kelompok
+
+RESPONS/SIKAP ASLI:
+Saya lebih mengandalkan aturan peran dan struktur keputusan daripada membaca siapa yang setia, tersinggung, atau perlu dirangkul secara personal.
+
+FOKUS RESPONS INTERNAL:
+struktur kendali dibanding nuansa hubungan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi memimpin konflik kelompok, aku lebih mengandalkan aturan peran dan struktur keputusan daripada membaca siapa yang setia, tersinggung, atau perlu dirangkul secara personal.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi memimpin konflik kelompok, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi memimpin konflik kelompok, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi memimpin konflik kelompok, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi memimpin konflik kelompok, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi memimpin konflik kelompok, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sle_see_01
+
+========================================================================================
+[[ITEM_START]] 234/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sle_see_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Membagi kekuasaan
+
+RESPONS/SIKAP ASLI:
+Saya lebih ingin membuat batas kewenangan yang konsisten daripada menyesuaikan dukungan berdasarkan kedekatan dan kepercayaan antarorang.
+
+FOKUS RESPONS INTERNAL:
+konsistensi kewenangan dibanding aliansi personal
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi membagi kekuasaan, aku lebih ingin bikin batas kewenangan yang konsisten daripada menyesuaikan dukungan berdasarkan kedekatan dan kepercayaan antarorang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membagi kekuasaan, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membagi kekuasaan, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membagi kekuasaan, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membagi kekuasaan, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membagi kekuasaan, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sle_see_02
+
+========================================================================================
+[[ITEM_START]] 235/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_iei_ili_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Membaca arah keadaan
+
+RESPONS/SIKAP ASLI:
+Saya lebih mudah mengungkapkan tema itu melalui suasana dan emosi bersama daripada mengujinya lewat fakta efektivitas serta hasil yang dapat diamati.
+
+FOKUS RESPONS INTERNAL:
+tema emosional dibanding verifikasi praktis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi membaca arah keadaan, aku lebih mudah mengungkapkan tema itu melalui suasana dan emosi bersama daripada mengujinya lewat fakta efektivitas serta hasil yang bisa diamati.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca arah keadaan, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca arah keadaan, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca arah keadaan, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca arah keadaan, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membaca arah keadaan, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_iei_ili_01
+
+========================================================================================
+[[ITEM_START]] 236/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_iei_ili_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Melihat perubahan yang akan datang
+
+RESPONS/SIKAP ASLI:
+Saya lebih tertarik pada bagaimana perubahan itu akan dirasakan orang daripada pada biaya, kegunaan, dan mekanisme pelaksanaannya.
+
+FOKUS RESPONS INTERNAL:
+dampak emosional dibanding konsekuensi praktis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas melihat perubahan yang akan datang, aku lebih tertarik pada bagaimana perubahan itu akan dirasakan orang daripada pada biaya, kegunaan, dan mekanisme pelaksanaannya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas melihat perubahan yang akan datang, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas melihat perubahan yang akan datang, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas melihat perubahan yang akan datang, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas melihat perubahan yang akan datang, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas melihat perubahan yang akan datang, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_iei_ili_02
+
+========================================================================================
+[[ITEM_START]] 237/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_lie_lse_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Mengembangkan pekerjaan
+
+RESPONS/SIKAP ASLI:
+Saya lebih terdorong menata langkah menurut arah jangka panjang daripada memastikan ritme harian, kondisi fisik, dan kenyamanan proses tetap stabil.
+
+FOKUS RESPONS INTERNAL:
+arah jangka panjang dibanding kestabilan keseharian
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi mengembangkan pekerjaan, aku lebih terdorong menata langkah menurut arah jangka panjang daripada memastikan ritme harian, kondisi fisik, dan kenyamanan proses tetap stabil.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengembangkan pekerjaan, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengembangkan pekerjaan, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengembangkan pekerjaan, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengembangkan pekerjaan, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi mengembangkan pekerjaan, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_lie_lse_01
+
+========================================================================================
+[[ITEM_START]] 238/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_lie_lse_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Memilih metode yang efektif
+
+RESPONS/SIKAP ASLI:
+Saya lebih mudah menerima ketidaknyamanan sekarang jika metode itu membuka perkembangan besar di masa depan.
+
+FOKUS RESPONS INTERNAL:
+pertumbuhan masa depan dibanding kenyamanan proses
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi milih metode yang efektif, aku lebih mudah menerima ketidaknyamanan sekarang kalau metode itu membuka perkembangan besar di masa depan.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi milih metode yang efektif, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi milih metode yang efektif, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi milih metode yang efektif, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi milih metode yang efektif, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi milih metode yang efektif, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_lie_lse_02
+
+========================================================================================
+[[ITEM_START]] 239/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_esi_eii_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Kepercayaan dilanggar
+
+RESPONS/SIKAP ASLI:
+Saya lebih terdorong memasang batas dan konsekuensi nyata daripada terus membuka kemungkinan alasan, perubahan, atau niat baik dari pelakunya.
+
+FOKUS RESPONS INTERNAL:
+konsekuensi tegas dibanding kemungkinan perubahan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi kepercayaan dilanggar, aku lebih terdorong memasang batas dan konsekuensi nyata daripada terus membuka kemungkinan alasan, perubahan, atau niat baik dari pelakunya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kepercayaan dilanggar, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kepercayaan dilanggar, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kepercayaan dilanggar, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kepercayaan dilanggar, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi kepercayaan dilanggar, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_esi_eii_01
+
+========================================================================================
+[[ITEM_START]] 240/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_esi_eii_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Melindungi orang dekat
+
+RESPONS/SIKAP ASLI:
+Saya lebih spontan menghentikan ancaman sekarang daripada mengeksplorasi jalan yang mungkin membuat semua pihak berkembang.
+
+FOKUS RESPONS INTERNAL:
+perlindungan langsung dibanding eksplorasi potensi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi melindungi orang dekat, aku lebih spontan menghentikan ancaman sekarang daripada mengeksplorasi jalan yang mungkin bikin semua pihak berkembang.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melindungi orang dekat, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melindungi orang dekat, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melindungi orang dekat, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melindungi orang dekat, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melindungi orang dekat, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_esi_eii_02
+
+========================================================================================
+[[ITEM_START]] 241/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_ile_lii_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menemukan konsep baru
+
+RESPONS/SIKAP ASLI:
+Saya lebih bersemangat membuka cabang dan kemungkinan baru daripada menahan diri sampai seluruh definisi tersusun konsisten.
+
+FOKUS RESPONS INTERNAL:
+ekspansi kemungkinan dibanding penyempurnaan kerangka
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi nemuin konsep baru, aku lebih bersemangat membuka cabang dan kemungkinan baru daripada menahan diri sampai seluruh definisi tersusun konsisten.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin konsep baru, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin konsep baru, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin konsep baru, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin konsep baru, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi nemuin konsep baru, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_ile_lii_01
+
+========================================================================================
+[[ITEM_START]] 242/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_ile_lii_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Diskusi teori berkembang
+
+RESPONS/SIKAP ASLI:
+Saya lebih cepat melompat ke hubungan baru yang menarik daripada merapikan satu sistem penjelasan hingga benar-benar tuntas.
+
+FOKUS RESPONS INTERNAL:
+eksplorasi hubungan baru dibanding ketuntasan struktur
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi diskusi teori berkembang, aku lebih cepat melompat ke hubungan baru yang menarik daripada merapikan satu sistem penjelasan hingga benar-benar tuntas.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi diskusi teori berkembang, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi diskusi teori berkembang, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi diskusi teori berkembang, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi diskusi teori berkembang, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi diskusi teori berkembang, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_ile_lii_02
+
+========================================================================================
+[[ITEM_START]] 243/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sei_ese_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Suasana bersama mulai tidak nyaman
+
+RESPONS/SIKAP ASLI:
+Saya lebih dahulu menyesuaikan ritme dan kenyamanan secara tenang daripada mengangkat energi kelompok dengan ekspresi yang lebih kuat.
+
+FOKUS RESPONS INTERNAL:
+penyetelan kenyamanan dibanding aktivasi emosi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas suasana bersama mulai nggak nyaman, aku lebih dahulu menyesuaikan ritme dan kenyamanan secara tenang daripada mengangkat energi kelompok dengan ekspresi yang lebih kuat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana bersama mulai nggak nyaman, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana bersama mulai nggak nyaman, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana bersama mulai nggak nyaman, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana bersama mulai nggak nyaman, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas suasana bersama mulai nggak nyaman, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sei_ese_01
+
+========================================================================================
+[[ITEM_START]] 244/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sei_ese_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Teman sedang lesu
+
+RESPONS/SIKAP ASLI:
+Saya lebih spontan menciptakan suasana santai yang menenangkan daripada mengajak mereka menunjukkan emosi dan kembali bersemangat.
+
+FOKUS RESPONS INTERNAL:
+ketenangan indrawi dibanding ekspresi emosional
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas teman sedang lesu, aku lebih spontan menciptakan suasana santai yang menenangkan daripada mengajak mereka nunjukin emosi dan kembali bersemangat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas teman sedang lesu, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas teman sedang lesu, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas teman sedang lesu, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas teman sedang lesu, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas teman sedang lesu, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sei_ese_02
+
+========================================================================================
+[[ITEM_START]] 245/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sle_lsi_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Masalah membutuhkan kendali
+
+RESPONS/SIKAP ASLI:
+Saya lebih cepat bertindak dan mengubah posisi nyata daripada memastikan setiap tindakan sudah sesuai kerangka aturan yang lengkap.
+
+FOKUS RESPONS INTERNAL:
+aksi penguasaan dibanding ketepatan struktur
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi masalah membutuhkan kendali, aku lebih cepat bertindak dan ngubah posisi nyata daripada memastikan setiap tindakan sudah sesuai kerangka aturan yang lengkap.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi masalah membutuhkan kendali, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi masalah membutuhkan kendali, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi masalah membutuhkan kendali, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi masalah membutuhkan kendali, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi masalah membutuhkan kendali, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sle_lsi_01
+
+========================================================================================
+[[ITEM_START]] 246/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sle_lsi_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada pelanggaran di lapangan
+
+RESPONS/SIKAP ASLI:
+Saya lebih terdorong menghentikannya saat itu juga daripada menata prosedur dan klasifikasi pelanggaran terlebih dahulu.
+
+FOKUS RESPONS INTERNAL:
+intervensi langsung dibanding prosedur sistematis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada pelanggaran di lapangan, aku lebih terdorong menghentikannya pas itu juga daripada menata prosedur dan klasifikasi pelanggaran terlebih dahulu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada pelanggaran di lapangan, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada pelanggaran di lapangan, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada pelanggaran di lapangan, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada pelanggaran di lapangan, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada pelanggaran di lapangan, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sle_lsi_02
+
+========================================================================================
+[[ITEM_START]] 247/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_iei_eie_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menangkap tema emosional
+
+RESPONS/SIKAP ASLI:
+Saya lebih sering membiarkan gambaran itu tumbuh diam-diam sebelum mengungkapkannya daripada langsung membentuk suasana kelompok secara terbuka.
+
+FOKUS RESPONS INTERNAL:
+visi batin dibanding ekspresi terbuka
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi menangkap tema emosional, aku lebih sering membiarkan gambaran itu tumbuh diam-diam sebelum mengungkapkannya daripada langsung membentuk suasana kelompok secara terbuka.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menangkap tema emosional, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menangkap tema emosional, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menangkap tema emosional, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menangkap tema emosional, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi menangkap tema emosional, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_iei_eie_01
+
+========================================================================================
+[[ITEM_START]] 248/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_iei_eie_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Merasakan arah sebuah hubungan
+
+RESPONS/SIKAP ASLI:
+Saya lebih nyaman menunggu makna dan waktunya mengendap daripada segera memberi nama serta intensitas pada emosi yang ada.
+
+FOKUS RESPONS INTERNAL:
+pengendapan makna dibanding pengarahan emosi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi merasakan arah sebuah hubungan, aku lebih nyaman nunggu makna dan waktunya mengendap daripada segera ngasih nama serta intensitas pada emosi yang ada.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi merasakan arah sebuah hubungan, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi merasakan arah sebuah hubungan, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi merasakan arah sebuah hubungan, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi merasakan arah sebuah hubungan, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi merasakan arah sebuah hubungan, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_iei_eie_02
+
+========================================================================================
+[[ITEM_START]] 249/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_see_esi_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Menghadapi orang yang merusak kepercayaan
+
+RESPONS/SIKAP ASLI:
+Saya lebih cepat mengubah posisi, pengaruh, dan aliansi secara aktif daripada menetapkan satu penilaian moral yang tetap tentang hubungan itu.
+
+FOKUS RESPONS INTERNAL:
+manuver pengaruh dibanding keteguhan penilaian relasi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ngadepin orang yang merusak kepercayaan, aku lebih cepat ngubah posisi, pengaruh, dan aliansi secara aktif daripada menetapkan satu penilaian moral yang tetap tentang hubungan itu.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ngadepin orang yang merusak kepercayaan, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ngadepin orang yang merusak kepercayaan, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ngadepin orang yang merusak kepercayaan, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ngadepin orang yang merusak kepercayaan, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ngadepin orang yang merusak kepercayaan, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_see_esi_01
+
+========================================================================================
+[[ITEM_START]] 250/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_see_esi_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Membela orang dekat
+
+RESPONS/SIKAP ASLI:
+Saya lebih spontan menggerakkan orang dan sumber daya daripada berfokus pada batas kesetiaan yang tidak boleh dilanggar.
+
+FOKUS RESPONS INTERNAL:
+mobilisasi pengaruh dibanding batas kesetiaan
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi membela orang dekat, aku lebih spontan menggerakkan orang dan sumber daya daripada berfokus pada batas kesetiaan yang nggak boleh dilanggar.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membela orang dekat, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membela orang dekat, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membela orang dekat, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membela orang dekat, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi membela orang dekat, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_see_esi_02
+
+========================================================================================
+[[ITEM_START]] 251/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_ili_lie_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Melihat peluang besar
+
+RESPONS/SIKAP ASLI:
+Saya lebih dahulu mengamati bagaimana peluang itu mungkin berkembang atau gagal daripada segera mengubahnya menjadi rencana kerja yang produktif.
+
+FOKUS RESPONS INTERNAL:
+pengamatan arah dibanding eksekusi praktis
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi melihat peluang besar, aku lebih dahulu mengamati bagaimana peluang itu mungkin berkembang atau gagal daripada segera mengubahnya menjadi rencana kerja yang produktif.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat peluang besar, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat peluang besar, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat peluang besar, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat peluang besar, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat peluang besar, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_ili_lie_01
+
+========================================================================================
+[[ITEM_START]] 252/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_ili_lie_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Tren baru mulai terlihat
+
+RESPONS/SIKAP ASLI:
+Saya lebih nyaman menunggu pola dan waktunya menjadi jelas daripada langsung mengerahkan sumber daya untuk memanfaatkannya.
+
+FOKUS RESPONS INTERNAL:
+menunggu kematangan arah dibanding bergerak produktif
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas tren baru mulai terlihat, aku lebih nyaman nunggu pola dan waktunya menjadi jelas daripada langsung mengerahkan sumber daya untuk memanfaatkannya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tren baru mulai terlihat, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tren baru mulai terlihat, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tren baru mulai terlihat, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tren baru mulai terlihat, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas tren baru mulai terlihat, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_ili_lie_02
+
+========================================================================================
+[[ITEM_START]] 253/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_iee_eii_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Melihat potensi seseorang
+
+RESPONS/SIKAP ASLI:
+Saya lebih terdorong membuka kemungkinan baru baginya daripada menjaga satu arah hubungan yang paling selaras dengan nilai dan batasnya.
+
+FOKUS RESPONS INTERNAL:
+membuka potensi dibanding menjaga arah relasi
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi melihat potensi seseorang, aku lebih terdorong membuka kemungkinan baru baginya daripada menjaga satu arah hubungan yang paling selaras dengan nilai dan batasnya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat potensi seseorang, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat potensi seseorang, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat potensi seseorang, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat potensi seseorang, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi melihat potensi seseorang, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_iee_eii_01
+
+========================================================================================
+[[ITEM_START]] 254/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_iee_eii_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Orang dekat ingin berubah
+
+RESPONS/SIKAP ASLI:
+Saya lebih cepat menunjukkan banyak jalan yang dapat dicoba daripada mendalami mana yang paling sesuai dengan suara batin dan komitmennya.
+
+FOKUS RESPONS INTERNAL:
+banyak jalan pertumbuhan dibanding keselarasan nilai
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas orang dekat ingin berubah, aku lebih cepat nunjukin banyak jalan yang bisa dicoba daripada mendalami mana yang paling sesuai dengan suara batin dan komitmennya.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas orang dekat ingin berubah, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas orang dekat ingin berubah, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas orang dekat ingin berubah, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas orang dekat ingin berubah, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas orang dekat ingin berubah, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_iee_eii_02
+
+========================================================================================
+[[ITEM_START]] 255/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sli_lse_01
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Pekerjaan harian perlu dibenahi
+
+RESPONS/SIKAP ASLI:
+Saya lebih dahulu mencari cara yang paling ringan dan nyaman dijalankan daripada membuat jadwal, target, dan pengawasan yang lebih ketat.
+
+FOKUS RESPONS INTERNAL:
+cara ringan adaptif dibanding pengaturan produktif
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas pekerjaan harian perlu dibenahi, aku lebih dahulu nyari cara yang paling ringan dan nyaman dijalankan daripada bikin jadwal, target, dan pengawasan yang lebih ketat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan harian perlu dibenahi, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan harian perlu dibenahi, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan harian perlu dibenahi, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan harian perlu dibenahi, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas pekerjaan harian perlu dibenahi, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sli_lse_01
+
+========================================================================================
+[[ITEM_START]] 256/256
+========================================================================================
+[META TEKNIS — JANGAN DIUBAH]
+ID: tb_sli_lse_02
+JENIS: TIE_BREAK
+ELEMEN: Ne
+KANAL: producer
+KONTEKS: decision
+SKALA: comparison
+
+[SUMBER ASLI — JANGAN DIHAPUS]
+SITUASI ASLI:
+Ada alat dan waktu terbatas
+
+RESPONS/SIKAP ASLI:
+Saya lebih suka menyesuaikan diri secara tenang dengan apa yang tersedia daripada mengorganisasi orang agar seluruh proses bergerak lebih cepat.
+
+FOKUS RESPONS INTERNAL:
+adaptasi praktis tenang dibanding pengorganisasian aktif
+
+[TEKS YANG DIPAKAI APLIKASI]
+VERSI KASUAL:
+Pas lagi menghadapi ada alat dan waktu terbatas, aku lebih suka menyesuaikan diri secara tenang dengan apa yang tersedia daripada mengorganisasi orang agar seluruh proses bergerak lebih cepat.
+
+--- PILIHAN 1 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat B
+
+ARTINYA:
+Sisi kedua terasa jauh lebih dekat dengan cara kerja kepalamu. Sisi pertama mungkin bisa kamu lakukan, tapi bukan jalur yang paling natural. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada alat dan waktu terbatas, kamu menggeser keputusan ke sisi kedua, mulai mengerjakan langkah dari sana, dan meninggalkan sisi pertama sebagai cadangan.
+
+--- PILIHAN 2 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat B
+
+ARTINYA:
+Kepalamu agak condong ke sisi kedua, walau sisi pertama masih muncul di keadaan tertentu. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada alat dan waktu terbatas, kamu lebih dulu mencoba sisi kedua, lalu baru kembali ke sisi pertama kalau hasil awalnya nggak cocok.
+
+--- PILIHAN 3 ---
+LABEL SKALA [JANGAN DIUBAH]: Sama dekat
+
+ARTINYA:
+Dua sisi ini terasa sama kuat. Pilihanmu benar-benar bergantung pada siapa, tujuan, dan tekanan yang sedang ada. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada alat dan waktu terbatas, kamu berhenti, melihat dua pilihan bergantian, lalu menentukan arah berdasarkan keadaan paling konkret saat itu.
+
+--- PILIHAN 4 ---
+LABEL SKALA [JANGAN DIUBAH]: Agak lebih dekat A
+
+ARTINYA:
+Kepalamu agak condong ke sisi pertama, walau sisi kedua tetap bisa dipakai saat keadaan menuntut. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada alat dan waktu terbatas, kamu lebih dulu mencoba sisi pertama, lalu baru pindah ke sisi kedua kalau situasinya menuntut.
+
+--- PILIHAN 5 ---
+LABEL SKALA [JANGAN DIUBAH]: Jauh lebih dekat A
+
+ARTINYA:
+Sisi pertama terasa jauh lebih natural dan cepat mengambil alih keputusanmu dibanding sisi kedua. Kalau mode ini nyala, kepalamu pengin langsung mengubah keadaan, bukan cuma mengamati.
+
+REAKSI:
+Pas lagi menghadapi ada alat dan waktu terbatas, kamu langsung bergerak lewat sisi pertama, membangun langkah dari sana, dan hampir nggak melirik sisi kedua.
+
+CATATAN EDITOR:
+
+[[ITEM_END]] tb_sli_lse_02
 ````
 
 ---
@@ -752,6 +19764,45 @@ Pemeriksaan tersebut memastikan integritas kode dan desain internal, bukan valid
 
 ---
 
+## `docs/RESULT_EXPERIENCE_GUIDE.md`
+
+````md
+# Panduan Pengalaman Hasil Empat Pintu
+
+## Tujuan
+
+Halaman hasil tidak berhenti pada nama TIM. Ia membuka empat jalur refleksi yang berbeda dan tetap mempertahankan ketidakpastian hasil, kandidat pembanding, Model A, serta hubungan antar-tipe.
+
+## Pintu A — Ruang Cermin
+
+Membahas fungsi Base, Creative, Role, Demonstrative, temperamen, pola seimbang, pola tertekan, dan bukti yang dapat menyangkal kandidat utama.
+
+## Pintu B — Ruang Cuaca
+
+Membaca emosi sebagai sinyal kebutuhan atau tekanan, bukan diagnosis. Emosi yang dibahas meliputi sukacita, marah, takut, sedih, malu, iri, muak, cinta, bosan, dan kebutuhan regulasi.
+
+## Pintu C — Observatorium Dunia
+
+Membahas aspek aturan, politik, agama, ekonomi, masyarakat, kekuasaan, dan kontribusi publik yang kemungkinan lebih cepat menarik perhatian tipe tersebut. Tidak ada klaim bahwa tipe menentukan pilihan partai, agama, ideologi, atau kelas sosial.
+
+## Pintu D — Laboratorium Hidup
+
+Menyediakan nasihat, sirkel ideal, kebutuhan bantuan, hadiah, buku, film, musik, pekerjaan, destinasi, kosakata, serta eksperimen kecil. Semua rekomendasi adalah bahan eksplorasi dan dapat ditolak bila tidak sesuai pengalaman nyata.
+
+## Personalisasi
+
+Selain data 16 TIM, komponen membaca `channelProfile` aktual peserta dan menampilkan empat sinyal dengan magnitudo terbesar. Sinyal tersebut diberi label sebagai pola jawaban, bukan fakta mutlak.
+
+## Batas klaim
+
+- Bukan diagnosis psikologis atau klinis.
+- Bukan alat prediksi politik, agama, moralitas, karier, atau kompatibilitas absolut.
+- Tidak menggantikan pengalaman hidup, budaya, kondisi kesehatan, atau bantuan profesional.
+- Rekomendasi buku, film, musik, destinasi, hadiah, dan pekerjaan adalah moodboard reflektif.
+````
+
+---
+
 ## `docs/SCORING_GUIDE.md`
 
 ````md
@@ -882,7 +19933,7 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
   "description": "Aplikasi refleksi pendidikan Socionics Model A dengan bank 256 item, bahasa peserta kasual, penjelasan Artinya/Reaksi, sampling berstrata, holdout, tie-break adaptif, dan penyimpanan lokal.",
   "requestFramePermissions": [],
   "majorCapabilities": [],
-  "version": "2.0.3"
+  "version": "2.0.4"
 }
 ````
 
@@ -894,7 +19945,7 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
 {
   "name": "socionics-dalam-diriku",
   "private": true,
-  "version": "2.0.3",
+  "version": "2.0.4",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -1305,6 +20356,7 @@ import { calculateResult } from "./scoring/engine";
 import { TIM, TIMProfile, InformationElement, MeasurementChannel, ModelAPosition, Quadra, TestSession } from "./types/socionics";
 import { getCasualVersion, getOptionDetail } from "./utils/optionDetails";
 import { runInstrumentAudit } from "./audit/instrumentAudit";
+import ResultPortal from "./components/ResultPortal";
 
 // Option Scale Wording by ScaleType
 const SCALE_OPTIONS_MAP: Record<string, { val: number; label: string }[]> = {
@@ -2379,9 +21431,9 @@ export default function App() {
                 <Target className="w-4 h-4 animate-spin-slow" />
                 <span>INTERPRETASI MODEL A SELESAI</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Daftar Hasil Personal</h2>
+              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Pintu Pertama: Peta Dirimu</h2>
               <p className="text-sm text-slate-400 max-w-xl mx-auto">
-                Silakan periksa pola metabolisme informasi kognitif harian Anda berbasis scoring Model A di bawah ini.
+                Kamu sudah melewati rangkaian panjang. Sekarang hasilnya bukan cuma nama tipe, tetapi empat pintu untuk membaca cara pikir, emosi, dunia, relasi, dan kemungkinan hidupmu.
               </p>
             </div>
 
@@ -2507,6 +21559,14 @@ export default function App() {
                 </button>
               </div>
             </div>
+
+
+            {/* FOUR-DOOR RESULT EXPERIENCE */}
+            <ResultPortal
+              primaryType={calculatedOutput.top3[0].type}
+              result={calculatedOutput}
+              theme={theme}
+            />
 
             {/* INTERACTIVE MODEL A GRID */}
             <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
@@ -3244,6 +22304,261 @@ export function runInstrumentAudit(simulatedSessions = 200): InstrumentAuditRepo
       simulatedSessions,
     },
   };
+}
+````
+
+---
+
+## `src/components/ResultPortal.tsx`
+
+````tsx
+import { useMemo, useState } from "react";
+import {
+  BookOpen,
+  Brain,
+  ChevronRight,
+  CloudLightning,
+  Compass,
+  DoorOpen,
+  Gift,
+  Globe2,
+  HeartHandshake,
+  Landmark,
+  Lightbulb,
+  Music,
+  Sparkles,
+  Users,
+} from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+
+import { TIM_MODELS } from "../constants/socionicsData";
+import { buildResultExperience } from "../results/resultExperience";
+import type { AssessmentResult, TIM } from "../types/socionics";
+
+type Props = {
+  primaryType: TIM;
+  result: AssessmentResult;
+  theme: "dark" | "light";
+};
+
+const DOOR_ICONS = {
+  A: Brain,
+  B: CloudLightning,
+  C: Landmark,
+  D: DoorOpen,
+} as const;
+
+const recommendationIcon = (title: string) => {
+  const lower = title.toLowerCase();
+  if (lower.includes("buku")) return BookOpen;
+  if (lower.includes("film")) return Sparkles;
+  if (lower.includes("musik")) return Music;
+  if (lower.includes("pekerjaan")) return Compass;
+  if (lower.includes("tempat")) return Globe2;
+  if (lower.includes("kosakata")) return Lightbulb;
+  if (lower.includes("hadiah")) return Gift;
+  if (lower.includes("sirkel")) return Users;
+  return HeartHandshake;
+};
+
+export default function ResultPortal({ primaryType, result, theme }: Props) {
+  const experience = useMemo(
+    () => buildResultExperience(primaryType, result),
+    [primaryType, result],
+  );
+  const [activeDoor, setActiveDoor] = useState<"A" | "B" | "C" | "D">("A");
+  const door = experience.doors.find((item) => item.id === activeDoor) ?? experience.doors[0];
+  const model = TIM_MODELS[primaryType];
+  const isDark = theme === "dark";
+
+  return (
+    <section className={`relative overflow-hidden rounded-3xl border p-4 sm:p-7 lg:p-10 ${
+      isDark
+        ? "border-emerald-500/20 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.12),transparent_38%),linear-gradient(145deg,rgba(2,6,23,0.98),rgba(15,23,42,0.96))]"
+        : "border-emerald-200 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.14),transparent_38%),linear-gradient(145deg,#ffffff,#f8fafc)] shadow-xl"
+    }`}>
+      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-teal-500/10 blur-3xl" />
+
+      <div className="relative space-y-8">
+        <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-400">
+              <DoorOpen className="h-3.5 w-3.5" />
+              Setelah tes, empat pintu terbuka
+            </div>
+            <div>
+              <p className={`text-xs font-mono uppercase tracking-[0.22em] ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                Portal hasil {primaryType} · {model.name}
+              </p>
+              <h3 className={`mt-2 text-3xl font-black tracking-tight sm:text-5xl ${isDark ? "text-white" : "text-slate-950"}`}>
+                {experience.portalName}
+              </h3>
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-emerald-400 sm:text-base">
+                {experience.portalTagline}
+              </p>
+            </div>
+            <p className={`max-w-3xl text-sm leading-7 ${isDark ? "text-slate-300" : "text-slate-700"}`}>
+              {experience.opening}
+            </p>
+          </div>
+
+          <div className={`rounded-2xl border p-4 ${
+            isDark ? "border-slate-800 bg-slate-950/55" : "border-slate-200 bg-white/80"
+          }`}>
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-500">
+              <Sparkles className="h-4 w-4" />
+              Sinyal dari jawabanmu
+            </div>
+            <div className="mt-3 space-y-2">
+              {experience.observedSignals.map((signal) => (
+                <p key={signal} className={`text-[11px] leading-5 ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                  {signal}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+          {experience.doors.map((item) => {
+            const Icon = DOOR_ICONS[item.id];
+            const active = item.id === activeDoor;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveDoor(item.id)}
+                className={`group relative min-h-28 overflow-hidden rounded-2xl border p-4 text-left transition-all duration-300 ${
+                  active
+                    ? "border-emerald-400 bg-emerald-500 text-slate-950 shadow-[0_15px_45px_rgba(16,185,129,0.22)]"
+                    : isDark
+                      ? "border-slate-800 bg-slate-900/50 text-slate-300 hover:border-emerald-500/40 hover:bg-slate-900"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/40"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <Icon className={`h-5 w-5 ${active ? "text-slate-950" : "text-emerald-500"}`} />
+                  <ChevronRight className={`h-4 w-4 transition-transform group-hover:translate-x-0.5 ${active ? "text-slate-800" : "text-slate-500"}`} />
+                </div>
+                <div className="mt-5">
+                  <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-70">{item.label}</div>
+                  <div className="mt-1 text-sm font-bold leading-tight">{item.title.replace(/^.*?:\s*/, "")}</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={door.id}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-7"
+          >
+            <div className="space-y-2 border-l-2 border-emerald-500 pl-4">
+              <div className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-500">
+                {door.label} sedang terbuka
+              </div>
+              <h4 className={`text-2xl font-black sm:text-3xl ${isDark ? "text-white" : "text-slate-950"}`}>{door.title}</h4>
+              <p className={`max-w-3xl text-sm leading-6 ${isDark ? "text-slate-400" : "text-slate-600"}`}>{door.subtitle}</p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {door.cards.map((card) => (
+                <article
+                  key={`${door.id}-${card.title}`}
+                  className={`rounded-2xl border p-5 ${
+                    isDark
+                      ? "border-slate-800 bg-slate-900/45 hover:border-emerald-500/25"
+                      : "border-slate-200 bg-white/90 shadow-sm hover:border-emerald-300"
+                  } transition-colors`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <h5 className={`text-base font-black ${isDark ? "text-white" : "text-slate-950"}`}>{card.title}</h5>
+                    <span className="shrink-0 rounded-full bg-emerald-500/10 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-emerald-500">
+                      Peta diri
+                    </span>
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    <div>
+                      <div className="text-[9px] font-black uppercase tracking-[0.2em] text-teal-500">Vibe</div>
+                      <p className={`mt-1 text-xs italic leading-5 ${isDark ? "text-slate-400" : "text-slate-600"}`}>{card.vibe}</p>
+                    </div>
+                    <div>
+                      <div className="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-500">Artinya</div>
+                      <p className={`mt-1 text-xs leading-6 ${isDark ? "text-slate-300" : "text-slate-700"}`}>{card.meaning}</p>
+                    </div>
+                    <p className={`text-sm leading-7 ${isDark ? "text-slate-200" : "text-slate-800"}`}>{card.body}</p>
+                    {card.edge && (
+                      <div className={`rounded-xl border px-3 py-2 text-xs leading-5 ${
+                        isDark ? "border-amber-500/20 bg-amber-500/5 text-amber-100" : "border-amber-200 bg-amber-50 text-amber-900"
+                      }`}>
+                        <strong>Sisi rawan:</strong> {card.edge}
+                      </div>
+                    )}
+                    {card.practice && (
+                      <div className={`rounded-xl border px-3 py-2 text-xs leading-5 ${
+                        isDark ? "border-emerald-500/20 bg-emerald-500/5 text-emerald-100" : "border-emerald-200 bg-emerald-50 text-emerald-900"
+                      }`}>
+                        <strong>Eksperimen:</strong> {card.practice}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {door.recommendations && (
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {door.recommendations.map((group) => {
+                  const Icon = recommendationIcon(group.title);
+                  return (
+                    <article
+                      key={group.title}
+                      className={`rounded-2xl border p-5 ${
+                        isDark ? "border-slate-800 bg-slate-950/45" : "border-slate-200 bg-white/90 shadow-sm"
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="rounded-xl bg-emerald-500/10 p-2 text-emerald-500">
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <h5 className={`text-sm font-black ${isDark ? "text-white" : "text-slate-950"}`}>{group.title}</h5>
+                          <p className="mt-1 text-[10px] italic leading-4 text-teal-500">Vibe: {group.vibe}</p>
+                        </div>
+                      </div>
+                      <p className={`mt-4 text-[11px] leading-5 ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                        <strong>Artinya:</strong> {group.meaning}
+                      </p>
+                      <ul className="mt-4 space-y-2">
+                        {group.items.map((item) => (
+                          <li key={item} className={`flex gap-2 text-xs leading-5 ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+
+        <div className={`rounded-2xl border p-4 text-[11px] leading-5 ${
+          isDark ? "border-slate-800 bg-slate-950/55 text-slate-500" : "border-slate-200 bg-white/80 text-slate-500"
+        }`}>
+          <strong className={isDark ? "text-slate-300" : "text-slate-700"}>Batas interpretasi:</strong> bagian ini adalah pembacaan tipologi dan refleksi diri, bukan diagnosis psikologis, penentu pilihan politik atau agama, ramalan karier, maupun penilaian nilai manusia. Pengalaman hidup, budaya, trauma, kesehatan, kelas sosial, dan keadaan saat tes dapat mengubah pola jawaban.
+        </div>
+      </div>
+    </section>
+  );
 }
 ````
 
@@ -4702,6 +24017,851 @@ createRoot(document.getElementById('root')!).render(
 
 ---
 
+## `src/results/resultExperience.ts`
+
+````ts
+import { TIM_MODELS, TIM_PROFILES } from "../constants/socionicsData";
+import type {
+  AssessmentResult,
+  Club,
+  InformationElement,
+  Quadra,
+  Temperament,
+  TIM,
+} from "../types/socionics";
+
+export interface ExperienceCard {
+  title: string;
+  vibe: string;
+  meaning: string;
+  body: string;
+  edge?: string;
+  practice?: string;
+}
+
+export interface RecommendationGroup {
+  title: string;
+  vibe: string;
+  meaning: string;
+  items: string[];
+}
+
+export interface ExperienceDoor {
+  id: "A" | "B" | "C" | "D";
+  label: string;
+  title: string;
+  subtitle: string;
+  cards: ExperienceCard[];
+  recommendations?: RecommendationGroup[];
+}
+
+export interface ResultExperience {
+  portalName: string;
+  portalTagline: string;
+  opening: string;
+  observedSignals: string[];
+  doors: ExperienceDoor[];
+}
+
+type ElementLens = {
+  vibe: string;
+  algorithm: string;
+  sees: string;
+  blindSpot: string;
+  blocked: string;
+  restored: string;
+  rules: string;
+  politics: string;
+  religion: string;
+  economy: string;
+  society: string;
+  gift: string;
+};
+
+const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
+  Ne: {
+    vibe: "jendela yang terus membuka jendela lain",
+    algorithm: "mendeteksi kemungkinan, celah, variasi, dan potensi yang belum dipakai",
+    sees: "dunia sebagai sesuatu yang belum selesai dan masih bisa ditafsirkan ulang",
+    blindSpot: "mudah meninggalkan bentuk final ketika kemungkinan baru terasa lebih hidup",
+    blocked: "merasa dikurung saat pilihan dipersempit terlalu cepat atau identitas dipakukan menjadi satu versi",
+    restored: "pulih ketika diberi ruang mencoba, bertanya, bercabang, dan menghubungkan hal yang kelihatannya tidak nyambung",
+    rules: "aturan terasa sehat bila bisa diuji, direvisi, dan tidak membunuh kemungkinan baru",
+    politics: "lebih peka pada pluralitas gagasan, kebebasan bereksperimen, dan hak orang untuk tidak seragam",
+    religion: "cenderung tertarik pada pertanyaan, simbol, tafsir, dan kemungkinan makna yang tidak berhenti pada satu jawaban dangkal",
+    economy: "melihat nilai pada inovasi, ide yang belum dilirik, jaringan baru, dan peluang yang belum diberi nama",
+    society: "cepat menangkap potensi unik orang dan biasanya alergi pada label sosial yang terlalu cepat menutup cerita",
+    gift: "memberi orang lain kemungkinan baru tentang siapa mereka bisa jadi",
+  },
+  Ni: {
+    vibe: "lorong waktu dengan lampu redup yang pelan-pelan membentuk satu arah",
+    algorithm: "mengompres banyak kejadian menjadi tema, momentum, dan arah perkembangan",
+    sees: "dunia sebagai rangkaian cerita yang bergerak menuju konsekuensi tertentu",
+    blindSpot: "bisa terlalu percaya pada satu tafsir besar lalu terlambat memberi ruang pada data yang membantahnya",
+    blocked: "tertekan saat dipaksa bergerak tanpa timing, tanpa konteks, atau tanpa sempat membaca ke mana semuanya mengarah",
+    restored: "pulih ketika punya jeda, ruang sunyi, dan kesempatan menyusun ulang arti dari kejadian yang berserakan",
+    rules: "aturan dinilai dari apakah ia selaras dengan arah jangka panjang, bukan cuma benar di atas kertas hari ini",
+    politics: "peka pada narasi sejarah, siklus kekuasaan, momentum sosial, dan akibat jangka panjang dari keputusan publik",
+    religion: "mudah tertarik pada makna batin, perjalanan, takdir, simbol waktu, kematian, perubahan, dan pertanyaan tentang arah hidup",
+    economy: "lebih cepat melihat tren, risiko yang menumpuk, momentum pasar, dan biaya yang baru terasa nanti",
+    society: "membaca suasana zaman dan sering merasa satu kejadian kecil adalah tanda dari perubahan yang lebih besar",
+    gift: "memberi orang lain rasa arah ketika mereka tenggelam dalam terlalu banyak detail",
+  },
+  Se: {
+    vibe: "ruang yang langsung punya garis, berat, jarak, dan pusat gravitasi",
+    algorithm: "mendeteksi batas, daya tekan, posisi, keberanian, dan apa yang benar-benar bisa digerakkan sekarang",
+    sees: "dunia sebagai medan nyata tempat keputusan, batas, dan tindakan punya konsekuensi langsung",
+    blindSpot: "bisa terlalu cepat menaikkan tekanan sebelum memastikan orang lain memang butuh dorongan sekeras itu",
+    blocked: "marah atau gelisah saat ruangnya diterobos, kendalinya dilumpuhkan, atau orang bicara besar tanpa berani bertindak",
+    restored: "pulih ketika bisa bergerak, menetapkan batas, menyelesaikan benturan, dan melihat perubahan yang nyata",
+    rules: "aturan dihormati bila punya daya, bisa ditegakkan, dan tidak cuma menjadi dekorasi moral",
+    politics: "peka pada distribusi kekuasaan, kapasitas kepemimpinan, keamanan, ketegasan, dan siapa yang benar-benar memegang kendali",
+    religion: "lebih tertarik pada keberanian hidup, disiplin, pengorbanan, keteguhan, dan bagaimana keyakinan diwujudkan dalam tindakan",
+    economy: "melihat nilai pada aset nyata, daya tawar, keberanian mengambil posisi, dan kemampuan menjaga kepentingan",
+    society: "cepat membaca siapa yang dominan, siapa yang ragu, siapa yang menguji batas, dan kapan suasana perlu ditahan atau didorong",
+    gift: "memberi orang lain keberanian untuk berhenti mengecilkan diri",
+  },
+  Si: {
+    vibe: "kamar yang temperaturnya pas, kainnya lembut, dan tidak ada suara yang menusuk",
+    algorithm: "mendeteksi kualitas sensasi, ritme tubuh, kecocokan, keseimbangan, dan detail yang membuat hidup terasa layak dijalani",
+    sees: "dunia melalui kualitas pengalaman langsung: nyaman, kasar, berlebihan, hambar, sehat, atau menenangkan",
+    blindSpot: "bisa menunda perubahan penting karena tubuh dan suasana belum terasa siap",
+    blocked: "terkuras oleh lingkungan kasar, ritme yang memaksa, kebisingan, ketidakrapian indrawi, atau tuntutan tanpa jeda",
+    restored: "pulih lewat tidur, makanan yang tepat, ruang rapi, gerak pelan, sentuhan aman, dan ritme yang kembali manusiawi",
+    rules: "aturan dinilai dari apakah ia membuat hidup lebih tertata, sehat, nyaman, dan tidak menyiksa manusia demi formalitas",
+    politics: "peka pada kualitas hidup sehari-hari, layanan publik, kesehatan, ruang kota, lingkungan, dan dampak kebijakan pada tubuh nyata",
+    religion: "mudah terhubung lewat ritual yang menenangkan, kehadiran, rasa syukur, keindahan, dan pengalaman sakral yang terasa di tubuh",
+    economy: "melihat nilai pada kualitas, daya tahan, keterampilan, kesejahteraan, dan produk yang benar-benar membuat hidup lebih baik",
+    society: "cepat sadar siapa yang lelah, siapa yang tidak nyaman, dan perubahan kecil apa yang bisa membuat suasana lebih manusiawi",
+    gift: "membuat hidup terasa cukup aman untuk dinikmati",
+  },
+  Te: {
+    vibe: "meja kerja dengan data terbuka, alat yang berfungsi, dan langkah berikutnya yang jelas",
+    algorithm: "mencari fakta yang bisa dipakai, hasil yang terukur, metode yang bekerja, dan penggunaan sumber daya yang masuk akal",
+    sees: "dunia sebagai kumpulan proses yang bisa diuji, diperbaiki, dipercepat, atau dihentikan bila tidak menghasilkan",
+    blindSpot: "bisa meremehkan pengalaman yang sulit diukur meski tetap nyata bagi orang lain",
+    blocked: "frustrasi saat harus bergerak dengan informasi kabur, prosedur tidak berguna, atau orang mempertahankan cara yang jelas-jelas gagal",
+    restored: "pulih ketika ada data, alat, target, bukti kemajuan, dan kebebasan mengganti metode yang tidak efektif",
+    rules: "aturan berguna selama memperlancar hasil; bila menghambat tanpa alasan, aturan itu layak ditinjau ulang",
+    politics: "peka pada kapasitas institusi, data kebijakan, akuntabilitas hasil, kualitas layanan, dan jarak antara slogan dengan pelaksanaan",
+    religion: "cenderung menghargai keyakinan yang tampak dalam tindakan, etos kerja, pelayanan, tanggung jawab, dan manfaat konkret",
+    economy: "secara alami memperhatikan produktivitas, kompetensi, informasi pasar, biaya peluang, dan apakah sistem menghasilkan nilai nyata",
+    society: "menghormati orang yang bisa membuktikan kerja, membagikan pengetahuan berguna, dan tidak bersembunyi di balik bahasa besar",
+    gift: "membuat sesuatu yang rumit menjadi bisa dikerjakan",
+  },
+  Ti: {
+    vibe: "perpustakaan sunyi dengan rak yang akhirnya tersusun menurut hukum yang masuk akal",
+    algorithm: "mencari konsistensi, definisi, hubungan struktural, kategori, dan aturan yang tidak saling bertabrakan",
+    sees: "dunia sebagai sistem yang perlu dipahami dari dalam sebelum disentuh atau diubah",
+    blindSpot: "bisa terus merapikan model ketika realitas sudah meminta keputusan praktis",
+    blocked: "terganggu oleh istilah kabur, aturan ganda, pengecualian sembarangan, atau argumen yang berubah hanya demi menang",
+    restored: "pulih saat bisa mendefinisikan masalah, membongkar asumsi, menyusun ulang struktur, dan menemukan prinsip yang konsisten",
+    rules: "aturan harus punya dasar, batas, dan hubungan yang jelas; bukan sekadar perintah dari orang yang lebih keras",
+    politics: "peka pada desain institusi, pembagian wewenang, konsistensi hukum, legitimasi, dan apakah struktur mencegah penyalahgunaan",
+    religion: "tertarik pada doktrin, filsafat, konsistensi teologis, paradoks, dan bagaimana suatu keyakinan menyusun realitas",
+    economy: "melihat nilai pada desain sistem, insentif, klasifikasi, standar, dan aturan permainan yang tidak berubah diam-diam",
+    society: "cepat melihat kontradiksi norma dan biasanya ingin tahu aturan tak tertulis apa yang sebenarnya sedang bekerja",
+    gift: "memberi bentuk pada kekacauan tanpa harus berteriak",
+  },
+  Fe: {
+    vibe: "panggung hidup tempat emosi punya volume, ritme, warna, dan arah gerak",
+    algorithm: "mendeteksi suhu emosi, ekspresi, energi kelompok, dan cara mengubah suasana agar orang ikut bergerak",
+    sees: "dunia sebagai arus perasaan yang bisa disuarakan, dibagi, dinaikkan, ditenangkan, atau diarahkan",
+    blindSpot: "bisa menaikkan intensitas saat sebagian orang justru membutuhkan ruang yang lebih tenang dan pribadi",
+    blocked: "terpukul oleh suasana beku, respons datar, emosi yang disangkal, atau kelompok yang kehilangan semangat tapi pura-pura baik-baik saja",
+    restored: "pulih lewat percakapan hidup, musik, tawa, tangis yang jujur, ekspresi kreatif, dan rasa bahwa emosi boleh punya tempat",
+    rules: "aturan diterima bila mampu menjaga moral kelompok, rasa keterlibatan, dan kehidupan bersama yang tidak mati rasa",
+    politics: "peka pada narasi publik, simbol, emosi massa, kemampuan pemimpin menggerakkan orang, dan bagaimana ketakutan atau harapan dibentuk",
+    religion: "mudah terhubung lewat nyanyian, kisah, perayaan, duka bersama, khotbah, simbol, dan rasa transenden yang dibagikan komunitas",
+    economy: "melihat bahwa kepercayaan, citra, semangat, pelayanan, dan pengalaman manusia juga menggerakkan nilai ekonomi",
+    society: "cepat menangkap mood kolektif dan sering sadar bahwa perubahan sosial tidak hanya bergerak lewat data, tetapi juga lewat perasaan",
+    gift: "membuat orang merasa hidup dan ikut hadir",
+  },
+  Fi: {
+    vibe: "ruang kecil dengan dua kursi, percakapan pelan, dan batas yang tidak perlu diumumkan keras-keras",
+    algorithm: "mendeteksi kedekatan, ketulusan, kepercayaan, niat, luka personal, dan kualitas ikatan dari orang ke orang",
+    sees: "dunia sebagai jaringan hubungan yang setiap simpulnya punya sejarah, jarak, dan tanggung jawab moral sendiri",
+    blindSpot: "bisa terlalu lama menilai niat atau menyimpan luka tanpa memberi orang lain kesempatan memahami batasnya",
+    blocked: "terpicu oleh pengkhianatan, kepalsuan, kedekatan yang dipaksa, permainan rasa bersalah, atau orang yang menganggap semua hubungan bisa diperlakukan sama",
+    restored: "pulih lewat percakapan jujur, permintaan maaf yang nyata, jarak yang dihormati, dan hubungan yang tidak menuntut topeng",
+    rules: "aturan dinilai dari apakah ia adil terhadap manusia konkret dan tidak mengorbankan kepercayaan demi formalitas kosong",
+    politics: "peka pada martabat, keadilan personal, loyalitas, korban yang tidak terlihat, dan dampak keputusan pada hubungan nyata",
+    religion: "mudah terhubung pada suara hati, pertobatan, belas kasih, kesetiaan, tanggung jawab personal, dan hubungan manusia dengan yang sakral",
+    economy: "melihat nilai pada reputasi, kepercayaan, transaksi yang adil, tanggung jawab, dan siapa yang menanggung biaya tersembunyi",
+    society: "membaca kualitas hubungan di balik status publik dan cenderung tidak gampang terpesona oleh keramahan yang terasa tidak tulus",
+    gift: "membuat orang merasa dilihat sebagai manusia, bukan fungsi",
+  },
+};
+
+type QuadraLens = {
+  vibe: string;
+  world: string;
+  circle: string;
+  politics: string;
+  sacred: string;
+  economy: string;
+  tension: string;
+};
+
+const QUADRA_LENS: Record<Quadra, QuadraLens> = {
+  Alpha: {
+    vibe: "salon ide, humor cerdas, rasa ingin tahu, dan ruang yang tidak cepat menghakimi",
+    world: "hidup terasa sehat ketika orang bisa bertukar ide, bermain dengan konsep, dan menikmati kenyamanan tanpa terlalu banyak drama status",
+    circle: "sirkel terbaikmu memberi ruang untuk bertanya aneh, tertawa, mengoreksi tanpa mempermalukan, dan tidak memaksa semua orang tampil keras",
+    politics: "cenderung menghargai akses pengetahuan, keterbukaan diskusi, inovasi sosial, dan institusi yang tidak mematikan rasa ingin tahu",
+    sacred: "makna tumbuh lewat dialog, keajaiban keseharian, pertanyaan filosofis, dan pengalaman komunitas yang hangat",
+    economy: "lebih mudah tertarik pada ekonomi kreatif, pendidikan, teknologi terbuka, kesejahteraan, dan cara membuat sistem terasa lebih manusiawi",
+    tension: "bisa meremehkan konflik kekuasaan nyata karena berharap percakapan rasional dan suasana baik cukup untuk menyelesaikannya",
+  },
+  Beta: {
+    vibe: "teater besar, misi bersama, loyalitas, simbol kuat, dan ritme yang menggerakkan banyak orang",
+    world: "hidup terasa bermakna ketika ada arah besar, peran yang jelas, keberanian, dan sesuatu yang layak diperjuangkan bersama",
+    circle: "sirkel terbaikmu punya loyalitas, humor internal, keberanian saling mengingatkan, dan rasa bahwa semua orang benar-benar hadir ketika krisis datang",
+    politics: "cenderung peka pada kepemimpinan, stabilitas, mobilisasi, legitimasi, keamanan, dan kekuatan narasi kolektif",
+    sacred: "makna tumbuh lewat ritual, sejarah, pengorbanan, panggilan, simbol, dan pengalaman menjadi bagian dari sesuatu yang lebih besar",
+    economy: "mudah melihat pentingnya infrastruktur, koordinasi besar, disiplin, kapasitas negara atau organisasi, dan pengorbanan jangka pendek untuk tujuan kolektif",
+    tension: "bisa terlalu memuliakan intensitas, loyalitas, atau hierarki sampai kritik tenang dianggap kurang berkomitmen",
+  },
+  Gamma: {
+    vibe: "kota malam, keputusan tajam, hubungan selektif, konsekuensi nyata, dan ambisi yang tidak perlu dipamerkan",
+    world: "hidup terasa jujur ketika orang bertanggung jawab atas pilihan, mampu membaca kekuasaan, dan tidak berlindung di balik idealisme tanpa biaya",
+    circle: "sirkel terbaikmu kecil tetapi kuat: orang kompeten, tidak palsu, tahan tekanan, menghormati privasi, dan muncul saat benar-benar dibutuhkan",
+    politics: "cenderung peka pada akuntabilitas, kepentingan nyata, korupsi kekuasaan, daya tawar, risiko, dan siapa yang membayar keputusan buruk",
+    sacred: "makna sering terasa personal, intens, dan dibuktikan lewat pilihan hidup, bukan sekadar pernyataan publik",
+    economy: "mudah tertarik pada investasi, strategi, kemandirian, kepemilikan, efisiensi, daya tahan, dan hasil yang tetap bernilai ketika suasana berubah",
+    tension: "bisa terlalu curiga, terlalu transaksional, atau sulit menerima kelembutan yang tidak datang bersama bukti kuat",
+  },
+  Delta: {
+    vibe: "studio kerja tenang, hubungan tulus, keterampilan nyata, pertumbuhan perlahan, dan hidup yang bisa dipertahankan",
+    world: "hidup terasa sehat ketika orang berkembang tanpa dipaksa menjadi seragam, bekerja dengan baik, dan menjaga hubungan yang jujur",
+    circle: "sirkel terbaikmu tidak heboh, tetapi aman: orang yang menghormati ritme, konsisten, mau belajar, tidak memainkan emosi, dan saling membantu secara nyata",
+    politics: "cenderung peka pada kebijakan yang praktis, lokal, berkelanjutan, manusiawi, dan memberi ruang perkembangan individu",
+    sacred: "makna tumbuh lewat integritas sehari-hari, kerja baik, alam, pelayanan, kesetiaan kecil, dan hidup yang tidak dibuat-buat",
+    economy: "lebih mudah tertarik pada kualitas jangka panjang, keterampilan, usaha berkelanjutan, kerja adil, dan nilai yang tumbuh tanpa drama spekulatif",
+    tension: "bisa terlalu menghindari benturan besar, padahal beberapa keadaan memang membutuhkan keputusan cepat dan tekanan yang tegas",
+  },
+};
+
+const TEMPERAMENT_LENS: Record<Temperament, { pace: string; stress: string; advice: string }> = {
+  EP: {
+    pace: "bergerak lewat peluang yang muncul dan lebih hidup ketika ruang tetap terbuka",
+    stress: "mudah gelisah ketika dipaksa mempertahankan satu jalur yang sudah kehilangan energi",
+    advice: "buat jangkar kecil: satu proyek utama, satu tempat menyimpan ide liar, dan satu batas waktu yang benar-benar final",
+  },
+  IP: {
+    pace: "bergerak mengikuti perubahan keadaan dan menunggu momen yang terasa tepat",
+    stress: "bisa terlalu lama beradaptasi sampai keputusan penting terus bergeser",
+    advice: "bedakan menunggu timing dengan menghindar; pasang satu tanda objektif kapan kamu harus bergerak",
+  },
+  EJ: {
+    pace: "bergerak dengan mendorong proses keluar dan ingin melihat dunia merespons usahanya",
+    stress: "mudah kelelahan karena merasa semua harus terus dijaga, dihidupkan, atau dituntaskan",
+    advice: "jadwalkan ruang tanpa fungsi; tidak semua jam harus membuktikan kegunaanmu",
+  },
+  IJ: {
+    pace: "bergerak dari posisi internal yang relatif stabil dan lebih suka perubahan yang punya dasar",
+    stress: "bisa kaku ketika keadaan berubah sebelum kerangka batin selesai menyesuaikan",
+    advice: "latih eksperimen berisiko kecil agar fleksibilitas tidak selalu terasa seperti kehilangan prinsip",
+  },
+};
+
+const CLUB_LENS: Record<Club, { work: string; strengths: string; risk: string }> = {
+  Researchers: {
+    work: "lingkungan yang memberi masalah kompleks, ruang berpikir, dan kebebasan merancang model atau strategi",
+    strengths: "analisis, abstraksi, skenario, sistem, penelitian, pemetaan risiko, dan desain konsep",
+    risk: "terjebak di kepala, menunda kontak dengan pengguna nyata, atau menganggap penjelasan sama dengan penyelesaian",
+  },
+  Socials: {
+    work: "lingkungan yang membuat hubungan, pengalaman manusia, koordinasi, dan pembacaan orang menjadi pusat",
+    strengths: "jejaring, pelayanan, negosiasi, komunitas, atmosfer, kebutuhan manusia, dan hubungan",
+    risk: "menguras diri demi orang lain, terlalu personal membaca penolakan, atau menghindari keputusan impersonal yang tetap perlu",
+  },
+  Pragmatists: {
+    work: "lingkungan dengan tantangan nyata, alat, operasi, hasil, keputusan, dan ruang memperbaiki cara kerja",
+    strengths: "eksekusi, sumber daya, struktur lapangan, kualitas, teknis, logistik, dan penyelesaian masalah",
+    risk: "terlalu cepat memperbaiki sebelum memahami makna manusia dari masalah atau menganggap emosi sebagai gangguan saja",
+  },
+  Humanitarians: {
+    work: "lingkungan yang memberi ruang pada makna, manusia, bahasa, pendidikan, budaya, dan perubahan personal",
+    strengths: "narasi, konseling non-klinis, pendidikan, seni, komunikasi, nilai, dan pengembangan manusia",
+    risk: "terlalu larut dalam kemungkinan manusia, simbol, atau perasaan sampai batas praktis terlambat dipasang",
+  },
+};
+
+type CuratedProfile = {
+  portalName: string;
+  tagline: string;
+  opening: string;
+  books: string[];
+  films: string[];
+  music: string[];
+  careers: string[];
+  destinations: string[];
+  words: string[];
+  gifts: string[];
+  circle: string[];
+  experiments: string[];
+};
+
+const CURATED: Record<TIM, CuratedProfile> = {
+  ILE: {
+    portalName: "Laboratorium Kemungkinan",
+    tagline: "Pintu yang terbuka ke lima pintu lain sebelum gagang pertama sempat dingin.",
+    opening: "Kamu tidak datang untuk menerima satu jawaban final. Kamu datang untuk menemukan berapa banyak dunia yang masih mungkin dibangun dari satu pertanyaan.",
+    books: ["Gödel, Escher, Bach — Douglas Hofstadter", "The Design of Everyday Things — Don Norman", "Invisible Cities — Italo Calvino"],
+    films: ["Everything Everywhere All at Once", "The Martian", "Arrival"],
+    music: ["progressive electronic", "jazz fusion", "art pop eksperimental"],
+    careers: ["R&D dan innovation lab", "product discovery", "arsitektur sistem", "penulis sains atau ide"],
+    destinations: ["Berlin, Jerman — ekosistem ide lintas bidang", "Tokyo, Jepang — teknologi dan subkultur", "Reykjavík, Islandia — ruang kosong untuk imajinasi"],
+    words: ["serendipity", "bricolage", "liminal", "emergent", "counterfactual"],
+    gifts: ["kit modular atau puzzle mekanik", "buku aneh yang tidak akan ia beli sendiri", "kelas singkat topik baru", "tiket museum sains"],
+    circle: ["orang yang tidak panik saat topik melompat", "teman yang bisa mengubah ide menjadi langkah", "seseorang yang mengingatkan tubuhmu untuk pulang"],
+    experiments: ["selesaikan satu prototipe dalam 48 jam", "buat daftar ide yang sengaja tidak kamu kejar", "jelaskan satu teori rumit dengan benda dapur"],
+  },
+  SEI: {
+    portalName: "Rumah dengan Cahaya Sore",
+    tagline: "Pintu yang tidak berisik, tetapi membuat tubuhmu sadar bahwa kamu akhirnya aman.",
+    opening: "Kamu membaca hidup dari kualitas rasa: apakah suasana ini manusiawi, apakah tubuh bisa bernapas, dan apakah orang-orang di sini masih punya kelembutan.",
+    books: ["The Little Prince — Antoine de Saint-Exupéry", "The Art of Stillness — Pico Iyer", "Convenience Store Woman — Sayaka Murata"],
+    films: ["Little Forest", "Amélie", "Perfect Days"],
+    music: ["bossa nova", "dream pop lembut", "acoustic soul"],
+    careers: ["hospitality dan guest experience", "kuliner atau sensory design", "community care", "visual merchandising"],
+    destinations: ["Kyoto, Jepang — detail, ritme, dan ketenangan", "Ubud, Indonesia — tubuh, alam, dan seni", "Copenhagen, Denmark — desain hidup manusiawi"],
+    words: ["hygge", "savor", "tenderness", "ease", "afterglow"],
+    gifts: ["selimut atau tekstil berkualitas", "makanan buatan tangan", "aroma yang dipilih personal", "hari tanpa agenda"],
+    circle: ["orang hangat tanpa drama", "teman yang membawa ide segar", "seseorang yang menghormati ritmemu"],
+    experiments: ["buat satu sudut rumah yang benar-benar memulihkan", "katakan tidak sebelum tubuhmu harus berteriak", "adakan makan kecil untuk tiga orang favorit"],
+  },
+  ESE: {
+    portalName: "Ruang Perayaan",
+    tagline: "Pintu yang terbuka sambil menyalakan lampu, musik, dan rasa bahwa semua orang masih bisa disatukan.",
+    opening: "Kamu punya bakat membuat kehidupan bersama terasa hidup. Tantangannya bukan belajar memberi lebih banyak, tetapi tahu kapan cintamu tidak harus berbentuk kerja tanpa akhir.",
+    books: ["The Art of Gathering — Priya Parker", "Humankind — Rutger Bregman", "The Book of Delights — Ross Gay"],
+    films: ["Paddington 2", "The Intouchables", "Mamma Mia!"],
+    music: ["soul-pop", "disco klasik", "musical theatre"],
+    careers: ["event dan community experience", "public relations", "hospitality leadership", "pendidikan berbasis interaksi"],
+    destinations: ["Lisbon, Portugal — warna dan kehidupan jalanan", "Naples, Italia — ekspresi dan rasa", "Bangkok, Thailand — energi sosial dan kuliner"],
+    words: ["effervescence", "convivial", "radiance", "uplift", "warmth"],
+    gifts: ["album foto bersama", "peralatan menjamu tamu", "tiket konser", "surprise gathering kecil"],
+    circle: ["orang yang menerima energimu tanpa mengeksploitasinya", "teman yang membantu struktur", "seseorang yang berani berkata kamu boleh istirahat"],
+    experiments: ["adakan pertemuan dengan batas waktu jelas", "biarkan orang lain merawatmu satu hari", "buat daftar emosi yang tidak perlu langsung kamu perbaiki"],
+  },
+  LII: {
+    portalName: "Arsip Hukum Tersembunyi",
+    tagline: "Pintu yang hanya terbuka setelah semua istilah didefinisikan dengan benar.",
+    opening: "Kamu mencari struktur yang tidak runtuh ketika diuji dari banyak sisi. Di balik ketenanganmu ada kebutuhan besar agar dunia masuk akal dan tidak memaksa orang tunduk pada aturan yang kontradiktif.",
+    books: ["The Structure of Scientific Revolutions — Thomas Kuhn", "Justice — Michael Sandel", "The Name of the Rose — Umberto Eco"],
+    films: ["12 Angry Men", "Primer", "The Imitation Game"],
+    music: ["minimal classical", "ambient electronic", "post-rock instrumental"],
+    careers: ["research dan methodology", "policy architecture", "data governance", "software atau systems design"],
+    destinations: ["Vienna, Austria — sistem dan sejarah ide", "Helsinki, Finlandia — desain institusi manusiawi", "Cambridge, Inggris — tradisi intelektual"],
+    words: ["axiom", "taxonomy", "coherence", "parsimony", "boundary condition"],
+    gifts: ["edisi anotasi buku penting", "alat tulis presisi", "puzzle logika", "akses kursus mendalam"],
+    circle: ["orang yang bisa berbeda pendapat tanpa menyerang", "teman ekspresif yang menghidupkan suasana", "seseorang yang membantu teori menyentuh kenyataan"],
+    experiments: ["ambil keputusan saat model baru 80% lengkap", "jelaskan batas tanpa membuat kuliah", "uji satu prinsip di kehidupan nyata selama tujuh hari"],
+  },
+  SLE: {
+    portalName: "Benteng Gerak",
+    tagline: "Pintu berat yang terbuka sekali doronganmu punya arah.",
+    opening: "Kamu membaca realitas lewat kekuatan, posisi, dan apa yang benar-benar bisa dilakukan. Kedalamanmu muncul ketika keberanianmu tidak hanya memenangkan ruang, tetapi juga melindungi sesuatu yang layak.",
+    books: ["Meditations — Marcus Aurelius", "The Strategy of Conflict — Thomas Schelling", "The Old Man and the Sea — Ernest Hemingway"],
+    films: ["Mad Max: Fury Road", "Gladiator", "Moneyball"],
+    music: ["industrial rock", "cinematic percussion", "hard-hitting hip-hop"],
+    careers: ["operations leadership", "crisis management", "entrepreneurship", "negotiation dan field strategy"],
+    destinations: ["Istanbul, Türkiye — sejarah kekuasaan dan pertemuan dunia", "Cape Town, Afrika Selatan — lanskap dan keberanian", "Seoul, Korea Selatan — kecepatan dan disiplin"],
+    words: ["leverage", "fortitude", "decisive", "threshold", "command presence"],
+    gifts: ["peralatan premium yang tahan lama", "pengalaman fisik menantang", "jam atau tas fungsional", "tiket pertandingan"],
+    circle: ["orang loyal yang tidak rapuh", "teman visioner yang membaca timing", "seseorang yang berani memberi batas balik"],
+    experiments: ["tunda respons keras selama sembilan puluh detik", "tanyakan apa yang ingin dilindungi sebelum menyerang", "latih menerima bantuan tanpa menguji orangnya dulu"],
+  },
+  IEI: {
+    portalName: "Teater Waktu",
+    tagline: "Pintu beludru yang membuka masa lalu, kemungkinan akhir, dan emosi yang belum sempat diberi nama.",
+    opening: "Kamu hidup dekat dengan arus makna. Kamu bisa merasakan arah cerita sebelum orang lain mengakui bahwa ceritanya sedang berubah.",
+    books: ["The Waves — Virginia Woolf", "Man's Search for Meaning — Viktor Frankl", "The Master and Margarita — Mikhail Bulgakov"],
+    films: ["In the Mood for Love", "Portrait of a Lady on Fire", "The Green Knight"],
+    music: ["ethereal wave", "cinematic ambient", "dark art pop"],
+    careers: ["penulis dan screenwriting", "brand narrative", "creative direction", "cultural research"],
+    destinations: ["Prague, Ceko — simbol dan sejarah", "Edinburgh, Skotlandia — atmosfer cerita", "Istanbul, Türkiye — lapisan waktu"],
+    words: ["premonition", "reverie", "elegiac", "ineffable", "zeitgeist"],
+    gifts: ["buku puisi dengan catatan personal", "parfum atmosferik", "kamera analog", "tiket pertunjukan"],
+    circle: ["orang tegas yang membuatmu merasa aman bergerak", "teman yang tidak menertawakan intuisi", "seseorang yang membantu makna menjadi keputusan"],
+    experiments: ["ubah satu firasat menjadi prediksi yang bisa diuji", "buat deadline yang dilindungi orang lain", "pisahkan tanda nyata dari suasana hati"],
+  },
+  EIE: {
+    portalName: "Menara Suara",
+    tagline: "Pintu yang terbuka ketika satu emosi pribadi berubah menjadi cerita yang bisa menggerakkan banyak orang.",
+    opening: "Kamu bisa memberi bahasa pada ketegangan yang orang lain rasakan tetapi tidak berani ucapkan. Kekuatanmu besar; begitu juga tanggung jawab untuk tidak menjadikan setiap rasa sebagai panggung darurat.",
+    books: ["The Hero with a Thousand Faces — Joseph Campbell", "The Fire Next Time — James Baldwin", "Antigone — Sophocles"],
+    films: ["The Lives of Others", "Black Swan", "Dead Poets Society"],
+    music: ["dramatic orchestral", "gospel dan choral", "theatrical art rock"],
+    careers: ["public communication", "advocacy", "performing arts", "campaign dan narrative strategy"],
+    destinations: ["Athens, Yunani — tragedi, politik, dan simbol", "Buenos Aires, Argentina — ekspresi dan budaya", "Warsaw, Polandia — sejarah dan ketahanan"],
+    words: ["catharsis", "rhetoric", "pathos", "prophetic", "gravitas"],
+    gifts: ["mikrofon atau alat rekam", "tiket teater", "jurnal premium", "benda simbolik dengan cerita"],
+    circle: ["orang yang tahan intensitas tanpa ikut membakar", "teman struktural yang jernih", "seseorang yang mengingatkan tubuh dan batas"],
+    experiments: ["turunkan volume tanpa mengurangi kejujuran", "tulis dua tafsir alternatif sebelum menyimpulkan", "jadwalkan hari tanpa peran publik"],
+  },
+  LSI: {
+    portalName: "Ruang Komando Sunyi",
+    tagline: "Pintu baja yang terbuka setelah aturan, posisi, dan risiko diperiksa satu per satu.",
+    opening: "Kamu mencari struktur yang bisa bertahan ketika keadaan menjadi berat. Kepercayaanmu tidak murah, tetapi ketika sudah diberikan, kamu ingin sistem dan orang sama-sama menunjukkan integritas.",
+    books: ["The Rule of Law — Tom Bingham", "The Art of War — Sun Tzu", "The Trial — Franz Kafka"],
+    films: ["Tinker Tailor Soldier Spy", "Sicario", "A Few Good Men"],
+    music: ["dark classical", "military ambient", "precise techno"],
+    careers: ["compliance dan governance", "security architecture", "quality assurance", "operations control"],
+    destinations: ["Tallinn, Estonia — struktur digital dan sejarah", "Berlin, Jerman — sistem dan memori", "Zurich, Swiss — presisi dan tata kelola"],
+    words: ["protocol", "integrity", "jurisdiction", "fortification", "precedent"],
+    gifts: ["alat presisi", "buku sejarah strategi", "organizer berkualitas", "pengalaman latihan keterampilan"],
+    circle: ["orang setia dan jelas", "teman ekspresif yang membawa makna", "seseorang yang tidak mempermainkan aturan"],
+    experiments: ["buat satu aturan yang punya mekanisme pengecualian", "minta kebutuhanmu tanpa memberi tes tersembunyi", "latih perubahan kecil yang tidak mengancam prinsip"],
+  },
+  SEE: {
+    portalName: "Salon Daya Tarik",
+    tagline: "Pintu yang terbuka karena kamu tahu siapa yang harus diajak, kapan harus mendekat, dan batas mana yang tidak boleh disentuh.",
+    opening: "Kamu membaca manusia dan kekuasaan sekaligus. Kamu tahu bahwa hubungan tidak hidup di ruang hampa; ia punya daya tarik, risiko, loyalitas, dan harga.",
+    books: ["The Prince — Niccolò Machiavelli", "Influence — Robert Cialdini", "The Talented Mr. Ripley — Patricia Highsmith"],
+    films: ["Ocean's Eleven", "The Favourite", "Erin Brockovich"],
+    music: ["confident R&B", "dance-pop", "Latin pop"],
+    careers: ["business development", "talent dan partnerships", "sales strategy", "public-facing entrepreneurship"],
+    destinations: ["Milan, Italia — gaya dan jaringan", "Dubai, UEA — ambisi dan daya tawar", "Rio de Janeiro, Brasil — energi sosial"],
+    words: ["charisma", "reciprocity", "alliance", "magnetism", "social capital"],
+    gifts: ["aksesori statement", "dinner di tempat spesial", "pengalaman VIP", "hadiah personal yang menunjukkan kamu memperhatikan"],
+    circle: ["orang kompeten yang tidak mudah dipengaruhi", "teman strategis yang membaca masa depan", "seseorang yang loyal tanpa posesif"],
+    experiments: ["bedakan kedekatan dari pengaruh", "beri tanpa menciptakan utang emosi", "biarkan satu orang melihat keraguanmu tanpa performa"],
+  },
+  ILI: {
+    portalName: "Observatorium Konsekuensi",
+    tagline: "Pintu gelap dengan jendela jauh: kamu melihat apa yang akan jatuh sebelum bunyinya terdengar.",
+    opening: "Kamu punya radar terhadap risiko, tren, dan optimisme yang terlalu mahal. Kekuatanmu bukan pesimisme, melainkan kemampuan memberi waktu pada kenyataan untuk menunjukkan harga sebenarnya.",
+    books: ["The Black Swan — Nassim Nicholas Taleb", "Thinking in Systems — Donella Meadows", "The Remains of the Day — Kazuo Ishiguro"],
+    films: ["Blade Runner 2049", "No Country for Old Men", "Margin Call"],
+    music: ["dark ambient", "trip-hop", "minimal techno"],
+    careers: ["risk analysis", "strategy dan forecasting", "investment research", "systems intelligence"],
+    destinations: ["London, Inggris — sejarah pasar dan institusi", "Tallinn, Estonia — masa depan digital", "Patagonia, Argentina/Chile — jarak dan perspektif"],
+    words: ["asymmetry", "entropy", "second-order effect", "antifragile", "horizon"],
+    gifts: ["buku analisis mendalam", "alat berkualitas tanpa gimmick", "headphone bagus", "perjalanan sunyi"],
+    circle: ["orang berani yang bisa mengeksekusi", "teman yang menghargai diam", "seseorang yang tidak memaksa optimisme palsu"],
+    experiments: ["catat satu prediksi beserta batas waktunya", "uji kemungkinan baik sekeras kamu menguji risiko", "ambil satu tindakan sebelum semua konsekuensi selesai dipetakan"],
+  },
+  LIE: {
+    portalName: "Mesin Horizon",
+    tagline: "Pintu yang langsung membuka jalan, target, dan pertanyaan: seberapa jauh ini bisa dibawa?",
+    opening: "Kamu melihat waktu sebagai modal dan realitas sebagai sesuatu yang bisa dibangun. Bahayanya muncul ketika tubuh, hubungan, dan rasa cukup diperlakukan seperti hambatan produksi.",
+    books: ["The Effective Executive — Peter Drucker", "Good Strategy Bad Strategy — Richard Rumelt", "The Innovator's Dilemma — Clayton Christensen"],
+    films: ["The Social Network", "Ford v Ferrari", "Apollo 13"],
+    music: ["driving electronic", "arena rock", "focus techno"],
+    careers: ["venture building", "strategy consulting", "operations scaling", "technology leadership"],
+    destinations: ["Singapore — sistem dan kecepatan", "New York, AS — ambisi dan jaringan", "Shenzhen, Tiongkok — eksekusi teknologi"],
+    words: ["scalability", "runway", "trajectory", "compounding", "throughput"],
+    gifts: ["alat produktivitas premium", "akses konferensi", "buku strategi", "pengalaman yang menghemat waktu"],
+    circle: ["orang setia yang berani menahanmu", "teman yang menjaga realitas emosional", "seseorang yang kompeten tanpa permainan status"],
+    experiments: ["ukur pemulihan seperti kamu mengukur hasil", "adakan satu percakapan tanpa agenda", "batasi satu proyek agar hidupmu tidak menjadi seluruhnya proyek"],
+  },
+  ESI: {
+    portalName: "Ruang Sumpah",
+    tagline: "Pintu yang hanya terbuka bagi orang yang niatnya terbukti, bukan sekadar terdengar manis.",
+    opening: "Kamu menjaga kualitas ikatan dan batas moral dengan serius. Kamu tahu bahwa satu pengkhianatan kecil bisa mengubah seluruh makna hubungan.",
+    books: ["The Ethics of Ambiguity — Simone de Beauvoir", "A Man Called Ove — Fredrik Backman", "The Crucible — Arthur Miller"],
+    films: ["A Separation", "Promising Young Woman", "The Secret in Their Eyes"],
+    music: ["intimate singer-songwriter", "dark folk", "soul ballad"],
+    careers: ["ethics dan safeguarding", "investigative work", "people risk", "client trust dan advocacy"],
+    destinations: ["Kraków, Polandia — memori dan nilai", "Kyoto, Jepang — batas, ritual, dan ketulusan", "Tbilisi, Georgia — keramahan dan loyalitas"],
+    words: ["fidelity", "boundary", "redress", "discernment", "moral injury"],
+    gifts: ["surat personal yang jujur", "benda tahan lama", "hadiah yang mengingat detail kecil", "waktu privat tanpa gangguan"],
+    circle: ["orang yang konsisten", "teman produktif yang bisa diandalkan", "seseorang yang tidak memaksa kamu cepat percaya"],
+    experiments: ["ucapkan batas sebelum berubah menjadi hukuman diam", "bedakan kesalahan dari pengkhianatan", "beri ruang pada niat baik yang belum sempurna"],
+  },
+  IEE: {
+    portalName: "Taman Identitas",
+    tagline: "Pintu yang terbuka ke versi dirimu yang belum pernah mendapat izin hidup.",
+    opening: "Kamu menangkap kemungkinan manusia sebelum mereka sendiri berani mengakuinya. Kamu hidup dari percikan: satu percakapan bisa mengubah arah hidup seseorang.",
+    books: ["The Artist's Way — Julia Cameron", "Braiding Sweetgrass — Robin Wall Kimmerer", "The Unbearable Lightness of Being — Milan Kundera"],
+    films: ["Frances Ha", "The Secret Life of Walter Mitty", "Before Sunrise"],
+    music: ["indie folk", "eclectic pop", "world fusion"],
+    careers: ["creative facilitation", "talent development", "community innovation", "writing dan interviewing"],
+    destinations: ["Melbourne, Australia — budaya kreatif", "Lisbon, Portugal — pertemuan dan ritme", "Mexico City, Meksiko — warna dan kemungkinan"],
+    words: ["becoming", "kinship", "possibility space", "kaleidoscopic", "unfurl"],
+    gifts: ["kelas kreatif", "buku yang dipilih berdasarkan potensi", "road trip spontan", "alat untuk hobi baru"],
+    circle: ["orang unik yang tidak sinis", "teman praktis yang membantu membumikan", "seseorang yang menghormati kebebasan dan kedekatan sekaligus"],
+    experiments: ["pilih satu versi diri untuk dilatih tiga puluh hari", "selesaikan percakapan sulit tanpa membuka topik baru", "buat kalender pemulihan setelah terlalu banyak manusia"],
+  },
+  SLI: {
+    portalName: "Bengkel Tenang",
+    tagline: "Pintu yang terbuka tanpa suara dan menunjukkan bahwa hidup bisa bekerja lebih baik tanpa menjadi lebih ribut.",
+    opening: "Kamu punya kecerdasan terhadap kualitas, alat, ritme, dan perbaikan yang tidak dramatis. Kamu sering menyelamatkan keadaan dengan sesuatu yang begitu praktis sampai orang lupa itu membutuhkan keahlian.",
+    books: ["Zen and the Art of Motorcycle Maintenance — Robert Pirsig", "Shop Class as Soulcraft — Matthew Crawford", "Walden — Henry David Thoreau"],
+    films: ["Paterson", "The Straight Story", "Chef"],
+    music: ["lo-fi instrumental", "roots rock", "ambient folk"],
+    careers: ["product quality", "craft dan technical design", "field engineering", "sustainable operations"],
+    destinations: ["Hokkaido, Jepang — alam dan kualitas", "Slovenia — tenang dan fungsional", "New Zealand — ruang dan keterampilan luar"],
+    words: ["craftsmanship", "tactile", "frictionless", "stewardship", "calibration"],
+    gifts: ["alat yang benar-benar bagus", "makanan berkualitas", "jaket atau sepatu tahan lama", "waktu bebas tanpa agenda sosial"],
+    circle: ["orang hangat tetapi tidak menuntut", "teman penuh ide", "seseorang yang menghargai kontribusi diam"],
+    experiments: ["jelaskan kebutuhan sebelum diam-diam memperbaiki semuanya", "biarkan satu proyek terlihat meski belum sempurna", "jadwalkan eksplorasi yang tidak punya kegunaan langsung"],
+  },
+  LSE: {
+    portalName: "Kota yang Berfungsi",
+    tagline: "Pintu yang membuka gudang, jadwal, sistem, dan rasa lega karena semuanya akhirnya berada di tangan yang kompeten.",
+    opening: "Kamu ingin dunia bisa diandalkan. Bagimu, kepedulian sering berbentuk sistem yang bekerja, kebutuhan yang terpenuhi, dan orang yang tidak dibiarkan menanggung kekacauan sendirian.",
+    books: ["The Checklist Manifesto — Atul Gawande", "The Goal — Eliyahu Goldratt", "Factfulness — Hans Rosling"],
+    films: ["Hidden Figures", "The Founder", "The Intern"],
+    music: ["upbeat classic rock", "focus playlists", "clean pop production"],
+    careers: ["operations management", "supply chain", "quality systems", "public service delivery"],
+    destinations: ["Zurich, Swiss — keteraturan dan kualitas", "Singapore — operasi publik", "Munich, Jerman — industri dan kenyamanan"],
+    words: ["reliability", "workflow", "maintenance", "service level", "operational excellence"],
+    gifts: ["organizer premium", "alat rumah tangga berkualitas", "kursus skill praktis", "pengalaman yang terencana rapi"],
+    circle: ["orang yang menepati janji", "teman yang membawa kemungkinan baru", "seseorang yang melihat kasih di balik tindakanmu"],
+    experiments: ["tanyakan perasaan sebelum menawarkan solusi", "sisakan satu blok waktu tanpa target", "izinkan metode orang lain berbeda selama hasil dan batas aman terpenuhi"],
+  },
+  EII: {
+    portalName: "Perpustakaan Hati",
+    tagline: "Pintu yang terbuka pelan dan menyimpan nama-nama orang yang pernah kamu coba pahami dengan sungguh-sungguh.",
+    opening: "Kamu memandang manusia sebagai cerita moral yang belum selesai. Kamu bisa melihat kemungkinan baik tanpa sepenuhnya menutup mata terhadap luka.",
+    books: ["The Brothers Karamazov — Fyodor Dostoevsky", "Gilead — Marilynne Robinson", "The Gifts of Imperfection — Brené Brown"],
+    films: ["Ikiru", "The Quiet Girl", "A Beautiful Day in the Neighborhood"],
+    music: ["chamber folk", "piano ballad", "gentle indie"],
+    careers: ["education dan mentoring", "ethics dan social impact", "writing dan editing", "people development"],
+    destinations: ["Assisi, Italia — kesederhanaan dan spiritualitas", "Edinburgh, Skotlandia — sastra dan keheningan", "Yogyakarta, Indonesia — budaya dan pembelajaran"],
+    words: ["conscience", "grace", "reparation", "attunement", "moral imagination"],
+    gifts: ["buku dengan dedikasi personal", "surat panjang", "barang buatan tangan", "waktu tenang berdua"],
+    circle: ["orang lembut tetapi kompeten", "teman yang mendorong tanpa memaksa", "seseorang yang tidak mengejek idealismemu"],
+    experiments: ["ubah belas kasih menjadi batas yang jelas", "tanyakan fakta sebelum menafsirkan niat", "buat satu keputusan tegas tanpa meminta semua orang memahami"],
+  },
+};
+
+const emotionLabel = (emotion: string, meaning: string, body: string): ExperienceCard => ({
+  title: emotion,
+  vibe: `emosi sebagai sinyal, bukan vonis`,
+  meaning,
+  body,
+});
+
+const strongestObservedSignals = (result: AssessmentResult): string[] => {
+  const entries = Object.entries(result.channelProfile).flatMap(([element, channels]) =>
+    Object.entries(channels).map(([channel, score]) => ({
+      element: element as InformationElement,
+      channel,
+      score,
+    })),
+  );
+
+  return entries
+    .filter((entry) => Number.isFinite(entry.score))
+    .sort((a, b) => Math.abs(b.score) - Math.abs(a.score))
+    .slice(0, 4)
+    .map((entry) => {
+      const direction = entry.score >= 0 ? "menguat" : "melemah";
+      return `${entry.element} pada kanal ${entry.channel} terlihat ${direction} (${entry.score.toFixed(2)}). Ini sinyal pola jawaban, bukan label mutlak.`;
+    });
+};
+
+const recommendationGroups = (curated: CuratedProfile): RecommendationGroup[] => [
+  {
+    title: "Buku yang mungkin membuka ruangan baru",
+    vibe: "bukan daftar wajib; ini pintu baca yang seirama dengan cara pikirmu",
+    meaning: "Judul-judul ini dipilih untuk memberi cermin, perlawanan, atau bahasa baru bagi kecenderungan tipe ini.",
+    items: curated.books,
+  },
+  {
+    title: "Film untuk merasakan strukturmu dalam bentuk cerita",
+    vibe: "menonton sebagai observasi diri",
+    meaning: "Film tidak mewakili tipe secara literal. Gunakan tokoh, konflik, dan atmosfernya untuk melihat bagian dirimu yang biasanya sulit dijelaskan.",
+    items: curated.films,
+  },
+  {
+    title: "Lanskap musik",
+    vibe: "soundtrack yang mungkin cocok dengan ritme batinmu",
+    meaning: "Rekomendasi ini berfungsi sebagai moodboard, bukan klaim bahwa semua orang bertipe sama punya selera identik.",
+    items: curated.music,
+  },
+  {
+    title: "Arah pekerjaan",
+    vibe: "tempat kemampuanmu punya fungsi nyata",
+    meaning: "Carilah bentuk pekerjaan dan budaya tim yang memberi ruang pada kekuatanmu tanpa terus-menerus menekan fungsi rentanmu.",
+    items: curated.careers,
+  },
+  {
+    title: "Tempat yang layak dijelajahi",
+    vibe: "perjalanan sebagai eksperimen identitas",
+    meaning: "Bukan negara yang pasti cocok untuk hidup, melainkan tempat yang menawarkan kontras, atmosfer, atau sistem yang bisa memperluas cara pandangmu.",
+    items: curated.destinations,
+  },
+  {
+    title: "Kosakata baru untuk dirimu",
+    vibe: "kata-kata adalah alat untuk melihat hal yang sebelumnya kabur",
+    meaning: "Pilih satu kata, cari maknanya, lalu gunakan selama seminggu untuk membaca pengalamanmu dengan lebih presisi.",
+    items: curated.words,
+  },
+  {
+    title: "Hadiah yang kemungkinan terasa personal",
+    vibe: "hadiah sebagai bukti bahwa seseorang benar-benar memperhatikan",
+    meaning: "Hadiah terbaik bukan yang paling mahal, tetapi yang menyentuh cara tipe ini menerima perhatian, ruang, kualitas, atau kemungkinan.",
+    items: curated.gifts,
+  },
+  {
+    title: "Sirkel yang membuatmu bertumbuh",
+    vibe: "bukan mencari orang identik; mencari ekosistem yang sehat",
+    meaning: "Sirkel yang baik menguatkan fungsi utamamu sekaligus memberi apa yang sulit kamu produksi sendirian.",
+    items: curated.circle,
+  },
+  {
+    title: "Eksperimen kecil setelah tes",
+    vibe: "hasil tes baru berarti ketika diuji di kehidupan nyata",
+    meaning: "Pilih satu eksperimen selama tujuh hari. Catat apa yang terasa hidup, apa yang terasa dipaksakan, dan bukti apa yang justru menyangkal hasil ini.",
+    items: curated.experiments,
+  },
+];
+
+export const buildResultExperience = (type: TIM, result: AssessmentResult): ResultExperience => {
+  const model = TIM_MODELS[type];
+  const profile = TIM_PROFILES[type];
+  const curated = CURATED[type];
+  const base = ELEMENT_LENS[model.positions.Base];
+  const creative = ELEMENT_LENS[model.positions.Creative];
+  const role = ELEMENT_LENS[model.positions.Role];
+  const vulnerable = ELEMENT_LENS[model.positions.Vulnerable];
+  const suggestive = ELEMENT_LENS[model.positions.Suggestive];
+  const mobilizing = ELEMENT_LENS[model.positions.Mobilizing];
+  const ignoring = ELEMENT_LENS[model.positions.Ignoring];
+  const demonstrative = ELEMENT_LENS[model.positions.Demonstrative];
+  const quadra = QUADRA_LENS[model.quadra];
+  const tempo = TEMPERAMENT_LENS[model.temperament];
+  const club = CLUB_LENS[model.club];
+
+  const doorA: ExperienceDoor = {
+    id: "A",
+    label: "Pintu A",
+    title: "Ruang Cermin: Mesin Batinmu",
+    subtitle: "Cara perhatianmu memilih apa yang terasa nyata, penting, dan layak ditanggapi.",
+    cards: [
+      {
+        title: "Algoritma inti",
+        vibe: base.vibe,
+        meaning: `Fungsi Base ${model.positions.Base} bukan sekadar kemampuan. Ia adalah kecenderungan untuk ${base.algorithm}.`,
+        body: `${base.sees}. ${profile.orientasiBase}`,
+        edge: `Sisi tajamnya: ${base.blindSpot}.`,
+        practice: `Pertanyaan editor diri: kapan kekuatan ini membantu, dan kapan ia mengambil seluruh ruangan?`,
+      },
+      {
+        title: "Cara kamu mengubah dunia",
+        vibe: creative.vibe,
+        meaning: `Fungsi Creative ${model.positions.Creative} adalah alat fleksibel yang paling mudah kamu pakai untuk mewujudkan orientasi utama.`,
+        body: `${creative.gift}. ${profile.caraCreative}`,
+        edge: `Saat terlalu aktif, alat ini bisa dipakai untuk memperbaiki semua hal bahkan ketika orang lain hanya ingin ditemani.`,
+      },
+      {
+        title: "Topeng sosial yang terlihat rapi",
+        vibe: role.vibe,
+        meaning: `Fungsi Role ${model.positions.Role} adalah bagian yang bisa kamu tampilkan karena merasa seharusnya mampu, bukan karena selalu terasa alami.`,
+        body: `${profile.roleTampilan}`,
+        edge: `Tanda kelelahan biasanya muncul ketika kamu harus mempertahankan performa ini terlalu lama tanpa kembali ke ritme asli.`,
+      },
+      {
+        title: "Kekuatan diam-diam",
+        vibe: demonstrative.vibe,
+        meaning: `Fungsi Demonstrative ${model.positions.Demonstrative} sering bekerja sangat kompeten di latar, tetapi tidak selalu kamu anggap identitas utama.`,
+        body: `${profile.kemampuanDemonstrative}`,
+        practice: `Perhatikan pujian yang membuatmu bingung karena bagimu hal itu terasa biasa saja. Di sana sering ada kompetensi latar.`,
+      },
+      {
+        title: "Ritme hidup",
+        vibe: `tempo ${model.temperament}: bukan cepat atau lambat, tetapi cara energi berubah menjadi gerak`,
+        meaning: `Temperamen ${model.temperament} menggambarkan pola umum bagaimana kamu merespons perubahan dan menggerakkan proses.`,
+        body: `Kamu cenderung ${tempo.pace}.`,
+        edge: tempo.stress,
+        practice: tempo.advice,
+      },
+      {
+        title: "Bukti yang bisa menyangkal hasil",
+        vibe: "cermin yang sehat juga menunjukkan retakan pada teorinya sendiri",
+        meaning: "Hasil terbaik bukan hasil yang terdengar paling indah, tetapi yang tetap bertahan setelah dibandingkan dengan bukti lawan.",
+        body: profile.buktiMenyangkal,
+        practice: profile.refleksi,
+      },
+    ],
+  };
+
+  const doorB: ExperienceDoor = {
+    id: "B",
+    label: "Pintu B",
+    title: "Ruang Cuaca: Peta Emosi dan Pemicu",
+    subtitle: "Emosi dibaca sebagai sinyal kebutuhan, batas, aspirasi, atau tekanan—bukan diagnosis.",
+    cards: [
+      emotionLabel(
+        "Sukacita",
+        `Kegembiraan paling hidup sering muncul ketika ${base.algorithm} bisa mengalir dan ${creative.gift}.`,
+        `Kamu terasa lebih hidup saat lingkungan memberi ruang pada ${base.sees.toLowerCase()} dan usahamu langsung punya bentuk yang terasa milikmu.`,
+      ),
+      emotionLabel(
+        "Marah",
+        `Kemarahan sering menjadi alarm bahwa orientasi Base-mu dihalangi, diremehkan, atau ruang geraknya direbut.`,
+        `${base.blocked}. Saat matang, marahmu bisa berubah menjadi batas atau keputusan; saat kewalahan, ia bisa berubah menjadi tekanan berlebih atau penarikan tajam.`,
+      ),
+      emotionLabel(
+        "Takut",
+        `Ketakutan paling spesifik sering berkaitan dengan tuntutan fungsi Vulnerable ${model.positions.Vulnerable}.`,
+        `${vulnerable.blocked}. ${profile.tuntutanPolr}`,
+      ),
+      emotionLabel(
+        "Sedih",
+        `Kesedihan bisa muncul ketika kebutuhan Suggestive ${model.positions.Suggestive} lama tidak hadir: kamu diminta terus memberi sesuatu yang justru ingin kamu terima dari dunia.`,
+        `${suggestive.restored}. Ketika kebutuhan ini tidak dipenuhi, hidup bisa terasa kering, terlalu berat, atau seperti harus kamu pecahkan sendirian.`,
+      ),
+      emotionLabel(
+        "Malu",
+        `Malu sering menempel pada fungsi Role ${model.positions.Role}: bagian yang ingin terlihat pantas tetapi takut ketahuan tidak seluwes kelihatannya.`,
+        `${role.blocked}. Responsnya bisa berupa overpreparing, membela diri, pura-pura tidak peduli, atau menghindari situasi yang akan menguji performa itu.`,
+      ),
+      emotionLabel(
+        "Iri",
+        `Iri tidak selalu buruk; kadang ia menunjukkan area Mobilizing ${model.positions.Mobilizing} yang sangat ingin berkembang dan diakui.`,
+        `${mobilizing.gift}. ${profile.areaMobilizing}`,
+      ),
+      emotionLabel(
+        "Muak",
+        `Rasa muak sering muncul ketika lingkungan memaksa nilai yang berlawanan dengan iklim quadra atau memakai informasi secara terasa palsu.`,
+        `Kamu cenderung menolak suasana yang berlawanan dengan kebutuhan ini: ${quadra.world.toLowerCase()}.`,
+      ),
+      emotionLabel(
+        "Cinta",
+        `Kamu cenderung memberi cinta lewat Creative ${model.positions.Creative}, tetapi menerima cinta paling dalam lewat Suggestive ${model.positions.Suggestive}.`,
+        `Cara memberimu: ${creative.gift}. Cara yang sering membuatmu benar-benar lega: ${profile.bantuanSuggestive}`,
+      ),
+      emotionLabel(
+        "Bosan",
+        `Kebosanan muncul ketika Base ${model.positions.Base} tidak punya objek hidup untuk diproses.`,
+        `Kamu bukan hanya kekurangan aktivitas; kamu kekurangan jenis informasi yang membuat perhatianmu merasa berguna: ${base.algorithm}.`,
+      ),
+      {
+        title: "Cara kembali ke tubuh",
+        vibe: "regulasi sebelum interpretasi",
+        meaning: "Ketika emosi terlalu penuh, jangan langsung menjadikannya kebenaran tentang dirimu atau orang lain.",
+        body: `${suggestive.restored}. Mulai dari tidur, makan, gerak, napas, jarak, atau bantuan konkret sebelum menyusun teori besar.`,
+        edge: `Jika emosi terasa ekstrem, menetap, atau mengganggu fungsi harian, hasil tipologi tidak menggantikan bantuan profesional.`,
+      },
+    ],
+  };
+
+  const doorC: ExperienceDoor = {
+    id: "C",
+    label: "Pintu C",
+    title: "Observatorium Dunia: Aturan, Politik, Agama, Ekonomi, Sosial",
+    subtitle: "Bukan ramalan ideologi. Ini lensa tentang aspek apa yang lebih cepat menarik perhatianmu.",
+    cards: [
+      {
+        title: "Cara melihat aturan",
+        vibe: `aturan sebagai sesuatu yang harus melewati filter ${model.positions.Base}–${model.positions.Creative}`,
+        meaning: "Kamu tidak otomatis menerima atau menolak aturan. Kamu menilai aturan lewat jenis informasi yang paling kamu percaya.",
+        body: `${base.rules}. Dalam praktiknya, ${creative.rules.toLowerCase()}.`,
+        edge: `Waspadai saat kamu menganggap filter pribadimu sebagai satu-satunya bentuk rasionalitas.`,
+      },
+      {
+        title: "Lensa politik",
+        vibe: quadra.vibe,
+        meaning: "Socionics tidak menentukan partai, pilihan kandidat, atau ideologi. Ia hanya bisa memberi hipotesis tentang dimensi politik yang lebih cepat kamu notice.",
+        body: `${quadra.politics}. Pada level fungsi, ${base.politics.toLowerCase()}.`,
+        edge: quadra.tension,
+      },
+      {
+        title: "Lensa agama dan yang sakral",
+        vibe: "keyakinan sebagai cara memberi bentuk pada makna, batas, komunitas, atau tindakan",
+        meaning: "Tipe tidak menentukan apakah seseorang religius, agnostik, spiritual, atau ateis. Yang mungkin berbeda adalah pintu masuk ke pengalaman makna.",
+        body: `${quadra.sacred}. Secara fungsi, ${base.religion.toLowerCase()}.`,
+      },
+      {
+        title: "Lensa ekonomi",
+        vibe: "nilai bukan hanya uang; nilai adalah apa yang dianggap layak dipertukarkan, dipelihara, dan dikembangkan",
+        meaning: "Cara memandang ekonomi dapat dipengaruhi pendidikan, kelas sosial, budaya, dan pengalaman hidup. Tipe hanya memberi satu sudut kecil.",
+        body: `${quadra.economy}. Kecenderungan Base-mu juga membuatmu ${base.economy.toLowerCase()}.`,
+      },
+      {
+        title: "Cara membaca masyarakat",
+        vibe: "siapa yang terlihat, siapa yang tidak terlihat, dan informasi apa yang dianggap penting",
+        meaning: "Setiap tipe cenderung menangkap masalah sosial melalui saluran informasi yang berbeda.",
+        body: `${base.society}. Dalam iklim ${model.quadra}, ${quadra.world.toLowerCase()}.`,
+      },
+      {
+        title: "Kekuasaan dan batas",
+        vibe: `Se berada di posisi ${Object.entries(model.positions).find(([, element]) => element === "Se")?.[0] ?? "tidak diketahui"}`,
+        meaning: "Cara berhubungan dengan kekuasaan tidak sama dengan agresivitas. Ia bisa muncul sebagai produksi tekanan, kebutuhan akan perlindungan, performa, penghindaran, atau kompetensi latar.",
+        body: ELEMENT_LENS.Se.politics,
+        edge: `Periksa apakah kamu terlalu cepat menganggap tekanan sebagai solusi, atau terlalu lama menunggu orang lain memasang batas untukmu.`,
+      },
+      {
+        title: "Pekerjaan dan kontribusi publik",
+        vibe: `${model.club}: cara kecerdasanmu ingin berguna`,
+        meaning: `Club ${model.club} adalah pengelompokan luas tentang jenis masalah yang sering terasa menarik, bukan pembatas profesi.` ,
+        body: `Kamu cenderung cocok dengan ${club.work}. Kekuatan yang mungkin tampak: ${club.strengths}.`,
+        edge: club.risk,
+      },
+      {
+        title: "Pertanyaan etis untuk dibawa pulang",
+        vibe: "dunia tidak hanya dibaca; dunia juga ikut dibentuk oleh kebiasaan perhatianmu",
+        meaning: "Setiap lensa membantu melihat sesuatu sekaligus membuat hal lain lebih mudah luput.",
+        body: `Apa yang selalu cepat kamu lihat dalam konflik publik? Siapa yang biasanya tidak masuk ke dalam modelmu? Data, aturan, kekuasaan, rasa, tubuh, waktu, kemungkinan, atau hubungan mana yang perlu sengaja kamu undang?`,
+      },
+    ],
+  };
+
+  const doorD: ExperienceDoor = {
+    id: "D",
+    label: "Pintu D",
+    title: "Laboratorium Hidup: Sirkel, Nasihat, Hadiah, dan Rekomendasi",
+    subtitle: "Bukan resep hidup. Anggap sebagai rak kemungkinan yang bisa kamu coba, tolak, atau ubah.",
+    cards: [
+      {
+        title: "Nasihat paling penting",
+        vibe: "pertumbuhan bukan menjadi tipe lain; pertumbuhan adalah memakai tipemu tanpa diperbudak olehnya",
+        meaning: "Kekuatan utama perlu wadah, fungsi rentan perlu dukungan, dan aspirasi perlu latihan yang tidak mempermalukan.",
+        body: `${profile.polaSeimbang}`,
+        edge: `${profile.polaTertekan}`,
+        practice: `${tempo.advice}`,
+      },
+      {
+        title: "Sirkel yang terasa seperti pulang",
+        vibe: quadra.circle,
+        meaning: "Sirkel terbaik tidak selalu berisi tipe yang sama. Ia memberi campuran validasi, koreksi, ketegasan, kehangatan, dan kompetensi.",
+        body: `${quadra.circle}`,
+        practice: `Cari orang yang bisa memberi Suggestive ${model.positions.Suggestive} tanpa merendahkanmu, dan menghargai Base ${model.positions.Base} tanpa menjadikannya mesin gratis.`,
+      },
+      {
+        title: "Apa yang perlu kamu hentikan",
+        vibe: "melepaskan strategi lama yang dulu menyelamatkan tetapi sekarang mengurung",
+        meaning: "Pola stres sering terlihat seperti versi ekstrem dari kekuatan atau performa berlebihan pada area yang rapuh.",
+        body: `${profile.batasPerhatian}`,
+        practice: `Tandai satu perilaku yang kamu sebut “memang aku begini” padahal sebenarnya hanya respons kelelahan.`,
+      },
+      {
+        title: "Apa yang perlu kamu izinkan",
+        vibe: "menerima bukan berarti lemah; menerima adalah bagian dari Model A",
+        meaning: `Suggestive ${model.positions.Suggestive} menunjukkan jenis bantuan yang dapat terasa melegakan ketika datang dengan cara yang tepat.`,
+        body: profile.bantuanSuggestive,
+        practice: `Coba minta bantuan itu dengan kalimat konkret, bukan menunggu orang menebaknya.`,
+      },
+      {
+        title: "Kalimat penutup pintu",
+        vibe: curated.tagline,
+        meaning: "Hasil ini seharusnya memperluas bahasa tentang dirimu, bukan mempersempit pilihan hidupmu.",
+        body: curated.opening,
+        practice: `Simpan yang terasa benar, uji yang terasa meragukan, dan buang bagian yang tidak didukung kehidupanmu.`,
+      },
+    ],
+    recommendations: recommendationGroups(curated),
+  };
+
+  return {
+    portalName: curated.portalName,
+    portalTagline: curated.tagline,
+    opening: curated.opening,
+    observedSignals: strongestObservedSignals(result),
+    doors: [doorA, doorB, doorC, doorD],
+  };
+};
+````
+
+---
+
 ## `src/scoring/engine.ts`
 
 ````ts
@@ -5871,12 +26031,4 @@ export default defineConfig({
 ````
 
 ---
-
-## `docs/EDITORIAL_COPY_ALL_256.txt`
-
-File ini tidak ditempel penuh karena berisi 256 item × 5 opsi dan berukuran besar. File lengkap tetap ada di ZIP. Untuk membuat ulang dari kode yang aktif:
-
-````bash
-npm run export:editorial
-````
 

@@ -63,3 +63,13 @@ Perintah tersebut menjalankan TypeScript, audit instrumen, synthetic recovery te
 ## Batas klaim
 
 Versi ini jauh lebih konsisten secara arsitektur dan content coverage dibanding versi awal, tetapi reliabilitas, validitas konstruk, differential item functioning, calibration, dan invariance tetap membutuhkan data peserta nyata. Lihat `docs/VALIDATION_ROADMAP.md`.
+## Pengalaman hasil empat pintu
+
+Versi 2.0.4 memperluas halaman hasil menjadi pengalaman eksplorasi interaktif tanpa menghapus fitur perbandingan tipe dan relasi antar-tipe.
+
+- **Pintu A — Ruang Cermin:** algoritma inti, cara mengubah dunia, topeng sosial, kompetensi latar, ritme, dan bukti penyangkal.
+- **Pintu B — Ruang Cuaca:** pemicu dan makna sukacita, marah, takut, sedih, malu, iri, muak, cinta, dan bosan.
+- **Pintu C — Observatorium Dunia:** lensa aturan, politik, agama, ekonomi, sosial, kekuasaan, dan kontribusi publik. Bagian ini tidak meramalkan ideologi atau keyakinan.
+- **Pintu D — Laboratorium Hidup:** nasihat, sirkel, hadiah, buku, film, musik, pekerjaan, destinasi, kosakata, dan eksperimen tujuh hari.
+
+Setiap kartu menggunakan struktur **Vibe → Artinya → Pembacaan → Sisi rawan/Eksperimen**. Rekomendasi diperlakukan sebagai moodboard dan bahan eksplorasi, bukan resep hidup atau diagnosis.
