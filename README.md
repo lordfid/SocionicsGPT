@@ -1,5 +1,10 @@
 # Socionics Dalam Diriku
 
+## Versi 2.1.0 — Library Editorial Results
+
+Halaman hasil sekarang memakai gaya editorial perpustakaan modern. Konten hasil dibagi menjadi Ringkasan Inti, Cara Berpikir, Emosi, Relasi, Pandangan Dunia, Blind Spot, dan Rekomendasi. Bahasa dibuat lebih ringkas dan langsung, dengan blok Catatan ahli, Versi gampangnya, serta Stereotipe internet yang diberi label jelas.
+
+
 Aplikasi React + TypeScript + Vite untuk eksplorasi pendidikan Socionics Model A. Seluruh jawaban dan hasil disimpan lokal di browser.
 
 ## Status metodologis

@@ -1,22 +1,24 @@
-SOCIONICS DALAM DIRIKU v2.0.3 — LANGUAGE INTEGRATED
+SOCIONICS DALAM DIRIKU v2.1.0 — LIBRARY EDITORIAL UPGRADE
 
-Yang sudah disatukan ke ZIP ini:
-- perbaikan penyimpanan jawaban;
-- pertanyaan utama Versi Kasual;
-- panel kalimat asli;
-- Artinya sebagai proses batin;
-- Reaksi sebagai tindakan nyata;
-- audit bahasa otomatis;
-- ekspor editorial seluruh 256 item;
-- package-lock publik dan konfigurasi Vercel.
+Perubahan utama:
+- halaman hasil tidak lagi memakai framing empat pintu;
+- hasil menjadi profil editorial yang ringkas dan tajam;
+- ada Catatan ahli, Versi gampangnya, Stereotipe internet, salah paham, blind spot, dan saran praktis;
+- tema visual perpustakaan modern: walnut, parchment, burgundy, navy, dusty plum, muted gold;
+- font Plus Jakarta Sans + DM Serif Display;
+- navigasi hasil mengambang dan rekomendasi seperti rak buku;
+- Bandingkan Dengan Tipe Lain dan Analisis Hubungan Antar-Tipe tetap dipertahankan;
+- kartu hasil PNG ikut memakai nuansa katalog perpustakaan;
+- ResultPortal dipisahkan menjadi lazy-loaded chunk agar bundle utama lebih ringan;
+- bug autosave jawaban tetap diperbaiki dengan savedSession.
 
-Sebelum upload:
+Cara upload:
 1. Ekstrak ZIP.
-2. Upload isi folder SocionicsGPT-main ke root repository.
-3. Jangan upload folder pembungkus ganda.
-4. Di Vercel gunakan:
+2. Upload ISI folder SocionicsGPT-main ke root repository.
+3. Jangan membuat folder pembungkus ganda.
+4. Pengaturan Vercel:
    Framework: Vite
-   Install: npm ci --no-audit --no-fund
+   Install: npm ci --prefer-offline --no-audit --no-fund
    Build: npm run build
    Output: dist
 

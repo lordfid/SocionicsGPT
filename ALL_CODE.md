@@ -1,14 +1,14 @@
-# ALL CODE — Socionics Dalam Diriku v2.0.4
+# ALL CODE — Socionics Dalam Diriku v2.1.0
 
-Dokumen ini menggabungkan seluruh kode sumber, konfigurasi, audit, dokumentasi, dan pengalaman hasil empat pintu. `node_modules`, `dist`, dan `package-lock.json` tidak disalin agar tetap terbaca.
+Dokumen ini menggabungkan kode sumber, konfigurasi, skrip audit, dan dokumentasi versi Library Editorial Results. `node_modules`, `dist`, dan `package-lock.json` tidak disalin agar tetap terbaca.
 
-## Perubahan utama v2.0.4
+## Ringkasan upgrade
 
-- Hasil tes sekarang membuka empat pintu: Cermin, Cuaca Emosi, Observatorium Dunia, dan Laboratorium Hidup.
-- Fitur Bandingkan Dengan Tipe Lain dan Analisis Hubungan Antar-Tipe tetap dipertahankan.
-- Setiap kartu hasil memiliki Vibe, Artinya, pembacaan, sisi rawan, dan eksperimen.
-- Seluruh 16 TIM memiliki rekomendasi buku, film, musik, pekerjaan, destinasi, kosakata, hadiah, sirkel, dan eksperimen.
-- Interpretasi politik/agama/ekonomi diberi batas tegas dan tidak diperlakukan sebagai prediksi ideologi.
+- Hasil tanpa framing empat pintu dan metafora berlebihan.
+- Tujuh rak pembacaan: inti, pikiran, emosi, relasi, dunia, blind spot, rekomendasi.
+- Catatan ahli, Versi gampangnya, Stereotipe internet, salah paham, risiko, dan saran praktis.
+- Tema perpustakaan modern dengan navigasi mengambang dan rekomendasi bergaya punggung buku.
+- ResultPortal lazy-loaded dan seluruh quality gate lulus.
 
 ## Daftar file
 
@@ -29,6 +29,7 @@ Dokumen ini menggabungkan seluruh kode sumber, konfigurasi, audit, dokumentasi, 
 - `docs/REBUILD_REPORT.md`
 - `docs/RESULT_EXPERIENCE_GUIDE.md`
 - `docs/SCORING_GUIDE.md`
+- `docs/UPGRADE_REPORT_v2.1.0.md`
 - `docs/VALIDATION_ROADMAP.md`
 - `index.html`
 - `metadata.json`
@@ -96,25 +97,27 @@ prefer-offline=true
 ## `BACA_DULU.txt`
 
 ````text
-SOCIONICS DALAM DIRIKU v2.0.3 — LANGUAGE INTEGRATED
+SOCIONICS DALAM DIRIKU v2.1.0 — LIBRARY EDITORIAL UPGRADE
 
-Yang sudah disatukan ke ZIP ini:
-- perbaikan penyimpanan jawaban;
-- pertanyaan utama Versi Kasual;
-- panel kalimat asli;
-- Artinya sebagai proses batin;
-- Reaksi sebagai tindakan nyata;
-- audit bahasa otomatis;
-- ekspor editorial seluruh 256 item;
-- package-lock publik dan konfigurasi Vercel.
+Perubahan utama:
+- halaman hasil tidak lagi memakai framing empat pintu;
+- hasil menjadi profil editorial yang ringkas dan tajam;
+- ada Catatan ahli, Versi gampangnya, Stereotipe internet, salah paham, blind spot, dan saran praktis;
+- tema visual perpustakaan modern: walnut, parchment, burgundy, navy, dusty plum, muted gold;
+- font Plus Jakarta Sans + DM Serif Display;
+- navigasi hasil mengambang dan rekomendasi seperti rak buku;
+- Bandingkan Dengan Tipe Lain dan Analisis Hubungan Antar-Tipe tetap dipertahankan;
+- kartu hasil PNG ikut memakai nuansa katalog perpustakaan;
+- ResultPortal dipisahkan menjadi lazy-loaded chunk agar bundle utama lebih ringan;
+- bug autosave jawaban tetap diperbaiki dengan savedSession.
 
-Sebelum upload:
+Cara upload:
 1. Ekstrak ZIP.
-2. Upload isi folder SocionicsGPT-main ke root repository.
-3. Jangan upload folder pembungkus ganda.
-4. Di Vercel gunakan:
+2. Upload ISI folder SocionicsGPT-main ke root repository.
+3. Jangan membuat folder pembungkus ganda.
+4. Pengaturan Vercel:
    Framework: Vite
-   Install: npm ci --no-audit --no-fund
+   Install: npm ci --prefer-offline --no-audit --no-fund
    Build: npm run build
    Output: dist
 
@@ -129,6 +132,30 @@ npm run check
 
 ````md
 # Changelog
+
+## 2.1.0 — Library Editorial Results
+
+### Bahasa hasil
+
+- Menghapus framing empat pintu dan metafora berlebihan.
+- Mengganti hasil menjadi profil editorial yang ringkas, tajam, dan mudah dipindai.
+- Menambahkan blok Catatan ahli, Versi gampangnya, Stereotipe internet, Yang sering disalahpahami, Blind spot, dan Saran praktis.
+- Menggunakan kata “kamu” secara konsisten pada halaman hasil.
+- Menjaga stereotipe sebagai bagian ringan yang diberi label jelas, bukan fakta.
+
+### UI/UX
+
+- Membangun tema perpustakaan modern dengan warna walnut, parchment, burgundy, navy, dusty plum, dan muted gold.
+- Menambahkan rak pembacaan mengambang, kartu katalog, bookmark, dan rekomendasi bergaya punggung buku.
+- Mengganti font utama menjadi Plus Jakarta Sans dan DM Serif Display.
+- Menambahkan navigasi hasil yang sticky di desktop dan horizontal di mobile.
+- Mempertahankan Bandingkan Dengan Tipe Lain dan Analisis Hubungan Antar-Tipe, lalu menyelaraskan warna dan bahasanya.
+
+### Performa dan teknis
+
+- Memecah ResultPortal menjadi lazy-loaded chunk agar bundle utama lebih kecil.
+- Mempertahankan perbaikan autosave dengan navigasi berbasis savedSession.
+- TypeScript, audit instrumen 10.000 seed, dan production build lulus.
 
 ## 2.0.3 — Editorial copy terintegrasi
 
@@ -220,6 +247,11 @@ npm run check
 
 ````md
 # Socionics Dalam Diriku
+
+## Versi 2.1.0 — Library Editorial Results
+
+Halaman hasil sekarang memakai gaya editorial perpustakaan modern. Konten hasil dibagi menjadi Ringkasan Inti, Cara Berpikir, Emosi, Relasi, Pandangan Dunia, Blind Spot, dan Rekomendasi. Bahasa dibuat lebih ringkas dan langsung, dengan blok Catatan ahli, Versi gampangnya, serta Stereotipe internet yang diberi label jelas.
+
 
 Aplikasi React + TypeScript + Vite untuk eksplorasi pendidikan Socionics Model A. Seluruh jawaban dan hasil disimpan lokal di browser.
 
@@ -19767,38 +19799,70 @@ Pemeriksaan tersebut memastikan integritas kode dan desain internal, bukan valid
 ## `docs/RESULT_EXPERIENCE_GUIDE.md`
 
 ````md
-# Panduan Pengalaman Hasil Empat Pintu
+# Panduan Hasil Editorial Perpustakaan — v2.1.0
 
 ## Tujuan
 
-Halaman hasil tidak berhenti pada nama TIM. Ia membuka empat jalur refleksi yang berbeda dan tetap mempertahankan ketidakpastian hasil, kandidat pembanding, Model A, serta hubungan antar-tipe.
+Halaman hasil dirancang seperti katalog editorial, bukan laporan teknis dan bukan dunia metafora. Peserta dapat membaca hasil sedikit demi sedikit melalui tujuh rak pembacaan:
 
-## Pintu A — Ruang Cermin
+1. Ringkasan inti.
+2. Cara berpikir.
+3. Emosi dan pemicu.
+4. Relasi dan sirkel.
+5. Pandangan dunia.
+6. Blind spot dan sabotase diri.
+7. Rekomendasi setelah tes.
 
-Membahas fungsi Base, Creative, Role, Demonstrative, temperamen, pola seimbang, pola tertekan, dan bukti yang dapat menyangkal kandidat utama.
+## Kontrak bahasa
 
-## Pintu B — Ruang Cuaca
+- Gunakan kata **kamu**.
+- Hindari paragraf puitis dan metafora panjang.
+- Gunakan kalimat ringkas, tajam, dan mudah dipindai.
+- Bedakan dengan jelas antara ringkasan teori, versi gampang, stereotipe internet, salah paham, risiko, dan saran praktis.
+- Stereotipe internet diberi label sebagai bagian ringan, bukan fakta.
+- Tidak ada kutipan ahli palsu. Label **Catatan ahli — ringkasan teori** berarti sintesis Model A, bukan kutipan langsung dari seseorang.
 
-Membaca emosi sebagai sinyal kebutuhan atau tekanan, bukan diagnosis. Emosi yang dibahas meliputi sukacita, marah, takut, sedih, malu, iri, muak, cinta, bosan, dan kebutuhan regulasi.
+## Struktur setiap kartu
 
-## Pintu C — Observatorium Dunia
+Kartu dapat berisi:
 
-Membahas aspek aturan, politik, agama, ekonomi, masyarakat, kekuasaan, dan kontribusi publik yang kemungkinan lebih cepat menarik perhatian tipe tersebut. Tidak ada klaim bahwa tipe menentukan pilihan partai, agama, ideologi, atau kelas sosial.
+- **Catatan ahli — ringkasan teori:** pembacaan yang bersumber dari posisi Model A.
+- **Versi gampangnya:** bahasa sehari-hari tanpa mengurangi makna.
+- **Stereotipe internet:** gambaran komunitas yang sengaja dibuat ringan.
+- **Yang sering bikin orang salah paham:** perbedaan antara kesan luar dan motif batin.
+- **Yang perlu kamu waspadai:** blind spot, tekanan, atau risiko penggunaan fungsi secara berlebihan.
+- **Saran praktis:** tindakan kecil yang bisa diuji di kehidupan nyata.
 
-## Pintu D — Laboratorium Hidup
+## Tema visual
 
-Menyediakan nasihat, sirkel ideal, kebutuhan bantuan, hadiah, buku, film, musik, pekerjaan, destinasi, kosakata, serta eksperimen kecil. Semua rekomendasi adalah bahan eksplorasi dan dapat ditolak bila tidak sesuai pengalaman nyata.
+Tema memakai bahasa visual perpustakaan modern:
+
+- warna walnut, parchment, burgundy, deep navy, dusty plum, dan muted gold;
+- font Plus Jakarta Sans untuk isi dan DM Serif Display untuk judul;
+- kartu katalog, bookmark, rak pembacaan mengambang, dan daftar rekomendasi bergaya punggung buku;
+- navigasi sticky di desktop dan horizontal di mobile;
+- gradient lembut dan bayangan ringan tanpa warna neon.
 
 ## Personalisasi
 
-Selain data 16 TIM, komponen membaca `channelProfile` aktual peserta dan menampilkan empat sinyal dengan magnitudo terbesar. Sinyal tersebut diberi label sebagai pola jawaban, bukan fakta mutlak.
+Komponen tetap membaca `channelProfile` aktual peserta dan menampilkan empat sinyal dengan magnitudo terbesar. Sinyal ditulis sebagai pola jawaban, bukan identitas mutlak.
+
+## Fitur yang dipertahankan
+
+- Top 3 kandidat.
+- Confidence dan indeks kecocokan relatif.
+- Grid Model A.
+- Bandingkan Dengan Tipe Lain.
+- Analisis Hubungan Antar-Tipe.
+- Kartu hasil dengan foto opsional.
+- Retest.
 
 ## Batas klaim
 
 - Bukan diagnosis psikologis atau klinis.
-- Bukan alat prediksi politik, agama, moralitas, karier, atau kompatibilitas absolut.
-- Tidak menggantikan pengalaman hidup, budaya, kondisi kesehatan, atau bantuan profesional.
-- Rekomendasi buku, film, musik, destinasi, hadiah, dan pekerjaan adalah moodboard reflektif.
+- Bukan penentu ideologi politik, agama, moralitas, kecerdasan, karier, atau kompatibilitas absolut.
+- Pengalaman hidup, budaya, trauma, kesehatan, kelas sosial, dan keadaan saat tes tetap dapat mengubah pola jawaban.
+- Rekomendasi buku, film, musik, tempat, hadiah, dan pekerjaan adalah bahan eksplorasi, bukan resep hidup.
 ````
 
 ---
@@ -19861,6 +19925,91 @@ Confidence tetap merupakan indikator internal, bukan koefisien reliabilitas psik
 
 ---
 
+## `docs/UPGRADE_REPORT_v2.1.0.md`
+
+````md
+# Laporan Upgrade v2.1.0 — Library Editorial Results
+
+## Masalah versi sebelumnya
+
+- Hasil terlalu banyak metafora dan nama bagian puitis.
+- Isi terasa panjang, tetapi belum cukup cepat menjawab “jadi aku seperti apa?”.
+- Stereotipe internet, pembacaan teori, dan saran praktis belum dipisahkan dengan jelas.
+- Tema visual masih didominasi hijau dan terlihat seperti dashboard biasa.
+- Rekomendasi tampil seperti daftar panjang, belum terasa sebagai pengalaman yang menyenangkan.
+- Bundle hasil ikut masuk ke berkas utama meski hanya dibutuhkan setelah tes selesai.
+
+## Perubahan isi
+
+Hasil kini dibagi menjadi tujuh bagian:
+
+1. Ringkasan inti.
+2. Cara berpikir dan mengambil keputusan.
+3. Emosi dan pemicu.
+4. Relasi dan sirkel.
+5. Pandangan dunia, politik, agama, ekonomi, dan sosial.
+6. Blind spot dan sabotase diri.
+7. Rekomendasi setelah tes.
+
+Setiap kartu dapat memiliki:
+
+- Catatan ahli — ringkasan teori.
+- Versi gampangnya.
+- Stereotipe internet — buat seru, bukan fakta.
+- Yang sering bikin orang salah paham.
+- Yang perlu kamu waspadai.
+- Saran praktis.
+
+Seluruh 16 TIM mendapat ringkasan editorial yang berbeda.
+
+## Perubahan UI/UX
+
+- Warna utama: walnut, parchment, burgundy, deep navy, dusty plum, dan muted gold.
+- Font: Plus Jakarta Sans untuk isi, DM Serif Display untuk judul, JetBrains Mono untuk data kecil.
+- Logo header memakai ikon perpustakaan.
+- Halaman hasil memakai kartu katalog, bookmark, rak pembacaan sticky, dan daftar rekomendasi bergaya punggung buku.
+- Navigasi hasil horizontal pada layar kecil dan sticky pada desktop.
+- Warna hijau lama ditimpa dengan palette perpustakaan pada seluruh aplikasi.
+- Light mode hasil mendapat koreksi warna agar teks tetap terbaca.
+- Kartu hasil PNG diubah menjadi kartu katalog tipologi.
+
+## Fitur yang dipertahankan
+
+- Top 3 kandidat.
+- Confidence dan indeks kecocokan relatif.
+- Grid Model A.
+- Bandingkan Dengan Tipe Lain.
+- Analisis Hubungan Antar-Tipe.
+- Kartu hasil dengan foto opsional.
+- Retest.
+- Autosave jawaban dan localStorage.
+
+## Performa
+
+`ResultPortal` sekarang dimuat dengan `React.lazy()`. Hasil build:
+
+- bundle utama: sekitar 560 kB sebelum gzip;
+- chunk ResultPortal: sekitar 92 kB sebelum gzip;
+- tidak ada warning chunk melebihi batas 650 kB.
+
+## Quality gate
+
+- TypeScript: lulus.
+- Audit instrumen: lulus.
+- Audit bahasa: lulus.
+- 10.000 simulasi sesi: lulus.
+- 256 item terdeteksi.
+- 64/64 core cells lengkap.
+- 16/16 synthetic TIM recovered.
+- Production build: lulus.
+
+## Batas klaim
+
+Hasil tetap merupakan pembacaan tipologi non-klinis. Ia tidak menentukan diagnosis, ideologi politik, agama, moralitas, kecerdasan, karier, atau masa depan peserta.
+````
+
+---
+
 ## `docs/VALIDATION_ROADMAP.md`
 
 ````md
@@ -19914,7 +20063,7 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Socionics Dalam Diriku - Tes Model A Lengkap</title>
+    <title>Socionics Dalam Diriku — Katalog Hasil Model A</title>
   </head>
   <body>
     <div id="root"></div>
@@ -19930,10 +20079,10 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
 ````json
 {
   "name": "Socionics Dalam Diriku",
-  "description": "Aplikasi refleksi pendidikan Socionics Model A dengan bank 256 item, bahasa peserta kasual, penjelasan Artinya/Reaksi, sampling berstrata, holdout, tie-break adaptif, dan penyimpanan lokal.",
+  "description": "Aplikasi refleksi Socionics Model A dengan hasil editorial bertema perpustakaan, bank 256 item, holdout, tie-break adaptif, dan penyimpanan lokal.",
   "requestFramePermissions": [],
   "majorCapabilities": [],
-  "version": "2.0.4"
+  "version": "2.1.0"
 }
 ````
 
@@ -19945,7 +20094,7 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
 {
   "name": "socionics-dalam-diriku",
   "private": true,
-  "version": "2.0.4",
+  "version": "2.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -20345,7 +20494,8 @@ import {
   X,
   Menu,
   Lock,
-  HelpCircle
+  HelpCircle,
+  LibraryBig
 } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -20356,7 +20506,7 @@ import { calculateResult } from "./scoring/engine";
 import { TIM, TIMProfile, InformationElement, MeasurementChannel, ModelAPosition, Quadra, TestSession } from "./types/socionics";
 import { getCasualVersion, getOptionDetail } from "./utils/optionDetails";
 import { runInstrumentAudit } from "./audit/instrumentAudit";
-import ResultPortal from "./components/ResultPortal";
+const ResultPortal = React.lazy(() => import("./components/ResultPortal"));
 
 // Option Scale Wording by ScaleType
 const SCALE_OPTIONS_MAP: Record<string, { val: number; label: string }[]> = {
@@ -20611,23 +20761,23 @@ export default function App() {
     ctx.clearRect(0, 0, 1080, 1920);
 
     // Outer Background
-    ctx.fillStyle = theme === "dark" ? "#0b1329" : "#f8fafc";
+    ctx.fillStyle = theme === "dark" ? "#1f1714" : "#f8efe1";
     ctx.fillRect(0, 0, 1080, 1920);
 
     // Gradient corner lighting
     const grad = ctx.createRadialGradient(540, 960, 50, 540, 960, 1000);
-    grad.addColorStop(0, theme === "dark" ? "#132b4f" : "#ecfdf5");
-    grad.addColorStop(1, theme === "dark" ? "#030712" : "#f1f5f9");
+    grad.addColorStop(0, theme === "dark" ? "#5a322b" : "#f2d6ad");
+    grad.addColorStop(1, theme === "dark" ? "#17100e" : "#f8efe1");
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 1080, 1920);
 
     // Frame borders
-    ctx.strokeStyle = theme === "dark" ? "#10b981" : "#059669";
+    ctx.strokeStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
     ctx.lineWidth = 20;
     ctx.strokeRect(40, 40, 1000, 1840);
 
     // Inner subtle guidelines
-    ctx.strokeStyle = theme === "dark" ? "rgba(16, 185, 129, 0.2)" : "rgba(5, 150, 105, 0.2)";
+    ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.24)" : "rgba(139, 94, 52, 0.22)";
     ctx.lineWidth = 3;
     ctx.strokeRect(60, 60, 960, 1800);
 
@@ -20635,16 +20785,16 @@ export default function App() {
     ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
     ctx.font = "bold 64px Space Grotesk";
     ctx.textAlign = "center";
-    ctx.fillText("KARTU COGNITIVE TIPOLOGI", 540, 160);
+    ctx.fillText("KARTU KATALOG TIPOLOGI", 540, 160);
 
     ctx.font = "bold 28px JetBrains Mono";
-    ctx.fillStyle = theme === "dark" ? "#10b981" : "#059669";
+    ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
     ctx.fillText("SOCIONICS DALAM DIRIKU • MODEL A", 540, 215);
 
     // Sub Title
     ctx.fillStyle = "rgba(100, 116, 139, 0.7)";
     ctx.font = "22px Inter";
-    ctx.fillText("Aplikasi Asesmen Mandiri - Bukan Identitas Resmi Negara", 540, 255);
+    ctx.fillText("Katalog hasil reflektif • bukan diagnosis klinis", 540, 255);
 
     ctx.lineWidth = 4;
     ctx.strokeStyle = "rgba(100, 116, 139, 0.3)";
@@ -20661,7 +20811,7 @@ export default function App() {
       const ph = 300;
 
       // Card Photo Inner Shadow Border
-      ctx.strokeStyle = theme === "dark" ? "rgba(16, 185, 129, 0.4)" : "rgba(5, 150, 105, 0.4)";
+      ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.48)" : "rgba(139, 94, 52, 0.42)";
       ctx.lineWidth = 6;
       ctx.strokeRect(px - 10, py - 10, pw + 20, ph + 20);
 
@@ -20674,10 +20824,10 @@ export default function App() {
         img.src = cardImage;
       } else {
         // Fallback Vector
-        ctx.fillStyle = theme === "dark" ? "#111827" : "#e2e8f0";
+        ctx.fillStyle = theme === "dark" ? "#2d211c" : "#ead9bd";
         ctx.fillRect(px, py, pw, ph);
 
-        ctx.fillStyle = theme === "dark" ? "#10b981" : "#059669";
+        ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
         ctx.font = "bold 110px Space Grotesk";
         ctx.fillText(top1.type, 540, 500);
 
@@ -20695,7 +20845,7 @@ export default function App() {
       ctx.fillText(cardNickname ? cardNickname.toUpperCase() : "PARTICIPANT", 540, 710);
 
       // Main TIM Title
-      ctx.fillStyle = theme === "dark" ? "#10b981" : "#059669";
+      ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
       ctx.font = "bold 88px Space Grotesk";
       ctx.fillText(`${top1.type} • ${topModel.name}`, 540, 830);
 
@@ -20704,9 +20854,9 @@ export default function App() {
       ctx.fillText(topModel.fullName, 540, 890);
 
       // Metadata Pill Box
-      ctx.fillStyle = theme === "dark" ? "rgba(16, 185, 129, 0.1)" : "rgba(5, 150, 105, 0.1)";
+      ctx.fillStyle = theme === "dark" ? "rgba(214, 183, 124, 0.11)" : "rgba(139, 94, 52, 0.10)";
       ctx.fillRect(150, 930, 780, 120);
-      ctx.strokeStyle = theme === "dark" ? "rgba(16, 185, 129, 0.3)" : "rgba(5, 150, 105, 0.3)";
+      ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.30)" : "rgba(139, 94, 52, 0.28)";
       ctx.strokeRect(150, 930, 780, 120);
 
       ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
@@ -20750,7 +20900,7 @@ export default function App() {
         ctx.font = "20px JetBrains Mono";
         ctx.fillText(pos.title, x + 15, y + 40);
 
-        ctx.fillStyle = theme === "dark" ? "#10b981" : "#059669";
+        ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
         ctx.font = "bold 38px Space Grotesk";
         ctx.fillText(`${el} (${ELEMENTS_METADATA[el].name.split(" ")[0]})`, x + 15, y + 80);
       });
@@ -20764,7 +20914,7 @@ export default function App() {
       ctx.fillStyle = "rgba(100, 116, 139, 0.7)";
       ctx.font = "20px JetBrains Mono";
       const timestamp = new Date(session!.lastUpdatedAt).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" });
-      ctx.fillText(`Timestamp: ${timestamp}  |  Scoring Engine v2.0.0`, 540, 1770);
+      ctx.fillText(`Tanggal: ${timestamp}  |  Scoring Engine v2.1.0`, 540, 1770);
     };
 
     drawPortrait();
@@ -20795,7 +20945,7 @@ export default function App() {
   const availableTIMs = Object.keys(TIM_MODELS) as TIM[];
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"}`}>
+    <div className={`library-app-shell min-h-screen ${theme === "dark" ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"}`}>
       
       {/* GLOBAL BACKGROUND CANVAS RENDERER FOR CARDS */}
       <canvas ref={cardCanvasRef} width="1080" height="1920" className="hidden" />
@@ -20805,7 +20955,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 md:py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2 md:space-x-3 cursor-pointer" onClick={() => setCurrentPage("landing")}>
             <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-emerald-500 flex items-center justify-center text-white font-bold">
-              <Brain className="w-5 h-5 md:w-6 md:h-6" />
+              <LibraryBig className="w-5 h-5 md:w-6 md:h-6" />
             </div>
             <div>
               <span className="text-base md:text-xl font-display font-bold tracking-tight">Socionics Dalam Diriku</span>
@@ -21423,17 +21573,17 @@ export default function App() {
 
         {/* DETAILED RESULTS DASHBOARD */}
         {currentPage === "result" && calculatedOutput && (
-          <div className="space-y-12">
+          <div className={`library-result-page ${theme === "dark" ? "library-page-dark" : "library-page-light"} space-y-12`}>
             
-            {/* Dossier top badge */}
+            {/* Editorial result header */}
             <div className="text-center space-y-4">
               <div className="inline-flex items-center space-x-1.5 text-xs bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-3.5 py-1 rounded-full font-mono">
                 <Target className="w-4 h-4 animate-spin-slow" />
-                <span>INTERPRETASI MODEL A SELESAI</span>
+                <span>HASIL MODEL A SIAP DIBACA</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Pintu Pertama: Peta Dirimu</h2>
+              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Katalog Hasil Socionics Kamu</h2>
               <p className="text-sm text-slate-400 max-w-xl mx-auto">
-                Kamu sudah melewati rangkaian panjang. Sekarang hasilnya bukan cuma nama tipe, tetapi empat pintu untuk membaca cara pikir, emosi, dunia, relasi, dan kemungkinan hidupmu.
+                Kamu sudah menyelesaikan tes. Sekarang baca hasilnya per bagian: cara berpikir, emosi, relasi, pandangan dunia, blind spot, dan rekomendasi personal.
               </p>
             </div>
 
@@ -21445,7 +21595,7 @@ export default function App() {
                 <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-emerald-500/10 blur-3xl" />
                 
                 <div className="space-y-2">
-                  <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Kandidat Tipe Utama (Most Likely match):</span>
+                  <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Kandidat tipe utama:</span>
                   <div className="flex flex-col sm:flex-row sm:items-baseline sm:space-x-4">
                     <span className="text-5xl sm:text-6xl font-display font-extrabold text-white tracking-tight">
                       {calculatedOutput.top3[0].type}
@@ -21493,7 +21643,7 @@ export default function App() {
                   <Shield className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                   <div className="space-y-1">
                     <div className="text-xs font-bold text-white uppercase tracking-wider">
-                      Tingkat Keyakinan Tes: <span className="text-emerald-400">{calculatedOutput.confidence.toUpperCase()}</span>
+                      Tingkat keyakinan tes: <span className="text-emerald-400">{calculatedOutput.confidence.toUpperCase()}</span>
                     </div>
                     <p className="text-xs text-slate-400 leading-relaxed">{calculatedOutput.confidenceExplanation}</p>
                   </div>
@@ -21505,28 +21655,28 @@ export default function App() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm uppercase tracking-wider font-display">
                     <Download className="w-4 h-4" />
-                    <span>Ekspor Kartu Identitas Tipologi</span>
+                    <span>Buat kartu hasil</span>
                   </div>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Sediakan nama panggilan Anda dan unggah foto opsional (semua diproses murni di browser Anda harian) untuk menghasilkan kartu infografis.
+                    Masukkan nama panggilan dan foto opsional. Semua diproses langsung di browser kamu.
                   </p>
 
                   <div className="space-y-2">
-                    <label className="block text-[10px] uppercase font-mono font-bold">Nama Panggilan</label>
+                    <label className="block text-[10px] uppercase font-mono font-bold">Nama panggilan</label>
                     <input
                       type="text"
                       id="nickname-input-privacy"
                       name="random_tipologi_nickname_field"
                       autoComplete="off"
                       className="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-emerald-500 outline-none text-white font-mono"
-                      placeholder="Contoh: Pengembara atau Anda"
+                      placeholder="Contoh: Alfidda"
                       value={cardNickname}
                       onChange={(e) => setCardNickname(e.target.value)}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="block text-[10px] uppercase font-mono font-bold">Unggah Foto Mandiri:</label>
+                    <label className="block text-[10px] uppercase font-mono font-bold">Unggah foto opsional</label>
                     <div className="border border-dashed border-slate-800 rounded p-4 text-center cursor-pointer hover:border-slate-700 hover:bg-slate-900/45 transition">
                       <input
                         type="file"
@@ -21537,14 +21687,14 @@ export default function App() {
                       />
                       <label htmlFor="cardFilePortrait" className="cursor-pointer space-y-1 block">
                         <Upload className="w-5 h-5 mx-auto text-slate-500" />
-                        <span className="block text-[10px] text-slate-400 font-mono mt-1">Cari File Gambar (.jpg/.png)</span>
+                        <span className="block text-[10px] text-slate-400 font-mono mt-1">Pilih gambar (.jpg/.png)</span>
                       </label>
                     </div>
                   </div>
 
                   {cardImage && (
                     <div className="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800">
-                      <span className="text-[10px] font-mono text-emerald-400">Gambar Terbaca (Selesai)</span>
+                      <span className="text-[10px] font-mono text-emerald-400">Gambar siap dipakai</span>
                       <button onClick={() => setCardImage(null)} className="text-[10px] text-rose-400 hover:underline">Hapus</button>
                     </div>
                   )}
@@ -21562,19 +21712,27 @@ export default function App() {
 
 
             {/* FOUR-DOOR RESULT EXPERIENCE */}
-            <ResultPortal
-              primaryType={calculatedOutput.top3[0].type}
-              result={calculatedOutput}
-              theme={theme}
-            />
+            <React.Suspense
+              fallback={(
+                <div className="library-result-shell flex min-h-56 items-center justify-center text-sm text-[#8b6b4e]">
+                  Menyiapkan katalog hasil kamu...
+                </div>
+              )}
+            >
+              <ResultPortal
+                primaryType={calculatedOutput.top3[0].type}
+                result={calculatedOutput}
+                theme={theme}
+              />
+            </React.Suspense>
 
             {/* INTERACTIVE MODEL A GRID */}
             <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
               <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Visualisasi Arsitektur Mental:</span>
-                <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Grid Interaktif Model A</h3>
+                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Model A kamu:</span>
+                <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Susunan Delapan Posisi Model A</h3>
                 <p className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-550"}`}>
-                  Klik di masing-masing kotak fungsi posisi Model A untuk menampilkan keterlaksanaan energinya dalam diri Anda menurut hasil asesmen.
+                  Klik satu posisi untuk membaca fungsi, kekuatan, kebutuhan, dan sisi rawannya.
                 </p>
               </div>
 
@@ -21789,15 +21947,15 @@ export default function App() {
             {/* MODEL COMPARISON FEATURE */}
             <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
               <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Analisis Korelasi Lanjutan:</span>
+                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Perbandingan tipe:</span>
                 <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Bandingkan Dengan Tipe Lain</h3>
                 <p className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-550"}`}>
-                  Pilih tipe sekunder untuk mengevaluasi perbedaan struktur pengolah informasinya (Model A) terhadap kandidat utama Anda.
+                  Pilih tipe lain untuk melihat perbedaan Base, Creative, PoLR, dan kebutuhan Suggestive.
                 </p>
               </div>
 
               <div className="space-y-4 max-w-sm">
-                <label className="block text-xs font-mono">Pilih Tipe Pembanding:</label>
+                <label className="block text-xs font-mono">Pilih tipe pembanding</label>
                 <select
                   value={compareTIM}
                   onChange={(e) => setCompareTIM(e.target.value as TIM)}
@@ -21815,15 +21973,15 @@ export default function App() {
                   {/* Tipe Utama */}
                   <div className="space-y-4">
                     <div className="border-b border-slate-800 pb-2">
-                      <span className="text-xs text-slate-500 font-mono">Tipe Utama Anda:</span>
+                      <span className="text-xs text-slate-500 font-mono">Tipe utama kamu:</span>
                       <h4 className="text-xl font-bold font-display text-emerald-400">
                         {calculatedOutput.top3[0].type} ({TIM_MODELS[calculatedOutput.top3[0].type].name})
                       </h4>
                     </div>
                     <div className="space-y-2 text-xs text-slate-300">
                       <div><strong>Orientasi Base:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].orientasiBase}</div>
-                      <div><strong>Tuntutan PoLR / Kelemahan:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].tuntutanPolr}</div>
-                      <div><strong>Sugesti Relief:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].bantuanSuggestive}</div>
+                      <div><strong>Tuntutan PoLR:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].tuntutanPolr}</div>
+                      <div><strong>Bantuan yang terasa melegakan:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].bantuanSuggestive}</div>
                     </div>
                   </div>
 
@@ -21837,8 +21995,8 @@ export default function App() {
                     </div>
                     <div className="space-y-2 text-xs text-slate-300">
                       <div><strong>Orientasi Base:</strong> {TIM_PROFILES[compareTIM].orientasiBase}</div>
-                      <div><strong>Tuntutan PoLR / Kelemahan:</strong> {TIM_PROFILES[compareTIM].tuntutanPolr}</div>
-                      <div><strong>Sugesti Relief:</strong> {TIM_PROFILES[compareTIM].bantuanSuggestive}</div>
+                      <div><strong>Tuntutan PoLR:</strong> {TIM_PROFILES[compareTIM].tuntutanPolr}</div>
+                      <div><strong>Bantuan yang terasa melegakan:</strong> {TIM_PROFILES[compareTIM].bantuanSuggestive}</div>
                     </div>
                   </div>
                 </div>
@@ -21848,16 +22006,16 @@ export default function App() {
             {/* DYNAMIC INTERTYPE RELATIONS CALCULATOR */}
             <div className="space-y-6 border-t border-slate-900 pt-10">
               <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Evaluasi Dinamika Komunikasi:</span>
+                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Relasi antar-tipe:</span>
                 <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white">Analisis Hubungan Antar-Tipe</h3>
                 <p className="text-xs text-slate-400">
-                  Hitung jenis dinamika interaksi informasi Model A antara tipe utama Anda dengan salah satu dari 15 tipe lainnya.
+                  Pilih tipe seseorang untuk membaca pola komunikasi, titik nyaman, dan gesekan yang mungkin muncul.
                 </p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-6 items-start">
                 <div className="space-y-4">
-                  <label className="block text-xs font-mono">Pilih Tipe Mitra:</label>
+                  <label className="block text-xs font-mono">Pilih tipe orang lain</label>
                   <div className="grid grid-cols-3 gap-2">
                     {availableTIMs.map((t) => {
                       const isActive = intertypeTarget === t;
@@ -21901,7 +22059,7 @@ export default function App() {
                         </p>
                         <hr className="border-slate-800/80" />
                         <div className="space-y-2">
-                          <div className="text-xs font-bold text-slate-300 uppercase tracking-wide">Dampak Aliran Metabolisme Informasi:</div>
+                          <div className="text-xs font-bold text-slate-300 uppercase tracking-wide">Dampak dalam interaksi:</div>
                           <p className="text-xs text-slate-300 leading-relaxed font-sans mt-1">
                             {relMeta.impact}
                           </p>
@@ -21915,13 +22073,13 @@ export default function App() {
 
             {/* RE-TEST BOX */}
             <div className="p-8 rounded-2xl border border-slate-900 bg-slate-900/20 text-center space-y-4 pt-10 border-t">
-              <h4 className="font-display font-bold text-xl">Ulangi Tes Model A?</h4>
+              <h4 className="font-display font-bold text-xl">Mau mengulang tes?</h4>
               <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Sesi tes sebelumnya akan dihapus dari peranti lokal Anda secara permanen. Mode tes, skor jawaban baru, dan holdouts verification akan diacak ulang.
+                Jawaban lama akan dihapus dari perangkat kamu. Pertanyaan dan urutan sesi baru akan dibuat ulang.
               </p>
               <button
                 onClick={() => {
-                  if (window.confirm("Ingin menghapus data dan mengulang tes dari awal?")) {
+                  if (window.confirm("Hapus hasil ini dan mulai tes dari awal?")) {
                     resetSession();
                     setCurrentPage("landing");
                   }
@@ -22312,27 +22470,38 @@ export function runInstrumentAudit(simulatedSessions = 200): InstrumentAuditRepo
 ## `src/components/ResultPortal.tsx`
 
 ````tsx
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
-  BookOpen,
+  AlertTriangle,
+  BookHeart,
+  BookMarked,
+  BookOpenText,
+  Bookmark,
+  BriefcaseBusiness,
   Brain,
-  ChevronRight,
-  CloudLightning,
+  ChevronDown,
   Compass,
-  DoorOpen,
+  Film,
   Gift,
   Globe2,
   HeartHandshake,
-  Landmark,
-  Lightbulb,
-  Music,
+  LibraryBig,
+  MessageCircleMore,
+  Music2,
+  Quote,
+  Search,
   Sparkles,
   Users,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { TIM_MODELS } from "../constants/socionicsData";
-import { buildResultExperience } from "../results/resultExperience";
+import {
+  buildResultExperience,
+  type RecommendationGroup,
+  type ResultInsightCard,
+  type ResultSectionId,
+} from "../results/resultExperience";
 import type { AssessmentResult, TIM } from "../types/socionics";
 
 type Props = {
@@ -22341,24 +22510,163 @@ type Props = {
   theme: "dark" | "light";
 };
 
-const DOOR_ICONS = {
-  A: Brain,
-  B: CloudLightning,
-  C: Landmark,
-  D: DoorOpen,
-} as const;
+const SECTION_META: Record<
+  ResultSectionId,
+  { short: string; icon: typeof Brain; tone: string }
+> = {
+  summary: { short: "Inti", icon: BookMarked, tone: "from-[#7f1d1d] to-[#9f1239]" },
+  thinking: { short: "Pikiran", icon: Brain, tone: "from-[#1e3a5f] to-[#312e81]" },
+  emotions: { short: "Emosi", icon: BookHeart, tone: "from-[#7c2d12] to-[#9d174d]" },
+  relationships: { short: "Relasi", icon: Users, tone: "from-[#5b3a29] to-[#713f12]" },
+  worldview: { short: "Dunia", icon: Globe2, tone: "from-[#334155] to-[#4c1d95]" },
+  blindspots: { short: "Blind spot", icon: AlertTriangle, tone: "from-[#4a2c2a] to-[#78350f]" },
+  recommendations: { short: "Pilihanmu", icon: Sparkles, tone: "from-[#6b3f2c] to-[#8b5e34]" },
+};
 
-const recommendationIcon = (title: string) => {
-  const lower = title.toLowerCase();
-  if (lower.includes("buku")) return BookOpen;
-  if (lower.includes("film")) return Sparkles;
-  if (lower.includes("musik")) return Music;
-  if (lower.includes("pekerjaan")) return Compass;
-  if (lower.includes("tempat")) return Globe2;
-  if (lower.includes("kosakata")) return Lightbulb;
-  if (lower.includes("hadiah")) return Gift;
-  if (lower.includes("sirkel")) return Users;
-  return HeartHandshake;
+const RECOMMENDATION_ICONS: Record<string, typeof BookOpenText> = {
+  Buku: BookOpenText,
+  Film: Film,
+  Musik: Music2,
+  "Arah kerja": BriefcaseBusiness,
+  "Tempat untuk dijelajahi": Compass,
+  "Kosakata baru": Quote,
+  "Hadiah yang mungkin cocok": Gift,
+  "Sirkel yang sehat": HeartHandshake,
+  "Eksperimen 7 hari": Search,
+};
+
+const DetailLine = ({
+  label,
+  children,
+  tone = "neutral",
+}: {
+  label: string;
+  children: React.ReactNode;
+  tone?: "neutral" | "warm" | "warning" | "internet";
+}) => {
+  const toneClass = {
+    neutral: "border-[#7c654a]/25 bg-[#f6eddc]/55 dark:border-[#d6b77c]/15 dark:bg-[#251d19]/55",
+    warm: "border-[#a1683a]/25 bg-[#fff1d2]/55 dark:border-[#b77945]/20 dark:bg-[#3a2319]/45",
+    warning: "border-[#9a3412]/25 bg-[#fff0e6]/60 dark:border-[#fb923c]/20 dark:bg-[#3d1f17]/45",
+    internet: "border-[#6d4c7d]/25 bg-[#f5ecf8]/60 dark:border-[#c084fc]/20 dark:bg-[#291c30]/45",
+  }[tone];
+
+  return (
+    <div className={`rounded-2xl border px-4 py-3 ${toneClass}`}>
+      <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#8b5e34] dark:text-[#d6b77c]">
+        {label}
+      </div>
+      <div className="mt-1.5 text-sm leading-6 text-[#3e3027] dark:text-[#eadfcf]">{children}</div>
+    </div>
+  );
+};
+
+const InsightCard = ({ card, index }: { card: ResultInsightCard; index: number; key?: React.Key }) => {
+  const [open, setOpen] = useState(index < 2);
+
+  return (
+    <motion.article
+      layout
+      className="library-insight-card group"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay: Math.min(index * 0.035, 0.18) }}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        className="flex w-full items-start justify-between gap-4 text-left"
+        aria-expanded={open}
+      >
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex h-7 min-w-7 items-center justify-center rounded-full border border-[#b68a55]/30 bg-[#f5e5c8] px-2 text-[10px] font-black text-[#774936] dark:border-[#d6b77c]/20 dark:bg-[#3a2a20] dark:text-[#e8c98e]">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h5 className="font-library-display text-xl font-bold leading-tight text-[#2d211a] dark:text-[#fff7e8]">
+              {card.title}
+            </h5>
+          </div>
+        </div>
+        <ChevronDown
+          className={`mt-1 h-5 w-5 shrink-0 text-[#95693f] transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22 }}
+            className="overflow-hidden"
+          >
+            <div className="mt-5 space-y-3">
+              <DetailLine label="Catatan ahli — ringkasan teori">{card.expert}</DetailLine>
+              <DetailLine label="Versi gampangnya" tone="warm">{card.simple}</DetailLine>
+              {card.stereotype && (
+                <DetailLine label="Stereotipe internet — buat seru, bukan fakta" tone="internet">
+                  {card.stereotype}
+                </DetailLine>
+              )}
+              {card.misunderstood && (
+                <DetailLine label="Yang sering bikin orang salah paham">{card.misunderstood}</DetailLine>
+              )}
+              {card.warning && (
+                <DetailLine label="Yang perlu kamu waspadai" tone="warning">{card.warning}</DetailLine>
+              )}
+              {card.actions && card.actions.length > 0 && (
+                <div className="rounded-2xl border border-[#8a7657]/25 bg-[#efe3cc]/55 px-4 py-3 dark:border-[#d6b77c]/15 dark:bg-[#201b18]/70">
+                  <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#765234] dark:text-[#d6b77c]">
+                    Saran praktis
+                  </div>
+                  <ul className="mt-2 space-y-2 text-sm leading-6 text-[#3e3027] dark:text-[#eadfcf]">
+                    {card.actions.map((action) => (
+                      <li key={action} className="flex gap-2">
+                        <Bookmark className="mt-1 h-4 w-4 shrink-0 text-[#9a5f37] dark:text-[#d6a45f]" />
+                        <span>{action}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.article>
+  );
+};
+
+const RecommendationShelf = ({ group, index }: { group: RecommendationGroup; index: number; key?: React.Key }) => {
+  const Icon = RECOMMENDATION_ICONS[group.title] ?? BookOpenText;
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay: Math.min(index * 0.04, 0.2) }}
+      className="library-shelf-card"
+    >
+      <div className="flex items-start gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-[#b78c58]/30 bg-gradient-to-br from-[#f4ddb7] to-[#e7c592] text-[#71452e] shadow-sm dark:border-[#d3aa72]/20 dark:from-[#5a3929] dark:to-[#3d2920] dark:text-[#f0d3a1]">
+          <Icon className="h-5 w-5" />
+        </div>
+        <div>
+          <h5 className="font-library-display text-xl font-bold text-[#2f2119] dark:text-[#fff7e8]">{group.title}</h5>
+          <p className="mt-1 text-xs leading-5 text-[#7a6755] dark:text-[#b9a997]">{group.note}</p>
+        </div>
+      </div>
+      <div className="mt-4 grid gap-2">
+        {group.items.map((item, itemIndex) => (
+          <div key={item} className="library-book-spine" style={{ "--spine-index": itemIndex } as React.CSSProperties}>
+            <span className="library-book-number">{String(itemIndex + 1).padStart(2, "0")}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </motion.article>
+  );
 };
 
 export default function ResultPortal({ primaryType, result, theme }: Props) {
@@ -22366,195 +22674,140 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
     () => buildResultExperience(primaryType, result),
     [primaryType, result],
   );
-  const [activeDoor, setActiveDoor] = useState<"A" | "B" | "C" | "D">("A");
-  const door = experience.doors.find((item) => item.id === activeDoor) ?? experience.doors[0];
+  const [activeSection, setActiveSection] = useState<ResultSectionId>("summary");
+  const section = experience.sections.find((item) => item.id === activeSection) ?? experience.sections[0];
   const model = TIM_MODELS[primaryType];
+  const SectionIcon = SECTION_META[section.id].icon;
   const isDark = theme === "dark";
 
   return (
-    <section className={`relative overflow-hidden rounded-3xl border p-4 sm:p-7 lg:p-10 ${
-      isDark
-        ? "border-emerald-500/20 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.12),transparent_38%),linear-gradient(145deg,rgba(2,6,23,0.98),rgba(15,23,42,0.96))]"
-        : "border-emerald-200 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.14),transparent_38%),linear-gradient(145deg,#ffffff,#f8fafc)] shadow-xl"
-    }`}>
-      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-teal-500/10 blur-3xl" />
+    <section className={`library-result-shell ${isDark ? "library-result-dark" : "library-result-light"}`}>
+      <div className="library-ambient library-ambient-one" />
+      <div className="library-ambient library-ambient-two" />
 
-      <div className="relative space-y-8">
-        <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-400">
-              <DoorOpen className="h-3.5 w-3.5" />
-              Setelah tes, empat pintu terbuka
-            </div>
+      <div className="relative z-10 space-y-7">
+        <div className="library-catalog-hero">
+          <div className="library-catalog-ribbon">Katalog hasil · Model A</div>
+          <div className="grid gap-7 xl:grid-cols-[1.3fr_0.7fr] xl:items-end">
             <div>
-              <p className={`text-xs font-mono uppercase tracking-[0.22em] ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                Portal hasil {primaryType} · {model.name}
-              </p>
-              <h3 className={`mt-2 text-3xl font-black tracking-tight sm:text-5xl ${isDark ? "text-white" : "text-slate-950"}`}>
-                {experience.portalName}
+              <div className="flex flex-wrap items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#996b42] dark:text-[#d9b77d]">
+                <LibraryBig className="h-4 w-4" />
+                <span>{primaryType}</span>
+                <span>•</span>
+                <span>{model.name}</span>
+                <span>•</span>
+                <span>Quadra {model.quadra}</span>
+              </div>
+              <h3 className="mt-4 max-w-4xl font-library-display text-4xl font-bold leading-[1.02] text-[#291c16] sm:text-5xl lg:text-6xl dark:text-[#fff8ed]">
+                {experience.title}
               </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-7 text-emerald-400 sm:text-base">
-                {experience.portalTagline}
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-[#5f4b3e] sm:text-base dark:text-[#cbbbac]">
+                {experience.subtitle}
               </p>
-            </div>
-            <p className={`max-w-3xl text-sm leading-7 ${isDark ? "text-slate-300" : "text-slate-700"}`}>
-              {experience.opening}
-            </p>
-          </div>
-
-          <div className={`rounded-2xl border p-4 ${
-            isDark ? "border-slate-800 bg-slate-950/55" : "border-slate-200 bg-white/80"
-          }`}>
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-500">
-              <Sparkles className="h-4 w-4" />
-              Sinyal dari jawabanmu
-            </div>
-            <div className="mt-3 space-y-2">
-              {experience.observedSignals.map((signal) => (
-                <p key={signal} className={`text-[11px] leading-5 ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                  {signal}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-          {experience.doors.map((item) => {
-            const Icon = DOOR_ICONS[item.id];
-            const active = item.id === activeDoor;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => setActiveDoor(item.id)}
-                className={`group relative min-h-28 overflow-hidden rounded-2xl border p-4 text-left transition-all duration-300 ${
-                  active
-                    ? "border-emerald-400 bg-emerald-500 text-slate-950 shadow-[0_15px_45px_rgba(16,185,129,0.22)]"
-                    : isDark
-                      ? "border-slate-800 bg-slate-900/50 text-slate-300 hover:border-emerald-500/40 hover:bg-slate-900"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/40"
-                }`}
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <Icon className={`h-5 w-5 ${active ? "text-slate-950" : "text-emerald-500"}`} />
-                  <ChevronRight className={`h-4 w-4 transition-transform group-hover:translate-x-0.5 ${active ? "text-slate-800" : "text-slate-500"}`} />
-                </div>
-                <div className="mt-5">
-                  <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-70">{item.label}</div>
-                  <div className="mt-1 text-sm font-bold leading-tight">{item.title.replace(/^.*?:\s*/, "")}</div>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={door.id}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25 }}
-            className="space-y-7"
-          >
-            <div className="space-y-2 border-l-2 border-emerald-500 pl-4">
-              <div className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-500">
-                {door.label} sedang terbuka
+              <div className="mt-5 flex flex-wrap gap-2">
+                {experience.tags.map((tag) => (
+                  <span key={tag} className="library-tag">#{tag.replace(/\s+/g, "-")}</span>
+                ))}
               </div>
-              <h4 className={`text-2xl font-black sm:text-3xl ${isDark ? "text-white" : "text-slate-950"}`}>{door.title}</h4>
-              <p className={`max-w-3xl text-sm leading-6 ${isDark ? "text-slate-400" : "text-slate-600"}`}>{door.subtitle}</p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              {door.cards.map((card) => (
-                <article
-                  key={`${door.id}-${card.title}`}
-                  className={`rounded-2xl border p-5 ${
-                    isDark
-                      ? "border-slate-800 bg-slate-900/45 hover:border-emerald-500/25"
-                      : "border-slate-200 bg-white/90 shadow-sm hover:border-emerald-300"
-                  } transition-colors`}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <h5 className={`text-base font-black ${isDark ? "text-white" : "text-slate-950"}`}>{card.title}</h5>
-                    <span className="shrink-0 rounded-full bg-emerald-500/10 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-emerald-500">
-                      Peta diri
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+              <div className="library-note-card">
+                <div className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#7b4c33] dark:text-[#e5bf86]">
+                  <BookOpenText className="h-4 w-4" />
+                  Catatan ahli
+                </div>
+                <p className="mt-2 text-sm leading-6 text-[#433329] dark:text-[#eadfce]">{experience.expertSnapshot}</p>
+              </div>
+              <div className="library-note-card library-note-purple">
+                <div className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#684369] dark:text-[#d7b4df]">
+                  <MessageCircleMore className="h-4 w-4" />
+                  Stereotipe internet
+                </div>
+                <p className="mt-2 text-sm leading-6 text-[#4b344c] dark:text-[#eadbed]">{experience.internetSnapshot}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="library-signal-strip">
+          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-[#7a4d31] dark:text-[#d6ad75]">
+            <Search className="h-4 w-4" />
+            Sinyal paling menonjol dari jawabanmu
+          </div>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+            {experience.observedSignals.map((signal) => (
+              <div key={signal} className="library-signal-chip">{signal}</div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-5 xl:grid-cols-[190px_minmax(0,1fr)]">
+          <nav className="library-floating-nav" aria-label="Navigasi bagian hasil">
+            <div className="mb-3 px-2 text-[9px] font-black uppercase tracking-[0.18em] text-[#8c6a4a] dark:text-[#bfa27d]">
+              Rak pembacaan
+            </div>
+            <div className="flex gap-2 overflow-x-auto pb-2 xl:flex-col xl:overflow-visible xl:pb-0">
+              {experience.sections.map((item) => {
+                const meta = SECTION_META[item.id];
+                const Icon = meta.icon;
+                const active = item.id === activeSection;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => setActiveSection(item.id)}
+                    className={`library-nav-tab ${active ? "library-nav-tab-active" : ""}`}
+                  >
+                    <span className={`library-nav-icon bg-gradient-to-br ${meta.tone}`}>
+                      <Icon className="h-4 w-4" />
                     </span>
-                  </div>
-                  <div className="mt-4 space-y-3">
-                    <div>
-                      <div className="text-[9px] font-black uppercase tracking-[0.2em] text-teal-500">Vibe</div>
-                      <p className={`mt-1 text-xs italic leading-5 ${isDark ? "text-slate-400" : "text-slate-600"}`}>{card.vibe}</p>
-                    </div>
-                    <div>
-                      <div className="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-500">Artinya</div>
-                      <p className={`mt-1 text-xs leading-6 ${isDark ? "text-slate-300" : "text-slate-700"}`}>{card.meaning}</p>
-                    </div>
-                    <p className={`text-sm leading-7 ${isDark ? "text-slate-200" : "text-slate-800"}`}>{card.body}</p>
-                    {card.edge && (
-                      <div className={`rounded-xl border px-3 py-2 text-xs leading-5 ${
-                        isDark ? "border-amber-500/20 bg-amber-500/5 text-amber-100" : "border-amber-200 bg-amber-50 text-amber-900"
-                      }`}>
-                        <strong>Sisi rawan:</strong> {card.edge}
-                      </div>
-                    )}
-                    {card.practice && (
-                      <div className={`rounded-xl border px-3 py-2 text-xs leading-5 ${
-                        isDark ? "border-emerald-500/20 bg-emerald-500/5 text-emerald-100" : "border-emerald-200 bg-emerald-50 text-emerald-900"
-                      }`}>
-                        <strong>Eksperimen:</strong> {card.practice}
-                      </div>
-                    )}
-                  </div>
-                </article>
-              ))}
+                    <span>{meta.short}</span>
+                  </button>
+                );
+              })}
             </div>
+          </nav>
 
-            {door.recommendations && (
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {door.recommendations.map((group) => {
-                  const Icon = recommendationIcon(group.title);
-                  return (
-                    <article
-                      key={group.title}
-                      className={`rounded-2xl border p-5 ${
-                        isDark ? "border-slate-800 bg-slate-950/45" : "border-slate-200 bg-white/90 shadow-sm"
-                      }`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="rounded-xl bg-emerald-500/10 p-2 text-emerald-500">
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <div>
-                          <h5 className={`text-sm font-black ${isDark ? "text-white" : "text-slate-950"}`}>{group.title}</h5>
-                          <p className="mt-1 text-[10px] italic leading-4 text-teal-500">Vibe: {group.vibe}</p>
-                        </div>
-                      </div>
-                      <p className={`mt-4 text-[11px] leading-5 ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        <strong>Artinya:</strong> {group.meaning}
-                      </p>
-                      <ul className="mt-4 space-y-2">
-                        {group.items.map((item) => (
-                          <li key={item} className={`flex gap-2 text-xs leading-5 ${isDark ? "text-slate-200" : "text-slate-800"}`}>
-                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </article>
-                  );
-                })}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={section.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.24 }}
+              className="min-w-0"
+            >
+              <div className="library-section-heading">
+                <div className={`library-section-icon bg-gradient-to-br ${SECTION_META[section.id].tone}`}>
+                  <SectionIcon className="h-6 w-6" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#9a6d42] dark:text-[#d7b37d]">{section.kicker}</div>
+                  <h4 className="mt-1 font-library-display text-3xl font-bold text-[#2d211a] sm:text-4xl dark:text-[#fff7e8]">{section.title}</h4>
+                  <p className="mt-2 max-w-3xl text-sm leading-6 text-[#715e4e] dark:text-[#bfae9e]">{section.intro}</p>
+                </div>
               </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
 
-        <div className={`rounded-2xl border p-4 text-[11px] leading-5 ${
-          isDark ? "border-slate-800 bg-slate-950/55 text-slate-500" : "border-slate-200 bg-white/80 text-slate-500"
-        }`}>
-          <strong className={isDark ? "text-slate-300" : "text-slate-700"}>Batas interpretasi:</strong> bagian ini adalah pembacaan tipologi dan refleksi diri, bukan diagnosis psikologis, penentu pilihan politik atau agama, ramalan karier, maupun penilaian nilai manusia. Pengalaman hidup, budaya, trauma, kesehatan, kelas sosial, dan keadaan saat tes dapat mengubah pola jawaban.
+              {section.recommendations ? (
+                <div className="mt-6 grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
+                  {section.recommendations.map((group, index) => (
+                    <RecommendationShelf key={group.title} group={group} index={index} />
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-6 grid gap-4 lg:grid-cols-2">
+                  {section.cards.map((card, index) => (
+                    <InsightCard key={`${section.id}-${card.title}`} card={card} index={index} />
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="library-boundary-note">
+          <strong>Batas interpretasi:</strong> hasil ini adalah pembacaan tipologi non-klinis. Ia tidak menentukan diagnosis, ideologi politik, agama, moralitas, kecerdasan, atau masa depanmu. Budaya, pengalaman hidup, kesehatan, trauma, usia, dan kondisi saat tes tetap bisa mengubah jawaban.
         </div>
       </div>
     </section>
@@ -23938,25 +24191,24 @@ export function useTestSession() {
 ## `src/index.css`
 
 ````css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "DM Serif Display", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
-  
-  --color-brand-50: #ecfdf5;
-  --color-brand-100: #d1fae5;
-  --color-brand-500: #10b981;
-  --color-brand-600: #059669;
-  --color-brand-700: #047857;
-  
-  --color-slate-950: #020617;
-  --color-slate-900: #0f172a;
+
+  --color-brand-50: #fdf7ed;
+  --color-brand-100: #f6e6cf;
+  --color-brand-500: #a56a3f;
+  --color-brand-600: #855232;
+  --color-brand-700: #653d29;
+
+  --color-slate-950: #17110f;
+  --color-slate-900: #241b18;
 }
 
-/* Custom Interactive States and Animation Kernels */
 @layer base {
   body {
     font-family: var(--font-sans);
@@ -23964,13 +24216,420 @@ export function useTestSession() {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
   }
 }
 
-/* Print Overrides */
+.font-library-display {
+  font-family: "DM Serif Display", Georgia, serif;
+  letter-spacing: -0.018em;
+}
+
+.library-result-page {
+  position: relative;
+  isolation: isolate;
+  border-radius: 2rem;
+  padding: clamp(0.25rem, 1vw, 0.75rem);
+}
+
+.library-result-page::before {
+  content: "";
+  position: absolute;
+  inset: -1.5rem;
+  z-index: -2;
+  border-radius: 2.5rem;
+  background:
+    radial-gradient(circle at 12% 2%, rgba(159, 98, 60, 0.12), transparent 30%),
+    radial-gradient(circle at 88% 14%, rgba(100, 54, 92, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(116, 77, 47, 0.04), transparent 28%);
+}
+
+.library-result-page [class*="text-emerald-"] {
+  color: #b77945 !important;
+}
+
+.library-result-page [class*="text-teal-"] {
+  color: #77506f !important;
+}
+
+.library-result-page [class*="bg-emerald-500"] {
+  background-color: #b77945 !important;
+}
+
+.library-result-page [class*="border-emerald-"] {
+  border-color: rgba(183, 121, 69, 0.42) !important;
+}
+
+.library-result-page [class*="ring-emerald-"] {
+  --tw-ring-color: rgba(183, 121, 69, 0.42) !important;
+}
+
+.library-result-page select,
+.library-result-page input {
+  border-color: rgba(165, 106, 63, 0.34) !important;
+  background: rgba(36, 27, 24, 0.88) !important;
+}
+
+.library-result-page > div > div:not(.library-result-shell) {
+  border-radius: 1.5rem;
+}
+
+.library-result-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(141, 99, 60, 0.28);
+  border-radius: 2rem;
+  padding: clamp(1rem, 2.5vw, 2.5rem);
+  box-shadow: 0 30px 90px rgba(37, 22, 14, 0.18);
+}
+
+.library-result-dark {
+  color: #f6eadb;
+  background:
+    linear-gradient(rgba(31, 23, 20, 0.94), rgba(31, 23, 20, 0.97)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 36px),
+    #1f1714;
+}
+
+.library-result-light {
+  color: #33261f;
+  background:
+    linear-gradient(rgba(251, 246, 236, 0.95), rgba(248, 239, 225, 0.98)),
+    repeating-linear-gradient(90deg, rgba(91,58,37,0.025) 0 1px, transparent 1px 36px),
+    #f8efe1;
+}
+
+.library-ambient {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(76px);
+  opacity: 0.35;
+}
+
+.library-ambient-one {
+  top: -7rem;
+  right: -5rem;
+  width: 22rem;
+  height: 22rem;
+  background: rgba(107, 45, 62, 0.42);
+}
+
+.library-ambient-two {
+  bottom: -9rem;
+  left: -7rem;
+  width: 24rem;
+  height: 24rem;
+  background: rgba(126, 88, 48, 0.36);
+}
+
+.library-catalog-hero {
+  position: relative;
+  border: 1px solid rgba(147, 102, 63, 0.3);
+  border-radius: 1.75rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.9), rgba(241, 220, 188, 0.72)),
+    repeating-linear-gradient(0deg, rgba(85, 50, 28, 0.03) 0 1px, transparent 1px 26px);
+  box-shadow: 0 20px 50px rgba(74, 42, 25, 0.13);
+}
+
+.library-result-dark .library-catalog-hero {
+  background:
+    linear-gradient(135deg, rgba(62, 41, 31, 0.92), rgba(35, 27, 29, 0.94)),
+    repeating-linear-gradient(0deg, rgba(255, 244, 224, 0.018) 0 1px, transparent 1px 26px);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+}
+
+.library-catalog-ribbon {
+  position: absolute;
+  top: 0;
+  right: clamp(1rem, 3vw, 2.5rem);
+  transform: translateY(-1px);
+  padding: 0.5rem 0.85rem 0.75rem;
+  border-radius: 0 0 0.8rem 0.8rem;
+  background: linear-gradient(180deg, #7f1d1d, #5f1b22);
+  color: #fff7e8;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(79, 24, 26, 0.22);
+}
+
+.library-tag {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(146, 95, 53, 0.27);
+  border-radius: 9999px;
+  padding: 0.4rem 0.7rem;
+  background: rgba(255, 246, 228, 0.62);
+  color: #765035;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.library-result-dark .library-tag {
+  border-color: rgba(223, 184, 126, 0.18);
+  background: rgba(82, 54, 40, 0.45);
+  color: #e6c58f;
+}
+
+.library-note-card {
+  border: 1px solid rgba(151, 103, 62, 0.25);
+  border-radius: 1.3rem;
+  padding: 1rem;
+  background: rgba(255, 249, 237, 0.72);
+  box-shadow: 0 12px 28px rgba(81, 49, 29, 0.08);
+  transform: rotate(-0.35deg);
+}
+
+.library-note-card:nth-child(2) {
+  transform: rotate(0.4deg);
+}
+
+.library-result-dark .library-note-card {
+  background: rgba(39, 29, 25, 0.68);
+  border-color: rgba(217, 178, 116, 0.16);
+}
+
+.library-note-purple {
+  border-color: rgba(105, 63, 103, 0.25);
+  background: rgba(248, 239, 250, 0.72);
+}
+
+.library-result-dark .library-note-purple {
+  border-color: rgba(192, 132, 252, 0.15);
+  background: rgba(43, 29, 47, 0.64);
+}
+
+.library-signal-strip {
+  border: 1px solid rgba(137, 98, 65, 0.22);
+  border-radius: 1.4rem;
+  padding: 1rem;
+  background: rgba(247, 235, 215, 0.56);
+}
+
+.library-result-dark .library-signal-strip {
+  background: rgba(26, 20, 18, 0.5);
+  border-color: rgba(211, 177, 124, 0.14);
+}
+
+.library-signal-chip {
+  border-left: 3px solid #9b6139;
+  border-radius: 0.8rem;
+  padding: 0.65rem 0.75rem;
+  background: rgba(255, 250, 241, 0.7);
+  color: #5c4738;
+  font-size: 0.72rem;
+  line-height: 1.35rem;
+}
+
+.library-result-dark .library-signal-chip {
+  background: rgba(50, 37, 30, 0.6);
+  color: #cbb8a5;
+  border-left-color: #d0a36b;
+}
+
+.library-floating-nav {
+  position: sticky;
+  top: 6.2rem;
+  align-self: start;
+  border: 1px solid rgba(133, 92, 58, 0.23);
+  border-radius: 1.35rem;
+  padding: 0.75rem;
+  background: rgba(250, 242, 229, 0.82);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 42px rgba(64, 39, 24, 0.1);
+}
+
+.library-result-dark .library-floating-nav {
+  background: rgba(31, 24, 21, 0.82);
+  border-color: rgba(211, 175, 116, 0.14);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
+}
+
+.library-nav-tab {
+  display: inline-flex;
+  min-width: max-content;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 0.95rem;
+  padding: 0.55rem 0.65rem;
+  color: #6f5a49;
+  font-size: 0.74rem;
+  font-weight: 800;
+  transition: 180ms ease;
+}
+
+.library-result-dark .library-nav-tab {
+  color: #bba999;
+}
+
+.library-nav-tab:hover {
+  border-color: rgba(153, 103, 61, 0.24);
+  background: rgba(255, 247, 231, 0.52);
+}
+
+.library-result-dark .library-nav-tab:hover {
+  background: rgba(72, 48, 37, 0.36);
+}
+
+.library-nav-tab-active {
+  border-color: rgba(142, 88, 51, 0.28);
+  background: rgba(244, 225, 195, 0.78);
+  color: #4a3021;
+  transform: translateX(2px);
+  box-shadow: 0 7px 18px rgba(84, 49, 29, 0.08);
+}
+
+.library-result-dark .library-nav-tab-active {
+  background: rgba(88, 55, 40, 0.58);
+  color: #f2dbc0;
+  border-color: rgba(222, 178, 116, 0.2);
+}
+
+.library-nav-icon {
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  color: #fff8ed;
+  box-shadow: 0 6px 14px rgba(71, 40, 25, 0.16);
+}
+
+.library-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(133, 91, 55, 0.2);
+  padding: 0.25rem 0 1.1rem;
+}
+
+.library-result-dark .library-section-heading {
+  border-bottom-color: rgba(214, 179, 121, 0.13);
+}
+
+.library-section-icon {
+  display: flex;
+  height: 3.25rem;
+  width: 3.25rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.1rem;
+  color: #fff8ed;
+  box-shadow: 0 12px 22px rgba(66, 34, 21, 0.17);
+}
+
+.library-insight-card {
+  border: 1px solid rgba(141, 98, 62, 0.24);
+  border-radius: 1.4rem;
+  padding: 1.15rem;
+  background: rgba(255, 249, 238, 0.72);
+  box-shadow: 0 14px 34px rgba(78, 48, 29, 0.08);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.library-insight-card:hover {
+  border-color: rgba(154, 95, 53, 0.42);
+  transform: translateY(-2px);
+  box-shadow: 0 19px 40px rgba(78, 48, 29, 0.12);
+}
+
+.library-result-dark .library-insight-card {
+  background: rgba(43, 32, 27, 0.68);
+  border-color: rgba(218, 179, 117, 0.14);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.18);
+}
+
+.library-result-dark .library-insight-card:hover {
+  border-color: rgba(222, 176, 111, 0.26);
+}
+
+.library-shelf-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(137, 94, 58, 0.24);
+  border-radius: 1.4rem;
+  padding: 1.1rem;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.86), rgba(241, 222, 194, 0.7));
+  box-shadow: 0 15px 36px rgba(77, 47, 29, 0.09);
+}
+
+.library-shelf-card::after {
+  content: "";
+  position: absolute;
+  left: 0.8rem;
+  right: 0.8rem;
+  bottom: 0.55rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #67412a, #a8784e, #5a3928);
+  opacity: 0.65;
+}
+
+.library-result-dark .library-shelf-card {
+  background: linear-gradient(180deg, rgba(54, 39, 31, 0.86), rgba(33, 25, 22, 0.84));
+  border-color: rgba(214, 173, 113, 0.15);
+}
+
+.library-book-spine {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 2.7rem;
+  border-left: 5px solid hsl(calc(18 + var(--spine-index) * 23), 38%, 38%);
+  border-radius: 0.25rem 0.75rem 0.75rem 0.25rem;
+  padding: 0.55rem 0.7rem;
+  background: rgba(255, 252, 245, 0.72);
+  color: #4e3a2d;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  box-shadow: 0 4px 9px rgba(74, 42, 24, 0.06);
+}
+
+.library-result-dark .library-book-spine {
+  background: rgba(70, 49, 38, 0.58);
+  color: #e7d8c5;
+}
+
+.library-book-number {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  color: #9b795c;
+}
+
+.library-boundary-note {
+  border: 1px dashed rgba(131, 91, 58, 0.28);
+  border-radius: 1.2rem;
+  padding: 1rem;
+  background: rgba(245, 233, 215, 0.45);
+  color: #766354;
+  font-size: 0.72rem;
+  line-height: 1.35rem;
+}
+
+.library-result-dark .library-boundary-note {
+  border-color: rgba(209, 171, 112, 0.18);
+  background: rgba(26, 20, 18, 0.45);
+  color: #a99583;
+}
+
+@media (max-width: 1279px) {
+  .library-floating-nav {
+    position: static;
+  }
+}
+
 @media print {
   .no-print {
     display: none !important;
@@ -23981,12 +24640,10 @@ export function useTestSession() {
   }
 }
 
-/* Prevent layout shifts */
 img {
   content-visibility: auto;
 }
 
-/* Reduced Motion Override */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-delay: 0s !important;
@@ -23995,6 +24652,111 @@ img {
     transition-duration: 0s !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* App-wide library palette and subtle bookshelf texture */
+.library-app-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  background-image:
+    linear-gradient(180deg, rgba(78, 48, 31, 0.025), transparent 22%),
+    repeating-linear-gradient(90deg, rgba(111, 73, 44, 0.018) 0 1px, transparent 1px 42px);
+}
+
+.library-app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(127, 29, 29, 0.08), transparent 24%),
+    radial-gradient(circle at 91% 12%, rgba(76, 29, 149, 0.06), transparent 23%),
+    linear-gradient(180deg, transparent, rgba(89, 58, 36, 0.035));
+}
+
+.library-app-shell [class*="text-emerald-"] {
+  color: #b77945 !important;
+}
+
+.library-app-shell [class*="hover:text-emerald-"]:hover {
+  color: #d19a63 !important;
+}
+
+.library-app-shell [class*="text-teal-"] {
+  color: #8b5b7f !important;
+}
+
+.library-app-shell [class*="bg-emerald-500"] {
+  background-color: #b77945 !important;
+}
+
+.library-app-shell [class*="hover:bg-emerald-"]:hover {
+  background-color: #9a6039 !important;
+}
+
+.library-app-shell [class*="border-emerald-"] {
+  border-color: rgba(183, 121, 69, 0.42) !important;
+}
+
+.library-app-shell [class*="from-emerald-"] {
+  --tw-gradient-from: #b77945 var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(183 121 69 / 0) var(--tw-gradient-to-position) !important;
+}
+
+.library-app-shell [class*="to-teal-"] {
+  --tw-gradient-to: #7a4e70 var(--tw-gradient-to-position) !important;
+}
+
+.library-app-shell [class*="ring-emerald-"] {
+  --tw-ring-color: rgba(183, 121, 69, 0.48) !important;
+}
+
+.library-app-shell header {
+  box-shadow: 0 8px 30px rgba(50, 31, 22, 0.08);
+}
+
+.library-page-light .text-white {
+  color: #2f2119 !important;
+}
+
+.library-page-light .text-slate-100,
+.library-page-light .text-slate-200,
+.library-page-light .text-slate-300 {
+  color: #4f3d31 !important;
+}
+
+.library-page-light .text-slate-400,
+.library-page-light .text-slate-500 {
+  color: #7a6756 !important;
+}
+
+.library-page-light [class*="bg-slate-950"],
+.library-page-light [class*="bg-slate-900"] {
+  background-color: rgba(255, 249, 239, 0.82) !important;
+}
+
+.library-page-light [class*="border-slate-8"],
+.library-page-light [class*="border-slate-9"] {
+  border-color: rgba(132, 92, 58, 0.22) !important;
+}
+
+.library-page-light select,
+.library-page-light input {
+  color: #2f2119 !important;
+  background: rgba(255, 250, 242, 0.94) !important;
+}
+
+.library-page-dark select,
+.library-page-dark input {
+  color: #f8ead8 !important;
+}
+
+.library-result-page button,
+.library-result-page select,
+.library-result-page input {
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 ````
 
@@ -24030,41 +24792,51 @@ import type {
   TIM,
 } from "../types/socionics";
 
-export interface ExperienceCard {
+export type ResultSectionId =
+  | "summary"
+  | "thinking"
+  | "emotions"
+  | "relationships"
+  | "worldview"
+  | "blindspots"
+  | "recommendations";
+
+export interface ResultInsightCard {
   title: string;
-  vibe: string;
-  meaning: string;
-  body: string;
-  edge?: string;
-  practice?: string;
+  expert: string;
+  simple: string;
+  stereotype?: string;
+  misunderstood?: string;
+  warning?: string;
+  actions?: string[];
 }
 
 export interface RecommendationGroup {
   title: string;
-  vibe: string;
-  meaning: string;
+  note: string;
   items: string[];
 }
 
-export interface ExperienceDoor {
-  id: "A" | "B" | "C" | "D";
-  label: string;
+export interface ResultSection {
+  id: ResultSectionId;
   title: string;
-  subtitle: string;
-  cards: ExperienceCard[];
+  kicker: string;
+  intro: string;
+  cards: ResultInsightCard[];
   recommendations?: RecommendationGroup[];
 }
 
 export interface ResultExperience {
-  portalName: string;
-  portalTagline: string;
-  opening: string;
+  title: string;
+  subtitle: string;
+  tags: string[];
+  expertSnapshot: string;
+  internetSnapshot: string;
   observedSignals: string[];
-  doors: ExperienceDoor[];
+  sections: ResultSection[];
 }
 
 type ElementLens = {
-  vibe: string;
   algorithm: string;
   sees: string;
   blindSpot: string;
@@ -24080,7 +24852,6 @@ type ElementLens = {
 
 const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
   Ne: {
-    vibe: "jendela yang terus membuka jendela lain",
     algorithm: "mendeteksi kemungkinan, celah, variasi, dan potensi yang belum dipakai",
     sees: "dunia sebagai sesuatu yang belum selesai dan masih bisa ditafsirkan ulang",
     blindSpot: "mudah meninggalkan bentuk final ketika kemungkinan baru terasa lebih hidup",
@@ -24094,7 +24865,6 @@ const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
     gift: "memberi orang lain kemungkinan baru tentang siapa mereka bisa jadi",
   },
   Ni: {
-    vibe: "lorong waktu dengan lampu redup yang pelan-pelan membentuk satu arah",
     algorithm: "mengompres banyak kejadian menjadi tema, momentum, dan arah perkembangan",
     sees: "dunia sebagai rangkaian cerita yang bergerak menuju konsekuensi tertentu",
     blindSpot: "bisa terlalu percaya pada satu tafsir besar lalu terlambat memberi ruang pada data yang membantahnya",
@@ -24108,7 +24878,6 @@ const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
     gift: "memberi orang lain rasa arah ketika mereka tenggelam dalam terlalu banyak detail",
   },
   Se: {
-    vibe: "ruang yang langsung punya garis, berat, jarak, dan pusat gravitasi",
     algorithm: "mendeteksi batas, daya tekan, posisi, keberanian, dan apa yang benar-benar bisa digerakkan sekarang",
     sees: "dunia sebagai medan nyata tempat keputusan, batas, dan tindakan punya konsekuensi langsung",
     blindSpot: "bisa terlalu cepat menaikkan tekanan sebelum memastikan orang lain memang butuh dorongan sekeras itu",
@@ -24122,7 +24891,6 @@ const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
     gift: "memberi orang lain keberanian untuk berhenti mengecilkan diri",
   },
   Si: {
-    vibe: "kamar yang temperaturnya pas, kainnya lembut, dan tidak ada suara yang menusuk",
     algorithm: "mendeteksi kualitas sensasi, ritme tubuh, kecocokan, keseimbangan, dan detail yang membuat hidup terasa layak dijalani",
     sees: "dunia melalui kualitas pengalaman langsung: nyaman, kasar, berlebihan, hambar, sehat, atau menenangkan",
     blindSpot: "bisa menunda perubahan penting karena tubuh dan suasana belum terasa siap",
@@ -24136,7 +24904,6 @@ const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
     gift: "membuat hidup terasa cukup aman untuk dinikmati",
   },
   Te: {
-    vibe: "meja kerja dengan data terbuka, alat yang berfungsi, dan langkah berikutnya yang jelas",
     algorithm: "mencari fakta yang bisa dipakai, hasil yang terukur, metode yang bekerja, dan penggunaan sumber daya yang masuk akal",
     sees: "dunia sebagai kumpulan proses yang bisa diuji, diperbaiki, dipercepat, atau dihentikan bila tidak menghasilkan",
     blindSpot: "bisa meremehkan pengalaman yang sulit diukur meski tetap nyata bagi orang lain",
@@ -24150,7 +24917,6 @@ const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
     gift: "membuat sesuatu yang rumit menjadi bisa dikerjakan",
   },
   Ti: {
-    vibe: "perpustakaan sunyi dengan rak yang akhirnya tersusun menurut hukum yang masuk akal",
     algorithm: "mencari konsistensi, definisi, hubungan struktural, kategori, dan aturan yang tidak saling bertabrakan",
     sees: "dunia sebagai sistem yang perlu dipahami dari dalam sebelum disentuh atau diubah",
     blindSpot: "bisa terus merapikan model ketika realitas sudah meminta keputusan praktis",
@@ -24164,7 +24930,6 @@ const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
     gift: "memberi bentuk pada kekacauan tanpa harus berteriak",
   },
   Fe: {
-    vibe: "panggung hidup tempat emosi punya volume, ritme, warna, dan arah gerak",
     algorithm: "mendeteksi suhu emosi, ekspresi, energi kelompok, dan cara mengubah suasana agar orang ikut bergerak",
     sees: "dunia sebagai arus perasaan yang bisa disuarakan, dibagi, dinaikkan, ditenangkan, atau diarahkan",
     blindSpot: "bisa menaikkan intensitas saat sebagian orang justru membutuhkan ruang yang lebih tenang dan pribadi",
@@ -24178,7 +24943,6 @@ const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
     gift: "membuat orang merasa hidup dan ikut hadir",
   },
   Fi: {
-    vibe: "ruang kecil dengan dua kursi, percakapan pelan, dan batas yang tidak perlu diumumkan keras-keras",
     algorithm: "mendeteksi kedekatan, ketulusan, kepercayaan, niat, luka personal, dan kualitas ikatan dari orang ke orang",
     sees: "dunia sebagai jaringan hubungan yang setiap simpulnya punya sejarah, jarak, dan tanggung jawab moral sendiri",
     blindSpot: "bisa terlalu lama menilai niat atau menyimpan luka tanpa memberi orang lain kesempatan memahami batasnya",
@@ -24194,7 +24958,6 @@ const ELEMENT_LENS: Record<InformationElement, ElementLens> = {
 };
 
 type QuadraLens = {
-  vibe: string;
   world: string;
   circle: string;
   politics: string;
@@ -24205,7 +24968,6 @@ type QuadraLens = {
 
 const QUADRA_LENS: Record<Quadra, QuadraLens> = {
   Alpha: {
-    vibe: "salon ide, humor cerdas, rasa ingin tahu, dan ruang yang tidak cepat menghakimi",
     world: "hidup terasa sehat ketika orang bisa bertukar ide, bermain dengan konsep, dan menikmati kenyamanan tanpa terlalu banyak drama status",
     circle: "sirkel terbaikmu memberi ruang untuk bertanya aneh, tertawa, mengoreksi tanpa mempermalukan, dan tidak memaksa semua orang tampil keras",
     politics: "cenderung menghargai akses pengetahuan, keterbukaan diskusi, inovasi sosial, dan institusi yang tidak mematikan rasa ingin tahu",
@@ -24214,7 +24976,6 @@ const QUADRA_LENS: Record<Quadra, QuadraLens> = {
     tension: "bisa meremehkan konflik kekuasaan nyata karena berharap percakapan rasional dan suasana baik cukup untuk menyelesaikannya",
   },
   Beta: {
-    vibe: "teater besar, misi bersama, loyalitas, simbol kuat, dan ritme yang menggerakkan banyak orang",
     world: "hidup terasa bermakna ketika ada arah besar, peran yang jelas, keberanian, dan sesuatu yang layak diperjuangkan bersama",
     circle: "sirkel terbaikmu punya loyalitas, humor internal, keberanian saling mengingatkan, dan rasa bahwa semua orang benar-benar hadir ketika krisis datang",
     politics: "cenderung peka pada kepemimpinan, stabilitas, mobilisasi, legitimasi, keamanan, dan kekuatan narasi kolektif",
@@ -24223,7 +24984,6 @@ const QUADRA_LENS: Record<Quadra, QuadraLens> = {
     tension: "bisa terlalu memuliakan intensitas, loyalitas, atau hierarki sampai kritik tenang dianggap kurang berkomitmen",
   },
   Gamma: {
-    vibe: "kota malam, keputusan tajam, hubungan selektif, konsekuensi nyata, dan ambisi yang tidak perlu dipamerkan",
     world: "hidup terasa jujur ketika orang bertanggung jawab atas pilihan, mampu membaca kekuasaan, dan tidak berlindung di balik idealisme tanpa biaya",
     circle: "sirkel terbaikmu kecil tetapi kuat: orang kompeten, tidak palsu, tahan tekanan, menghormati privasi, dan muncul saat benar-benar dibutuhkan",
     politics: "cenderung peka pada akuntabilitas, kepentingan nyata, korupsi kekuasaan, daya tawar, risiko, dan siapa yang membayar keputusan buruk",
@@ -24232,7 +24992,6 @@ const QUADRA_LENS: Record<Quadra, QuadraLens> = {
     tension: "bisa terlalu curiga, terlalu transaksional, atau sulit menerima kelembutan yang tidak datang bersama bukti kuat",
   },
   Delta: {
-    vibe: "studio kerja tenang, hubungan tulus, keterampilan nyata, pertumbuhan perlahan, dan hidup yang bisa dipertahankan",
     world: "hidup terasa sehat ketika orang berkembang tanpa dipaksa menjadi seragam, bekerja dengan baik, dan menjaga hubungan yang jujur",
     circle: "sirkel terbaikmu tidak heboh, tetapi aman: orang yang menghormati ritme, konsisten, mau belajar, tidak memainkan emosi, dan saling membantu secara nyata",
     politics: "cenderung peka pada kebijakan yang praktis, lokal, berkelanjutan, manusiawi, dan memberi ruang perkembangan individu",
@@ -24289,9 +25048,6 @@ const CLUB_LENS: Record<Club, { work: string; strengths: string; risk: string }>
 };
 
 type CuratedProfile = {
-  portalName: string;
-  tagline: string;
-  opening: string;
   books: string[];
   films: string[];
   music: string[];
@@ -24305,9 +25061,6 @@ type CuratedProfile = {
 
 const CURATED: Record<TIM, CuratedProfile> = {
   ILE: {
-    portalName: "Laboratorium Kemungkinan",
-    tagline: "Pintu yang terbuka ke lima pintu lain sebelum gagang pertama sempat dingin.",
-    opening: "Kamu tidak datang untuk menerima satu jawaban final. Kamu datang untuk menemukan berapa banyak dunia yang masih mungkin dibangun dari satu pertanyaan.",
     books: ["Gödel, Escher, Bach — Douglas Hofstadter", "The Design of Everyday Things — Don Norman", "Invisible Cities — Italo Calvino"],
     films: ["Everything Everywhere All at Once", "The Martian", "Arrival"],
     music: ["progressive electronic", "jazz fusion", "art pop eksperimental"],
@@ -24319,9 +25072,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["selesaikan satu prototipe dalam 48 jam", "buat daftar ide yang sengaja tidak kamu kejar", "jelaskan satu teori rumit dengan benda dapur"],
   },
   SEI: {
-    portalName: "Rumah dengan Cahaya Sore",
-    tagline: "Pintu yang tidak berisik, tetapi membuat tubuhmu sadar bahwa kamu akhirnya aman.",
-    opening: "Kamu membaca hidup dari kualitas rasa: apakah suasana ini manusiawi, apakah tubuh bisa bernapas, dan apakah orang-orang di sini masih punya kelembutan.",
     books: ["The Little Prince — Antoine de Saint-Exupéry", "The Art of Stillness — Pico Iyer", "Convenience Store Woman — Sayaka Murata"],
     films: ["Little Forest", "Amélie", "Perfect Days"],
     music: ["bossa nova", "dream pop lembut", "acoustic soul"],
@@ -24333,9 +25083,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["buat satu sudut rumah yang benar-benar memulihkan", "katakan tidak sebelum tubuhmu harus berteriak", "adakan makan kecil untuk tiga orang favorit"],
   },
   ESE: {
-    portalName: "Ruang Perayaan",
-    tagline: "Pintu yang terbuka sambil menyalakan lampu, musik, dan rasa bahwa semua orang masih bisa disatukan.",
-    opening: "Kamu punya bakat membuat kehidupan bersama terasa hidup. Tantangannya bukan belajar memberi lebih banyak, tetapi tahu kapan cintamu tidak harus berbentuk kerja tanpa akhir.",
     books: ["The Art of Gathering — Priya Parker", "Humankind — Rutger Bregman", "The Book of Delights — Ross Gay"],
     films: ["Paddington 2", "The Intouchables", "Mamma Mia!"],
     music: ["soul-pop", "disco klasik", "musical theatre"],
@@ -24347,9 +25094,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["adakan pertemuan dengan batas waktu jelas", "biarkan orang lain merawatmu satu hari", "buat daftar emosi yang tidak perlu langsung kamu perbaiki"],
   },
   LII: {
-    portalName: "Arsip Hukum Tersembunyi",
-    tagline: "Pintu yang hanya terbuka setelah semua istilah didefinisikan dengan benar.",
-    opening: "Kamu mencari struktur yang tidak runtuh ketika diuji dari banyak sisi. Di balik ketenanganmu ada kebutuhan besar agar dunia masuk akal dan tidak memaksa orang tunduk pada aturan yang kontradiktif.",
     books: ["The Structure of Scientific Revolutions — Thomas Kuhn", "Justice — Michael Sandel", "The Name of the Rose — Umberto Eco"],
     films: ["12 Angry Men", "Primer", "The Imitation Game"],
     music: ["minimal classical", "ambient electronic", "post-rock instrumental"],
@@ -24361,9 +25105,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["ambil keputusan saat model baru 80% lengkap", "jelaskan batas tanpa membuat kuliah", "uji satu prinsip di kehidupan nyata selama tujuh hari"],
   },
   SLE: {
-    portalName: "Benteng Gerak",
-    tagline: "Pintu berat yang terbuka sekali doronganmu punya arah.",
-    opening: "Kamu membaca realitas lewat kekuatan, posisi, dan apa yang benar-benar bisa dilakukan. Kedalamanmu muncul ketika keberanianmu tidak hanya memenangkan ruang, tetapi juga melindungi sesuatu yang layak.",
     books: ["Meditations — Marcus Aurelius", "The Strategy of Conflict — Thomas Schelling", "The Old Man and the Sea — Ernest Hemingway"],
     films: ["Mad Max: Fury Road", "Gladiator", "Moneyball"],
     music: ["industrial rock", "cinematic percussion", "hard-hitting hip-hop"],
@@ -24375,9 +25116,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["tunda respons keras selama sembilan puluh detik", "tanyakan apa yang ingin dilindungi sebelum menyerang", "latih menerima bantuan tanpa menguji orangnya dulu"],
   },
   IEI: {
-    portalName: "Teater Waktu",
-    tagline: "Pintu beludru yang membuka masa lalu, kemungkinan akhir, dan emosi yang belum sempat diberi nama.",
-    opening: "Kamu hidup dekat dengan arus makna. Kamu bisa merasakan arah cerita sebelum orang lain mengakui bahwa ceritanya sedang berubah.",
     books: ["The Waves — Virginia Woolf", "Man's Search for Meaning — Viktor Frankl", "The Master and Margarita — Mikhail Bulgakov"],
     films: ["In the Mood for Love", "Portrait of a Lady on Fire", "The Green Knight"],
     music: ["ethereal wave", "cinematic ambient", "dark art pop"],
@@ -24389,9 +25127,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["ubah satu firasat menjadi prediksi yang bisa diuji", "buat deadline yang dilindungi orang lain", "pisahkan tanda nyata dari suasana hati"],
   },
   EIE: {
-    portalName: "Menara Suara",
-    tagline: "Pintu yang terbuka ketika satu emosi pribadi berubah menjadi cerita yang bisa menggerakkan banyak orang.",
-    opening: "Kamu bisa memberi bahasa pada ketegangan yang orang lain rasakan tetapi tidak berani ucapkan. Kekuatanmu besar; begitu juga tanggung jawab untuk tidak menjadikan setiap rasa sebagai panggung darurat.",
     books: ["The Hero with a Thousand Faces — Joseph Campbell", "The Fire Next Time — James Baldwin", "Antigone — Sophocles"],
     films: ["The Lives of Others", "Black Swan", "Dead Poets Society"],
     music: ["dramatic orchestral", "gospel dan choral", "theatrical art rock"],
@@ -24403,9 +25138,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["turunkan volume tanpa mengurangi kejujuran", "tulis dua tafsir alternatif sebelum menyimpulkan", "jadwalkan hari tanpa peran publik"],
   },
   LSI: {
-    portalName: "Ruang Komando Sunyi",
-    tagline: "Pintu baja yang terbuka setelah aturan, posisi, dan risiko diperiksa satu per satu.",
-    opening: "Kamu mencari struktur yang bisa bertahan ketika keadaan menjadi berat. Kepercayaanmu tidak murah, tetapi ketika sudah diberikan, kamu ingin sistem dan orang sama-sama menunjukkan integritas.",
     books: ["The Rule of Law — Tom Bingham", "The Art of War — Sun Tzu", "The Trial — Franz Kafka"],
     films: ["Tinker Tailor Soldier Spy", "Sicario", "A Few Good Men"],
     music: ["dark classical", "military ambient", "precise techno"],
@@ -24417,9 +25149,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["buat satu aturan yang punya mekanisme pengecualian", "minta kebutuhanmu tanpa memberi tes tersembunyi", "latih perubahan kecil yang tidak mengancam prinsip"],
   },
   SEE: {
-    portalName: "Salon Daya Tarik",
-    tagline: "Pintu yang terbuka karena kamu tahu siapa yang harus diajak, kapan harus mendekat, dan batas mana yang tidak boleh disentuh.",
-    opening: "Kamu membaca manusia dan kekuasaan sekaligus. Kamu tahu bahwa hubungan tidak hidup di ruang hampa; ia punya daya tarik, risiko, loyalitas, dan harga.",
     books: ["The Prince — Niccolò Machiavelli", "Influence — Robert Cialdini", "The Talented Mr. Ripley — Patricia Highsmith"],
     films: ["Ocean's Eleven", "The Favourite", "Erin Brockovich"],
     music: ["confident R&B", "dance-pop", "Latin pop"],
@@ -24431,9 +25160,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["bedakan kedekatan dari pengaruh", "beri tanpa menciptakan utang emosi", "biarkan satu orang melihat keraguanmu tanpa performa"],
   },
   ILI: {
-    portalName: "Observatorium Konsekuensi",
-    tagline: "Pintu gelap dengan jendela jauh: kamu melihat apa yang akan jatuh sebelum bunyinya terdengar.",
-    opening: "Kamu punya radar terhadap risiko, tren, dan optimisme yang terlalu mahal. Kekuatanmu bukan pesimisme, melainkan kemampuan memberi waktu pada kenyataan untuk menunjukkan harga sebenarnya.",
     books: ["The Black Swan — Nassim Nicholas Taleb", "Thinking in Systems — Donella Meadows", "The Remains of the Day — Kazuo Ishiguro"],
     films: ["Blade Runner 2049", "No Country for Old Men", "Margin Call"],
     music: ["dark ambient", "trip-hop", "minimal techno"],
@@ -24445,9 +25171,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["catat satu prediksi beserta batas waktunya", "uji kemungkinan baik sekeras kamu menguji risiko", "ambil satu tindakan sebelum semua konsekuensi selesai dipetakan"],
   },
   LIE: {
-    portalName: "Mesin Horizon",
-    tagline: "Pintu yang langsung membuka jalan, target, dan pertanyaan: seberapa jauh ini bisa dibawa?",
-    opening: "Kamu melihat waktu sebagai modal dan realitas sebagai sesuatu yang bisa dibangun. Bahayanya muncul ketika tubuh, hubungan, dan rasa cukup diperlakukan seperti hambatan produksi.",
     books: ["The Effective Executive — Peter Drucker", "Good Strategy Bad Strategy — Richard Rumelt", "The Innovator's Dilemma — Clayton Christensen"],
     films: ["The Social Network", "Ford v Ferrari", "Apollo 13"],
     music: ["driving electronic", "arena rock", "focus techno"],
@@ -24459,9 +25182,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["ukur pemulihan seperti kamu mengukur hasil", "adakan satu percakapan tanpa agenda", "batasi satu proyek agar hidupmu tidak menjadi seluruhnya proyek"],
   },
   ESI: {
-    portalName: "Ruang Sumpah",
-    tagline: "Pintu yang hanya terbuka bagi orang yang niatnya terbukti, bukan sekadar terdengar manis.",
-    opening: "Kamu menjaga kualitas ikatan dan batas moral dengan serius. Kamu tahu bahwa satu pengkhianatan kecil bisa mengubah seluruh makna hubungan.",
     books: ["The Ethics of Ambiguity — Simone de Beauvoir", "A Man Called Ove — Fredrik Backman", "The Crucible — Arthur Miller"],
     films: ["A Separation", "Promising Young Woman", "The Secret in Their Eyes"],
     music: ["intimate singer-songwriter", "dark folk", "soul ballad"],
@@ -24473,9 +25193,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["ucapkan batas sebelum berubah menjadi hukuman diam", "bedakan kesalahan dari pengkhianatan", "beri ruang pada niat baik yang belum sempurna"],
   },
   IEE: {
-    portalName: "Taman Identitas",
-    tagline: "Pintu yang terbuka ke versi dirimu yang belum pernah mendapat izin hidup.",
-    opening: "Kamu menangkap kemungkinan manusia sebelum mereka sendiri berani mengakuinya. Kamu hidup dari percikan: satu percakapan bisa mengubah arah hidup seseorang.",
     books: ["The Artist's Way — Julia Cameron", "Braiding Sweetgrass — Robin Wall Kimmerer", "The Unbearable Lightness of Being — Milan Kundera"],
     films: ["Frances Ha", "The Secret Life of Walter Mitty", "Before Sunrise"],
     music: ["indie folk", "eclectic pop", "world fusion"],
@@ -24487,9 +25204,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["pilih satu versi diri untuk dilatih tiga puluh hari", "selesaikan percakapan sulit tanpa membuka topik baru", "buat kalender pemulihan setelah terlalu banyak manusia"],
   },
   SLI: {
-    portalName: "Bengkel Tenang",
-    tagline: "Pintu yang terbuka tanpa suara dan menunjukkan bahwa hidup bisa bekerja lebih baik tanpa menjadi lebih ribut.",
-    opening: "Kamu punya kecerdasan terhadap kualitas, alat, ritme, dan perbaikan yang tidak dramatis. Kamu sering menyelamatkan keadaan dengan sesuatu yang begitu praktis sampai orang lupa itu membutuhkan keahlian.",
     books: ["Zen and the Art of Motorcycle Maintenance — Robert Pirsig", "Shop Class as Soulcraft — Matthew Crawford", "Walden — Henry David Thoreau"],
     films: ["Paterson", "The Straight Story", "Chef"],
     music: ["lo-fi instrumental", "roots rock", "ambient folk"],
@@ -24501,9 +25215,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["jelaskan kebutuhan sebelum diam-diam memperbaiki semuanya", "biarkan satu proyek terlihat meski belum sempurna", "jadwalkan eksplorasi yang tidak punya kegunaan langsung"],
   },
   LSE: {
-    portalName: "Kota yang Berfungsi",
-    tagline: "Pintu yang membuka gudang, jadwal, sistem, dan rasa lega karena semuanya akhirnya berada di tangan yang kompeten.",
-    opening: "Kamu ingin dunia bisa diandalkan. Bagimu, kepedulian sering berbentuk sistem yang bekerja, kebutuhan yang terpenuhi, dan orang yang tidak dibiarkan menanggung kekacauan sendirian.",
     books: ["The Checklist Manifesto — Atul Gawande", "The Goal — Eliyahu Goldratt", "Factfulness — Hans Rosling"],
     films: ["Hidden Figures", "The Founder", "The Intern"],
     music: ["upbeat classic rock", "focus playlists", "clean pop production"],
@@ -24515,9 +25226,6 @@ const CURATED: Record<TIM, CuratedProfile> = {
     experiments: ["tanyakan perasaan sebelum menawarkan solusi", "sisakan satu blok waktu tanpa target", "izinkan metode orang lain berbeda selama hasil dan batas aman terpenuhi"],
   },
   EII: {
-    portalName: "Perpustakaan Hati",
-    tagline: "Pintu yang terbuka pelan dan menyimpan nama-nama orang yang pernah kamu coba pahami dengan sungguh-sungguh.",
-    opening: "Kamu memandang manusia sebagai cerita moral yang belum selesai. Kamu bisa melihat kemungkinan baik tanpa sepenuhnya menutup mata terhadap luka.",
     books: ["The Brothers Karamazov — Fyodor Dostoevsky", "Gilead — Marilynne Robinson", "The Gifts of Imperfection — Brené Brown"],
     films: ["Ikiru", "The Quiet Girl", "A Beautiful Day in the Neighborhood"],
     music: ["chamber folk", "piano ballad", "gentle indie"],
@@ -24530,12 +25238,260 @@ const CURATED: Record<TIM, CuratedProfile> = {
   },
 };
 
-const emotionLabel = (emotion: string, meaning: string, body: string): ExperienceCard => ({
-  title: emotion,
-  vibe: `emosi sebagai sinyal, bukan vonis`,
-  meaning,
-  body,
-});
+
+type EditorialProfile = {
+  title: string;
+  subtitle: string;
+  tags: string[];
+  expert: string;
+  simple: string;
+  stereotype: string;
+  misunderstood: string;
+  emotionalPattern: string;
+  relationshipStyle: string;
+  loveStyle: string;
+  blindspot: string;
+  advice: string[];
+};
+
+const TYPE_EDITORIAL: Record<TIM, EditorialProfile> = {
+  ILE: {
+    title: "Penjelajah ide yang sulit dikurung satu jawaban",
+    subtitle: "Cepat melihat kemungkinan, senang menghubungkan hal yang tidak terlihat nyambung, lalu memakai logika untuk menguji mana yang layak diteruskan.",
+    tags: ["penasaran", "eksperimental", "argumentatif", "cepat bosan"],
+    expert: "Dalam Model A, Ne berada di posisi Base dan Ti di Creative. Pola ini biasanya menghasilkan perhatian yang cepat menangkap potensi, disusul dorongan untuk menyusun kerangka yang masuk akal.",
+    simple: "Kamu biasanya melihat opsi dulu, baru memikirkan sistemnya. Masalahnya, pilihan baru bisa terasa lebih menarik daripada menyelesaikan pilihan lama.",
+    stereotype: "Sering digambarkan sebagai orang yang punya 17 tab terbuka, tiga proyek setengah jadi, dan satu teori yang dijelaskan dengan terlalu semangat.",
+    misunderstood: "Orang bisa mengira kamu tidak serius, padahal kamu serius pada eksplorasi—bukan selalu pada bentuk final pertama.",
+    emotionalPattern: "Kamu mudah hidup saat ada kebebasan berpikir. Kamu lebih cepat kesal saat ide dipotong terlalu dini, orang menutup kemungkinan, atau kamu dipaksa mengikuti rutinitas tanpa alasan jelas.",
+    relationshipStyle: "Kamu butuh orang yang bisa mengikuti lompatan pikiran tanpa menuntut semua obrolan rapi. Kamu tetap berkembang paling baik bersama orang yang berani membantu memilih prioritas.",
+    loveStyle: "Kamu menunjukkan perhatian lewat ide, humor, rekomendasi, dan membuka pengalaman baru. Kamu biasanya merasa disayang saat orang memberi ketenangan praktis tanpa mematikan kebebasanmu.",
+    blindspot: "Kamu bisa menganggap ide yang menarik sebagai ide yang penting, menunda keputusan, atau mengabaikan sinyal tubuh sampai energi benar-benar habis.",
+    advice: ["Pilih satu proyek yang harus selesai sebelum membuka proyek besar baru.", "Simpan ide liar di satu tempat, jangan semuanya langsung dijalankan.", "Tanya: ini peluang nyata atau cuma stimulasi baru?"],
+  },
+  SEI: {
+    title: "Pencipta kenyamanan yang membaca suasana lewat detail kecil",
+    subtitle: "Peka pada kualitas pengalaman, kondisi tubuh, dan perubahan mood orang; biasanya lebih kuat mengatur suasana daripada menjelaskan prosesnya.",
+    tags: ["hangat", "adaptif", "sensitif suasana", "menghindari tekanan"],
+    expert: "Si Base memberi perhatian pada kualitas pengalaman langsung, sedangkan Fe Creative membantu menyesuaikan ekspresi dan suasana sosial secara fleksibel.",
+    simple: "Kamu cepat tahu mana yang bikin suasana enak atau melelahkan. Kamu juga bisa membuat orang lebih santai tanpa perlu menguasai ruangan.",
+    stereotype: "Sering dianggap chill, suka makanan enak, dan selalu tahu tempat paling nyaman—meski sebenarnya kamu juga punya batas yang cukup tegas.",
+    misunderstood: "Sikap tenangmu bisa dianggap pasif. Padahal kamu sering sedang mengamati kondisi dan memilih cara paling halus agar keadaan tidak makin kasar.",
+    emotionalPattern: "Kamu lebih mudah terganggu oleh tekanan, nada kasar, lingkungan tidak nyaman, atau konflik yang tidak punya jeda. Emosimu sering terasa dulu di tubuh.",
+    relationshipStyle: "Kamu suka relasi yang hangat, tidak memaksa, dan punya ruang bernapas. Kamu cenderung menjauh kalau kedekatan berubah menjadi kontrol atau tuntutan terus-menerus.",
+    loveStyle: "Kamu menunjukkan sayang lewat perhatian kecil, makanan, suasana, sentuhan aman, dan membuat orang merasa diterima. Kamu butuh pasangan yang memberi arah tanpa meremehkan ritmemu.",
+    blindspot: "Kamu bisa terlalu lama menunggu keadaan terasa nyaman, sulit menegaskan keinginan, atau membiarkan masalah tumbuh karena tidak mau merusak suasana.",
+    advice: ["Nyatakan kebutuhan sebelum tubuhmu mulai protes.", "Bedakan damai dengan menunda konflik.", "Pasang satu batas sederhana dan pertahankan tanpa meminta maaf berlebihan."],
+  },
+  ESE: {
+    title: "Penggerak suasana yang membuat orang merasa ikut terlibat",
+    subtitle: "Cepat membaca energi sosial, memberi respons emosional yang jelas, lalu memakai perhatian praktis untuk menjaga orang tetap nyaman.",
+    tags: ["ekspresif", "peduli", "aktif", "mudah terkuras"],
+    expert: "Fe Base membuat dinamika emosi kelompok cepat masuk radar, sementara Si Creative membantu mengubah perhatian itu menjadi pengalaman yang lebih nyaman dan manusiawi.",
+    simple: "Kamu biasanya tahu suasana sedang hidup atau mati. Kamu juga cenderung langsung melakukan sesuatu supaya orang merasa lebih diterima.",
+    stereotype: "Sering digambarkan sebagai host grup, pengirim chat panjang, atau orang yang ingat ulang tahun dan tahu siapa yang sedang murung.",
+    misunderstood: "Ekspresimu bisa dianggap dramatis, padahal sering kali itu cara kamu memberi sinyal yang jelas agar orang tidak perlu menebak-nebak suasana.",
+    emotionalPattern: "Kamu mudah terpancing oleh sikap dingin, ketidakpedulian, atau orang yang menolak berpartisipasi tetapi tetap mengeluh. Penolakan sosial bisa terasa lebih berat daripada yang terlihat.",
+    relationshipStyle: "Kamu memberi banyak energi pada relasi. Kamu butuh orang yang menghargai perhatianmu, tetapi juga berani mengingatkan saat kamu terlalu mengurus semua orang.",
+    loveStyle: "Kamu menunjukkan sayang secara terbuka, merawat detail, dan menciptakan momen. Kamu merasa aman saat pasangan konsisten, responsif, dan tidak membuatmu memikul semua kerja emosional.",
+    blindspot: "Kamu bisa mengira semua masalah perlu dibicarakan saat itu juga, mengorbankan diri demi suasana, atau mengambil respons orang terlalu personal.",
+    advice: ["Tanya apakah orang butuh didengar atau dibantu.", "Jangan pakai kehangatan sebagai kewajiban permanen.", "Sisakan waktu tanpa harus menjadi pusat energi kelompok."],
+  },
+  LII: {
+    title: "Penyusun sistem yang ingin semuanya masuk akal",
+    subtitle: "Mencari konsistensi, definisi, dan struktur yang bersih; memakai kemungkinan baru untuk menguji apakah sebuah sistem benar-benar tahan banting.",
+    tags: ["analitis", "independen", "presisi", "terlihat dingin"],
+    expert: "Ti Base berfokus pada koherensi internal, sedangkan Ne Creative membantu membuka alternatif dan menguji batas model yang sedang dipakai.",
+    simple: "Kamu tidak puas dengan jawaban yang cuma terdengar benar. Kamu ingin tahu apakah logikanya tetap bekerja saat dibawa ke kasus lain.",
+    stereotype: "Sering digambarkan sebagai manusia Wikipedia, korektor definisi, atau orang yang bisa mengubah obrolan santai menjadi seminar mini.",
+    misunderstood: "Keinginanmu memperjelas konsep bisa dianggap mencari kesalahan orang, padahal kamu sering hanya ingin semua orang memakai makna yang sama.",
+    emotionalPattern: "Kamu mudah tegang saat dipaksa bereaksi cepat secara emosional, menghadapi tekanan langsung, atau diminta menerima aturan yang kontradiktif.",
+    relationshipStyle: "Kamu nyaman bersama orang yang jujur secara intelektual dan tidak memainkan kode sosial berlebihan. Kedekatan tumbuh lewat kepercayaan, konsistensi, dan obrolan yang punya isi.",
+    loveStyle: "Kamu menunjukkan perhatian lewat pemecahan masalah, penjelasan, dan kesediaan memahami dunia orang lain. Kamu butuh kehangatan yang tidak menuntut performa sosial terus-menerus.",
+    blindspot: "Kamu bisa terlalu lama menyempurnakan model, mengabaikan kekuasaan nyata, atau menganggap emosi sebagai data yang kurang rapi sehingga terlambat ditangani.",
+    advice: ["Uji teori dengan satu tindakan kecil.", "Jelaskan tujuanmu sebelum mengoreksi detail.", "Akui emosi sebagai informasi, meski bentuknya tidak rapi."],
+  },
+  EIE: {
+    title: "Pembaca arah sosial yang kuat pada narasi dan emosi",
+    subtitle: "Menangkap perubahan mood, simbol, dan momentum; sering mampu membuat orang merasa sebuah isu punya arti yang lebih besar.",
+    tags: ["intens", "visioner", "persuasif", "mudah overthinking"],
+    expert: "Fe Base menempatkan dinamika emosi sebagai pusat perhatian, sementara Ni Creative membantu menyusun arah, makna, dan konsekuensi jangka panjang.",
+    simple: "Kamu cepat menangkap apa yang sedang dirasakan banyak orang dan ke mana suasananya bergerak. Kamu juga punya dorongan untuk memberi makna pada semua itu.",
+    stereotype: "Sering dianggap tokoh utama, pembuat pidato, atau orang yang bisa mengubah satu kejadian kecil menjadi analisis satu musim penuh.",
+    misunderstood: "Intensitasmu bisa dianggap manipulatif. Padahal sering kali kamu memang merasakan pentingnya sesuatu lebih cepat dan ingin orang lain ikut melihatnya.",
+    emotionalPattern: "Kamu mudah terpicu oleh pengabaian, pengkhianatan narasi, ketidakpedulian moral, atau keadaan yang terasa menuju arah buruk. Emosi bisa menguat saat tidak punya saluran ekspresi.",
+    relationshipStyle: "Kamu butuh relasi yang punya kedalaman, keberanian emosional, dan tujuan. Kamu mudah bosan pada hubungan yang terasa datar tetapi juga mudah lelah pada drama tanpa arah.",
+    loveStyle: "Kamu menunjukkan cinta lewat perhatian emosional, makna, dan dukungan pada perjalanan hidup seseorang. Kamu butuh ketegasan yang aman, bukan pasangan yang kabur setiap situasi menjadi intens.",
+    blindspot: "Kamu bisa terlalu percaya pada satu narasi, membaca motif secara berlebihan, atau menaikkan intensitas sebelum memastikan fakta dasar.",
+    advice: ["Pisahkan fakta, tafsir, dan prediksi.", "Jangan menguji cinta lewat krisis buatan.", "Cari satu tindakan konkret setelah analisis emosional selesai."],
+  },
+  LSI: {
+    title: "Penjaga struktur yang serius pada batas dan tanggung jawab",
+    subtitle: "Mencari aturan yang konsisten, posisi yang jelas, dan tindakan yang bisa ditegakkan—terutama saat keadaan mulai kacau.",
+    tags: ["disiplin", "tegas", "loyal", "sulit fleksibel"],
+    expert: "Ti Base mengatur kerangka dan konsistensi, sedangkan Se Creative memberi kemampuan menegakkan batas serta mendorong tindakan saat struktur perlu dijaga.",
+    simple: "Kamu ingin semua orang tahu aturan mainnya. Kalau aturan itu masuk akal, kamu bisa sangat konsisten menjaganya.",
+    stereotype: "Sering disebut polisi grup, penjaga SOP, atau orang yang diam-diam sudah menilai siapa yang bisa dipercaya saat keadaan genting.",
+    misunderstood: "Ketegasanmu bisa dianggap ingin mengontrol, padahal kamu sering sedang berusaha membuat tanggung jawab tidak dilempar ke orang yang salah.",
+    emotionalPattern: "Kamu mudah marah pada ketidakjelasan, pelanggaran batas, ketidakdisiplinan, atau orang yang menghindari konsekuensi. Perubahan mendadak bisa membuatmu defensif.",
+    relationshipStyle: "Kamu menghargai loyalitas, komitmen, dan orang yang tidak berubah sikap hanya karena suasana. Kamu sulit santai bersama orang yang terus menguji batas.",
+    loveStyle: "Kamu menunjukkan cinta lewat perlindungan, konsistensi, dan kehadiran saat sulit. Kamu butuh pasangan yang memberi kehangatan tanpa meremehkan prinsipmu.",
+    blindspot: "Kamu bisa terlalu kaku, menganggap tekanan sebagai solusi utama, atau menilai orang sebelum memahami konteks emosional dan perubahan keadaan.",
+    advice: ["Tentukan aturan mana yang prinsip dan mana yang cuma kebiasaan.", "Tanya konteks sebelum memberi konsekuensi.", "Latih fleksibilitas pada hal kecil supaya tidak terasa seperti kehilangan kendali."],
+  },
+  SLE: {
+    title: "Pengambil posisi yang cepat membaca kekuatan nyata",
+    subtitle: "Melihat siapa memegang kendali, apa yang bisa digerakkan sekarang, dan langkah mana yang memberi hasil langsung.",
+    tags: ["berani", "taktis", "langsung", "bisa terlalu menekan"],
+    expert: "Se Base menyorot batas, daya, dan tindakan nyata, sementara Ti Creative membantu menyusun taktik serta struktur yang membuat tekanan tetap terarah.",
+    simple: "Kamu cepat tahu siapa yang ragu, apa yang macet, dan bagian mana yang perlu didorong. Kamu tidak betah hanya membahas masalah.",
+    stereotype: "Sering digambarkan sebagai boss energy, manusia kompetisi, atau orang yang masuk ruangan dan langsung tahu posisi semua orang.",
+    misunderstood: "Gaya langsungmu bisa dianggap kasar, padahal kamu sering percaya kejelasan lebih menghormati orang daripada sinyal yang dibuat samar.",
+    emotionalPattern: "Kamu mudah terpicu oleh kelemahan yang dipakai sebagai alasan, sikap pasif-agresif, atau orang yang menantang batas tanpa siap menanggung akibat.",
+    relationshipStyle: "Kamu menghargai orang kuat yang tidak mudah goyah tetapi tetap jujur. Kamu tidak butuh pasangan yang selalu setuju; kamu butuh orang yang jelas dan tahan dialog keras.",
+    loveStyle: "Kamu menunjukkan sayang lewat perlindungan, tindakan, dan membuat masalah terasa bisa ditangani. Kamu butuh seseorang yang membantu membaca timing dan dampak emosional.",
+    blindspot: "Kamu bisa bergerak terlalu cepat, mengira semua orang termotivasi oleh tantangan, atau memakai tekanan saat sebenarnya orang butuh waktu dan informasi.",
+    advice: ["Tanya izin sebelum mengambil alih.", "Bedakan orang yang takut dengan orang yang tidak peduli.", "Nilai kemenangan dari dampak jangka panjang, bukan cuma hasil cepat."],
+  },
+  IEI: {
+    title: "Pembaca makna yang peka pada arah dan suasana",
+    subtitle: "Menangkap tema tersembunyi, perubahan momentum, dan emosi yang belum diucapkan; sering kuat dalam bahasa, simbol, dan intuisi sosial.",
+    tags: ["imajinatif", "peka", "mendalam", "mudah menghindar"],
+    expert: "Ni Base berfokus pada arah dan perkembangan makna, sedangkan Fe Creative membantu mengekspresikan atau menyesuaikan suasana agar pesan terasa hidup.",
+    simple: "Kamu sering tahu sesuatu sedang berubah sebelum bisa menjelaskan buktinya. Kamu juga mudah menangkap nada emosional di balik kata-kata.",
+    stereotype: "Sering digambarkan sebagai playlist sedih berjalan, pembaca tarot grup, atau orang yang melihat foreshadowing di semua hal.",
+    misunderstood: "Sikap menunggumu bisa dianggap malas. Padahal kamu sering sedang membaca timing atau menunggu gambaran terasa cukup jelas.",
+    emotionalPattern: "Kamu mudah terseret oleh suasana, kemungkinan buruk, kehilangan makna, atau relasi yang terasa berubah tanpa penjelasan. Tekanan langsung bisa membuatmu makin menarik diri.",
+    relationshipStyle: "Kamu butuh kedekatan emosional, rasa dipahami, dan orang yang tidak menertawakan intuisi. Kamu tetap perlu orang yang membantu mengubah perasaan menjadi keputusan.",
+    loveStyle: "Kamu menunjukkan cinta lewat perhatian pada detail emosional, simbol personal, dan pemahaman mendalam. Kamu butuh pasangan yang konsisten dan berani hadir di dunia nyata.",
+    blindspot: "Kamu bisa terlalu lama hidup dalam tafsir, memprediksi penolakan tanpa bertanya, atau memakai mood sebagai bukti bahwa sebuah cerita pasti benar.",
+    advice: ["Tulis fakta sebelum menyusun makna.", "Buat batas waktu untuk menunggu timing.", "Ambil satu tindakan fisik saat pikiran mulai berputar terlalu jauh."],
+  },
+  SEE: {
+    title: "Pembaca manusia yang berani mengambil ruang",
+    subtitle: "Cepat membaca daya tarik, hubungan, batas, dan pengaruh; biasanya tahu cara mendekat, menekan, atau menjaga jarak sesuai situasi.",
+    tags: ["karismatik", "adaptif", "protektif", "intens"],
+    expert: "Se Base memberi kepekaan pada daya dan posisi, sedangkan Fi Creative membantu membaca kedekatan, loyalitas, dan batas personal secara fleksibel.",
+    simple: "Kamu cepat tahu siapa yang tulus, siapa yang ragu, dan kapan harus maju. Kamu cenderung bertindak berdasarkan hubungan nyata, bukan teori abstrak.",
+    stereotype: "Sering dilihat sebagai social powerhouse, orang yang punya koneksi di mana-mana, atau teman yang siap membela kamu tanpa banyak rapat.",
+    misunderstood: "Kepercayaan dirimu bisa dianggap dangkal. Padahal kamu sering membaca risiko sosial dan loyalitas dengan sangat serius.",
+    emotionalPattern: "Kamu mudah terpicu oleh penghinaan, pengkhianatan, sikap pengecut, atau orang yang memanfaatkan kedekatan. Rasa sayang dan marah bisa sama-sama kuat.",
+    relationshipStyle: "Kamu butuh relasi yang jelas, hidup, dan punya bukti tindakan. Kamu sulit percaya pada orang yang banyak bicara tetapi tidak hadir saat dibutuhkan.",
+    loveStyle: "Kamu menunjukkan cinta lewat keberanian, perhatian personal, hadiah, dan perlindungan. Kamu butuh orang yang membantu melihat konsekuensi jangka panjang tanpa menggurui.",
+    blindspot: "Kamu bisa terlalu cepat menilai loyalitas, mengambil keputusan emosional saat terluka, atau mengira daya tarik dan kedekatan selalu berarti arah yang sama.",
+    advice: ["Tunda keputusan besar saat harga diri sedang terluka.", "Bedakan chemistry dengan kompatibilitas.", "Tanya apa yang akan kamu pikirkan tentang pilihan ini enam bulan lagi."],
+  },
+  ILI: {
+    title: "Analis arah yang peka pada risiko dan konsekuensi",
+    subtitle: "Menangkap pola perkembangan, titik lemah, dan hal yang kemungkinan gagal; memakai fakta praktis untuk memeriksa apakah prediksi itu masuk akal.",
+    tags: ["strategis", "skeptis", "mandiri", "terlihat pesimis"],
+    expert: "Ni Base membaca arah waktu dan konsekuensi, sementara Te Creative membantu memeriksa prediksi lewat fakta, efisiensi, dan informasi yang dapat dipakai.",
+    simple: "Kamu cepat melihat apa yang tidak akan bertahan. Kamu biasanya lebih tertarik pada keputusan yang masuk akal dalam jangka panjang daripada semangat sesaat.",
+    stereotype: "Sering dianggap doomer pintar, investor grup, atau orang yang bilang ‘aku sudah bilang’ setelah semua risiko yang diabaikan benar-benar terjadi.",
+    misunderstood: "Kehati-hatianmu bisa dianggap negatif, padahal kamu sering sedang melindungi waktu dan sumber daya dari keputusan yang terlalu optimistis.",
+    emotionalPattern: "Kamu mudah lelah oleh tuntutan sosial berlebihan, optimisme kosong, tekanan untuk bereaksi cepat, atau orang yang mengabaikan data dan konsekuensi.",
+    relationshipStyle: "Kamu menghargai kemandirian, kecerdasan, dan orang yang tidak memaksa kedekatan. Kepercayaan tumbuh perlahan tetapi biasanya sangat serius.",
+    loveStyle: "Kamu menunjukkan sayang lewat peringatan, perencanaan, informasi berguna, dan kehadiran diam-diam. Kamu butuh pasangan yang memberi energi hidup tanpa mengabaikan batasmu.",
+    blindspot: "Kamu bisa terlalu cepat menyimpulkan sesuatu akan gagal, menunda tindakan karena menunggu momen sempurna, atau meremehkan kekuatan antusiasme sosial.",
+    advice: ["Bedakan risiko nyata dengan kebiasaan mengantisipasi yang terburuk.", "Jalankan eksperimen kecil sebelum menolak seluruh ide.", "Sampaikan kebutuhan tanpa menyamarkannya sebagai kritik."],
+  },
+  LIE: {
+    title: "Pendorong strategi yang mengejar hasil dan momentum",
+    subtitle: "Cepat melihat metode, peluang, dan hasil; memakai intuisi waktu untuk memilih langkah yang paling layak dikejar.",
+    tags: ["ambisius", "strategis", "cepat", "sulit berhenti"],
+    expert: "Te Base berorientasi pada informasi yang dapat dipakai dan hasil, sedangkan Ni Creative membantu memilih timing, arah, dan konsekuensi jangka panjang.",
+    simple: "Kamu ingin tahu apa yang bekerja, seberapa cepat, dan untuk tujuan apa. Kamu tidak suka energi habis pada proses yang tidak menghasilkan.",
+    stereotype: "Sering digambarkan sebagai founder mode, manusia spreadsheet, atau orang yang mengubah liburan menjadi peluang networking.",
+    misunderstood: "Fokus hasilmu bisa dianggap tidak peduli, padahal kamu sering menunjukkan kepedulian dengan membuat hidup orang lebih aman dan efektif.",
+    emotionalPattern: "Kamu mudah terpicu oleh inkompetensi berulang, pemborosan, ketidakjelasan arah, atau orang yang menuntut hasil tanpa mau mengambil tanggung jawab.",
+    relationshipStyle: "Kamu butuh orang yang mandiri, jujur, dan menghargai tujuan. Kamu juga berkembang bersama orang yang bisa mengingatkan bahwa tidak semua kebutuhan bisa dijadikan proyek.",
+    loveStyle: "Kamu menunjukkan cinta lewat rencana, peluang, solusi, dan dukungan pada masa depan pasangan. Kamu butuh kepercayaan personal dan batas moral yang jelas.",
+    blindspot: "Kamu bisa mengorbankan tubuh, relasi, atau proses emosional demi target; bisa juga terlalu yakin bahwa efisiensi otomatis berarti keputusan terbaik.",
+    advice: ["Masukkan istirahat ke dalam strategi, bukan sebagai hadiah.", "Tanya dampak manusia sebelum mengejar percepatan.", "Tetapkan definisi cukup sebelum target terus naik."],
+  },
+  ESI: {
+    title: "Penjaga nilai yang tegas pada loyalitas dan batas",
+    subtitle: "Membaca kedekatan, niat, dan kepercayaan secara serius; mampu bertindak tegas kalau nilai atau orang penting perlu dilindungi.",
+    tags: ["loyal", "selektif", "protektif", "sulit memaafkan"],
+    expert: "Fi Base berfokus pada kualitas hubungan dan nilai personal, sementara Se Creative memberi kemampuan menetapkan batas serta bertindak saat loyalitas diuji.",
+    simple: "Kamu tidak gampang menganggap semua orang dekat. Tapi kalau seseorang sudah masuk lingkaranmu, kamu bisa sangat konsisten membela dan menjaga.",
+    stereotype: "Sering digambarkan sebagai human lie detector, teman yang ingat semua pengkhianatan, atau orang baik yang jangan diuji batasnya.",
+    misunderstood: "Sikap selektifmu bisa dianggap menghakimi, padahal kamu sering sedang memastikan kepercayaan tidak diberikan ke orang yang salah.",
+    emotionalPattern: "Kamu mudah terpicu oleh pengkhianatan, ketidakjujuran, penghinaan pada orang lemah, atau permintaan memaafkan tanpa perubahan nyata.",
+    relationshipStyle: "Kamu menghargai konsistensi, bukti, dan rasa aman. Kamu butuh relasi yang tidak memaksa keterbukaan cepat tetapi juga tidak bermain abu-abu.",
+    loveStyle: "Kamu menunjukkan cinta lewat loyalitas, perlindungan, dan perhatian personal. Kamu butuh pasangan yang membawa arah, peluang, dan kepercayaan pada masa depan.",
+    blindspot: "Kamu bisa terlalu lama menyimpan penilaian, sulit memberi kesempatan kedua, atau melihat konflik moral dalam situasi yang sebenarnya lebih kompleks.",
+    advice: ["Bedakan kesalahan, pola, dan pengkhianatan.", "Jelaskan batas sebelum menguji apakah orang akan menebaknya.", "Cari bukti baru, bukan hanya mengulang bukti lama."],
+  },
+  IEE: {
+    title: "Pembaca potensi manusia yang hidup dari koneksi dan kemungkinan",
+    subtitle: "Cepat melihat sisi unik orang, peluang hubungan, dan arah perkembangan; memakai nilai personal untuk memilih mana yang terasa tulus.",
+    tags: ["antusias", "empatik", "spontan", "mudah tersebar"],
+    expert: "Ne Base membuka kemungkinan dan potensi, sedangkan Fi Creative membantu menilai kedekatan serta menyesuaikan pendekatan pada tiap orang.",
+    simple: "Kamu cepat melihat versi diri yang mungkin tumbuh dari seseorang. Kamu juga mudah membangun kedekatan lewat rasa penasaran yang tulus.",
+    stereotype: "Sering dianggap pengadopsi introvert, manusia networking tanpa sadar, atau orang yang punya banyak cerita dan lebih banyak rencana.",
+    misunderstood: "Keramahanmu bisa dianggap dangkal, padahal kamu sering benar-benar tertarik pada keunikan orang—hanya saja energimu bergerak cepat.",
+    emotionalPattern: "Kamu mudah terpicu oleh penolakan identitas, relasi yang kaku, sinisme, atau orang yang menganggap perubahan tidak mungkin. Terlalu banyak tuntutan praktis bisa membuatmu kabur.",
+    relationshipStyle: "Kamu butuh kebebasan, kejujuran personal, dan percakapan yang hidup. Kamu berkembang dengan orang yang membantu memberi struktur tanpa mengendalikan.",
+    loveStyle: "Kamu menunjukkan cinta lewat eksplorasi, percakapan, dukungan pada potensi, dan perhatian personal. Kamu butuh konsistensi praktis agar kedekatan tidak hanya jadi kemungkinan.",
+    blindspot: "Kamu bisa terlalu cepat percaya pada potensi, membuka terlalu banyak relasi atau proyek, dan menghindari bagian membosankan yang justru membuat sesuatu bertahan.",
+    advice: ["Nilai orang dari pola tindakan, bukan hanya potensi.", "Pilih tiga prioritas aktif, sisanya simpan.", "Jangan gunakan topik baru untuk menghindari percakapan sulit."],
+  },
+  SLI: {
+    title: "Pemecah masalah tenang yang menghargai kualitas nyata",
+    subtitle: "Peka pada kenyamanan, fungsi, dan detail teknis; biasanya memilih cara yang efisien tanpa perlu banyak menunjukkan prosesnya.",
+    tags: ["praktis", "tenang", "mandiri", "sulit dibaca"],
+    expert: "Si Base memantau kualitas pengalaman dan keseimbangan, sementara Te Creative membantu memilih metode yang paling berguna serta efisien.",
+    simple: "Kamu cepat tahu mana yang tidak nyaman atau tidak bekerja. Kamu biasanya memperbaikinya dengan cara paling sederhana tanpa membuat acara besar.",
+    stereotype: "Sering disebut manusia tutorial, teman yang punya alat tepat, atau orang yang terlihat santai tetapi diam-diam paling kompeten.",
+    misunderstood: "Sikap hemat kata bisa dianggap tidak peduli, padahal kamu sering menunjukkan perhatian lewat bantuan praktis dan mengurangi beban.",
+    emotionalPattern: "Kamu mudah terganggu oleh kebisingan sosial, tuntutan emosional tanpa solusi, alat atau proses buruk, dan orang yang memaksa ritme.",
+    relationshipStyle: "Kamu butuh ruang, kejujuran, dan orang yang tidak memperumit hidup. Kedekatan tumbuh lewat waktu, kenyamanan, dan keandalan.",
+    loveStyle: "Kamu menunjukkan cinta lewat perbaikan, kualitas, dan menjaga kehidupan sehari-hari tetap lancar. Kamu butuh pasangan yang membawa ide serta kehangatan tanpa menuntut performa.",
+    blindspot: "Kamu bisa terlalu lama diam, menganggap masalah akan selesai sendiri, atau hanya bergerak saat sesuatu sudah cukup mengganggu tubuh dan rutinitas.",
+    advice: ["Ucapkan kebutuhan sebelum berubah menjadi jarak.", "Biarkan orang melihat kontribusimu.", "Sisihkan ruang untuk mencoba hal yang tidak langsung berguna."],
+  },
+  LSE: {
+    title: "Pengelola kehidupan yang ingin semuanya bisa diandalkan",
+    subtitle: "Fokus pada metode, hasil, dan keteraturan praktis; memakai kepekaan pada kenyamanan untuk membuat sistem tetap manusiawi.",
+    tags: ["andal", "produktif", "terorganisir", "bisa terlalu menuntut"],
+    expert: "Te Base mengutamakan efektivitas dan fakta yang dapat dipakai, sedangkan Si Creative membantu menjaga kualitas, ritme, dan kelayakan proses sehari-hari.",
+    simple: "Kamu ingin pekerjaan selesai dengan benar dan hidup berjalan tanpa kekacauan yang sebenarnya bisa dicegah.",
+    stereotype: "Sering dianggap project manager keluarga, manusia checklist, atau orang yang datang membawa solusi dan charger cadangan.",
+    misunderstood: "Dorongan mengaturmu bisa dianggap tidak percaya pada orang, padahal kamu sering hanya tidak tahan melihat masalah yang bisa dicegah dibiarkan tumbuh.",
+    emotionalPattern: "Kamu mudah kesal pada ketidakandalan, janji kosong, proses yang boros, atau orang yang mengeluh tanpa mencoba solusi.",
+    relationshipStyle: "Kamu menghargai konsistensi, tanggung jawab, dan perhatian yang terlihat dalam tindakan. Kamu perlu orang yang membantu memberi ruang pada emosi tanpa membuat semuanya tidak efisien.",
+    loveStyle: "Kamu menunjukkan cinta lewat pelayanan, perencanaan, dan menjaga kebutuhan praktis. Kamu butuh kedekatan personal yang tidak hanya berbicara lewat tugas.",
+    blindspot: "Kamu bisa terlalu cepat memberi solusi, menuntut ritme yang sama dari semua orang, atau mengukur kepedulian dari produktivitas.",
+    advice: ["Tanya perasaan sebelum menyusun langkah.", "Bedakan standar penting dengan preferensi pribadi.", "Sisakan waktu yang tidak perlu menghasilkan apa pun."],
+  },
+  EII: {
+    title: "Pembaca nilai yang serius pada pertumbuhan manusia",
+    subtitle: "Mencari ketulusan, niat, dan kualitas hubungan; menggunakan kemungkinan untuk melihat bagaimana seseorang masih bisa berkembang.",
+    tags: ["idealis", "empatik", "reflektif", "sulit tegas"],
+    expert: "Fi Base menempatkan nilai dan hubungan personal sebagai orientasi utama, sementara Ne Creative membantu melihat potensi, alternatif, dan jalan perkembangan.",
+    simple: "Kamu cepat merasakan apakah hubungan terasa tulus. Kamu juga cenderung melihat sisi manusia yang belum selesai, bukan hanya kesalahannya saat ini.",
+    stereotype: "Sering digambarkan sebagai konselor gratis, pembaca karakter, atau orang lembut yang diam-diam punya standar moral sangat tinggi.",
+    misunderstood: "Kelembutanmu bisa dianggap tidak punya batas. Padahal kamu sering memiliki penilaian kuat, hanya tidak selalu mengatakannya secara langsung.",
+    emotionalPattern: "Kamu mudah terpicu oleh ketidakjujuran, kekejaman, penolakan emosional, atau situasi yang memaksa kamu mengkhianati nilai sendiri.",
+    relationshipStyle: "Kamu butuh ketulusan, ruang aman, dan orang yang tidak meremehkan kedalamanmu. Kamu berkembang bersama orang yang membantu mengubah nilai menjadi tindakan nyata.",
+    loveStyle: "Kamu menunjukkan cinta lewat pemahaman, dukungan, dan mengingat hal personal. Kamu butuh pasangan yang konsisten, tegas, dan tidak membuatmu menebak komitmen.",
+    blindspot: "Kamu bisa terlalu lama berharap orang berubah, menghindari konflik sampai batas terlambat, atau menyamakan niat baik dengan kemampuan nyata.",
+    advice: ["Nilai pola tindakan bersama niat.", "Ucapkan tidak sebelum kamu merasa dikhianati.", "Buat satu keputusan tegas tanpa menunggu semua orang memahami."],
+  },
+};
+
+
+const CHANNEL_LABELS: Record<string, string> = {
+  producer: "muncul spontan",
+  flexible: "mudah dipakai secara fleksibel",
+  mask: "sering dipakai sebagai tuntutan sosial",
+  threat: "mudah terasa menekan",
+  receiver: "terasa melegakan saat diberikan orang lain",
+  aspiration: "ingin dikembangkan dan diakui",
+  dismissive: "mampu tetapi tidak dianggap pusat",
+  background: "berjalan otomatis di latar",
+};
 
 const strongestObservedSignals = (result: AssessmentResult): string[] => {
   const entries = Object.entries(result.channelProfile).flatMap(([element, channels]) =>
@@ -24551,71 +25507,28 @@ const strongestObservedSignals = (result: AssessmentResult): string[] => {
     .sort((a, b) => Math.abs(b.score) - Math.abs(a.score))
     .slice(0, 4)
     .map((entry) => {
-      const direction = entry.score >= 0 ? "menguat" : "melemah";
-      return `${entry.element} pada kanal ${entry.channel} terlihat ${direction} (${entry.score.toFixed(2)}). Ini sinyal pola jawaban, bukan label mutlak.`;
+      const label = CHANNEL_LABELS[entry.channel] ?? entry.channel;
+      const direction = entry.score >= 0 ? "cukup kuat" : "cukup rendah";
+      return `${entry.element} ${label} (${direction}, ${entry.score.toFixed(2)}).`;
     });
 };
 
 const recommendationGroups = (curated: CuratedProfile): RecommendationGroup[] => [
-  {
-    title: "Buku yang mungkin membuka ruangan baru",
-    vibe: "bukan daftar wajib; ini pintu baca yang seirama dengan cara pikirmu",
-    meaning: "Judul-judul ini dipilih untuk memberi cermin, perlawanan, atau bahasa baru bagi kecenderungan tipe ini.",
-    items: curated.books,
-  },
-  {
-    title: "Film untuk merasakan strukturmu dalam bentuk cerita",
-    vibe: "menonton sebagai observasi diri",
-    meaning: "Film tidak mewakili tipe secara literal. Gunakan tokoh, konflik, dan atmosfernya untuk melihat bagian dirimu yang biasanya sulit dijelaskan.",
-    items: curated.films,
-  },
-  {
-    title: "Lanskap musik",
-    vibe: "soundtrack yang mungkin cocok dengan ritme batinmu",
-    meaning: "Rekomendasi ini berfungsi sebagai moodboard, bukan klaim bahwa semua orang bertipe sama punya selera identik.",
-    items: curated.music,
-  },
-  {
-    title: "Arah pekerjaan",
-    vibe: "tempat kemampuanmu punya fungsi nyata",
-    meaning: "Carilah bentuk pekerjaan dan budaya tim yang memberi ruang pada kekuatanmu tanpa terus-menerus menekan fungsi rentanmu.",
-    items: curated.careers,
-  },
-  {
-    title: "Tempat yang layak dijelajahi",
-    vibe: "perjalanan sebagai eksperimen identitas",
-    meaning: "Bukan negara yang pasti cocok untuk hidup, melainkan tempat yang menawarkan kontras, atmosfer, atau sistem yang bisa memperluas cara pandangmu.",
-    items: curated.destinations,
-  },
-  {
-    title: "Kosakata baru untuk dirimu",
-    vibe: "kata-kata adalah alat untuk melihat hal yang sebelumnya kabur",
-    meaning: "Pilih satu kata, cari maknanya, lalu gunakan selama seminggu untuk membaca pengalamanmu dengan lebih presisi.",
-    items: curated.words,
-  },
-  {
-    title: "Hadiah yang kemungkinan terasa personal",
-    vibe: "hadiah sebagai bukti bahwa seseorang benar-benar memperhatikan",
-    meaning: "Hadiah terbaik bukan yang paling mahal, tetapi yang menyentuh cara tipe ini menerima perhatian, ruang, kualitas, atau kemungkinan.",
-    items: curated.gifts,
-  },
-  {
-    title: "Sirkel yang membuatmu bertumbuh",
-    vibe: "bukan mencari orang identik; mencari ekosistem yang sehat",
-    meaning: "Sirkel yang baik menguatkan fungsi utamamu sekaligus memberi apa yang sulit kamu produksi sendirian.",
-    items: curated.circle,
-  },
-  {
-    title: "Eksperimen kecil setelah tes",
-    vibe: "hasil tes baru berarti ketika diuji di kehidupan nyata",
-    meaning: "Pilih satu eksperimen selama tujuh hari. Catat apa yang terasa hidup, apa yang terasa dipaksakan, dan bukti apa yang justru menyangkal hasil ini.",
-    items: curated.experiments,
-  },
+  { title: "Buku", note: "Pilih yang membuatmu berpikir, bukan cuma membenarkan dirimu.", items: curated.books },
+  { title: "Film", note: "Gunakan konflik dan tokohnya sebagai bahan refleksi, bukan label tipe.", items: curated.films },
+  { title: "Musik", note: "Moodboard yang mungkin cocok dengan ritme perhatianmu.", items: curated.music },
+  { title: "Arah kerja", note: "Fokus pada budaya kerja dan jenis masalah, bukan jabatan semata.", items: curated.careers },
+  { title: "Tempat untuk dijelajahi", note: "Rekomendasi pengalaman, bukan klaim tempat tinggal terbaik.", items: curated.destinations },
+  { title: "Kosakata baru", note: "Cari maknanya lalu pakai untuk membaca pengalamanmu lebih presisi.", items: curated.words },
+  { title: "Hadiah yang mungkin cocok", note: "Yang terasa personal biasanya lebih kuat daripada yang mahal.", items: curated.gifts },
+  { title: "Sirkel yang sehat", note: "Bukan orang yang sama persis, tetapi orang yang melengkapi tanpa mengecilkanmu.", items: curated.circle },
+  { title: "Eksperimen 7 hari", note: "Uji hasil ini di dunia nyata dan catat bukti yang mendukung maupun membantah.", items: curated.experiments },
 ];
 
 export const buildResultExperience = (type: TIM, result: AssessmentResult): ResultExperience => {
   const model = TIM_MODELS[type];
   const profile = TIM_PROFILES[type];
+  const editorial = TYPE_EDITORIAL[type];
   const curated = CURATED[type];
   const base = ELEMENT_LENS[model.positions.Base];
   const creative = ELEMENT_LENS[model.positions.Creative];
@@ -24623,239 +25536,240 @@ export const buildResultExperience = (type: TIM, result: AssessmentResult): Resu
   const vulnerable = ELEMENT_LENS[model.positions.Vulnerable];
   const suggestive = ELEMENT_LENS[model.positions.Suggestive];
   const mobilizing = ELEMENT_LENS[model.positions.Mobilizing];
-  const ignoring = ELEMENT_LENS[model.positions.Ignoring];
   const demonstrative = ELEMENT_LENS[model.positions.Demonstrative];
   const quadra = QUADRA_LENS[model.quadra];
   const tempo = TEMPERAMENT_LENS[model.temperament];
   const club = CLUB_LENS[model.club];
 
-  const doorA: ExperienceDoor = {
-    id: "A",
-    label: "Pintu A",
-    title: "Ruang Cermin: Mesin Batinmu",
-    subtitle: "Cara perhatianmu memilih apa yang terasa nyata, penting, dan layak ditanggapi.",
-    cards: [
-      {
-        title: "Algoritma inti",
-        vibe: base.vibe,
-        meaning: `Fungsi Base ${model.positions.Base} bukan sekadar kemampuan. Ia adalah kecenderungan untuk ${base.algorithm}.`,
-        body: `${base.sees}. ${profile.orientasiBase}`,
-        edge: `Sisi tajamnya: ${base.blindSpot}.`,
-        practice: `Pertanyaan editor diri: kapan kekuatan ini membantu, dan kapan ia mengambil seluruh ruangan?`,
-      },
-      {
-        title: "Cara kamu mengubah dunia",
-        vibe: creative.vibe,
-        meaning: `Fungsi Creative ${model.positions.Creative} adalah alat fleksibel yang paling mudah kamu pakai untuk mewujudkan orientasi utama.`,
-        body: `${creative.gift}. ${profile.caraCreative}`,
-        edge: `Saat terlalu aktif, alat ini bisa dipakai untuk memperbaiki semua hal bahkan ketika orang lain hanya ingin ditemani.`,
-      },
-      {
-        title: "Topeng sosial yang terlihat rapi",
-        vibe: role.vibe,
-        meaning: `Fungsi Role ${model.positions.Role} adalah bagian yang bisa kamu tampilkan karena merasa seharusnya mampu, bukan karena selalu terasa alami.`,
-        body: `${profile.roleTampilan}`,
-        edge: `Tanda kelelahan biasanya muncul ketika kamu harus mempertahankan performa ini terlalu lama tanpa kembali ke ritme asli.`,
-      },
-      {
-        title: "Kekuatan diam-diam",
-        vibe: demonstrative.vibe,
-        meaning: `Fungsi Demonstrative ${model.positions.Demonstrative} sering bekerja sangat kompeten di latar, tetapi tidak selalu kamu anggap identitas utama.`,
-        body: `${profile.kemampuanDemonstrative}`,
-        practice: `Perhatikan pujian yang membuatmu bingung karena bagimu hal itu terasa biasa saja. Di sana sering ada kompetensi latar.`,
-      },
-      {
-        title: "Ritme hidup",
-        vibe: `tempo ${model.temperament}: bukan cepat atau lambat, tetapi cara energi berubah menjadi gerak`,
-        meaning: `Temperamen ${model.temperament} menggambarkan pola umum bagaimana kamu merespons perubahan dan menggerakkan proses.`,
-        body: `Kamu cenderung ${tempo.pace}.`,
-        edge: tempo.stress,
-        practice: tempo.advice,
-      },
-      {
-        title: "Bukti yang bisa menyangkal hasil",
-        vibe: "cermin yang sehat juga menunjukkan retakan pada teorinya sendiri",
-        meaning: "Hasil terbaik bukan hasil yang terdengar paling indah, tetapi yang tetap bertahan setelah dibandingkan dengan bukti lawan.",
-        body: profile.buktiMenyangkal,
-        practice: profile.refleksi,
-      },
-    ],
-  };
-
-  const doorB: ExperienceDoor = {
-    id: "B",
-    label: "Pintu B",
-    title: "Ruang Cuaca: Peta Emosi dan Pemicu",
-    subtitle: "Emosi dibaca sebagai sinyal kebutuhan, batas, aspirasi, atau tekanan—bukan diagnosis.",
-    cards: [
-      emotionLabel(
-        "Sukacita",
-        `Kegembiraan paling hidup sering muncul ketika ${base.algorithm} bisa mengalir dan ${creative.gift}.`,
-        `Kamu terasa lebih hidup saat lingkungan memberi ruang pada ${base.sees.toLowerCase()} dan usahamu langsung punya bentuk yang terasa milikmu.`,
-      ),
-      emotionLabel(
-        "Marah",
-        `Kemarahan sering menjadi alarm bahwa orientasi Base-mu dihalangi, diremehkan, atau ruang geraknya direbut.`,
-        `${base.blocked}. Saat matang, marahmu bisa berubah menjadi batas atau keputusan; saat kewalahan, ia bisa berubah menjadi tekanan berlebih atau penarikan tajam.`,
-      ),
-      emotionLabel(
-        "Takut",
-        `Ketakutan paling spesifik sering berkaitan dengan tuntutan fungsi Vulnerable ${model.positions.Vulnerable}.`,
-        `${vulnerable.blocked}. ${profile.tuntutanPolr}`,
-      ),
-      emotionLabel(
-        "Sedih",
-        `Kesedihan bisa muncul ketika kebutuhan Suggestive ${model.positions.Suggestive} lama tidak hadir: kamu diminta terus memberi sesuatu yang justru ingin kamu terima dari dunia.`,
-        `${suggestive.restored}. Ketika kebutuhan ini tidak dipenuhi, hidup bisa terasa kering, terlalu berat, atau seperti harus kamu pecahkan sendirian.`,
-      ),
-      emotionLabel(
-        "Malu",
-        `Malu sering menempel pada fungsi Role ${model.positions.Role}: bagian yang ingin terlihat pantas tetapi takut ketahuan tidak seluwes kelihatannya.`,
-        `${role.blocked}. Responsnya bisa berupa overpreparing, membela diri, pura-pura tidak peduli, atau menghindari situasi yang akan menguji performa itu.`,
-      ),
-      emotionLabel(
-        "Iri",
-        `Iri tidak selalu buruk; kadang ia menunjukkan area Mobilizing ${model.positions.Mobilizing} yang sangat ingin berkembang dan diakui.`,
-        `${mobilizing.gift}. ${profile.areaMobilizing}`,
-      ),
-      emotionLabel(
-        "Muak",
-        `Rasa muak sering muncul ketika lingkungan memaksa nilai yang berlawanan dengan iklim quadra atau memakai informasi secara terasa palsu.`,
-        `Kamu cenderung menolak suasana yang berlawanan dengan kebutuhan ini: ${quadra.world.toLowerCase()}.`,
-      ),
-      emotionLabel(
-        "Cinta",
-        `Kamu cenderung memberi cinta lewat Creative ${model.positions.Creative}, tetapi menerima cinta paling dalam lewat Suggestive ${model.positions.Suggestive}.`,
-        `Cara memberimu: ${creative.gift}. Cara yang sering membuatmu benar-benar lega: ${profile.bantuanSuggestive}`,
-      ),
-      emotionLabel(
-        "Bosan",
-        `Kebosanan muncul ketika Base ${model.positions.Base} tidak punya objek hidup untuk diproses.`,
-        `Kamu bukan hanya kekurangan aktivitas; kamu kekurangan jenis informasi yang membuat perhatianmu merasa berguna: ${base.algorithm}.`,
-      ),
-      {
-        title: "Cara kembali ke tubuh",
-        vibe: "regulasi sebelum interpretasi",
-        meaning: "Ketika emosi terlalu penuh, jangan langsung menjadikannya kebenaran tentang dirimu atau orang lain.",
-        body: `${suggestive.restored}. Mulai dari tidur, makan, gerak, napas, jarak, atau bantuan konkret sebelum menyusun teori besar.`,
-        edge: `Jika emosi terasa ekstrem, menetap, atau mengganggu fungsi harian, hasil tipologi tidak menggantikan bantuan profesional.`,
-      },
-    ],
-  };
-
-  const doorC: ExperienceDoor = {
-    id: "C",
-    label: "Pintu C",
-    title: "Observatorium Dunia: Aturan, Politik, Agama, Ekonomi, Sosial",
-    subtitle: "Bukan ramalan ideologi. Ini lensa tentang aspek apa yang lebih cepat menarik perhatianmu.",
-    cards: [
-      {
-        title: "Cara melihat aturan",
-        vibe: `aturan sebagai sesuatu yang harus melewati filter ${model.positions.Base}–${model.positions.Creative}`,
-        meaning: "Kamu tidak otomatis menerima atau menolak aturan. Kamu menilai aturan lewat jenis informasi yang paling kamu percaya.",
-        body: `${base.rules}. Dalam praktiknya, ${creative.rules.toLowerCase()}.`,
-        edge: `Waspadai saat kamu menganggap filter pribadimu sebagai satu-satunya bentuk rasionalitas.`,
-      },
-      {
-        title: "Lensa politik",
-        vibe: quadra.vibe,
-        meaning: "Socionics tidak menentukan partai, pilihan kandidat, atau ideologi. Ia hanya bisa memberi hipotesis tentang dimensi politik yang lebih cepat kamu notice.",
-        body: `${quadra.politics}. Pada level fungsi, ${base.politics.toLowerCase()}.`,
-        edge: quadra.tension,
-      },
-      {
-        title: "Lensa agama dan yang sakral",
-        vibe: "keyakinan sebagai cara memberi bentuk pada makna, batas, komunitas, atau tindakan",
-        meaning: "Tipe tidak menentukan apakah seseorang religius, agnostik, spiritual, atau ateis. Yang mungkin berbeda adalah pintu masuk ke pengalaman makna.",
-        body: `${quadra.sacred}. Secara fungsi, ${base.religion.toLowerCase()}.`,
-      },
-      {
-        title: "Lensa ekonomi",
-        vibe: "nilai bukan hanya uang; nilai adalah apa yang dianggap layak dipertukarkan, dipelihara, dan dikembangkan",
-        meaning: "Cara memandang ekonomi dapat dipengaruhi pendidikan, kelas sosial, budaya, dan pengalaman hidup. Tipe hanya memberi satu sudut kecil.",
-        body: `${quadra.economy}. Kecenderungan Base-mu juga membuatmu ${base.economy.toLowerCase()}.`,
-      },
-      {
-        title: "Cara membaca masyarakat",
-        vibe: "siapa yang terlihat, siapa yang tidak terlihat, dan informasi apa yang dianggap penting",
-        meaning: "Setiap tipe cenderung menangkap masalah sosial melalui saluran informasi yang berbeda.",
-        body: `${base.society}. Dalam iklim ${model.quadra}, ${quadra.world.toLowerCase()}.`,
-      },
-      {
-        title: "Kekuasaan dan batas",
-        vibe: `Se berada di posisi ${Object.entries(model.positions).find(([, element]) => element === "Se")?.[0] ?? "tidak diketahui"}`,
-        meaning: "Cara berhubungan dengan kekuasaan tidak sama dengan agresivitas. Ia bisa muncul sebagai produksi tekanan, kebutuhan akan perlindungan, performa, penghindaran, atau kompetensi latar.",
-        body: ELEMENT_LENS.Se.politics,
-        edge: `Periksa apakah kamu terlalu cepat menganggap tekanan sebagai solusi, atau terlalu lama menunggu orang lain memasang batas untukmu.`,
-      },
-      {
-        title: "Pekerjaan dan kontribusi publik",
-        vibe: `${model.club}: cara kecerdasanmu ingin berguna`,
-        meaning: `Club ${model.club} adalah pengelompokan luas tentang jenis masalah yang sering terasa menarik, bukan pembatas profesi.` ,
-        body: `Kamu cenderung cocok dengan ${club.work}. Kekuatan yang mungkin tampak: ${club.strengths}.`,
-        edge: club.risk,
-      },
-      {
-        title: "Pertanyaan etis untuk dibawa pulang",
-        vibe: "dunia tidak hanya dibaca; dunia juga ikut dibentuk oleh kebiasaan perhatianmu",
-        meaning: "Setiap lensa membantu melihat sesuatu sekaligus membuat hal lain lebih mudah luput.",
-        body: `Apa yang selalu cepat kamu lihat dalam konflik publik? Siapa yang biasanya tidak masuk ke dalam modelmu? Data, aturan, kekuasaan, rasa, tubuh, waktu, kemungkinan, atau hubungan mana yang perlu sengaja kamu undang?`,
-      },
-    ],
-  };
-
-  const doorD: ExperienceDoor = {
-    id: "D",
-    label: "Pintu D",
-    title: "Laboratorium Hidup: Sirkel, Nasihat, Hadiah, dan Rekomendasi",
-    subtitle: "Bukan resep hidup. Anggap sebagai rak kemungkinan yang bisa kamu coba, tolak, atau ubah.",
-    cards: [
-      {
-        title: "Nasihat paling penting",
-        vibe: "pertumbuhan bukan menjadi tipe lain; pertumbuhan adalah memakai tipemu tanpa diperbudak olehnya",
-        meaning: "Kekuatan utama perlu wadah, fungsi rentan perlu dukungan, dan aspirasi perlu latihan yang tidak mempermalukan.",
-        body: `${profile.polaSeimbang}`,
-        edge: `${profile.polaTertekan}`,
-        practice: `${tempo.advice}`,
-      },
-      {
-        title: "Sirkel yang terasa seperti pulang",
-        vibe: quadra.circle,
-        meaning: "Sirkel terbaik tidak selalu berisi tipe yang sama. Ia memberi campuran validasi, koreksi, ketegasan, kehangatan, dan kompetensi.",
-        body: `${quadra.circle}`,
-        practice: `Cari orang yang bisa memberi Suggestive ${model.positions.Suggestive} tanpa merendahkanmu, dan menghargai Base ${model.positions.Base} tanpa menjadikannya mesin gratis.`,
-      },
-      {
-        title: "Apa yang perlu kamu hentikan",
-        vibe: "melepaskan strategi lama yang dulu menyelamatkan tetapi sekarang mengurung",
-        meaning: "Pola stres sering terlihat seperti versi ekstrem dari kekuatan atau performa berlebihan pada area yang rapuh.",
-        body: `${profile.batasPerhatian}`,
-        practice: `Tandai satu perilaku yang kamu sebut “memang aku begini” padahal sebenarnya hanya respons kelelahan.`,
-      },
-      {
-        title: "Apa yang perlu kamu izinkan",
-        vibe: "menerima bukan berarti lemah; menerima adalah bagian dari Model A",
-        meaning: `Suggestive ${model.positions.Suggestive} menunjukkan jenis bantuan yang dapat terasa melegakan ketika datang dengan cara yang tepat.`,
-        body: profile.bantuanSuggestive,
-        practice: `Coba minta bantuan itu dengan kalimat konkret, bukan menunggu orang menebaknya.`,
-      },
-      {
-        title: "Kalimat penutup pintu",
-        vibe: curated.tagline,
-        meaning: "Hasil ini seharusnya memperluas bahasa tentang dirimu, bukan mempersempit pilihan hidupmu.",
-        body: curated.opening,
-        practice: `Simpan yang terasa benar, uji yang terasa meragukan, dan buang bagian yang tidak didukung kehidupanmu.`,
-      },
-    ],
-    recommendations: recommendationGroups(curated),
-  };
+  const sections: ResultSection[] = [
+    {
+      id: "summary",
+      kicker: "Profil utama",
+      title: "Ringkasan inti",
+      intro: "Bagian paling padat untuk memahami kecenderungan utama, kesan orang, dan stereotipe yang sering beredar.",
+      cards: [
+        {
+          title: "Catatan ahli — ringkasan teori",
+          expert: editorial.expert,
+          simple: editorial.simple,
+          stereotype: editorial.stereotype,
+          misunderstood: editorial.misunderstood,
+        },
+        {
+          title: "Cara orang sering membaca kamu",
+          expert: `${profile.description} Pola ini paling masuk akal bila terlihat lintas situasi, bukan hanya saat kamu sedang stres atau menjalankan peran tertentu.`,
+          simple: `Kesan terkuatmu biasanya datang dari kombinasi ${model.positions.Base} dan ${model.positions.Creative}: ${base.algorithm}, lalu ${creative.gift.toLowerCase()}.`,
+          warning: "Kesan orang tidak selalu sama dengan motif batinmu. Gunakan contoh perilaku nyata sebelum menerima atau menolak bagian ini.",
+        },
+      ],
+    },
+    {
+      id: "thinking",
+      kicker: "Proses informasi",
+      title: "Cara berpikir dan mengambil keputusan",
+      intro: "Bukan soal pintar atau tidak. Ini tentang informasi apa yang paling cepat kamu percaya dan bagaimana kamu mengubahnya menjadi keputusan.",
+      cards: [
+        {
+          title: `Fokus utama: ${model.positions.Base}`,
+          expert: `Base ${model.positions.Base} membuat perhatianmu cenderung ${base.algorithm}. ${base.sees}.`,
+          simple: editorial.simple,
+          misunderstood: `Orang bisa hanya melihat hasil akhirnya, padahal orientasi dasarnya adalah: ${profile.orientasiBase}`,
+          warning: base.blindSpot,
+        },
+        {
+          title: `Alat fleksibel: ${model.positions.Creative}`,
+          expert: `Creative ${model.positions.Creative} biasanya menjadi alat yang mudah kamu sesuaikan untuk membantu tujuan fungsi Base.`,
+          simple: profile.caraCreative,
+          warning: `Kekuatan ini bisa berlebihan kalau kamu merasa harus selalu memperbaiki keadaan untuk orang lain.`,
+          actions: ["Tanya apa tujuan sebenarnya sebelum bergerak.", "Pisahkan kemampuan yang kamu punya dari hal yang memang perlu kamu kerjakan."],
+        },
+        {
+          title: "Aturan dan keputusan",
+          expert: `${base.rules}. Creative-mu menambah filter: ${creative.rules.toLowerCase()}.`,
+          simple: `Kamu tidak sekadar pro atau anti aturan. Kamu menilai apakah aturan sesuai dengan jenis informasi yang paling kamu percaya.`,
+          warning: "Waspadai saat filter pribadi terasa seperti satu-satunya bentuk kewarasan.",
+        },
+        {
+          title: "Ritme kerja dan belajar",
+          expert: `Temperamen ${model.temperament} cenderung ${tempo.pace}. Dalam kelompok ${model.club}, kekuatan umumnya muncul pada ${club.strengths}.`,
+          simple: club.work,
+          warning: `${tempo.stress}. ${club.risk}.`,
+          actions: [tempo.advice],
+        },
+      ],
+    },
+    {
+      id: "emotions",
+      kicker: "Pemicu dan regulasi",
+      title: "Emosi yang paling mudah aktif",
+      intro: "Ini bukan diagnosis. Bagian ini membaca kemungkinan pemicu, pola reaksi, dan kebutuhan yang sering tersembunyi di balik emosi.",
+      cards: [
+        {
+          title: "Pola emosi umum",
+          expert: editorial.emotionalPattern,
+          simple: `Emosimu cenderung lebih kuat saat orientasi ${model.positions.Base} terhambat atau kebutuhan ${model.positions.Suggestive} terlalu lama tidak terpenuhi.`,
+          warning: `Kalau emosi menetap, ekstrem, atau mengganggu hidup sehari-hari, tipologi tidak menggantikan bantuan profesional.`,
+        },
+        {
+          title: "Marah dan defensif",
+          expert: `${base.blocked}. Tekanan pada Vulnerable ${model.positions.Vulnerable} juga dapat membuatmu kaku, malu, atau ingin menghindar.`,
+          simple: profile.tuntutanPolr,
+          misunderstood: "Respons defensif tidak selalu berarti kamu tidak peduli. Kadang kamu tidak punya cara yang cukup fleksibel untuk menghadapi tuntutan itu.",
+          actions: ["Tunda respons saat harga diri sedang panas.", "Sebut kebutuhan atau batas dalam satu kalimat konkret."],
+        },
+        {
+          title: "Takut, malu, dan rasa tidak cukup",
+          expert: `Role ${model.positions.Role} sering menjadi area performa sosial, sedangkan Vulnerable ${model.positions.Vulnerable} lebih mudah terasa seperti titik yang tidak boleh disentuh.`,
+          simple: profile.roleTampilan,
+          warning: role.blocked,
+          actions: ["Bedakan tidak terlatih dengan tidak mampu.", "Minta instruksi atau dukungan spesifik, bukan menutupi semua kebingungan."],
+        },
+        {
+          title: "Cinta, lega, dan rasa diterima",
+          expert: `Kamu cenderung memberi lewat Creative ${model.positions.Creative}, tetapi merasa sangat terbantu saat Suggestive ${model.positions.Suggestive} datang dari orang yang dipercaya.`,
+          simple: profile.bantuanSuggestive,
+          actions: ["Jelaskan bentuk bantuan yang terasa melegakan.", "Jangan menguji kasih sayang lewat tebakan atau situasi buatan."],
+        },
+        {
+          title: "Iri dan ambisi tersembunyi",
+          expert: `Mobilizing ${model.positions.Mobilizing} sering menjadi area yang ingin berkembang dan mudah tersentuh oleh pengakuan yang tepat.`,
+          simple: profile.areaMobilizing,
+          warning: mobilizing.blindSpot,
+          actions: ["Ubah iri menjadi daftar kemampuan yang ingin dilatih.", "Cari mentor, bukan hanya pembanding."],
+        },
+        {
+          title: "Cara pulih",
+          expert: suggestive.restored,
+          simple: `Sebelum membuat kesimpulan besar, cek tidur, makan, kondisi tubuh, tekanan sosial, dan apakah kamu sudah mendapat dukungan yang sebenarnya kamu butuhkan.`,
+          actions: ["Kurangi stimulasi selama 20 menit.", "Pilih satu tindakan fisik sederhana.", "Hubungi satu orang yang tidak membuatmu perlu tampil sempurna."],
+        },
+      ],
+    },
+    {
+      id: "relationships",
+      kicker: "Relasi dan sirkel",
+      title: "Cara kamu dekat, menjauh, dan memilih orang",
+      intro: "Relasi sehat tidak ditentukan oleh tipe. Bagian ini membantu membaca kebutuhan komunikasi, pola kedekatan, dan orang yang mungkin melengkapi kamu.",
+      cards: [
+        {
+          title: "Gaya pertemanan",
+          expert: editorial.relationshipStyle,
+          simple: `Sirkel yang paling sehat biasanya memberi ruang pada ${model.positions.Base}, sekaligus membantu kebutuhan ${model.positions.Suggestive} tanpa membuatmu merasa tidak kompeten.`,
+          stereotype: `Stereotipe internet untuk ${type}: ${editorial.stereotype}`,
+          misunderstood: editorial.misunderstood,
+        },
+        {
+          title: "Gaya cinta",
+          expert: editorial.loveStyle,
+          simple: `Kamu cenderung memberi perhatian lewat ${model.positions.Creative} dan paling lega saat menerima dukungan ${model.positions.Suggestive}.`,
+          warning: "Chemistry, rasa aman, dan kompatibilitas hidup adalah hal berbeda. Tipe tidak menggantikan komunikasi dan batas.",
+        },
+        {
+          title: "Konflik",
+          expert: `Saat tertekan, kamu bisa kembali pada pola ${model.positions.Base} secara berlebihan atau menjadi defensif pada tuntutan ${model.positions.Vulnerable}.`,
+          simple: editorial.emotionalPattern,
+          actions: ["Jelaskan masalah tanpa menebak motif.", "Tentukan apakah kamu ingin dipahami, mencari solusi, atau memasang batas."],
+        },
+        {
+          title: "Sirkel yang mendorong pertumbuhan",
+          expert: quadra.circle,
+          simple: curated.circle.join("; "),
+          actions: ["Cari orang yang menghargai kekuatanmu tetapi tidak ikut membenarkan blind spot-mu."],
+        },
+      ],
+    },
+    {
+      id: "worldview",
+      kicker: "Aturan dan masyarakat",
+      title: "Cara melihat dunia, politik, agama, ekonomi, dan sosial",
+      intro: "Socionics tidak menentukan ideologi, agama, atau pilihan politik. Yang dibaca hanyalah aspek yang mungkin lebih cepat menarik perhatianmu.",
+      cards: [
+        {
+          title: "Aturan dan institusi",
+          expert: `${base.rules}. ${creative.rules}.`,
+          simple: "Kamu cenderung menerima aturan yang lolos filter perhatian utamamu dan lebih skeptis pada aturan yang hanya meminta kepatuhan tanpa alasan yang kamu percaya.",
+          warning: "Pendidikan, budaya, pengalaman kekuasaan, dan kondisi hidup jauh lebih besar pengaruhnya daripada tipe.",
+        },
+        {
+          title: "Politik dan kekuasaan",
+          expert: `${quadra.politics}. Dari lensa Base, ${base.politics.toLowerCase()}.`,
+          simple: "Ini bukan prediksi partai. Ini hanya memperkirakan isu apa yang mungkin lebih cepat kamu notice dalam percakapan politik.",
+          warning: quadra.tension,
+        },
+        {
+          title: "Agama dan hal yang dianggap sakral",
+          expert: `${quadra.sacred}. Dari lensa Base, ${base.religion.toLowerCase()}.`,
+          simple: "Tipe tidak menentukan apakah kamu religius, spiritual, agnostik, atau ateis. Ia hanya memberi dugaan tentang cara kamu memahami makna.",
+        },
+        {
+          title: "Ekonomi dan kerja",
+          expert: `${quadra.economy}. Base-mu juga membuatmu ${base.economy.toLowerCase()}.`,
+          simple: `Dalam kerja, ${club.work}.`,
+          warning: club.risk,
+        },
+        {
+          title: "Masyarakat dan kontribusi",
+          expert: `${base.society}. Iklim ${model.quadra} biasanya menilai hidup lewat gagasan bahwa ${quadra.world.toLowerCase()}.`,
+          simple: `Kontribusi publikmu cenderung kuat saat ${base.gift.toLowerCase()} dan ${creative.gift.toLowerCase()}.`,
+        },
+      ],
+    },
+    {
+      id: "blindspots",
+      kicker: "Bagian yang perlu dijaga",
+      title: "Blind spot dan pola sabotase diri",
+      intro: "Bagian ini sengaja tidak dibuat manis. Gunakan sebagai daftar hipotesis yang perlu diuji lewat kejadian nyata.",
+      cards: [
+        {
+          title: "Blind spot utama",
+          expert: editorial.blindspot,
+          simple: base.blindSpot,
+          warning: profile.tuntutanPolr,
+        },
+        {
+          title: "Topeng sosial",
+          expert: `Role ${model.positions.Role} dapat membuatmu terlihat lebih nyaman pada area ini daripada yang sebenarnya kamu rasakan.`,
+          simple: profile.roleTampilan,
+          warning: `Kalau dipertahankan terlalu lama, performa ini bisa berubah menjadi lelah, kaku, atau mudah tersinggung.`,
+        },
+        {
+          title: "Kekuatan yang sering kamu remehkan",
+          expert: `Demonstrative ${model.positions.Demonstrative} biasanya berjalan cukup otomatis tetapi tidak selalu dianggap penting oleh pemiliknya.`,
+          simple: profile.kemampuanDemonstrative,
+          actions: ["Catat pujian yang sering kamu anggap berlebihan.", "Gunakan kemampuan ini sebagai dukungan, bukan identitas yang harus dibuktikan."],
+        },
+        {
+          title: "Nasihat paling praktis",
+          expert: `Pertumbuhan bukan mengganti tipe. Tujuannya adalah memakai kekuatan tanpa membiarkannya mengambil semua keputusan.`,
+          simple: editorial.advice.join(" "),
+          actions: editorial.advice,
+        },
+        {
+          title: "Bukti yang dapat menyangkal hasil",
+          expert: profile.buktiMenyangkal,
+          simple: profile.refleksi,
+          warning: "Kalau bukti lawan lebih kuat dan konsisten lintas konteks, pertahankan kandidat kedua atau ulangi observasi sebelum menetapkan tipe.",
+        },
+      ],
+    },
+    {
+      id: "recommendations",
+      kicker: "Daftar pilihan personal",
+      title: "Rekomendasi setelah tes",
+      intro: "Bukan resep hidup dan bukan bukti tipe. Pilih yang terasa berguna, abaikan yang tidak cocok, lalu buat versimu sendiri.",
+      cards: [],
+      recommendations: recommendationGroups(curated),
+    },
+  ];
 
   return {
-    portalName: curated.portalName,
-    portalTagline: curated.tagline,
-    opening: curated.opening,
+    title: editorial.title,
+    subtitle: editorial.subtitle,
+    tags: editorial.tags,
+    expertSnapshot: editorial.expert,
+    internetSnapshot: editorial.stereotype,
     observedSignals: strongestObservedSignals(result),
-    doors: [doorA, doorB, doorC, doorD],
+    sections,
   };
 };
 ````

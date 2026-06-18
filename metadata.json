@@ -1,7 +1,7 @@
 {
   "name": "Socionics Dalam Diriku",
-  "description": "Aplikasi refleksi pendidikan Socionics Model A dengan bank 256 item, bahasa peserta kasual, penjelasan Artinya/Reaksi, sampling berstrata, holdout, tie-break adaptif, dan penyimpanan lokal.",
+  "description": "Aplikasi refleksi Socionics Model A dengan hasil editorial bertema perpustakaan, bank 256 item, holdout, tie-break adaptif, dan penyimpanan lokal.",
   "requestFramePermissions": [],
   "majorCapabilities": [],
-  "version": "2.0.4"
+  "version": "2.1.0"
 }

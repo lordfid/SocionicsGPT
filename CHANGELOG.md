@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.1.0 — Library Editorial Results
+
+### Bahasa hasil
+
+- Menghapus framing empat pintu dan metafora berlebihan.
+- Mengganti hasil menjadi profil editorial yang ringkas, tajam, dan mudah dipindai.
+- Menambahkan blok Catatan ahli, Versi gampangnya, Stereotipe internet, Yang sering disalahpahami, Blind spot, dan Saran praktis.
+- Menggunakan kata “kamu” secara konsisten pada halaman hasil.
+- Menjaga stereotipe sebagai bagian ringan yang diberi label jelas, bukan fakta.
+
+### UI/UX
+
+- Membangun tema perpustakaan modern dengan warna walnut, parchment, burgundy, navy, dusty plum, dan muted gold.
+- Menambahkan rak pembacaan mengambang, kartu katalog, bookmark, dan rekomendasi bergaya punggung buku.
+- Mengganti font utama menjadi Plus Jakarta Sans dan DM Serif Display.
+- Menambahkan navigasi hasil yang sticky di desktop dan horizontal di mobile.
+- Mempertahankan Bandingkan Dengan Tipe Lain dan Analisis Hubungan Antar-Tipe, lalu menyelaraskan warna dan bahasanya.
+
+### Performa dan teknis
+
+- Memecah ResultPortal menjadi lazy-loaded chunk agar bundle utama lebih kecil.
+- Mempertahankan perbaikan autosave dengan navigasi berbasis savedSession.
+- TypeScript, audit instrumen 10.000 seed, dan production build lulus.
+
 ## 2.0.3 — Editorial copy terintegrasi
 
 - Memasukkan Versi Kasual, Artinya, dan Reaksi yang lebih hidup ke proyek terbaru.
