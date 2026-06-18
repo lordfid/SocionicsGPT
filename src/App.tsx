@@ -35,7 +35,7 @@ import { TIM_MODELS, TIM_PROFILES, QUADRA_DATA, INTERTYPE_MAP, INTERTYPE_RELATIO
 import { ALL_QUESTIONS } from "./data/questions";
 import { calculateResult } from "./scoring/engine";
 import { TIM, TIMProfile, InformationElement, MeasurementChannel, ModelAPosition, Quadra, TestSession } from "./types/socionics";
-import { getOptionDetail } from "./utils/optionDetails";
+import { getCasualVersion, getOptionDetail } from "./utils/optionDetails";
 import { runInstrumentAudit } from "./audit/instrumentAudit";
 
 // Option Scale Wording by ScaleType
@@ -190,9 +190,6 @@ export default function App() {
       if (isLastQuestion) {
         finishOrExtendSession(savedSession);
       } else {
-        // Use the just-saved session as the navigation source.
-        // Calling goToQuestion with the render's stale session would overwrite
-        // the answer that was persisted a few milliseconds earlier.
         goToQuestion(savedSession.currentIndex + 1, savedSession);
       }
 
@@ -563,7 +560,7 @@ export default function App() {
             <div className="space-y-4">
               <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full border border-emerald-500/20 text-xs sm:text-sm font-mono mx-auto">
                 <Compass className="w-4 h-4" />
-                <span>ASOSIASI TIPOLOGI SOCIONICS INDONESIA</span>
+                <span>TES REFLEKSI SOCIONICS MODEL A</span>
               </div>
               <h1 className="text-4xl sm:text-6xl font-display font-extrabold tracking-tight">
                 Temukan Struktur Kognitif <br />
@@ -572,7 +569,7 @@ export default function App() {
                 </span>
               </h1>
               <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-                Asesmen psikometrik mutakhir menggunakan 64 profil kanal evaluasi, holdout verification cerdas, dan deteksi person-fit untuk mengungkap metabolisme informasi harian Anda.
+                Tes refleksi berbasis 64 kanal Model A, item verifikasi, dan pemeriksaan konsistensi untuk membaca pola jawabanmu dengan lebih hati-hati.
               </p>
             </div>
 
@@ -583,7 +580,7 @@ export default function App() {
               }`}>
                 <div className={`flex items-center justify-center space-x-3 font-medium ${theme === "dark" ? "text-emerald-400" : "text-emerald-700"}`}>
                   <Activity className="w-5 h-5 animate-pulse" />
-                  <span>Sesi Tes Anda Masih Berlangsung</span>
+                  <span>Tesmu masih tersimpan</span>
                 </div>
                 <div className={`text-xs font-mono ${theme === "dark" ? "text-slate-400" : "text-slate-600"}`}>
                   Selesai: {Object.keys(session.answers).length} / {activeQuestions.length} Soal | Mode: {session.mode.toUpperCase()}
@@ -640,13 +637,13 @@ export default function App() {
               <div className="flex items-start space-x-2">
                 <Shield className="w-5 h-5 text-emerald-500 shrink-0" />
                 <p>
-                  <strong>KEDAULATAN DATA LOKAL:</strong> Semua respon data jawaban maupun foto diolah secara murni di peranti lokal Anda. Aplikasi tidak mengirimkan data apa pun ke server mana pun.
+                  <strong>DATAMU TETAP LOKAL:</strong> Jawaban dan foto opsional diproses di perangkatmu. Aplikasi tidak mengirimkannya ke server.
                 </p>
               </div>
               <div className="flex items-start space-x-2">
                 <Info className="w-5 h-5 text-slate-500 shrink-0" />
                 <p>
-                  <strong>BATAS EVALUASI:</strong> Tes mandiri ini bertujuan untuk eksplorasi intelek diri, bukan sebagai saran medis, patokan klinis berlisensi, atau jaminan keselarasan mutlak.
+                  <strong>BATAS TES:</strong> Ini alat refleksi tipologi, bukan diagnosis, penilaian nilai diri, atau keputusan klinis.
                 </p>
               </div>
             </div>
@@ -656,13 +653,13 @@ export default function App() {
                 theme === "dark" ? "text-slate-400 hover:text-emerald-400" : "text-slate-600 hover:text-emerald-700"
               }`}>
                 <Sliders className="w-3.5 h-3.5" />
-                <span>Baca Formulasi Matematika</span>
+                <span>Lihat cara penilaian</span>
               </button>
               <button onClick={() => setCurrentPage("references")} className={`inline-flex items-center space-x-1 text-xs transition cursor-pointer ${
                 theme === "dark" ? "text-slate-400 hover:text-emerald-400" : "text-slate-600 hover:text-emerald-700"
               }`}>
                 <BookOpen className="w-3.5 h-3.5" />
-                <span>Tinjauan Rujukan Teoretis</span>
+                <span>Lihat rujukan</span>
               </button>
             </div>
           </div>
@@ -678,7 +675,7 @@ export default function App() {
             }`}>
               <div className="flex items-center space-x-2">
                 <Brain className="w-4 h-4 text-emerald-500" />
-                <span>Bagian: Evaluasi Respon Pola Pikir Baku</span>
+                <span>Bagian: Pola respons sehari-hari</span>
               </div>
               <div>
                 Pertanyaan <span className="text-emerald-500 font-bold">{session.currentIndex + 1}</span> dari <span className="font-bold">{activeQuestions.length}</span>
@@ -700,18 +697,48 @@ export default function App() {
                 theme === "dark" ? "border-slate-850 bg-slate-900/40 text-slate-100" : "border-slate-205 bg-white text-slate-800 shadow-sm"
               }`}
             >
-              {currentQuestion.scenario && (
-                <div className="space-y-2">
-                  <span className="text-[10px] uppercase tracking-wider text-emerald-500 font-mono font-bold">Bayangkan Situasi</span>
-                  <p className={`text-sm leading-relaxed font-sans ${theme === "dark" ? "text-slate-300" : "text-slate-600"}`}>{currentQuestion.scenario}</p>
-                </div>
-              )}
-              <div className={`border-t pt-6 space-y-3 ${theme === "dark" ? "border-slate-800/85" : "border-slate-100"}`}>
-                <span className="text-[10px] uppercase tracking-wider text-teal-500 font-mono font-bold">Respon atau Sikap Anda</span>
-                <p className={`text-lg sm:text-xl font-medium leading-relaxed font-sans ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
-                  {currentQuestion.statement}
+              <div className="space-y-3">
+                <span className="text-[10px] uppercase tracking-wider text-emerald-500 font-mono font-bold">
+                  Versi Kasual
+                </span>
+                <p className={`text-lg sm:text-xl font-medium leading-relaxed font-sans ${
+                  theme === "dark" ? "text-white" : "text-slate-900"
+                }`}>
+                  {getCasualVersion(currentQuestion)}
                 </p>
               </div>
+
+              <details className={`border-t pt-4 group ${
+                theme === "dark" ? "border-slate-800/85" : "border-slate-100"
+              }`}>
+                <summary className={`cursor-pointer text-xs select-none ${
+                  theme === "dark" ? "text-slate-500 hover:text-slate-300" : "text-slate-500 hover:text-slate-700"
+                }`}>
+                  Lihat kalimat asli
+                </summary>
+                <div className="mt-3 space-y-3">
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider text-emerald-500 font-mono font-bold">
+                      Situasi
+                    </span>
+                    <p className={`mt-1 text-sm leading-relaxed ${
+                      theme === "dark" ? "text-slate-400" : "text-slate-600"
+                    }`}>
+                      {currentQuestion.scenario}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider text-teal-500 font-mono font-bold">
+                      Respons atau Sikapmu
+                    </span>
+                    <p className={`mt-1 text-sm leading-relaxed ${
+                      theme === "dark" ? "text-slate-300" : "text-slate-700"
+                    }`}>
+                      {currentQuestion.statement}
+                    </p>
+                  </div>
+                </div>
+              </details>
             </div>
 
             {/* SCALE RESPONSE CHOICES BUTTONS */}
@@ -807,7 +834,7 @@ export default function App() {
               {isTransitioning && (
                 <div className="flex items-center justify-center space-x-1.5 text-xs text-emerald-500 font-medium animate-pulse py-1">
                   <Check className="w-4 h-4 shrink-0 stroke-[2.5]" />
-                  <span>Jawaban disimpan. Pindah ke soal berikutnya...</span>
+                  <span>Jawaban tersimpan. Lanjut ke soal berikutnya...</span>
                 </div>
               )}
 
@@ -833,9 +860,6 @@ export default function App() {
                       <span className={`text-xs sm:text-sm font-bold ${theme === "dark" ? "text-slate-100" : "text-slate-950"}`}>
                         {(SCALE_OPTIONS_MAP[currentQuestion.scaleType] || SCALE_OPTIONS_MAP.frequency).find(o => o.val === expandedRating)?.label || "Penjelasan"}
                       </span>
-                      <span className="text-[9px] font-mono text-slate-400 lowercase px-1.5 py-0.5 rounded border border-slate-700/30">
-                        skala: {currentQuestion.scaleType}
-                      </span>
                     </div>
                     <button
                       type="button"
@@ -857,9 +881,9 @@ export default function App() {
                           </p>
                         </div>
                         <div className="space-y-2">
-                          <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block">Contoh reaksi</span>
-                          <p className={`leading-relaxed italic ${theme === "dark" ? "text-slate-300" : "text-slate-650 font-serif"}`}>
-                            &ldquo;{detail?.reaksi}&rdquo;
+                          <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block">Reaksi</span>
+                          <p className={`leading-relaxed ${theme === "dark" ? "text-slate-300" : "text-slate-650"}`}>
+                            {detail?.reaksi}
                           </p>
                         </div>
                       </div>
@@ -903,7 +927,7 @@ export default function App() {
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 w-full border-t border-slate-200/40 dark:border-slate-800/40">
                 <button
                   onClick={() => {
-                    if (window.confirm("Ingin menjeda sesi tes? Jawaban Anda tersimpan otomatis.")) {
+                    if (window.confirm("Ingin menjeda sesi tes? Jawabanmu tersimpan otomatis.")) {
                       setCurrentPage("landing");
                     }
                   }}
