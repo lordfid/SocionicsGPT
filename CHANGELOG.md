@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.2 — Library result stage 2
+
+- Mendesain ulang cover hasil utama menjadi sampul buku editorial.
+- Menata Top 3 sebagai rak katalog kandidat.
+- Mendesain ulang generator kartu hasil agar kontrasnya aman di tema terang dan gelap.
+- Mengubah perbandingan tipe menjadi tampilan buku terbuka dua halaman.
+- Mengubah analisis hubungan menjadi laci katalog tipe dan kartu catatan relasi.
+- Memperbaiki hierarki warna, ukuran teks, dan layout mobile.
+- Mempertahankan scoring, Model A, compare, intertype, autosave, dan ekspor kartu.
+
 ## 2.1.0 — Library Editorial Results
 
 ### Bahasa hasil

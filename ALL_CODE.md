@@ -1,14 +1,6 @@
-# ALL CODE — Socionics Dalam Diriku v2.1.0
+# ALL CODE — Socionics Dalam Diriku v2.1.2
 
-Dokumen ini menggabungkan kode sumber, konfigurasi, skrip audit, dan dokumentasi versi Library Editorial Results. `node_modules`, `dist`, dan `package-lock.json` tidak disalin agar tetap terbaca.
-
-## Ringkasan upgrade
-
-- Hasil tanpa framing empat pintu dan metafora berlebihan.
-- Tujuh rak pembacaan: inti, pikiran, emosi, relasi, dunia, blind spot, rekomendasi.
-- Catatan ahli, Versi gampangnya, Stereotipe internet, salah paham, risiko, dan saran praktis.
-- Tema perpustakaan modern dengan navigasi mengambang dan rekomendasi bergaya punggung buku.
-- ResultPortal lazy-loaded dan seluruh quality gate lulus.
+Versi ini memuat perbaikan hasil tes, cover buku editorial, katalog kandidat, perbandingan tipe berbentuk buku terbuka, serta analisis relasi berbentuk laci katalog.
 
 ## Daftar file
 
@@ -33,6 +25,7 @@ Dokumen ini menggabungkan kode sumber, konfigurasi, skrip audit, dan dokumentasi
 - `docs/VALIDATION_ROADMAP.md`
 - `index.html`
 - `metadata.json`
+- `package-lock.json`
 - `package.json`
 - `scripts/audit.ts`
 - `scripts/auditLanguage.ts`
@@ -132,6 +125,16 @@ npm run check
 
 ````md
 # Changelog
+
+## 2.1.2 — Library result stage 2
+
+- Mendesain ulang cover hasil utama menjadi sampul buku editorial.
+- Menata Top 3 sebagai rak katalog kandidat.
+- Mendesain ulang generator kartu hasil agar kontrasnya aman di tema terang dan gelap.
+- Mengubah perbandingan tipe menjadi tampilan buku terbuka dua halaman.
+- Mengubah analisis hubungan menjadi laci katalog tipe dan kartu catatan relasi.
+- Memperbaiki hierarki warna, ukuran teks, dan layout mobile.
+- Mempertahankan scoring, Model A, compare, intertype, autosave, dan ekspor kartu.
 
 ## 2.1.0 — Library Editorial Results
 
@@ -20082,7 +20085,3006 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
   "description": "Aplikasi refleksi Socionics Model A dengan hasil editorial bertema perpustakaan, bank 256 item, holdout, tie-break adaptif, dan penyimpanan lokal.",
   "requestFramePermissions": [],
   "majorCapabilities": [],
-  "version": "2.1.0"
+  "version": "2.1.2"
+}
+````
+
+---
+
+## `package-lock.json`
+
+````json
+{
+  "name": "socionics-dalam-diriku",
+  "version": "2.1.2",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "socionics-dalam-diriku",
+      "version": "2.1.2",
+      "dependencies": {
+        "lucide-react": "^0.546.0",
+        "motion": "^12.23.24",
+        "react": "^19.0.1",
+        "react-dom": "^19.0.1"
+      },
+      "devDependencies": {
+        "@tailwindcss/vite": "^4.3.1",
+        "@types/node": "^22.14.0",
+        "@vitejs/plugin-react": "^5.2.0",
+        "tailwindcss": "^4.3.1",
+        "tsx": "^4.21.0",
+        "typescript": "~5.8.2",
+        "vite": "^6.2.3"
+      }
+    },
+    "node_modules/@babel/code-frame": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.29.7.tgz",
+      "integrity": "sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/helper-validator-identifier": "^7.29.7",
+        "js-tokens": "^4.0.0",
+        "picocolors": "^1.1.1"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/compat-data": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.29.7.tgz",
+      "integrity": "sha512-locTkQyKvwIEgBzVrn8693ebc97F2U8ZHjbXwDXJ5Fn2TCpNwTlKcaKLkdHop5c/icOFE7qt7Q9JC5hnKNa6Gg==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/core": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/core/-/core-7.29.7.tgz",
+      "integrity": "sha512-RgHBCvtjbOK2gXSNBNIkNoEc9qoVEtau3hj8gEqKQuL3HZAibKarWFEI3Lfm6EYKkLalOh8eSrj9b+ch9H/VBA==",
+      "dev": true,
+      "dependencies": {
+        "@babel/code-frame": "^7.29.7",
+        "@babel/generator": "^7.29.7",
+        "@babel/helper-compilation-targets": "^7.29.7",
+        "@babel/helper-module-transforms": "^7.29.7",
+        "@babel/helpers": "^7.29.7",
+        "@babel/parser": "^7.29.7",
+        "@babel/template": "^7.29.7",
+        "@babel/traverse": "^7.29.7",
+        "@babel/types": "^7.29.7",
+        "@jridgewell/remapping": "^2.3.5",
+        "convert-source-map": "^2.0.0",
+        "debug": "^4.1.0",
+        "gensync": "^1.0.0-beta.2",
+        "json5": "^2.2.3",
+        "semver": "^6.3.1"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/babel"
+      }
+    },
+    "node_modules/@babel/generator": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/generator/-/generator-7.29.7.tgz",
+      "integrity": "sha512-DkXD5OJQaAQIdZ1bt3UZdEnHAn9Imd3IVBdX03UFe+ony9Ojw5pzr9YVKGDY1jt+Gcn/FnGkNf8r+Vj5NOJWtQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/parser": "^7.29.7",
+        "@babel/types": "^7.29.7",
+        "@jridgewell/gen-mapping": "^0.3.12",
+        "@jridgewell/trace-mapping": "^0.3.28",
+        "jsesc": "^3.0.2"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/helper-compilation-targets": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-compilation-targets/-/helper-compilation-targets-7.29.7.tgz",
+      "integrity": "sha512-wem6WaBj4NaVYVdNhLPPVacES6ZJ+KBBfSkTMD3YZxbP3rm3Di85tJU5ljaUNhaOynt+Aj0xruhYuzQBt8n71g==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/compat-data": "^7.29.7",
+        "@babel/helper-validator-option": "^7.29.7",
+        "browserslist": "^4.24.0",
+        "lru-cache": "^5.1.1",
+        "semver": "^6.3.1"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/helper-globals": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-globals/-/helper-globals-7.29.7.tgz",
+      "integrity": "sha512-3nQVUAtvkKH9zahfWgw96Jc/uFOmjACE1kQz82E2lqWmHBgjzbNlsC22nuQTfahmWeQtTq5nQ/4Nnd2A1wj4zA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/helper-module-imports": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-module-imports/-/helper-module-imports-7.29.7.tgz",
+      "integrity": "sha512-ejHwrQQYcm9xnTivShn2IDOlIzInN34AXskvq9QicvCtEzq1Vzclu/tKF8Jq1Cg8JG2GL6/EmjgsCT7lXepE3g==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/traverse": "^7.29.7",
+        "@babel/types": "^7.29.7"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/helper-module-transforms": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-module-transforms/-/helper-module-transforms-7.29.7.tgz",
+      "integrity": "sha512-UPUVSyXbOh627KiCIGQSgwWzGeBKLkaJ9PJEdrngIwMSzxLR4jS4+f1f1jb7VzBbg8nFLaYotvVPFCTqdrmTAg==",
+      "dev": true,
+      "dependencies": {
+        "@babel/helper-module-imports": "^7.29.7",
+        "@babel/helper-validator-identifier": "^7.29.7",
+        "@babel/traverse": "^7.29.7"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      },
+      "peerDependencies": {
+        "@babel/core": "^7.0.0"
+      }
+    },
+    "node_modules/@babel/helper-plugin-utils": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-plugin-utils/-/helper-plugin-utils-7.29.7.tgz",
+      "integrity": "sha512-G7sHYigPY17oO5SYWnfD/0MTBwVR781S/JI643e/JhUYgVgWE/61SoW3NH9KWUKyKq5LVh3npif99Wkt6j86Jw==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/helper-string-parser": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-string-parser/-/helper-string-parser-7.29.7.tgz",
+      "integrity": "sha512-Pb5ijPrZ89GDH8223L4UP8i6QApWxs04RbPQJTeWDV0/keR2E36MeKnyr6LYmUUvqRRI+Iv87SuF1W6ErINzYw==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/helper-validator-identifier": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.29.7.tgz",
+      "integrity": "sha512-qehxGkRj55h/ff8EMaJ+cYhyaKlHIxqYDn682wQD7RNp9UujOQsHog2uS0r2vzr4pW+sXf90NeeayjcNaX3fFg==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/helper-validator-option": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helper-validator-option/-/helper-validator-option-7.29.7.tgz",
+      "integrity": "sha512-N9ZErrD+yW5geCDtBqnOoxmR8+tNKiGuxKlDpuJxfsqpa2dFcexaziGAE/qoHLiDDreVNMupxGmSoNlyvsA3gw==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/helpers": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/helpers/-/helpers-7.29.7.tgz",
+      "integrity": "sha512-1k2lAGRMfHTcwuNYcCNUmaUffmQv8KWMfh2iJUUeRlwlwH4FdNG7mfPI10NPfLHJFThE4Tyr4mv7kTNZOiPuBg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/template": "^7.29.7",
+        "@babel/types": "^7.29.7"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/parser": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/parser/-/parser-7.29.7.tgz",
+      "integrity": "sha512-hnORnjP/1P/zFEndoeX+n+t1RwWRJiJpM/jO7FW32Kn9r5+sJB2JWOdYo4L6k78j15eCwY3Gm/7364B1EMwtNg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/types": "^7.29.7"
+      },
+      "bin": {
+        "parser": "bin/babel-parser.js"
+      },
+      "engines": {
+        "node": ">=6.0.0"
+      }
+    },
+    "node_modules/@babel/plugin-transform-react-jsx-self": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-react-jsx-self/-/plugin-transform-react-jsx-self-7.29.7.tgz",
+      "integrity": "sha512-TL0hMc9xzy86VD31nUiwzd5otRAcyEPcsegCxolO0PvcXuH1v0kECe/UIznYFihpkvU5wg/jk4v0TTEFfm53fw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/helper-plugin-utils": "^7.29.7"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      },
+      "peerDependencies": {
+        "@babel/core": "^7.0.0-0"
+      }
+    },
+    "node_modules/@babel/plugin-transform-react-jsx-source": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-react-jsx-source/-/plugin-transform-react-jsx-source-7.29.7.tgz",
+      "integrity": "sha512-06IyK09H3wi4cGbhDBwp5gUGo0IKtnYa8tyTiephirPCK6fbobVGiXMMI5zLQ4aKEYP3wZ3ArU44o+8KMrSG/Q==",
+      "dev": true,
+      "dependencies": {
+        "@babel/helper-plugin-utils": "^7.29.7"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      },
+      "peerDependencies": {
+        "@babel/core": "^7.0.0-0"
+      }
+    },
+    "node_modules/@babel/template": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/template/-/template-7.29.7.tgz",
+      "integrity": "sha512-puq+Gf35oI24FeN11LkoUQFqv9uwNeWpxXZi/Ji3rRIoKAzKnxRaZ+Gkj0vKS9ZCiTESfng1N9LyOyXvo+m+Gg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/code-frame": "^7.29.7",
+        "@babel/parser": "^7.29.7",
+        "@babel/types": "^7.29.7"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/traverse": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/traverse/-/traverse-7.29.7.tgz",
+      "integrity": "sha512-EhlfNQtZ+NK22w5BM61ciuiq1m58ed33Wr1Xan//ZRTy6hgjnwyCffRYwzsGXdASJSUJ1guZILsErh1eQcl+zw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/code-frame": "^7.29.7",
+        "@babel/generator": "^7.29.7",
+        "@babel/helper-globals": "^7.29.7",
+        "@babel/parser": "^7.29.7",
+        "@babel/template": "^7.29.7",
+        "@babel/types": "^7.29.7",
+        "debug": "^4.3.1"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@babel/types": {
+      "version": "7.29.7",
+      "resolved": "https://registry.npmjs.org/@babel/types/-/types-7.29.7.tgz",
+      "integrity": "sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/helper-string-parser": "^7.29.7",
+        "@babel/helper-validator-identifier": "^7.29.7"
+      },
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/@esbuild/aix-ppc64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.25.12.tgz",
+      "integrity": "sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==",
+      "cpu": [
+        "ppc64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "aix"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/android-arm": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/android-arm/-/android-arm-0.25.12.tgz",
+      "integrity": "sha512-VJ+sKvNA/GE7Ccacc9Cha7bpS8nyzVv0jdVgwNDaR4gDMC/2TTRc33Ip8qrNYUcpkOHUT5OZ0bUcNNVZQ9RLlg==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/android-arm64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/android-arm64/-/android-arm64-0.25.12.tgz",
+      "integrity": "sha512-6AAmLG7zwD1Z159jCKPvAxZd4y/VTO0VkprYy+3N2FtJ8+BQWFXU+OxARIwA46c5tdD9SsKGZ/1ocqBS/gAKHg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/android-x64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/android-x64/-/android-x64-0.25.12.tgz",
+      "integrity": "sha512-5jbb+2hhDHx5phYR2By8GTWEzn6I9UqR11Kwf22iKbNpYrsmRB18aX/9ivc5cabcUiAT/wM+YIZ6SG9QO6a8kg==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/darwin-arm64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.25.12.tgz",
+      "integrity": "sha512-N3zl+lxHCifgIlcMUP5016ESkeQjLj/959RxxNYIthIg+CQHInujFuXeWbWMgnTo4cp5XVHqFPmpyu9J65C1Yg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/darwin-x64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.25.12.tgz",
+      "integrity": "sha512-HQ9ka4Kx21qHXwtlTUVbKJOAnmG1ipXhdWTmNXiPzPfWKpXqASVcWdnf2bnL73wgjNrFXAa3yYvBSd9pzfEIpA==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/freebsd-arm64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-arm64/-/freebsd-arm64-0.25.12.tgz",
+      "integrity": "sha512-gA0Bx759+7Jve03K1S0vkOu5Lg/85dou3EseOGUes8flVOGxbhDDh/iZaoek11Y8mtyKPGF3vP8XhnkDEAmzeg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/freebsd-x64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-x64/-/freebsd-x64-0.25.12.tgz",
+      "integrity": "sha512-TGbO26Yw2xsHzxtbVFGEXBFH0FRAP7gtcPE7P5yP7wGy7cXK2oO7RyOhL5NLiqTlBh47XhmIUXuGciXEqYFfBQ==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-arm": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm/-/linux-arm-0.25.12.tgz",
+      "integrity": "sha512-lPDGyC1JPDou8kGcywY0YILzWlhhnRjdof3UlcoqYmS9El818LLfJJc3PXXgZHrHCAKs/Z2SeZtDJr5MrkxtOw==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-arm64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.25.12.tgz",
+      "integrity": "sha512-8bwX7a8FghIgrupcxb4aUmYDLp8pX06rGh5HqDT7bB+8Rdells6mHvrFHHW2JAOPZUbnjUpKTLg6ECyzvas2AQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-ia32": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-ia32/-/linux-ia32-0.25.12.tgz",
+      "integrity": "sha512-0y9KrdVnbMM2/vG8KfU0byhUN+EFCny9+8g202gYqSSVMonbsCfLjUO+rCci7pM0WBEtz+oK/PIwHkzxkyharA==",
+      "cpu": [
+        "ia32"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-loong64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-loong64/-/linux-loong64-0.25.12.tgz",
+      "integrity": "sha512-h///Lr5a9rib/v1GGqXVGzjL4TMvVTv+s1DPoxQdz7l/AYv6LDSxdIwzxkrPW438oUXiDtwM10o9PmwS/6Z0Ng==",
+      "cpu": [
+        "loong64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-mips64el": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-mips64el/-/linux-mips64el-0.25.12.tgz",
+      "integrity": "sha512-iyRrM1Pzy9GFMDLsXn1iHUm18nhKnNMWscjmp4+hpafcZjrr2WbT//d20xaGljXDBYHqRcl8HnxbX6uaA/eGVw==",
+      "cpu": [
+        "mips64el"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-ppc64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-ppc64/-/linux-ppc64-0.25.12.tgz",
+      "integrity": "sha512-9meM/lRXxMi5PSUqEXRCtVjEZBGwB7P/D4yT8UG/mwIdze2aV4Vo6U5gD3+RsoHXKkHCfSxZKzmDssVlRj1QQA==",
+      "cpu": [
+        "ppc64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-riscv64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-riscv64/-/linux-riscv64-0.25.12.tgz",
+      "integrity": "sha512-Zr7KR4hgKUpWAwb1f3o5ygT04MzqVrGEGXGLnj15YQDJErYu/BGg+wmFlIDOdJp0PmB0lLvxFIOXZgFRrdjR0w==",
+      "cpu": [
+        "riscv64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-s390x": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-s390x/-/linux-s390x-0.25.12.tgz",
+      "integrity": "sha512-MsKncOcgTNvdtiISc/jZs/Zf8d0cl/t3gYWX8J9ubBnVOwlk65UIEEvgBORTiljloIWnBzLs4qhzPkJcitIzIg==",
+      "cpu": [
+        "s390x"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/linux-x64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.25.12.tgz",
+      "integrity": "sha512-uqZMTLr/zR/ed4jIGnwSLkaHmPjOjJvnm6TVVitAa08SLS9Z0VM8wIRx7gWbJB5/J54YuIMInDquWyYvQLZkgw==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/netbsd-arm64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-arm64/-/netbsd-arm64-0.25.12.tgz",
+      "integrity": "sha512-xXwcTq4GhRM7J9A8Gv5boanHhRa/Q9KLVmcyXHCTaM4wKfIpWkdXiMog/KsnxzJ0A1+nD+zoecuzqPmCRyBGjg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "netbsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/netbsd-x64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-x64/-/netbsd-x64-0.25.12.tgz",
+      "integrity": "sha512-Ld5pTlzPy3YwGec4OuHh1aCVCRvOXdH8DgRjfDy/oumVovmuSzWfnSJg+VtakB9Cm0gxNO9BzWkj6mtO1FMXkQ==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "netbsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/openbsd-arm64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-arm64/-/openbsd-arm64-0.25.12.tgz",
+      "integrity": "sha512-fF96T6KsBo/pkQI950FARU9apGNTSlZGsv1jZBAlcLL1MLjLNIWPBkj5NlSz8aAzYKg+eNqknrUJ24QBybeR5A==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/openbsd-x64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-x64/-/openbsd-x64-0.25.12.tgz",
+      "integrity": "sha512-MZyXUkZHjQxUvzK7rN8DJ3SRmrVrke8ZyRusHlP+kuwqTcfWLyqMOE3sScPPyeIXN/mDJIfGXvcMqCgYKekoQw==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/openharmony-arm64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/openharmony-arm64/-/openharmony-arm64-0.25.12.tgz",
+      "integrity": "sha512-rm0YWsqUSRrjncSXGA7Zv78Nbnw4XL6/dzr20cyrQf7ZmRcsovpcRBdhD43Nuk3y7XIoW2OxMVvwuRvk9XdASg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "openharmony"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/sunos-x64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/sunos-x64/-/sunos-x64-0.25.12.tgz",
+      "integrity": "sha512-3wGSCDyuTHQUzt0nV7bocDy72r2lI33QL3gkDNGkod22EsYl04sMf0qLb8luNKTOmgF/eDEDP5BFNwoBKH441w==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "sunos"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/win32-arm64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-arm64/-/win32-arm64-0.25.12.tgz",
+      "integrity": "sha512-rMmLrur64A7+DKlnSuwqUdRKyd3UE7oPJZmnljqEptesKM8wx9J8gx5u0+9Pq0fQQW8vqeKebwNXdfOyP+8Bsg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/win32-ia32": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-ia32/-/win32-ia32-0.25.12.tgz",
+      "integrity": "sha512-HkqnmmBoCbCwxUKKNPBixiWDGCpQGVsrQfJoVGYLPT41XWF8lHuE5N6WhVia2n4o5QK5M4tYr21827fNhi4byQ==",
+      "cpu": [
+        "ia32"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@esbuild/win32-x64": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.25.12.tgz",
+      "integrity": "sha512-alJC0uCZpTFrSL0CCDjcgleBXPnCrEAhTBILpeAp7M/OFgoqtAetfBzX0xM00MUsVVPpVjlPuMbREqnZCXaTnA==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/@jridgewell/gen-mapping": {
+      "version": "0.3.13",
+      "resolved": "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.13.tgz",
+      "integrity": "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/sourcemap-codec": "^1.5.0",
+        "@jridgewell/trace-mapping": "^0.3.24"
+      }
+    },
+    "node_modules/@jridgewell/remapping": {
+      "version": "2.3.5",
+      "resolved": "https://registry.npmjs.org/@jridgewell/remapping/-/remapping-2.3.5.tgz",
+      "integrity": "sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/gen-mapping": "^0.3.5",
+        "@jridgewell/trace-mapping": "^0.3.24"
+      }
+    },
+    "node_modules/@jridgewell/resolve-uri": {
+      "version": "3.1.2",
+      "resolved": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz",
+      "integrity": "sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.0.0"
+      }
+    },
+    "node_modules/@jridgewell/sourcemap-codec": {
+      "version": "1.5.5",
+      "resolved": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.5.tgz",
+      "integrity": "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@jridgewell/trace-mapping": {
+      "version": "0.3.31",
+      "resolved": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz",
+      "integrity": "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/resolve-uri": "^3.1.0",
+        "@jridgewell/sourcemap-codec": "^1.4.14"
+      }
+    },
+    "node_modules/@rolldown/pluginutils": {
+      "version": "1.0.0-rc.3",
+      "resolved": "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.0-rc.3.tgz",
+      "integrity": "sha512-eybk3TjzzzV97Dlj5c+XrBFW57eTNhzod66y9HrBlzJ6NsCrWCp/2kaPS3K9wJmurBC0Tdw4yPjXKZqlznim3Q==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@rollup/rollup-android-arm-eabi": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.62.0.tgz",
+      "integrity": "sha512-IPIQ55ythEHkfEd9jMEi32OQ7SxURsGA43JI22lj01OLZNt2NUbJX8YUHxkVWyQ6daHPNn0truF5nSj3DQp6YQ==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ]
+    },
+    "node_modules/@rollup/rollup-android-arm64": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm64/-/rollup-android-arm64-4.62.0.tgz",
+      "integrity": "sha512-M6s9cr10MibETyo8JsOkq+Lo1+lU6hcvb1MApnUql5qte/5hMEgzlN8/ReIKNfRV8rrqX50W1BX9zoUhC192RA==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ]
+    },
+    "node_modules/@rollup/rollup-darwin-arm64": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.62.0.tgz",
+      "integrity": "sha512-BqCoMoIbn0keKys+dEAdBa70EtOwV1bEsQCUgU9FdiZmmMge/Zk7LlkYGqbrdHR+Frnt0E1FOanly+rlwvvQzw==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ]
+    },
+    "node_modules/@rollup/rollup-darwin-x64": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-x64/-/rollup-darwin-x64-4.62.0.tgz",
+      "integrity": "sha512-SIMzST3VFNXDAbeIWDWiFCNM5qncUBDWaEV7NfE7oZbDt2mgfW4MvbKdbYiGOLoM32gbTv608UMd0XktEYSD7w==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ]
+    },
+    "node_modules/@rollup/rollup-freebsd-arm64": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-arm64/-/rollup-freebsd-arm64-4.62.0.tgz",
+      "integrity": "sha512-ezjfSQMP7ArdUsbBwbQIfwAlhE84I2iVnzQNCFSveqV42q+BmKlzVpf7mxv5EchLcoWU4y6/heFzVg1F+hodUQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ]
+    },
+    "node_modules/@rollup/rollup-freebsd-x64": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-x64/-/rollup-freebsd-x64-4.62.0.tgz",
+      "integrity": "sha512-9+qTWGW9AZRhnUgwtTwzNwcPlL87ngkeN0LA+q1bADvmY9aNvWaF2TFW8BZgnQPYxpDI7+rMVLivcd4V737TAQ==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-arm-gnueabihf": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-gnueabihf/-/rollup-linux-arm-gnueabihf-4.62.0.tgz",
+      "integrity": "sha512-T1dMEQhXA/jkJ/jyMIw9IovK8bSUq7A8kLIlvZTb/6YIVsp2zLavr4F3oyllHWo7eIVJRyE5n3tUjQJEbE1IuQ==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-arm-musleabihf": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-musleabihf/-/rollup-linux-arm-musleabihf-4.62.0.tgz",
+      "integrity": "sha512-2as0LgT7qQpyceQq6VUJYnumUMUrgGQCWIiDIN9DE0/tglsk6o66uCB4f3djRawAltvfCNLyZZrsqbPA6inCsA==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-arm64-gnu": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.62.0.tgz",
+      "integrity": "sha512-bVURMg+6eNN9C/yc0aVjooZcwTTtYF4YW3xta5pP0//r3o1V8gXEHXWCndj47w/HhwsFroZrFhR+6uQP5T0n0g==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-arm64-musl": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-musl/-/rollup-linux-arm64-musl-4.62.0.tgz",
+      "integrity": "sha512-Ful8pM/2yYI83PViWdFdpZhdI8HJ5qsXANe5atypbHDf+KIBBDsZsbyy8hbXnULVvW9NsTh5DHwbcBftyLTfiw==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-loong64-gnu": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-loong64-gnu/-/rollup-linux-loong64-gnu-4.62.0.tgz",
+      "integrity": "sha512-9Gp/DgrkzfUBmNPVTyPTvay+4xEP7M/clXpj3efXBcm6uTIVIgDg4rqUpqKXvLEuFRVuEpSAOkhgNeecvaZ4Cg==",
+      "cpu": [
+        "loong64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-loong64-musl": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-loong64-musl/-/rollup-linux-loong64-musl-4.62.0.tgz",
+      "integrity": "sha512-m9tsJz54LUXkSYM8+8PG81B9IKK5r+2T0clMq4QrS16xFosufU7firBDAZEsDheDs7wTlP7h3++S7lMsU955HA==",
+      "cpu": [
+        "loong64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-ppc64-gnu": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-ppc64-gnu/-/rollup-linux-ppc64-gnu-4.62.0.tgz",
+      "integrity": "sha512-3UvJ5PNVU16aJf6M3tFI24pWzAl2/ynfbyRN3ICyQajK1lSkrnVYNnLz3v04J32qKa0FczJc22zeToc0lr2A3w==",
+      "cpu": [
+        "ppc64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-ppc64-musl": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-ppc64-musl/-/rollup-linux-ppc64-musl-4.62.0.tgz",
+      "integrity": "sha512-vRWUAbYLGHBZS6Q8Msb2sfnf1fvJf+47t8l/TwOerM2qArzy+IeNMTHrYLHXh95h8MoatPHI5hhSZNs+mGXKPg==",
+      "cpu": [
+        "ppc64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-riscv64-gnu": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-gnu/-/rollup-linux-riscv64-gnu-4.62.0.tgz",
+      "integrity": "sha512-c00T5SYENHAt86cfW47URaP3Us5vLC/4QO7GYud1G5VNRffCwwCuBspwqYrriuJB+5m0WFzClCn9wed0FBjKvg==",
+      "cpu": [
+        "riscv64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-riscv64-musl": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-musl/-/rollup-linux-riscv64-musl-4.62.0.tgz",
+      "integrity": "sha512-krrCDilhXOwFkSkO3Wm9I/f9H0L92XHHwy2fwxjukxIbh0dem8gZqOW5Y8BsHrpJv5qwlRBV+Wl4ZFyRWhUpwg==",
+      "cpu": [
+        "riscv64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-s390x-gnu": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-s390x-gnu/-/rollup-linux-s390x-gnu-4.62.0.tgz",
+      "integrity": "sha512-7pfYFSTc4/rUC/FtAI0Qp6QthDBCIi6/AuP1xYqFk5vanI6KnL5dWKP60OM/05LOsbwTmIcvr6eXC4CJuJ75IA==",
+      "cpu": [
+        "s390x"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-x64-gnu": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.62.0.tgz",
+      "integrity": "sha512-7SDIalKeIpG0Ifogbbdn58HmSotYMlf23K3dCJEmiVd9Fg36Vmni82iPQec27N3wY4Bvbxftkxz6vSx9OcouTg==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-linux-x64-musl": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.62.0.tgz",
+      "integrity": "sha512-eRZevouTH2i1HeAVLqJuLnt256krQkGY0TN6WsTmsIhuzbh457HuWDMakKwmi0Cjadux983CoSr8Lim2QhUIFw==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ]
+    },
+    "node_modules/@rollup/rollup-openbsd-x64": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-openbsd-x64/-/rollup-openbsd-x64-4.62.0.tgz",
+      "integrity": "sha512-3oVS7FLGa4U1qcvao9ylGxrjXZyUQqR8UwxEcnUEyPX53O/C/mKDZegNXTdHCP+h3e6ta/f1EN38Yif1mmZHYg==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ]
+    },
+    "node_modules/@rollup/rollup-openharmony-arm64": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-openharmony-arm64/-/rollup-openharmony-arm64-4.62.0.tgz",
+      "integrity": "sha512-yTB9TgfWj5wHe5QgktAgXTLLot1gvEjl1NiPPAUiCs4oPrIWFl5V4nC3GrkNdj9LaAU4s94nVrGbGOCqUpyWsg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "openharmony"
+      ]
+    },
+    "node_modules/@rollup/rollup-win32-arm64-msvc": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-arm64-msvc/-/rollup-win32-arm64-msvc-4.62.0.tgz",
+      "integrity": "sha512-5LOhoaesY3doG1c+ac/2JtgREpKoJr5bUHH8tKY0V8di7+uSV6BwLs2PlR0/yzefGOkR+wE7ZolZphHCsyG5Rw==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ]
+    },
+    "node_modules/@rollup/rollup-win32-ia32-msvc": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-ia32-msvc/-/rollup-win32-ia32-msvc-4.62.0.tgz",
+      "integrity": "sha512-yYkWHhmbhRTWTnWos5HC4GcPQfjlzzCNbM9e/+GXrLuaBXYA3qSDR9f0Vgufd5S8yX81U8jPKp7ZnAjZFMtRnw==",
+      "cpu": [
+        "ia32"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ]
+    },
+    "node_modules/@rollup/rollup-win32-x64-gnu": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-gnu/-/rollup-win32-x64-gnu-4.62.0.tgz",
+      "integrity": "sha512-SoTb6lPg25xZlA2ibwQ++ahCCnH+FP0qmEuafMJ4gznZKOlXioKEAeJLgCrqjM98ACziXM9V1amFjICVL4IFoA==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ]
+    },
+    "node_modules/@rollup/rollup-win32-x64-msvc": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.62.0.tgz",
+      "integrity": "sha512-5L+T1fMX4RIEBoZzT0+sQ0PhTS36NULFmMXtl1TZo44TMAROIMHbZufSOjVWt/Y622BtxgxtaNOokbTDvfsrZA==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ]
+    },
+    "node_modules/@tailwindcss/node": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/node/-/node-4.3.1.tgz",
+      "integrity": "sha512-6NDaqRoAMSXD1mr/RXu0HBvNE9a2n5tHPsxu9XHLws8o4Twes5rBM2205SUUiJ9goAtadrN6xTGX0UDEwp/N4A==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/remapping": "^2.3.5",
+        "enhanced-resolve": "5.21.6",
+        "jiti": "^2.7.0",
+        "lightningcss": "1.32.0",
+        "magic-string": "^0.30.21",
+        "source-map-js": "^1.2.1",
+        "tailwindcss": "4.3.1"
+      }
+    },
+    "node_modules/@tailwindcss/oxide": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide/-/oxide-4.3.1.tgz",
+      "integrity": "sha512-yVPyo8RNkabVr3O2EhHEE0Rewu7YKzc1DhIqfL46LKveFrmu9XbDazNOJY7/GRuvw1h6u3utWnR29H/p5JPlgA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">= 20"
+      },
+      "optionalDependencies": {
+        "@tailwindcss/oxide-android-arm64": "4.3.1",
+        "@tailwindcss/oxide-darwin-arm64": "4.3.1",
+        "@tailwindcss/oxide-darwin-x64": "4.3.1",
+        "@tailwindcss/oxide-freebsd-x64": "4.3.1",
+        "@tailwindcss/oxide-linux-arm-gnueabihf": "4.3.1",
+        "@tailwindcss/oxide-linux-arm64-gnu": "4.3.1",
+        "@tailwindcss/oxide-linux-arm64-musl": "4.3.1",
+        "@tailwindcss/oxide-linux-x64-gnu": "4.3.1",
+        "@tailwindcss/oxide-linux-x64-musl": "4.3.1",
+        "@tailwindcss/oxide-wasm32-wasi": "4.3.1",
+        "@tailwindcss/oxide-win32-arm64-msvc": "4.3.1",
+        "@tailwindcss/oxide-win32-x64-msvc": "4.3.1"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-android-arm64": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-android-arm64/-/oxide-android-arm64-4.3.1.tgz",
+      "integrity": "sha512-SVlyf61g374l5cHyg8x9kf5xmLcOaxvOTsbsqDnSsDJaKOEFZ7GCvi84VAVGpxojYOs1+3K6M0UjXfqPU8vmOQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-darwin-arm64": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-darwin-arm64/-/oxide-darwin-arm64-4.3.1.tgz",
+      "integrity": "sha512-hVnWLwv+e/l7c4WKyVtHVrIPvYdqWHjRB3MDIqARynzFtnQg85kmQEFCbV9Ja0VVx4xXTIiDWY60Y7iz/iNoDA==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-darwin-x64": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-darwin-x64/-/oxide-darwin-x64-4.3.1.tgz",
+      "integrity": "sha512-Cf7abu0WVgbhU7ANgPUnSAvm7nCvMweusHb8FnaHlLfv/Caq4GYaEZg7ZImzzmjx4lIAfuS8q+eLIS7A7IzxIg==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-freebsd-x64": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-freebsd-x64/-/oxide-freebsd-x64-4.3.1.tgz",
+      "integrity": "sha512-ZZqzX2Y+GXtXXfqSfpJhDm60OoZfvLHLCgm+J7NVqgHHJjG/m9ugZI77RwTsVd4fnBJuCFP6Ae6kTJb71UdS8g==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-linux-arm-gnueabihf": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-linux-arm-gnueabihf/-/oxide-linux-arm-gnueabihf-4.3.1.tgz",
+      "integrity": "sha512-/Ah/xik0LaMYfv9DZ0S/t4pBlBNYOcqtRwusjgovHkvT8ixueWCLyJjsaF5kQIckjb4IT8Q6K6p/iPmZMixYgg==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-linux-arm64-gnu": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-gnu/-/oxide-linux-arm64-gnu-4.3.1.tgz",
+      "integrity": "sha512-gqdFoVJlw444GvpnheZLHmvTzSxI/cOUUh2KSNejQjTcYkW062SVD+En0rUgD+QV91bz1XGIGtt1HJd48xUGbQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-linux-arm64-musl": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-linux-arm64-musl/-/oxide-linux-arm64-musl-4.3.1.tgz",
+      "integrity": "sha512-Bwv9KwOvE0VKa86xPFif9b9c3Y1NxOV1P0gLti/IYaWEsQYZXDlxfGEtA8mdDZ7SG3wyNXAWYT5SIn3giL57oA==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-linux-x64-gnu": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-gnu/-/oxide-linux-x64-gnu-4.3.1.tgz",
+      "integrity": "sha512-Ymi8O8T15HYQdOUWUtTI6ldN0neHP85FC+Qz32xTcZ7iJXtem/x8ITev0o1e9e5rkqj4lONZfTRLvkmin1+tKg==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-linux-x64-musl": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-linux-x64-musl/-/oxide-linux-x64-musl-4.3.1.tgz",
+      "integrity": "sha512-M+P/91qJ6uILLw4k2G93GMDRAXj61SMvFQYt39AqvUqYgExXpLL5aepfns7sj4HiAQeolirQF9E0lzRvdf4zPQ==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-wasm32-wasi": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-wasm32-wasi/-/oxide-wasm32-wasi-4.3.1.tgz",
+      "integrity": "sha512-zsM8uOeqvVGHsAXsJxsT28ttosFahLJKCLOTUBqRAtKnVgGSRitds9T432QiT8b77Yga7JIBkulIRRlJPtYhRA==",
+      "bundleDependencies": [
+        "@napi-rs/wasm-runtime",
+        "@emnapi/core",
+        "@emnapi/runtime",
+        "@tybys/wasm-util",
+        "@emnapi/wasi-threads",
+        "tslib"
+      ],
+      "cpu": [
+        "wasm32"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "dependencies": {
+        "@emnapi/core": "^1.10.0",
+        "@emnapi/runtime": "^1.10.0",
+        "@emnapi/wasi-threads": "^1.2.1",
+        "@napi-rs/wasm-runtime": "^1.1.4",
+        "@tybys/wasm-util": "^0.10.2",
+        "tslib": "^2.8.1"
+      },
+      "engines": {
+        "node": ">=14.0.0"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-win32-arm64-msvc": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-win32-arm64-msvc/-/oxide-win32-arm64-msvc-4.3.1.tgz",
+      "integrity": "sha512-aiNvSq9BsVk8V513lDKlrCFAgf8qBMPZTpgEhInL+NwQqs97mYmupVMrPrgBBSL8Pv/0zXu9MrMF9rMun1ZeNg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/oxide-win32-x64-msvc": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/oxide-win32-x64-msvc/-/oxide-win32-x64-msvc-4.3.1.tgz",
+      "integrity": "sha512-xDEyu1rg290472FEGaKHnzyDyh5QH+AlWvsU5hMoMtPpzmKlRI0jaYKCgSHDYtaQWZOYbMaduSyCwFwY4n1HmA==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">= 20"
+      }
+    },
+    "node_modules/@tailwindcss/vite": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@tailwindcss/vite/-/vite-4.3.1.tgz",
+      "integrity": "sha512-hItDHuIIlEV61R+faXu66s1K36aTurO/Qw0e45Vskz57gXl9pWOT6eg3zmcEui6CZXddbN7zd41bwmvag4JGwQ==",
+      "dev": true,
+      "dependencies": {
+        "@tailwindcss/node": "4.3.1",
+        "@tailwindcss/oxide": "4.3.1",
+        "tailwindcss": "4.3.1"
+      },
+      "peerDependencies": {
+        "vite": "^5.2.0 || ^6 || ^7 || ^8"
+      }
+    },
+    "node_modules/@types/babel__core": {
+      "version": "7.20.5",
+      "resolved": "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.20.5.tgz",
+      "integrity": "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/parser": "^7.20.7",
+        "@babel/types": "^7.20.7",
+        "@types/babel__generator": "*",
+        "@types/babel__template": "*",
+        "@types/babel__traverse": "*"
+      }
+    },
+    "node_modules/@types/babel__generator": {
+      "version": "7.27.0",
+      "resolved": "https://registry.npmjs.org/@types/babel__generator/-/babel__generator-7.27.0.tgz",
+      "integrity": "sha512-ufFd2Xi92OAVPYsy+P4n7/U7e68fex0+Ee8gSG9KX7eo084CWiQ4sdxktvdl0bOPupXtVJPY19zk6EwWqUQ8lg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/types": "^7.0.0"
+      }
+    },
+    "node_modules/@types/babel__template": {
+      "version": "7.4.4",
+      "resolved": "https://registry.npmjs.org/@types/babel__template/-/babel__template-7.4.4.tgz",
+      "integrity": "sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/parser": "^7.1.0",
+        "@babel/types": "^7.0.0"
+      }
+    },
+    "node_modules/@types/babel__traverse": {
+      "version": "7.28.0",
+      "resolved": "https://registry.npmjs.org/@types/babel__traverse/-/babel__traverse-7.28.0.tgz",
+      "integrity": "sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@babel/types": "^7.28.2"
+      }
+    },
+    "node_modules/@types/estree": {
+      "version": "1.0.9",
+      "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.9.tgz",
+      "integrity": "sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@types/node": {
+      "version": "22.19.21",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-22.19.21.tgz",
+      "integrity": "sha512-VMeFBSCKQKmm2swI2kW51SFusDqekC6q9trBCvJ/JliDchFSuoYYKN7yVNjPthP1HKZcx3U1gI/wTcEBjEFKTA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "undici-types": "~6.21.0"
+      }
+    },
+    "node_modules/@vitejs/plugin-react": {
+      "version": "5.2.0",
+      "resolved": "https://registry.npmjs.org/@vitejs/plugin-react/-/plugin-react-5.2.0.tgz",
+      "integrity": "sha512-YmKkfhOAi3wsB1PhJq5Scj3GXMn3WvtQ/JC0xoopuHoXSdmtdStOpFrYaT1kie2YgFBcIe64ROzMYRjCrYOdYw==",
+      "dev": true,
+      "dependencies": {
+        "@babel/core": "^7.29.0",
+        "@babel/plugin-transform-react-jsx-self": "^7.27.1",
+        "@babel/plugin-transform-react-jsx-source": "^7.27.1",
+        "@rolldown/pluginutils": "1.0.0-rc.3",
+        "@types/babel__core": "^7.20.5",
+        "react-refresh": "^0.18.0"
+      },
+      "engines": {
+        "node": "^20.19.0 || >=22.12.0"
+      },
+      "peerDependencies": {
+        "vite": "^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+      }
+    },
+    "node_modules/baseline-browser-mapping": {
+      "version": "2.10.37",
+      "resolved": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.37.tgz",
+      "integrity": "sha512-girxaJ7WZssDOFhzCGZTDKoTa1gk6A1TbflaYTpykLJ4UU9Fz9kx1aREM8JCuoVHbL8X8T/mJg7w2oYSq72Oig==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "bin": {
+        "baseline-browser-mapping": "dist/cli.cjs"
+      },
+      "engines": {
+        "node": ">=6.0.0"
+      }
+    },
+    "node_modules/browserslist": {
+      "version": "4.28.2",
+      "resolved": "https://registry.npmjs.org/browserslist/-/browserslist-4.28.2.tgz",
+      "integrity": "sha512-48xSriZYYg+8qXna9kwqjIVzuQxi+KYWp2+5nCYnYKPTr0LvD89Jqk2Or5ogxz0NUMfIjhh2lIUX/LyX9B4oIg==",
+      "dev": true,
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/browserslist"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/browserslist"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "dependencies": {
+        "baseline-browser-mapping": "^2.10.12",
+        "caniuse-lite": "^1.0.30001782",
+        "electron-to-chromium": "^1.5.328",
+        "node-releases": "^2.0.36",
+        "update-browserslist-db": "^1.2.3"
+      },
+      "bin": {
+        "browserslist": "cli.js"
+      },
+      "engines": {
+        "node": "^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7"
+      }
+    },
+    "node_modules/caniuse-lite": {
+      "version": "1.0.30001799",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001799.tgz",
+      "integrity": "sha512-hG1bReV+OUU+MOqK4t/ZWI0tZOyz3rqS9XuhOUz1cIcbwBKjOyJEJuw9ER5JuNyqxNk8u/JUVbGibBOL1yrjFw==",
+      "dev": true,
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/browserslist"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/caniuse-lite"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "CC-BY-4.0"
+    },
+    "node_modules/convert-source-map": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz",
+      "integrity": "sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/debug": {
+      "version": "4.4.3",
+      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "ms": "^2.1.3"
+      },
+      "engines": {
+        "node": ">=6.0"
+      },
+      "peerDependenciesMeta": {
+        "supports-color": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/detect-libc": {
+      "version": "2.1.2",
+      "resolved": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz",
+      "integrity": "sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/electron-to-chromium": {
+      "version": "1.5.375",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.375.tgz",
+      "integrity": "sha512-ZWP5eB4BVPW/ZYo9252hQZHZ5XavtsTgpbhcmMmRwymavC5AsLWQWBPaKMeNd2LW0KGby5HPXvj7+sr4ta5j/Q==",
+      "dev": true,
+      "license": "ISC"
+    },
+    "node_modules/enhanced-resolve": {
+      "version": "5.21.6",
+      "resolved": "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.21.6.tgz",
+      "integrity": "sha512-aNnGCvbJ/RIyWo1IuhNdVjnNF+EjH9wpzpNHt+ci/m9He9LJvUN8wrCcXjp9cWsGNAuvSpVFTx/vraAFQ8qGjQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "graceful-fs": "^4.2.4",
+        "tapable": "^2.3.3"
+      },
+      "engines": {
+        "node": ">=10.13.0"
+      }
+    },
+    "node_modules/esbuild": {
+      "version": "0.25.12",
+      "resolved": "https://registry.npmjs.org/esbuild/-/esbuild-0.25.12.tgz",
+      "integrity": "sha512-bbPBYYrtZbkt6Os6FiTLCTFxvq4tt3JKall1vRwshA3fdVztsLAatFaZobhkBC8/BrPetoa0oksYoKXoG4ryJg==",
+      "dev": true,
+      "hasInstallScript": true,
+      "bin": {
+        "esbuild": "bin/esbuild"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "optionalDependencies": {
+        "@esbuild/aix-ppc64": "0.25.12",
+        "@esbuild/android-arm": "0.25.12",
+        "@esbuild/android-arm64": "0.25.12",
+        "@esbuild/android-x64": "0.25.12",
+        "@esbuild/darwin-arm64": "0.25.12",
+        "@esbuild/darwin-x64": "0.25.12",
+        "@esbuild/freebsd-arm64": "0.25.12",
+        "@esbuild/freebsd-x64": "0.25.12",
+        "@esbuild/linux-arm": "0.25.12",
+        "@esbuild/linux-arm64": "0.25.12",
+        "@esbuild/linux-ia32": "0.25.12",
+        "@esbuild/linux-loong64": "0.25.12",
+        "@esbuild/linux-mips64el": "0.25.12",
+        "@esbuild/linux-ppc64": "0.25.12",
+        "@esbuild/linux-riscv64": "0.25.12",
+        "@esbuild/linux-s390x": "0.25.12",
+        "@esbuild/linux-x64": "0.25.12",
+        "@esbuild/netbsd-arm64": "0.25.12",
+        "@esbuild/netbsd-x64": "0.25.12",
+        "@esbuild/openbsd-arm64": "0.25.12",
+        "@esbuild/openbsd-x64": "0.25.12",
+        "@esbuild/openharmony-arm64": "0.25.12",
+        "@esbuild/sunos-x64": "0.25.12",
+        "@esbuild/win32-arm64": "0.25.12",
+        "@esbuild/win32-ia32": "0.25.12",
+        "@esbuild/win32-x64": "0.25.12"
+      }
+    },
+    "node_modules/escalade": {
+      "version": "3.2.0",
+      "resolved": "https://registry.npmjs.org/escalade/-/escalade-3.2.0.tgz",
+      "integrity": "sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==",
+      "dev": true,
+      "engines": {
+        "node": ">=6"
+      }
+    },
+    "node_modules/fdir": {
+      "version": "6.5.0",
+      "resolved": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz",
+      "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=12.0.0"
+      },
+      "peerDependencies": {
+        "picomatch": "^3 || ^4"
+      },
+      "peerDependenciesMeta": {
+        "picomatch": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/framer-motion": {
+      "version": "12.40.0",
+      "resolved": "https://registry.npmjs.org/framer-motion/-/framer-motion-12.40.0.tgz",
+      "integrity": "sha512-uaBd3qC1v3KQqBEjwTUd183K6PbS+j0yR9w9VmEOLWA/tnUcSn8Xa3uck7t4dgpDoUss8xQTcj8W2L07lrnLFg==",
+      "license": "MIT",
+      "dependencies": {
+        "motion-dom": "^12.40.0",
+        "motion-utils": "^12.39.0",
+        "tslib": "^2.4.0"
+      },
+      "peerDependencies": {
+        "@emotion/is-prop-valid": "*",
+        "react": "^18.0.0 || ^19.0.0",
+        "react-dom": "^18.0.0 || ^19.0.0"
+      },
+      "peerDependenciesMeta": {
+        "@emotion/is-prop-valid": {
+          "optional": true
+        },
+        "react": {
+          "optional": true
+        },
+        "react-dom": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/fsevents": {
+      "version": "2.3.3",
+      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
+      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+      "dev": true,
+      "hasInstallScript": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
+      }
+    },
+    "node_modules/gensync": {
+      "version": "1.0.0-beta.2",
+      "resolved": "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz",
+      "integrity": "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      }
+    },
+    "node_modules/graceful-fs": {
+      "version": "4.2.11",
+      "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.11.tgz",
+      "integrity": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==",
+      "dev": true,
+      "license": "ISC"
+    },
+    "node_modules/jiti": {
+      "version": "2.7.0",
+      "resolved": "https://registry.npmjs.org/jiti/-/jiti-2.7.0.tgz",
+      "integrity": "sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==",
+      "dev": true,
+      "license": "MIT",
+      "bin": {
+        "jiti": "lib/jiti-cli.mjs"
+      }
+    },
+    "node_modules/js-tokens": {
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
+      "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/jsesc": {
+      "version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/jsesc/-/jsesc-3.1.0.tgz",
+      "integrity": "sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==",
+      "dev": true,
+      "license": "MIT",
+      "bin": {
+        "jsesc": "bin/jsesc"
+      },
+      "engines": {
+        "node": ">=6"
+      }
+    },
+    "node_modules/json5": {
+      "version": "2.2.3",
+      "resolved": "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz",
+      "integrity": "sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==",
+      "dev": true,
+      "license": "MIT",
+      "bin": {
+        "json5": "lib/cli.js"
+      },
+      "engines": {
+        "node": ">=6"
+      }
+    },
+    "node_modules/lightningcss": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss/-/lightningcss-1.32.0.tgz",
+      "integrity": "sha512-NXYBzinNrblfraPGyrbPoD19C1h9lfI/1mzgWYvXUTe414Gz/X1FD2XBZSZM7rRTrMA8JL3OtAaGifrIKhQ5yQ==",
+      "dev": true,
+      "license": "MPL-2.0",
+      "dependencies": {
+        "detect-libc": "^2.0.3"
+      },
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      },
+      "optionalDependencies": {
+        "lightningcss-android-arm64": "1.32.0",
+        "lightningcss-darwin-arm64": "1.32.0",
+        "lightningcss-darwin-x64": "1.32.0",
+        "lightningcss-freebsd-x64": "1.32.0",
+        "lightningcss-linux-arm-gnueabihf": "1.32.0",
+        "lightningcss-linux-arm64-gnu": "1.32.0",
+        "lightningcss-linux-arm64-musl": "1.32.0",
+        "lightningcss-linux-x64-gnu": "1.32.0",
+        "lightningcss-linux-x64-musl": "1.32.0",
+        "lightningcss-win32-arm64-msvc": "1.32.0",
+        "lightningcss-win32-x64-msvc": "1.32.0"
+      }
+    },
+    "node_modules/lightningcss-android-arm64": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-android-arm64/-/lightningcss-android-arm64-1.32.0.tgz",
+      "integrity": "sha512-YK7/ClTt4kAK0vo6w3X+Pnm0D2cf2vPHbhOXdoNti1Ga0al1P4TBZhwjATvjNwLEBCnKvjJc2jQgHXH0NEwlAg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-darwin-arm64": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.32.0.tgz",
+      "integrity": "sha512-RzeG9Ju5bag2Bv1/lwlVJvBE3q6TtXskdZLLCyfg5pt+HLz9BqlICO7LZM7VHNTTn/5PRhHFBSjk5lc4cmscPQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-darwin-x64": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.32.0.tgz",
+      "integrity": "sha512-U+QsBp2m/s2wqpUYT/6wnlagdZbtZdndSmut/NJqlCcMLTWp5muCrID+K5UJ6jqD2BFshejCYXniPDbNh73V8w==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-freebsd-x64": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-freebsd-x64/-/lightningcss-freebsd-x64-1.32.0.tgz",
+      "integrity": "sha512-JCTigedEksZk3tHTTthnMdVfGf61Fky8Ji2E4YjUTEQX14xiy/lTzXnu1vwiZe3bYe0q+SpsSH/CTeDXK6WHig==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-linux-arm-gnueabihf": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm-gnueabihf/-/lightningcss-linux-arm-gnueabihf-1.32.0.tgz",
+      "integrity": "sha512-x6rnnpRa2GL0zQOkt6rts3YDPzduLpWvwAF6EMhXFVZXD4tPrBkEFqzGowzCsIWsPjqSK+tyNEODUBXeeVHSkw==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-linux-arm64-gnu": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-1.32.0.tgz",
+      "integrity": "sha512-0nnMyoyOLRJXfbMOilaSRcLH3Jw5z9HDNGfT/gwCPgaDjnx0i8w7vBzFLFR1f6CMLKF8gVbebmkUN3fa/kQJpQ==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-linux-arm64-musl": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-1.32.0.tgz",
+      "integrity": "sha512-UpQkoenr4UJEzgVIYpI80lDFvRmPVg6oqboNHfoH4CQIfNA+HOrZ7Mo7KZP02dC6LjghPQJeBsvXhJod/wnIBg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-linux-x64-gnu": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.32.0.tgz",
+      "integrity": "sha512-V7Qr52IhZmdKPVr+Vtw8o+WLsQJYCTd8loIfpDaMRWGUZfBOYEJeyJIkqGIDMZPwPx24pUMfwSxxI8phr/MbOA==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-linux-x64-musl": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.32.0.tgz",
+      "integrity": "sha512-bYcLp+Vb0awsiXg/80uCRezCYHNg1/l3mt0gzHnWV9XP1W5sKa5/TCdGWaR/zBM2PeF/HbsQv/j2URNOiVuxWg==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-win32-arm64-msvc": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-win32-arm64-msvc/-/lightningcss-win32-arm64-msvc-1.32.0.tgz",
+      "integrity": "sha512-8SbC8BR40pS6baCM8sbtYDSwEVQd4JlFTOlaD3gWGHfThTcABnNDBda6eTZeqbofalIJhFx0qKzgHJmcPTnGdw==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lightningcss-win32-x64-msvc": {
+      "version": "1.32.0",
+      "resolved": "https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.32.0.tgz",
+      "integrity": "sha512-Amq9B/SoZYdDi1kFrojnoqPLxYhQ4Wo5XiL8EVJrVsB8ARoC1PWW6VGtT0WKCemjy8aC+louJnjS7U18x3b06Q==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MPL-2.0",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">= 12.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/parcel"
+      }
+    },
+    "node_modules/lru-cache": {
+      "version": "5.1.1",
+      "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-5.1.1.tgz",
+      "integrity": "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==",
+      "dev": true,
+      "dependencies": {
+        "yallist": "^3.0.2"
+      }
+    },
+    "node_modules/lucide-react": {
+      "version": "0.546.0",
+      "resolved": "https://registry.npmjs.org/lucide-react/-/lucide-react-0.546.0.tgz",
+      "integrity": "sha512-Z94u6fKT43lKeYHiVyvyR8fT7pwCzDu7RyMPpTvh054+xahSgj4HFQ+NmflvzdXsoAjYGdCguGaFKYuvq0ThCQ==",
+      "license": "ISC",
+      "peerDependencies": {
+        "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+      }
+    },
+    "node_modules/magic-string": {
+      "version": "0.30.21",
+      "resolved": "https://registry.npmjs.org/magic-string/-/magic-string-0.30.21.tgz",
+      "integrity": "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/sourcemap-codec": "^1.5.5"
+      }
+    },
+    "node_modules/motion": {
+      "version": "12.40.0",
+      "resolved": "https://registry.npmjs.org/motion/-/motion-12.40.0.tgz",
+      "integrity": "sha512-yjrHUrBFW6kQvjJwRsoiPSAhC5tRwRqNGJWmiJ4CrGnbKp0V88AdzkhBmDoqIsIPfarOe0Uddd37Xq43/gIocA==",
+      "license": "MIT",
+      "dependencies": {
+        "framer-motion": "^12.40.0",
+        "tslib": "^2.4.0"
+      },
+      "peerDependencies": {
+        "@emotion/is-prop-valid": "*",
+        "react": "^18.0.0 || ^19.0.0",
+        "react-dom": "^18.0.0 || ^19.0.0"
+      },
+      "peerDependenciesMeta": {
+        "@emotion/is-prop-valid": {
+          "optional": true
+        },
+        "react": {
+          "optional": true
+        },
+        "react-dom": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/motion-dom": {
+      "version": "12.40.0",
+      "resolved": "https://registry.npmjs.org/motion-dom/-/motion-dom-12.40.0.tgz",
+      "integrity": "sha512-HxU3ZaBwNPVQUBQf1xxgq+7JrPNZvjLVxgbpEZL7RrWJnsxOf0/OM+yrHG9ogLQ31Do/r57Oz2gQWPK+6q62mg==",
+      "license": "MIT",
+      "dependencies": {
+        "motion-utils": "^12.39.0"
+      }
+    },
+    "node_modules/motion-utils": {
+      "version": "12.39.0",
+      "resolved": "https://registry.npmjs.org/motion-utils/-/motion-utils-12.39.0.tgz",
+      "integrity": "sha512-8nadJAJjTtqRkmRF36FoJTrywK9nnFmnPwnSMyxaOCU7GDjN9RTMJIxx9De8ErM+vpPhMccr/6fo5WciyQLnMQ==",
+      "license": "MIT"
+    },
+    "node_modules/ms": {
+      "version": "2.1.3",
+      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/nanoid": {
+      "version": "3.3.12",
+      "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.12.tgz",
+      "integrity": "sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==",
+      "dev": true,
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "bin": {
+        "nanoid": "bin/nanoid.cjs"
+      },
+      "engines": {
+        "node": "^10 || ^12 || ^13.7 || ^14 || >=15.0.1"
+      }
+    },
+    "node_modules/node-releases": {
+      "version": "2.0.47",
+      "resolved": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.47.tgz",
+      "integrity": "sha512-Uzmd6LXpouKo8EUK68IjH4+E01w/hXyV3R3g/geCJo+rXLNfh1xucB+LOzYEOQPSiUK3h/xZf0cQGcSsmyL2Og==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/picocolors": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
+      "dev": true,
+      "license": "ISC"
+    },
+    "node_modules/picomatch": {
+      "version": "4.0.4",
+      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz",
+      "integrity": "sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/jonschlinkert"
+      }
+    },
+    "node_modules/postcss": {
+      "version": "8.5.15",
+      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.15.tgz",
+      "integrity": "sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==",
+      "dev": true,
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/postcss/"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/postcss"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "nanoid": "^3.3.12",
+        "picocolors": "^1.1.1",
+        "source-map-js": "^1.2.1"
+      },
+      "engines": {
+        "node": "^10 || ^12 || >=14"
+      }
+    },
+    "node_modules/react": {
+      "version": "19.2.7",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.2.7.tgz",
+      "integrity": "sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/react-dom": {
+      "version": "19.2.7",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.7.tgz",
+      "integrity": "sha512-t0BRVXvbiE/o20Hfw669rLbMCDWtYZLvmJigy2f0MxsXF+71pxhR3xOkspmsO8h3ZlNzyibAmtCa3l4lYKk6gQ==",
+      "license": "MIT",
+      "dependencies": {
+        "scheduler": "^0.27.0"
+      },
+      "peerDependencies": {
+        "react": "^19.2.7"
+      }
+    },
+    "node_modules/react-refresh": {
+      "version": "0.18.0",
+      "resolved": "https://registry.npmjs.org/react-refresh/-/react-refresh-0.18.0.tgz",
+      "integrity": "sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/rollup": {
+      "version": "4.62.0",
+      "resolved": "https://registry.npmjs.org/rollup/-/rollup-4.62.0.tgz",
+      "integrity": "sha512-nc72Wgq62I7rtDV4izT5/aaS0zxy3kttkinf9586ApknY3jZO9NYsmtc24fUckA0X7Q2v+ML4a15pdUlV5V/jA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@types/estree": "1.0.9"
+      },
+      "bin": {
+        "rollup": "dist/bin/rollup"
+      },
+      "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=8.0.0"
+      },
+      "optionalDependencies": {
+        "@rollup/rollup-android-arm-eabi": "4.62.0",
+        "@rollup/rollup-android-arm64": "4.62.0",
+        "@rollup/rollup-darwin-arm64": "4.62.0",
+        "@rollup/rollup-darwin-x64": "4.62.0",
+        "@rollup/rollup-freebsd-arm64": "4.62.0",
+        "@rollup/rollup-freebsd-x64": "4.62.0",
+        "@rollup/rollup-linux-arm-gnueabihf": "4.62.0",
+        "@rollup/rollup-linux-arm-musleabihf": "4.62.0",
+        "@rollup/rollup-linux-arm64-gnu": "4.62.0",
+        "@rollup/rollup-linux-arm64-musl": "4.62.0",
+        "@rollup/rollup-linux-loong64-gnu": "4.62.0",
+        "@rollup/rollup-linux-loong64-musl": "4.62.0",
+        "@rollup/rollup-linux-ppc64-gnu": "4.62.0",
+        "@rollup/rollup-linux-ppc64-musl": "4.62.0",
+        "@rollup/rollup-linux-riscv64-gnu": "4.62.0",
+        "@rollup/rollup-linux-riscv64-musl": "4.62.0",
+        "@rollup/rollup-linux-s390x-gnu": "4.62.0",
+        "@rollup/rollup-linux-x64-gnu": "4.62.0",
+        "@rollup/rollup-linux-x64-musl": "4.62.0",
+        "@rollup/rollup-openbsd-x64": "4.62.0",
+        "@rollup/rollup-openharmony-arm64": "4.62.0",
+        "@rollup/rollup-win32-arm64-msvc": "4.62.0",
+        "@rollup/rollup-win32-ia32-msvc": "4.62.0",
+        "@rollup/rollup-win32-x64-gnu": "4.62.0",
+        "@rollup/rollup-win32-x64-msvc": "4.62.0",
+        "fsevents": "~2.3.2"
+      }
+    },
+    "node_modules/scheduler": {
+      "version": "0.27.0",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz",
+      "integrity": "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==",
+      "license": "MIT"
+    },
+    "node_modules/semver": {
+      "version": "6.3.1",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz",
+      "integrity": "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==",
+      "dev": true,
+      "bin": {
+        "semver": "bin/semver.js"
+      }
+    },
+    "node_modules/source-map-js": {
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz",
+      "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==",
+      "dev": true,
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/tailwindcss": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.3.1.tgz",
+      "integrity": "sha512-hk+TB1m+K8CYNrP6rjQaq/Y+4Zylwpa87mLYBKCunwnnQ9p+fHb7kmSfGqyEJoxF/O6CDyABWVFEafNSYKll+Q==",
+      "dev": true
+    },
+    "node_modules/tapable": {
+      "version": "2.3.3",
+      "resolved": "https://registry.npmjs.org/tapable/-/tapable-2.3.3.tgz",
+      "integrity": "sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==",
+      "dev": true,
+      "engines": {
+        "node": ">=6"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/webpack"
+      }
+    },
+    "node_modules/tinyglobby": {
+      "version": "0.2.17",
+      "resolved": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz",
+      "integrity": "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==",
+      "dev": true,
+      "dependencies": {
+        "fdir": "^6.5.0",
+        "picomatch": "^4.0.4"
+      },
+      "engines": {
+        "node": ">=12.0.0"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/SuperchupuDev"
+      }
+    },
+    "node_modules/tslib": {
+      "version": "2.8.1",
+      "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz",
+      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==",
+      "license": "0BSD"
+    },
+    "node_modules/tsx": {
+      "version": "4.22.4",
+      "resolved": "https://registry.npmjs.org/tsx/-/tsx-4.22.4.tgz",
+      "integrity": "sha512-X8EX+XV4QR5xCsrgxaED954zTDfY8KqlDtskKEL0cHhyS/P8b4IFOvGDQpsC9Q1XnLq915wEfwwY/zzskCtmhg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "esbuild": "~0.28.0"
+      },
+      "bin": {
+        "tsx": "dist/cli.mjs"
+      },
+      "engines": {
+        "node": ">=18.0.0"
+      },
+      "optionalDependencies": {
+        "fsevents": "~2.3.3"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/aix-ppc64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.28.1.tgz",
+      "integrity": "sha512-Svl7tq8k/08+p6CXPpRjQ1fKX+1odH/BQbb48fV6fj3CWHhsoIOoY87w1oHXm0qEpkIK3ZfVgp0hed3XBXzXMQ==",
+      "cpu": [
+        "ppc64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "aix"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/android-arm": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/android-arm/-/android-arm-0.28.1.tgz",
+      "integrity": "sha512-0k2F129Xdio1TdJfzJ8sy1Q47vUD2NnwdhiAf7drUN1EBTfPf4hsFCtmMgu/6m8JSzsBrlmVjudMBQqOfG8usQ==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/android-arm64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/android-arm64/-/android-arm64-0.28.1.tgz",
+      "integrity": "sha512-34EGEbCIAgosYz6goLcopX6Mo7NyGv9tfwEM2/7Ce2VcVRk568iSvniGWcUXIy7wEDR1wzolcxcriFVrWYcwBg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/android-x64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/android-x64/-/android-x64-0.28.1.tgz",
+      "integrity": "sha512-dbwY7ltSMDWsRatcRpCnES4F+im88OCUgGZjy52shC7GqHRE/cYlxNbB4Z4UpJswpcc4Qxd2oE/ufM0p61IKng==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/darwin-arm64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.28.1.tgz",
+      "integrity": "sha512-TZbWkQY7kvTAXbXUT7uVACR5cMHsDiSz9z7ZKAX/RTq/WJEk3QyRr0wZpNhBDX+/0CtdqUIJlOiodQcta6tY3Q==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/darwin-x64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.28.1.tgz",
+      "integrity": "sha512-zfdzgK9ACBNZLI/CyHTOx81SyNbM6YXn7rxSgX97VjyiPl9W1i4Ka4fgKECEoFCKGpvBj5qArWIGgQjOwkgskQ==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/freebsd-arm64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-arm64/-/freebsd-arm64-0.28.1.tgz",
+      "integrity": "sha512-wG2EA8ENdEI0qhkSZMjfqrdY+ziCYCPMmtZjjIwOmXFjmyzEHn+UUxk5of+SYsjtfs3VpnlC7QLzSI5hY/rOAw==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/freebsd-x64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-x64/-/freebsd-x64-0.28.1.tgz",
+      "integrity": "sha512-i7dZ9vQgnvSCzi/rYCXNgtF/U+eKZNJBzu3eTQbRgHnM7tNSizLOkRFAl3qzVc/Op/u5YkHHa4pf/3DOYHthLQ==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-arm": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm/-/linux-arm-0.28.1.tgz",
+      "integrity": "sha512-qVXBOHQS+d5Y722GwJzJUtOLlX7km3CraOaGormF1pDtPd2C/l1SHRPgjLunLGe51Sh5YYWKMFDyV4SxgMQYTQ==",
+      "cpu": [
+        "arm"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-arm64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.28.1.tgz",
+      "integrity": "sha512-yHs+0uc8+nvEAfAfxrWQKK5peSNzBc4PegcMO0EJ2hT71uA7vB8Ihg2e77R2P7SG5uYjPbHlLLmve4LLLRCf0g==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-ia32": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-ia32/-/linux-ia32-0.28.1.tgz",
+      "integrity": "sha512-d1z4ZuP0ajrfz/FhGT4vv278rX8KnPPJx8i5+AtK7TYbx9Le9F1hyzurZpkEyjkGa9dUGhQow4C1NmeGvqxN2w==",
+      "cpu": [
+        "ia32"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-loong64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-loong64/-/linux-loong64-0.28.1.tgz",
+      "integrity": "sha512-M5sRjUVZrkm1OAPR3dlOYzNmN+loZKGVi1VUQGrwuqLcbR6qeAz+famMhjASeH3YVKvZz+zT1jlh/keC3Rj/lg==",
+      "cpu": [
+        "loong64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-mips64el": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-mips64el/-/linux-mips64el-0.28.1.tgz",
+      "integrity": "sha512-mRObBZeHh2OxcBFPWE/FjylkRgZdYuiTR3vaTozquCGOH14iP9oN4x4Ge81CoIDYQrXmIxpFumJBu5MtZpnQJQ==",
+      "cpu": [
+        "mips64el"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-ppc64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-ppc64/-/linux-ppc64-0.28.1.tgz",
+      "integrity": "sha512-slScBsMAb3GFDcdrCgLwZtPYRoH2H/youv10QiZyRjmsP48fznoveWytSgCI/R0ZcUgpc0ZhIUEx6LHts8yrfQ==",
+      "cpu": [
+        "ppc64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-riscv64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-riscv64/-/linux-riscv64-0.28.1.tgz",
+      "integrity": "sha512-kw0owk1o0GFETUJyW0jc0G4Yzs0BHZn0JDZ8JRT088vjJYX777BAs1fDGxAC+q831qOs2DTC96mNsG2opdfyyQ==",
+      "cpu": [
+        "riscv64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-s390x": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-s390x/-/linux-s390x-0.28.1.tgz",
+      "integrity": "sha512-/lAIjX8aYFRByhh6L5rYtPEDRqa9de/4V/juOXcta5frjvzXO4/sqEtyytse0g3zZFuWu5cDN0MkLz2qRDD2Ag==",
+      "cpu": [
+        "s390x"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/linux-x64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.28.1.tgz",
+      "integrity": "sha512-u/anNYF2mmVOEDwLtnQ1wOr3EZ9sTNGLWrsYGYwHWzGA3Si84IOkHXlbWTD1NB+9/1lcnweYKO54uhxZydNzfA==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/netbsd-arm64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-arm64/-/netbsd-arm64-0.28.1.tgz",
+      "integrity": "sha512-oks0DYbLwWMmaakTsCb+zL4E+aHRVLom9IJZOAthMQEPiQmydXHkziYEsGYRx0uNV/IjEKGAV941JzH02pflqw==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "netbsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/netbsd-x64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-x64/-/netbsd-x64-0.28.1.tgz",
+      "integrity": "sha512-aeL6lAnN89Hz43Mlh1G8ARasbuoYvSITDEx0tHh5b7jJnHcssqgjy9Yx430GDpmCa6OyrKoS0aNRjKundRizGg==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "netbsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/openbsd-arm64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-arm64/-/openbsd-arm64-0.28.1.tgz",
+      "integrity": "sha512-MEFJe5C3R8pwXdZ5Y21oo6m7ePiS0d9pWucn99O/wvyJZChoIQKrQDxKrGeW8F5+T0okTHesAmDeiHDTIq0V/Q==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/openbsd-x64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-x64/-/openbsd-x64-0.28.1.tgz",
+      "integrity": "sha512-i/ZLIOafE0Z8cI/XANJAixoJL/uRAoS2xOA3rb0xN+KK0K177cMAsQYkzHtBrtMXAKuAc7HGgcWiZ/sRC1Nxgw==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/openharmony-arm64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/openharmony-arm64/-/openharmony-arm64-0.28.1.tgz",
+      "integrity": "sha512-ge+Z7EXFNt2BO1oAMsVpiQ8EwndV9i1xXerAeTIK7AtPs3bKFXQM7nlRxDSIUIMeueR1CNXxqztLzdNeReKBJg==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "openharmony"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/sunos-x64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/sunos-x64/-/sunos-x64-0.28.1.tgz",
+      "integrity": "sha512-BEjgtECkL3vY+SaSQ6nzVfiALUeFxpawyp8Jmf5PtYhf1Ug40N1h/hxlhts+f1FvSvarEigdxS3BlSMI2PJLcQ==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "sunos"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/win32-arm64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-arm64/-/win32-arm64-0.28.1.tgz",
+      "integrity": "sha512-lCv9eK/H6ZJWbE7bh2nw54CZ9M2nupBxJcTsdk/QQnWkdSjKGuxmmH8/GWrlT1eMmZfn4dGcCjRte397WqfQXA==",
+      "cpu": [
+        "arm64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/win32-ia32": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-ia32/-/win32-ia32-0.28.1.tgz",
+      "integrity": "sha512-zvb/mB2bSCoJOpoCBgYKKpX6YM6mJBlBUVUtVj41DlZJVEB6/0CKlRYxP5wWl1C1ILiCoAU5wZZ4q1P3qeS6Eg==",
+      "cpu": [
+        "ia32"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/@esbuild/win32-x64": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.28.1.tgz",
+      "integrity": "sha512-bm4Mowrv+GXMlpWX++EcXw/iLyd1o3+bJkC2DkWXYVvgZCqD/bSj9ctZeAMC3cIxgjRVR2Dufaiu4YPxr5gW1A==",
+      "cpu": [
+        "x64"
+      ],
+      "dev": true,
+      "license": "MIT",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "engines": {
+        "node": ">=18"
+      }
+    },
+    "node_modules/tsx/node_modules/esbuild": {
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/esbuild/-/esbuild-0.28.1.tgz",
+      "integrity": "sha512-HrJrvZv5ayxBzPfwphOoNzkzOIIlifzk0KJrGK2c8R4+LKpMtpYLQeUdjnwjWv/LZlkH2laZk+4w78pi99D4Vw==",
+      "dev": true,
+      "hasInstallScript": true,
+      "bin": {
+        "esbuild": "bin/esbuild"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "optionalDependencies": {
+        "@esbuild/aix-ppc64": "0.28.1",
+        "@esbuild/android-arm": "0.28.1",
+        "@esbuild/android-arm64": "0.28.1",
+        "@esbuild/android-x64": "0.28.1",
+        "@esbuild/darwin-arm64": "0.28.1",
+        "@esbuild/darwin-x64": "0.28.1",
+        "@esbuild/freebsd-arm64": "0.28.1",
+        "@esbuild/freebsd-x64": "0.28.1",
+        "@esbuild/linux-arm": "0.28.1",
+        "@esbuild/linux-arm64": "0.28.1",
+        "@esbuild/linux-ia32": "0.28.1",
+        "@esbuild/linux-loong64": "0.28.1",
+        "@esbuild/linux-mips64el": "0.28.1",
+        "@esbuild/linux-ppc64": "0.28.1",
+        "@esbuild/linux-riscv64": "0.28.1",
+        "@esbuild/linux-s390x": "0.28.1",
+        "@esbuild/linux-x64": "0.28.1",
+        "@esbuild/netbsd-arm64": "0.28.1",
+        "@esbuild/netbsd-x64": "0.28.1",
+        "@esbuild/openbsd-arm64": "0.28.1",
+        "@esbuild/openbsd-x64": "0.28.1",
+        "@esbuild/openharmony-arm64": "0.28.1",
+        "@esbuild/sunos-x64": "0.28.1",
+        "@esbuild/win32-arm64": "0.28.1",
+        "@esbuild/win32-ia32": "0.28.1",
+        "@esbuild/win32-x64": "0.28.1"
+      }
+    },
+    "node_modules/typescript": {
+      "version": "5.8.3",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.8.3.tgz",
+      "integrity": "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "bin": {
+        "tsc": "bin/tsc",
+        "tsserver": "bin/tsserver"
+      },
+      "engines": {
+        "node": ">=14.17"
+      }
+    },
+    "node_modules/undici-types": {
+      "version": "6.21.0",
+      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz",
+      "integrity": "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/update-browserslist-db": {
+      "version": "1.2.3",
+      "resolved": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.2.3.tgz",
+      "integrity": "sha512-Js0m9cx+qOgDxo0eMiFGEueWztz+d4+M3rGlmKPT+T4IS/jP4ylw3Nwpu6cpTTP8R1MAC1kF4VbdLt3ARf209w==",
+      "dev": true,
+      "funding": [
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/browserslist"
+        },
+        {
+          "type": "tidelift",
+          "url": "https://tidelift.com/funding/github/npm/browserslist"
+        },
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/ai"
+        }
+      ],
+      "license": "MIT",
+      "dependencies": {
+        "escalade": "^3.2.0",
+        "picocolors": "^1.1.1"
+      },
+      "bin": {
+        "update-browserslist-db": "cli.js"
+      },
+      "peerDependencies": {
+        "browserslist": ">= 4.21.0"
+      }
+    },
+    "node_modules/vite": {
+      "version": "6.4.3",
+      "resolved": "https://registry.npmjs.org/vite/-/vite-6.4.3.tgz",
+      "integrity": "sha512-NTKlcQjlAK7MlQoyb6LgaqHc8sso/pVyUJYWMws3jg21uTJw/LddqIFPcPqP6PzpgbIcZyKI85sFE4HBrQDA8A==",
+      "dev": true,
+      "dependencies": {
+        "esbuild": "^0.25.0",
+        "fdir": "^6.4.4",
+        "picomatch": "^4.0.2",
+        "postcss": "^8.5.3",
+        "rollup": "^4.34.9",
+        "tinyglobby": "^0.2.13"
+      },
+      "bin": {
+        "vite": "bin/vite.js"
+      },
+      "engines": {
+        "node": "^18.0.0 || ^20.0.0 || >=22.0.0"
+      },
+      "funding": {
+        "url": "https://github.com/vitejs/vite?sponsor=1"
+      },
+      "optionalDependencies": {
+        "fsevents": "~2.3.3"
+      },
+      "peerDependencies": {
+        "@types/node": "^18.0.0 || ^20.0.0 || >=22.0.0",
+        "jiti": ">=1.21.0",
+        "less": "*",
+        "lightningcss": "^1.21.0",
+        "sass": "*",
+        "sass-embedded": "*",
+        "stylus": "*",
+        "sugarss": "*",
+        "terser": "^5.16.0",
+        "tsx": "^4.8.1",
+        "yaml": "^2.4.2"
+      },
+      "peerDependenciesMeta": {
+        "@types/node": {
+          "optional": true
+        },
+        "jiti": {
+          "optional": true
+        },
+        "less": {
+          "optional": true
+        },
+        "lightningcss": {
+          "optional": true
+        },
+        "sass": {
+          "optional": true
+        },
+        "sass-embedded": {
+          "optional": true
+        },
+        "stylus": {
+          "optional": true
+        },
+        "sugarss": {
+          "optional": true
+        },
+        "terser": {
+          "optional": true
+        },
+        "tsx": {
+          "optional": true
+        },
+        "yaml": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/yallist": {
+      "version": "3.1.1",
+      "resolved": "https://registry.npmjs.org/yallist/-/yallist-3.1.1.tgz",
+      "integrity": "sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==",
+      "dev": true,
+      "license": "ISC"
+    }
+  }
 }
 ````
 
@@ -20094,7 +23096,7 @@ Jangan menampilkan alpha, accuracy, atau probability sebagai fakta sebelum anali
 {
   "name": "socionics-dalam-diriku",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.1.2",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -21576,108 +24578,111 @@ export default function App() {
           <div className={`library-result-page ${theme === "dark" ? "library-page-dark" : "library-page-light"} space-y-12`}>
             
             {/* Editorial result header */}
-            <div className="text-center space-y-4">
-              <div className="inline-flex items-center space-x-1.5 text-xs bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-3.5 py-1 rounded-full font-mono">
-                <Target className="w-4 h-4 animate-spin-slow" />
-                <span>HASIL MODEL A SIAP DIBACA</span>
+            <div className="result-library-intro">
+              <div className="result-library-kicker">
+                <LibraryBig className="h-4 w-4" />
+                <span>HASIL MODEL A · EDISI KATALOG</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight">Katalog Hasil Socionics Kamu</h2>
-              <p className="text-sm text-slate-400 max-w-xl mx-auto">
-                Kamu sudah menyelesaikan tes. Sekarang baca hasilnya per bagian: cara berpikir, emosi, relasi, pandangan dunia, blind spot, dan rekomendasi personal.
+              <h2>Katalog Hasil Socionics Kamu</h2>
+              <p>
+                Hasil ini disusun seperti koleksi bacaan: mulai dari tipe utama, lanjut ke cara berpikir, emosi, relasi, pandangan dunia, blind spot, dan rekomendasi.
               </p>
             </div>
 
-            {/* TOP 3 candidates layout */}
-            <div className="grid lg:grid-cols-3 gap-8">
-              
-              {/* Main candidate display */}
-              <div className="lg:col-span-2 p-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 space-y-6 shadow-2xl relative overflow-hidden">
-                <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-emerald-500/10 blur-3xl" />
-                
-                <div className="space-y-2">
-                  <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Kandidat tipe utama:</span>
-                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:space-x-4">
-                    <span className="text-5xl sm:text-6xl font-display font-extrabold text-white tracking-tight">
-                      {calculatedOutput.top3[0].type}
-                    </span>
-                    <span className="text-2xl sm:text-3xl font-display font-medium text-emerald-400">
-                      {TIM_MODELS[calculatedOutput.top3[0].type].name}
-                    </span>
+            {/* Main result cover + candidate catalogue */}
+            <div className="result-hero-grid">
+              <article className="result-type-book">
+                <div className="result-book-ribbon">Kandidat utama</div>
+                <div className="result-book-edition">SOCIONICS DALAM DIRIKU · MODEL A</div>
+
+                <div className="result-book-title-row">
+                  <div className="result-type-monogram">{calculatedOutput.top3[0].type}</div>
+                  <div>
+                    <h3>{TIM_MODELS[calculatedOutput.top3[0].type].name}</h3>
+                    <p>{TIM_MODELS[calculatedOutput.top3[0].type].fullName}</p>
                   </div>
-                  <p className="text-sm font-mono text-slate-400">
-                    {TIM_MODELS[calculatedOutput.top3[0].type].fullName} | Quadra {TIM_MODELS[calculatedOutput.top3[0].type].quadra} | {calculatedOutput.top3[0].fitScore}% Kecocokan Relatif
-                  </p>
                 </div>
 
-                <div className="border-t border-slate-800 pt-6">
-                  <p className="text-sm text-slate-300 leading-relaxed font-sans">
-                    {TIM_PROFILES[calculatedOutput.top3[0].type].description}
-                  </p>
+                <div className="result-book-meta">
+                  <span>Quadra {TIM_MODELS[calculatedOutput.top3[0].type].quadra}</span>
+                  <span>{TIM_MODELS[calculatedOutput.top3[0].type].club}</span>
+                  <span>{calculatedOutput.top3[0].fitScore}% kecocokan relatif</span>
                 </div>
 
-                {/* Top 3 relative matching table bar chart */}
-                <div className="space-y-3.5 border-t border-slate-800 pt-6">
-                  <span className="text-xs uppercase tracking-wider text-slate-400 font-mono font-bold">Kecocokan Relatif Top 3 Model Kandidat:</span>
-                  <div className="space-y-2.5">
-                    {calculatedOutput.top3.map((cand) => (
-                      <div key={cand.type} className="space-y-1">
-                        <div className="flex justify-between text-xs font-mono">
-                          <span className="font-bold text-slate-300">
-                            {cand.type} ({TIM_MODELS[cand.type].name})
-                          </span>
-                          <span>{cand.fitScore}%</span>
-                        </div>
-                        <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
-                          <div
-                            className="bg-emerald-500 h-full rounded-full"
-                            style={{ width: `${cand.fitScore}%` }}
-                          />
+                <p className="result-book-description">
+                  {TIM_PROFILES[calculatedOutput.top3[0].type].description}
+                </p>
+
+                <div className="result-confidence-card">
+                  <Shield className="h-5 w-5" />
+                  <div>
+                    <div className="result-confidence-title">
+                      Keyakinan hasil: {calculatedOutput.confidence.toUpperCase()}
+                    </div>
+                    <p>{calculatedOutput.confidenceExplanation}</p>
+                  </div>
+                </div>
+              </article>
+
+              <div className="result-side-stack">
+                <section className="result-candidate-catalogue">
+                  <div className="result-panel-heading">
+                    <div>
+                      <span>Rak kandidat</span>
+                      <h3>Tiga tipe terdekat</h3>
+                    </div>
+                    <Target className="h-5 w-5" />
+                  </div>
+
+                  <div className="space-y-3">
+                    {calculatedOutput.top3.map((candidate, index) => (
+                      <div key={candidate.type} className="result-candidate-card">
+                        <div className="result-candidate-rank">0{index + 1}</div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-baseline justify-between gap-3">
+                            <div className="min-w-0">
+                              <strong>{candidate.type}</strong>
+                              <span>{TIM_MODELS[candidate.type].name}</span>
+                            </div>
+                            <b>{candidate.fitScore}%</b>
+                          </div>
+                          <div className="result-candidate-track">
+                            <div style={{ width: `${candidate.fitScore}%` }} />
+                          </div>
                         </div>
                       </div>
                     ))}
                   </div>
-                </div>
+                </section>
 
-                {/* Confidence banner */}
-                <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/60 flex items-start space-x-3">
-                  <Shield className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <div className="text-xs font-bold text-white uppercase tracking-wider">
-                      Tingkat keyakinan tes: <span className="text-emerald-400">{calculatedOutput.confidence.toUpperCase()}</span>
+                <section className="result-export-card">
+                  <div className="result-panel-heading">
+                    <div>
+                      <span>Kartu katalog</span>
+                      <h3>Simpan hasilmu</h3>
                     </div>
-                    <p className="text-xs text-slate-400 leading-relaxed">{calculatedOutput.confidenceExplanation}</p>
+                    <Download className="h-5 w-5" />
                   </div>
-                </div>
-              </div>
 
-              {/* CARD GENERATOR EXPORTER CONTROLLER */}
-              <div className="p-6 rounded-2xl border border-slate-800 bg-slate-950 space-y-6 flex flex-col justify-between shadow-xl">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm uppercase tracking-wider font-display">
-                    <Download className="w-4 h-4" />
-                    <span>Buat kartu hasil</span>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Masukkan nama panggilan dan foto opsional. Semua diproses langsung di browser kamu.
+                  <p className="result-panel-copy">
+                    Tambahkan nama panggilan dan foto opsional. Semuanya diproses langsung di browser kamu.
                   </p>
 
-                  <div className="space-y-2">
-                    <label className="block text-[10px] uppercase font-mono font-bold">Nama panggilan</label>
-                    <input
-                      type="text"
-                      id="nickname-input-privacy"
-                      name="random_tipologi_nickname_field"
-                      autoComplete="off"
-                      className="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-xs focus:ring-1 focus:ring-emerald-500 outline-none text-white font-mono"
-                      placeholder="Contoh: Alfidda"
-                      value={cardNickname}
-                      onChange={(e) => setCardNickname(e.target.value)}
-                    />
-                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
+                    <label className="result-form-field">
+                      <span>Nama panggilan</span>
+                      <input
+                        type="text"
+                        id="nickname-input-privacy"
+                        name="random_tipologi_nickname_field"
+                        autoComplete="off"
+                        placeholder="Contoh: Alfidda"
+                        value={cardNickname}
+                        onChange={(e) => setCardNickname(e.target.value)}
+                      />
+                    </label>
 
-                  <div className="space-y-2">
-                    <label className="block text-[10px] uppercase font-mono font-bold">Unggah foto opsional</label>
-                    <div className="border border-dashed border-slate-800 rounded p-4 text-center cursor-pointer hover:border-slate-700 hover:bg-slate-900/45 transition">
+                    <label className="result-upload-field" htmlFor="cardFilePortrait">
                       <input
                         type="file"
                         accept="image/*"
@@ -21685,33 +24690,27 @@ export default function App() {
                         id="cardFilePortrait"
                         onChange={handleImageUpload}
                       />
-                      <label htmlFor="cardFilePortrait" className="cursor-pointer space-y-1 block">
-                        <Upload className="w-5 h-5 mx-auto text-slate-500" />
-                        <span className="block text-[10px] text-slate-400 font-mono mt-1">Pilih gambar (.jpg/.png)</span>
-                      </label>
-                    </div>
+                      <Upload className="h-5 w-5" />
+                      <span>{cardImage ? "Foto sudah dipilih" : "Pilih foto opsional"}</span>
+                    </label>
                   </div>
 
                   {cardImage && (
-                    <div className="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800">
-                      <span className="text-[10px] font-mono text-emerald-400">Gambar siap dipakai</span>
-                      <button onClick={() => setCardImage(null)} className="text-[10px] text-rose-400 hover:underline">Hapus</button>
-                    </div>
+                    <button type="button" onClick={() => setCardImage(null)} className="result-remove-photo">
+                      Hapus foto yang dipilih
+                    </button>
                   )}
-                </div>
 
-                <button
-                  onClick={handleDownloadCard}
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-lg text-sm transition flex items-center justify-center space-x-2"
-                >
-                  <Download className="w-4 h-4 shrink-0" />
-                  <span>Unduh Kartu PNG</span>
-                </button>
+                  <button type="button" onClick={handleDownloadCard} className="result-download-button">
+                    <Download className="h-4 w-4" />
+                    <span>Unduh Kartu PNG</span>
+                  </button>
+                </section>
               </div>
             </div>
 
 
-            {/* FOUR-DOOR RESULT EXPERIENCE */}
+            {/* EDITORIAL CATALOGUE RESULT EXPERIENCE */}
             <React.Suspense
               fallback={(
                 <div className="library-result-shell flex min-h-56 items-center justify-center text-sm text-[#8b6b4e]">
@@ -21945,150 +24944,175 @@ export default function App() {
             </div>
 
             {/* MODEL COMPARISON FEATURE */}
-            <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
-              <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Perbandingan tipe:</span>
-                <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Bandingkan Dengan Tipe Lain</h3>
-                <p className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-550"}`}>
-                  Pilih tipe lain untuk melihat perbedaan Base, Creative, PoLR, dan kebutuhan Suggestive.
-                </p>
+            <section className="library-comparison-section">
+              <div className="library-section-titlebar">
+                <div>
+                  <span>Perbandingan tipe</span>
+                  <h3>Bandingkan Dengan Tipe Lain</h3>
+                  <p>Pilih satu tipe untuk membandingkan pusat perhatian, titik rawan, dan bentuk bantuan yang terasa paling melegakan.</p>
+                </div>
+                <BookOpen className="h-7 w-7" />
               </div>
 
-              <div className="space-y-4 max-w-sm">
-                <label className="block text-xs font-mono">Pilih tipe pembanding</label>
-                <select
-                  value={compareTIM}
-                  onChange={(e) => setCompareTIM(e.target.value as TIM)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm focus:ring-1 focus:ring-emerald-500 outline-none text-white text-semibold font-mono"
-                >
+              <label className="library-catalog-select">
+                <span>Pilih tipe pembanding</span>
+                <select value={compareTIM} onChange={(e) => setCompareTIM(e.target.value as TIM)}>
                   <option value="">-- Pilih Tipe --</option>
-                  {availableTIMs.filter((t) => t !== calculatedOutput.top3[0].type).map((t) => (
-                    <option key={t} value={t}>{t} - {TIM_MODELS[t].name}</option>
+                  {availableTIMs.filter((type) => type !== calculatedOutput.top3[0].type).map((type) => (
+                    <option key={type} value={type}>{type} - {TIM_MODELS[type].name}</option>
                   ))}
                 </select>
-              </div>
+              </label>
 
-              {compareTIM && (
-                <div className="grid md:grid-cols-2 gap-6 p-6 rounded-2xl border border-slate-800 bg-slate-900/10">
-                  {/* Tipe Utama */}
-                  <div className="space-y-4">
-                    <div className="border-b border-slate-800 pb-2">
-                      <span className="text-xs text-slate-500 font-mono">Tipe utama kamu:</span>
-                      <h4 className="text-xl font-bold font-display text-emerald-400">
-                        {calculatedOutput.top3[0].type} ({TIM_MODELS[calculatedOutput.top3[0].type].name})
-                      </h4>
-                    </div>
-                    <div className="space-y-2 text-xs text-slate-300">
-                      <div><strong>Orientasi Base:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].orientasiBase}</div>
-                      <div><strong>Tuntutan PoLR:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].tuntutanPolr}</div>
-                      <div><strong>Bantuan yang terasa melegakan:</strong> {TIM_PROFILES[calculatedOutput.top3[0].type].bantuanSuggestive}</div>
-                    </div>
-                  </div>
+              {compareTIM ? (
+                <div className="library-open-book">
+                  {[calculatedOutput.top3[0].type, compareTIM].map((type, index) => (
+                    <article key={type} className="library-book-page">
+                      <div className="library-book-page-label">{index === 0 ? "Tipe utama kamu" : "Tipe pembanding"}</div>
+                      <div className="library-book-page-header">
+                        <div>
+                          <strong>{type}</strong>
+                          <h4>{TIM_MODELS[type].name}</h4>
+                          <p>{TIM_MODELS[type].fullName}</p>
+                        </div>
+                        <span>Quadra {TIM_MODELS[type].quadra}</span>
+                      </div>
 
-                  {/* Tipe Pembanding */}
-                  <div className="space-y-4">
-                    <div className="border-b border-slate-800 pb-2">
-                      <span className="text-xs text-slate-500 font-mono">Tipe Pembanding:</span>
-                      <h4 className="text-xl font-bold font-display text-teal-400">
-                        {compareTIM} ({TIM_MODELS[compareTIM].name})
-                      </h4>
-                    </div>
-                    <div className="space-y-2 text-xs text-slate-300">
-                      <div><strong>Orientasi Base:</strong> {TIM_PROFILES[compareTIM].orientasiBase}</div>
-                      <div><strong>Tuntutan PoLR:</strong> {TIM_PROFILES[compareTIM].tuntutanPolr}</div>
-                      <div><strong>Bantuan yang terasa melegakan:</strong> {TIM_PROFILES[compareTIM].bantuanSuggestive}</div>
-                    </div>
+                      <div className="library-comparison-list">
+                        <div>
+                          <b>Base · {TIM_MODELS[type].positions.Base}</b>
+                          <p>{TIM_PROFILES[type].orientasiBase}</p>
+                        </div>
+                        <div>
+                          <b>Creative · {TIM_MODELS[type].positions.Creative}</b>
+                          <p>{TIM_PROFILES[type].gayaCreative}</p>
+                        </div>
+                        <div>
+                          <b>PoLR · {TIM_MODELS[type].positions.Vulnerable}</b>
+                          <p>{TIM_PROFILES[type].tuntutanPolr}</p>
+                        </div>
+                        <div>
+                          <b>Suggestive · {TIM_MODELS[type].positions.Suggestive}</b>
+                          <p>{TIM_PROFILES[type].bantuanSuggestive}</p>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className="library-empty-catalogue">
+                  <BookOpen className="h-8 w-8" />
+                  <div>
+                    <strong>Belum ada tipe pembanding.</strong>
+                    <p>Pilih satu tipe dari daftar di atas. Perbandingan akan tampil seperti dua halaman buku yang dibuka berdampingan.</p>
                   </div>
                 </div>
               )}
-            </div>
+            </section>
 
             {/* DYNAMIC INTERTYPE RELATIONS CALCULATOR */}
-            <div className="space-y-6 border-t border-slate-900 pt-10">
-              <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Relasi antar-tipe:</span>
-                <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white">Analisis Hubungan Antar-Tipe</h3>
-                <p className="text-xs text-slate-400">
-                  Pilih tipe seseorang untuk membaca pola komunikasi, titik nyaman, dan gesekan yang mungkin muncul.
-                </p>
+            <section className="library-relation-section">
+              <div className="library-section-titlebar">
+                <div>
+                  <span>Relasi antar-tipe</span>
+                  <h3>Analisis Hubungan Antar-Tipe</h3>
+                  <p>Pilih tipe seseorang untuk membaca pola komunikasi, titik nyaman, dan gesekan yang mungkin muncul.</p>
+                </div>
+                <Users className="h-7 w-7" />
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6 items-start">
-                <div className="space-y-4">
-                  <label className="block text-xs font-mono">Pilih tipe orang lain</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {availableTIMs.map((t) => {
-                      const isActive = intertypeTarget === t;
-                      const relCode = INTERTYPE_MAP[calculatedOutput.top3[0].type][t];
+              <div className="library-relation-layout">
+                <div className="library-type-drawer">
+                  <div className="library-drawer-label">Laci tipe</div>
+                  <div className="grid grid-cols-4 gap-2 sm:grid-cols-8 xl:grid-cols-4">
+                    {availableTIMs.map((type) => {
+                      const isActive = intertypeTarget === type;
                       return (
                         <button
-                          key={t}
-                          onClick={() => setIntertypeTarget(t)}
-                          className={`py-2 rounded font-mono text-xs border uppercase font-bold transition ${
-                            isActive
-                              ? "bg-emerald-500 text-slate-950 border-emerald-500"
-                              : "border-slate-800 bg-slate-900/30 text-slate-300 hover:bg-slate-850"
-                          }`}
+                          key={type}
+                          type="button"
+                          onClick={() => setIntertypeTarget(type)}
+                          className={`library-type-tab ${isActive ? "library-type-tab-active" : ""}`}
+                          title={`${type} - ${TIM_MODELS[type].name}`}
                         >
-                          {t}
+                          <strong>{type}</strong>
+                          <span>{TIM_MODELS[type].name}</span>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Calculation breakdown result */}
-                <div className="md:col-span-2 p-6 rounded-2xl border border-slate-800 bg-slate-900/30 space-y-4">
+                <div className="library-relation-record">
                   {(() => {
                     const self = calculatedOutput.top3[0].type;
-                    const relCode = INTERTYPE_MAP[self][intertypeTarget];
-                    const relMeta = INTERTYPE_RELATIONS_METADATA[relCode] || { name: relCode, description: "", impact: "" };
+                    const relationCode = INTERTYPE_MAP[self][intertypeTarget];
+                    const relation = INTERTYPE_RELATIONS_METADATA[relationCode] || {
+                      name: relationCode,
+                      description: "",
+                      impact: "",
+                    };
 
                     return (
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-baseline border-b border-slate-800 pb-3">
-                          <h4 className="text-lg font-bold font-display text-white">
-                            Interaksi: <span className="text-emerald-400">{relMeta.name}</span>
-                          </h4>
-                          <span className="text-[10px] font-mono text-slate-400 uppercase">
-                            {self} bertemu {intertypeTarget}
-                          </span>
+                      <>
+                        <div className="library-record-stamp">CATATAN RELASI</div>
+                        <div className="library-relation-pair">
+                          <div>
+                            <strong>{self}</strong>
+                            <span>{TIM_MODELS[self].name}</span>
+                          </div>
+                          <Heart className="h-5 w-5" />
+                          <div>
+                            <strong>{intertypeTarget}</strong>
+                            <span>{TIM_MODELS[intertypeTarget].name}</span>
+                          </div>
                         </div>
-                        <p className="text-xs text-slate-400 leading-relaxed font-mono italic">
-                          {relMeta.description}
-                        </p>
-                        <hr className="border-slate-800/80" />
-                        <div className="space-y-2">
-                          <div className="text-xs font-bold text-slate-300 uppercase tracking-wide">Dampak dalam interaksi:</div>
-                          <p className="text-xs text-slate-300 leading-relaxed font-sans mt-1">
-                            {relMeta.impact}
-                          </p>
+
+                        <div className="library-relation-name">
+                          <span>Jenis hubungan</span>
+                          <h4>{relation.name}</h4>
                         </div>
-                      </div>
+
+                        <div className="library-relation-copy">
+                          <div>
+                            <b>Gambaran singkat</b>
+                            <p>{relation.description}</p>
+                          </div>
+                          <div>
+                            <b>Dampak dalam interaksi</b>
+                            <p>{relation.impact}</p>
+                          </div>
+                        </div>
+
+                        <div className="library-relation-note">
+                          Hubungan nyata tetap dipengaruhi kedewasaan, nilai, pengalaman, komunikasi, dan batas pribadi. Socionics hanya memberi peta kecenderungan.
+                        </div>
+                      </>
                     );
                   })()}
                 </div>
               </div>
-            </div>
+            </section>
 
             {/* RE-TEST BOX */}
-            <div className="p-8 rounded-2xl border border-slate-900 bg-slate-900/20 text-center space-y-4 pt-10 border-t">
-              <h4 className="font-display font-bold text-xl">Mau mengulang tes?</h4>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Jawaban lama akan dihapus dari perangkat kamu. Pertanyaan dan urutan sesi baru akan dibuat ulang.
-              </p>
+            <section className="library-retest-card">
+              <div>
+                <span>Mulai dari halaman pertama lagi</span>
+                <h4>Mau mengulang tes?</h4>
+                <p>Jawaban lama akan dihapus dari perangkat kamu. Sesi baru akan memakai susunan pertanyaan yang dibuat ulang.</p>
+              </div>
               <button
+                type="button"
                 onClick={() => {
                   if (window.confirm("Hapus hasil ini dan mulai tes dari awal?")) {
                     resetSession();
                     setCurrentPage("landing");
                   }
                 }}
-                className="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 hover:border-slate-700 font-bold px-6 py-2 rounded-lg text-sm transition"
               >
                 Mulai Ulang Tes
               </button>
-            </div>
+            </section>
           </div>
         )}
 
@@ -22470,38 +25494,26 @@ export function runInstrumentAudit(simulatedSessions = 200): InstrumentAuditRepo
 ## `src/components/ResultPortal.tsx`
 
 ````tsx
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
-  AlertTriangle,
-  BookHeart,
-  BookMarked,
-  BookOpenText,
-  Bookmark,
-  BriefcaseBusiness,
+  BookOpen,
   Brain,
-  ChevronDown,
   Compass,
   Film,
   Gift,
   Globe2,
   HeartHandshake,
+  Landmark,
   LibraryBig,
-  MessageCircleMore,
-  Music2,
-  Quote,
-  Search,
+  Lightbulb,
+  Music,
+  ShieldAlert,
   Sparkles,
   Users,
 } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
 
 import { TIM_MODELS } from "../constants/socionicsData";
-import {
-  buildResultExperience,
-  type RecommendationGroup,
-  type ResultInsightCard,
-  type ResultSectionId,
-} from "../results/resultExperience";
+import { buildResultExperience, type ResultSectionId } from "../results/resultExperience";
 import type { AssessmentResult, TIM } from "../types/socionics";
 
 type Props = {
@@ -22510,163 +25522,27 @@ type Props = {
   theme: "dark" | "light";
 };
 
-const SECTION_META: Record<
-  ResultSectionId,
-  { short: string; icon: typeof Brain; tone: string }
-> = {
-  summary: { short: "Inti", icon: BookMarked, tone: "from-[#7f1d1d] to-[#9f1239]" },
-  thinking: { short: "Pikiran", icon: Brain, tone: "from-[#1e3a5f] to-[#312e81]" },
-  emotions: { short: "Emosi", icon: BookHeart, tone: "from-[#7c2d12] to-[#9d174d]" },
-  relationships: { short: "Relasi", icon: Users, tone: "from-[#5b3a29] to-[#713f12]" },
-  worldview: { short: "Dunia", icon: Globe2, tone: "from-[#334155] to-[#4c1d95]" },
-  blindspots: { short: "Blind spot", icon: AlertTriangle, tone: "from-[#4a2c2a] to-[#78350f]" },
-  recommendations: { short: "Pilihanmu", icon: Sparkles, tone: "from-[#6b3f2c] to-[#8b5e34]" },
+const SECTION_ICONS: Record<ResultSectionId, typeof Brain> = {
+  summary: Sparkles,
+  thinking: Brain,
+  emotions: HeartHandshake,
+  relationships: Users,
+  worldview: Landmark,
+  blindspots: ShieldAlert,
+  recommendations: Compass,
 };
 
-const RECOMMENDATION_ICONS: Record<string, typeof BookOpenText> = {
-  Buku: BookOpenText,
-  Film: Film,
-  Musik: Music2,
-  "Arah kerja": BriefcaseBusiness,
-  "Tempat untuk dijelajahi": Compass,
-  "Kosakata baru": Quote,
-  "Hadiah yang mungkin cocok": Gift,
-  "Sirkel yang sehat": HeartHandshake,
-  "Eksperimen 7 hari": Search,
-};
-
-const DetailLine = ({
-  label,
-  children,
-  tone = "neutral",
-}: {
-  label: string;
-  children: React.ReactNode;
-  tone?: "neutral" | "warm" | "warning" | "internet";
-}) => {
-  const toneClass = {
-    neutral: "border-[#7c654a]/25 bg-[#f6eddc]/55 dark:border-[#d6b77c]/15 dark:bg-[#251d19]/55",
-    warm: "border-[#a1683a]/25 bg-[#fff1d2]/55 dark:border-[#b77945]/20 dark:bg-[#3a2319]/45",
-    warning: "border-[#9a3412]/25 bg-[#fff0e6]/60 dark:border-[#fb923c]/20 dark:bg-[#3d1f17]/45",
-    internet: "border-[#6d4c7d]/25 bg-[#f5ecf8]/60 dark:border-[#c084fc]/20 dark:bg-[#291c30]/45",
-  }[tone];
-
-  return (
-    <div className={`rounded-2xl border px-4 py-3 ${toneClass}`}>
-      <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#8b5e34] dark:text-[#d6b77c]">
-        {label}
-      </div>
-      <div className="mt-1.5 text-sm leading-6 text-[#3e3027] dark:text-[#eadfcf]">{children}</div>
-    </div>
-  );
-};
-
-const InsightCard = ({ card, index }: { card: ResultInsightCard; index: number; key?: React.Key }) => {
-  const [open, setOpen] = useState(index < 2);
-
-  return (
-    <motion.article
-      layout
-      className="library-insight-card group"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, delay: Math.min(index * 0.035, 0.18) }}
-    >
-      <button
-        type="button"
-        onClick={() => setOpen((value) => !value)}
-        className="flex w-full items-start justify-between gap-4 text-left"
-        aria-expanded={open}
-      >
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex h-7 min-w-7 items-center justify-center rounded-full border border-[#b68a55]/30 bg-[#f5e5c8] px-2 text-[10px] font-black text-[#774936] dark:border-[#d6b77c]/20 dark:bg-[#3a2a20] dark:text-[#e8c98e]">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <h5 className="font-library-display text-xl font-bold leading-tight text-[#2d211a] dark:text-[#fff7e8]">
-              {card.title}
-            </h5>
-          </div>
-        </div>
-        <ChevronDown
-          className={`mt-1 h-5 w-5 shrink-0 text-[#95693f] transition-transform ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.22 }}
-            className="overflow-hidden"
-          >
-            <div className="mt-5 space-y-3">
-              <DetailLine label="Catatan ahli — ringkasan teori">{card.expert}</DetailLine>
-              <DetailLine label="Versi gampangnya" tone="warm">{card.simple}</DetailLine>
-              {card.stereotype && (
-                <DetailLine label="Stereotipe internet — buat seru, bukan fakta" tone="internet">
-                  {card.stereotype}
-                </DetailLine>
-              )}
-              {card.misunderstood && (
-                <DetailLine label="Yang sering bikin orang salah paham">{card.misunderstood}</DetailLine>
-              )}
-              {card.warning && (
-                <DetailLine label="Yang perlu kamu waspadai" tone="warning">{card.warning}</DetailLine>
-              )}
-              {card.actions && card.actions.length > 0 && (
-                <div className="rounded-2xl border border-[#8a7657]/25 bg-[#efe3cc]/55 px-4 py-3 dark:border-[#d6b77c]/15 dark:bg-[#201b18]/70">
-                  <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#765234] dark:text-[#d6b77c]">
-                    Saran praktis
-                  </div>
-                  <ul className="mt-2 space-y-2 text-sm leading-6 text-[#3e3027] dark:text-[#eadfcf]">
-                    {card.actions.map((action) => (
-                      <li key={action} className="flex gap-2">
-                        <Bookmark className="mt-1 h-4 w-4 shrink-0 text-[#9a5f37] dark:text-[#d6a45f]" />
-                        <span>{action}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.article>
-  );
-};
-
-const RecommendationShelf = ({ group, index }: { group: RecommendationGroup; index: number; key?: React.Key }) => {
-  const Icon = RECOMMENDATION_ICONS[group.title] ?? BookOpenText;
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, delay: Math.min(index * 0.04, 0.2) }}
-      className="library-shelf-card"
-    >
-      <div className="flex items-start gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-[#b78c58]/30 bg-gradient-to-br from-[#f4ddb7] to-[#e7c592] text-[#71452e] shadow-sm dark:border-[#d3aa72]/20 dark:from-[#5a3929] dark:to-[#3d2920] dark:text-[#f0d3a1]">
-          <Icon className="h-5 w-5" />
-        </div>
-        <div>
-          <h5 className="font-library-display text-xl font-bold text-[#2f2119] dark:text-[#fff7e8]">{group.title}</h5>
-          <p className="mt-1 text-xs leading-5 text-[#7a6755] dark:text-[#b9a997]">{group.note}</p>
-        </div>
-      </div>
-      <div className="mt-4 grid gap-2">
-        {group.items.map((item, itemIndex) => (
-          <div key={item} className="library-book-spine" style={{ "--spine-index": itemIndex } as React.CSSProperties}>
-            <span className="library-book-number">{String(itemIndex + 1).padStart(2, "0")}</span>
-            <span>{item}</span>
-          </div>
-        ))}
-      </div>
-    </motion.article>
-  );
+const recommendationIcon = (title: string) => {
+  const lower = title.toLowerCase();
+  if (lower.includes("buku")) return BookOpen;
+  if (lower.includes("film") || lower.includes("series")) return Film;
+  if (lower.includes("musik")) return Music;
+  if (lower.includes("pekerjaan")) return Compass;
+  if (lower.includes("tempat") || lower.includes("negara") || lower.includes("kota")) return Globe2;
+  if (lower.includes("kosakata")) return Lightbulb;
+  if (lower.includes("hadiah")) return Gift;
+  if (lower.includes("sirkel") || lower.includes("circle")) return Users;
+  return HeartHandshake;
 };
 
 export default function ResultPortal({ primaryType, result, theme }: Props) {
@@ -22675,9 +25551,8 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
     [primaryType, result],
   );
   const [activeSection, setActiveSection] = useState<ResultSectionId>("summary");
-  const section = experience.sections.find((item) => item.id === activeSection) ?? experience.sections[0];
+  const active = experience.sections.find((section) => section.id === activeSection) ?? experience.sections[0];
   const model = TIM_MODELS[primaryType];
-  const SectionIcon = SECTION_META[section.id].icon;
   const isDark = theme === "dark";
 
   return (
@@ -22685,129 +25560,219 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
       <div className="library-ambient library-ambient-one" />
       <div className="library-ambient library-ambient-two" />
 
-      <div className="relative z-10 space-y-7">
+      <div className="relative space-y-8">
         <div className="library-catalog-hero">
-          <div className="library-catalog-ribbon">Katalog hasil · Model A</div>
-          <div className="grid gap-7 xl:grid-cols-[1.3fr_0.7fr] xl:items-end">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#996b42] dark:text-[#d9b77d]">
-                <LibraryBig className="h-4 w-4" />
-                <span>{primaryType}</span>
-                <span>•</span>
-                <span>{model.name}</span>
-                <span>•</span>
-                <span>Quadra {model.quadra}</span>
-              </div>
-              <h3 className="mt-4 max-w-4xl font-library-display text-4xl font-bold leading-[1.02] text-[#291c16] sm:text-5xl lg:text-6xl dark:text-[#fff8ed]">
-                {experience.title}
-              </h3>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-[#5f4b3e] sm:text-base dark:text-[#cbbbac]">
-                {experience.subtitle}
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
+          <div className="library-catalog-ribbon">Katalog hasil</div>
+          <div className="grid gap-5 xl:grid-cols-[1.3fr_0.7fr] xl:items-start">
+            <div className="space-y-5">
+              <div className="flex flex-wrap gap-2">
+                <span className="library-tag">
+                  <LibraryBig className="mr-1.5 h-3.5 w-3.5" />
+                  {primaryType} · {model.name}
+                </span>
                 {experience.tags.map((tag) => (
-                  <span key={tag} className="library-tag">#{tag.replace(/\s+/g, "-")}</span>
+                  <span key={tag} className="library-tag">{tag}</span>
+                ))}
+              </div>
+
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#d5b07b]">
+                  Ringkasan editorial
+                </p>
+                <h3 className="mt-2 text-3xl font-black tracking-tight text-[#241915] sm:text-5xl dark:text-[#fff7ea]">
+                  {experience.title}
+                </h3>
+                <p className="mt-3 max-w-3xl text-sm leading-7 text-[#5f4a3d] dark:text-[#ddc9b0]">
+                  {experience.subtitle}
+                </p>
+              </div>
+
+              <div className="grid gap-3 md:grid-cols-2">
+                <div className="library-note-card">
+                  <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#8c5a34] dark:text-[#ddb175]">
+                    Pendapat ahli singkat
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-[#2d221d] dark:text-[#f4e7d4]">
+                    {experience.expertSnapshot}
+                  </p>
+                </div>
+                <div className="library-note-card library-note-purple">
+                  <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#7a4f74] dark:text-[#ddb5ee]">
+                    Stereotipe internet
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-[#2d221d] dark:text-[#f4e7d4]">
+                    {experience.internetSnapshot}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="library-signal-strip">
+              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                Sinyal yang kelihatan dari jawabanmu
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {experience.observedSignals.map((signal) => (
+                  <span key={signal} className="library-signal-chip">
+                    {signal}
+                  </span>
                 ))}
               </div>
             </div>
-
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-              <div className="library-note-card">
-                <div className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#7b4c33] dark:text-[#e5bf86]">
-                  <BookOpenText className="h-4 w-4" />
-                  Catatan ahli
-                </div>
-                <p className="mt-2 text-sm leading-6 text-[#433329] dark:text-[#eadfce]">{experience.expertSnapshot}</p>
-              </div>
-              <div className="library-note-card library-note-purple">
-                <div className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#684369] dark:text-[#d7b4df]">
-                  <MessageCircleMore className="h-4 w-4" />
-                  Stereotipe internet
-                </div>
-                <p className="mt-2 text-sm leading-6 text-[#4b344c] dark:text-[#eadbed]">{experience.internetSnapshot}</p>
-              </div>
-            </div>
           </div>
         </div>
 
-        <div className="library-signal-strip">
-          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-[#7a4d31] dark:text-[#d6ad75]">
-            <Search className="h-4 w-4" />
-            Sinyal paling menonjol dari jawabanmu
-          </div>
-          <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-            {experience.observedSignals.map((signal) => (
-              <div key={signal} className="library-signal-chip">{signal}</div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid gap-5 xl:grid-cols-[190px_minmax(0,1fr)]">
-          <nav className="library-floating-nav" aria-label="Navigasi bagian hasil">
-            <div className="mb-3 px-2 text-[9px] font-black uppercase tracking-[0.18em] text-[#8c6a4a] dark:text-[#bfa27d]">
-              Rak pembacaan
+        <div className="grid gap-6 xl:grid-cols-[250px_minmax(0,1fr)] xl:items-start">
+          <aside className="library-floating-nav xl:sticky xl:top-6">
+            <div className="space-y-1">
+              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                Daftar bab hasil
+              </div>
+              <p className="text-xs leading-5 text-[#6d584b] dark:text-[#cbb89e]">
+                Baca hasilmu seperti katalog. Klik bab yang ingin kamu buka lebih dulu.
+              </p>
             </div>
-            <div className="flex gap-2 overflow-x-auto pb-2 xl:flex-col xl:overflow-visible xl:pb-0">
-              {experience.sections.map((item) => {
-                const meta = SECTION_META[item.id];
-                const Icon = meta.icon;
-                const active = item.id === activeSection;
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 xl:block xl:space-y-2 xl:overflow-visible">
+              {experience.sections.map((section) => {
+                const Icon = SECTION_ICONS[section.id];
+                const current = section.id === active.id;
                 return (
                   <button
-                    key={item.id}
+                    key={section.id}
                     type="button"
-                    onClick={() => setActiveSection(item.id)}
-                    className={`library-nav-tab ${active ? "library-nav-tab-active" : ""}`}
+                    onClick={() => setActiveSection(section.id)}
+                    className={`library-nav-tab ${current ? "library-nav-tab-active" : ""}`}
                   >
-                    <span className={`library-nav-icon bg-gradient-to-br ${meta.tone}`}>
-                      <Icon className="h-4 w-4" />
+                    <Icon className="h-4 w-4" />
+                    <span className="min-w-0">
+                      <span className="block text-[10px] font-bold uppercase tracking-[0.16em] opacity-70">
+                        {section.kicker}
+                      </span>
+                      <span className="block truncate text-sm font-extrabold">
+                        {section.title}
+                      </span>
                     </span>
-                    <span>{meta.short}</span>
                   </button>
                 );
               })}
             </div>
-          </nav>
+          </aside>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={section.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.24 }}
-              className="min-w-0"
-            >
-              <div className="library-section-heading">
-                <div className={`library-section-icon bg-gradient-to-br ${SECTION_META[section.id].tone}`}>
-                  <SectionIcon className="h-6 w-6" />
+          <div className="space-y-6">
+            <div className="library-section-heading">
+              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                {active.kicker}
+              </div>
+              <h4 className="mt-2 text-2xl font-black text-[#251a15] sm:text-3xl dark:text-[#fff5e6]">
+                {active.title}
+              </h4>
+              <p className="mt-3 text-sm leading-7 text-[#5f4a3d] dark:text-[#d8c3aa]">
+                {active.intro}
+              </p>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              {active.cards.map((card) => (
+                <article key={`${active.id}-${card.title}`} className="library-insight-card">
+                  <div className="flex items-start justify-between gap-3">
+                    <h5 className="text-lg font-black text-[#241915] dark:text-[#fff3e3]">{card.title}</h5>
+                    <span className="library-tag whitespace-nowrap">{active.kicker}</span>
+                  </div>
+
+                  <div className="mt-5 space-y-4">
+                    <div>
+                      <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                        Pendapat ahli
+                      </div>
+                      <p className="mt-1.5 text-sm leading-6 text-[#2f241f] dark:text-[#f4e8d7]">
+                        {card.expert}
+                      </p>
+                    </div>
+
+                    <div>
+                      <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#7a4f74] dark:text-[#d7b0ea]">
+                        Versi gampangnya
+                      </div>
+                      <p className="mt-1.5 text-sm leading-6 text-[#5b473b] dark:text-[#d5c0a5]">
+                        {card.simple}
+                      </p>
+                    </div>
+
+                    {card.stereotype && (
+                      <div className="rounded-2xl border border-[rgba(122,79,116,0.18)] bg-[rgba(248,239,250,0.8)] p-3 text-sm leading-6 text-[#4f3b48] dark:border-[rgba(215,176,234,0.14)] dark:bg-[rgba(57,38,59,0.72)] dark:text-[#e7d6f0]">
+                        <strong className="font-extrabold">Stereotipe internet:</strong> {card.stereotype}
+                      </div>
+                    )}
+
+                    {card.misunderstood && (
+                      <div className="rounded-2xl border border-[rgba(146,95,53,0.18)] bg-[rgba(255,249,237,0.8)] p-3 text-sm leading-6 text-[#4a382f] dark:border-[rgba(223,184,126,0.12)] dark:bg-[rgba(60,43,34,0.72)] dark:text-[#e8d7bf]">
+                        <strong className="font-extrabold">Yang sering bikin orang salah paham:</strong> {card.misunderstood}
+                      </div>
+                    )}
+
+                    {card.warning && (
+                      <div className="rounded-2xl border border-[rgba(138,70,45,0.22)] bg-[rgba(172,93,55,0.08)] p-3 text-sm leading-6 text-[#623f2b] dark:border-[rgba(239,160,94,0.16)] dark:bg-[rgba(97,53,30,0.26)] dark:text-[#f4d0a2]">
+                        <strong className="font-extrabold">Yang perlu kamu waspadai:</strong> {card.warning}
+                      </div>
+                    )}
+
+                    {card.actions && card.actions.length > 0 && (
+                      <div>
+                        <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                          Saran praktis
+                        </div>
+                        <ul className="mt-2 space-y-2">
+                          {card.actions.map((action) => (
+                            <li key={action} className="flex gap-2 text-sm leading-6 text-[#312620] dark:text-[#f2e6d5]">
+                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#a56a3f]" />
+                              <span>{action}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {active.recommendations && active.recommendations.length > 0 && (
+              <div className="space-y-4">
+                <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                  Rak rekomendasi untukmu
                 </div>
-                <div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#9a6d42] dark:text-[#d7b37d]">{section.kicker}</div>
-                  <h4 className="mt-1 font-library-display text-3xl font-bold text-[#2d211a] sm:text-4xl dark:text-[#fff7e8]">{section.title}</h4>
-                  <p className="mt-2 max-w-3xl text-sm leading-6 text-[#715e4e] dark:text-[#bfae9e]">{section.intro}</p>
+                <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
+                  {active.recommendations.map((group) => {
+                    const Icon = recommendationIcon(group.title);
+                    return (
+                      <article key={group.title} className="library-shelf-card">
+                        <div className="flex items-start gap-3">
+                          <div className="rounded-2xl border border-[rgba(146,95,53,0.24)] bg-[rgba(255,246,228,0.72)] p-2.5 text-[#8c5a34] shadow-sm dark:border-[rgba(223,184,126,0.16)] dark:bg-[rgba(57,41,33,0.72)] dark:text-[#e6c58f]">
+                            <Icon className="h-4 w-4" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <h5 className="text-base font-extrabold text-[#2b201a] dark:text-[#fbf2e2]">{group.title}</h5>
+                            <p className="mt-1 text-xs leading-5 text-[#6f5948] dark:text-[#cbb89e]">{group.note}</p>
+                          </div>
+                        </div>
+                        <div className="mt-4 space-y-2">
+                          {group.items.map((item) => (
+                            <div key={item} className="library-book-spine">
+                              <span>{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
               </div>
-
-              {section.recommendations ? (
-                <div className="mt-6 grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
-                  {section.recommendations.map((group, index) => (
-                    <RecommendationShelf key={group.title} group={group} index={index} />
-                  ))}
-                </div>
-              ) : (
-                <div className="mt-6 grid gap-4 lg:grid-cols-2">
-                  {section.cards.map((card, index) => (
-                    <InsightCard key={`${section.id}-${card.title}`} card={card} index={index} />
-                  ))}
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+            )}
+          </div>
         </div>
 
         <div className="library-boundary-note">
-          <strong>Batas interpretasi:</strong> hasil ini adalah pembacaan tipologi non-klinis. Ia tidak menentukan diagnosis, ideologi politik, agama, moralitas, kecerdasan, atau masa depanmu. Budaya, pengalaman hidup, kesehatan, trauma, usia, dan kondisi saat tes tetap bisa mengubah jawaban.
+          <strong>Batas interpretasi:</strong> hasil ini adalah pembacaan tipologi dan refleksi diri. Ini bukan diagnosis psikologis, bukan penentu ideologi atau agama, dan bukan pengganti penilaian profesional.
         </div>
       </div>
     </section>
@@ -24758,6 +27723,367 @@ img {
 .library-result-page input {
   font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
+
+/* v2.1.2 — Result desk, open-book comparison, and relation catalogue */
+.result-library-intro {
+  max-width: 54rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.result-library-intro h2 {
+  margin-top: 0.85rem;
+  color: #2b1e18;
+  font-size: clamp(2rem, 5vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.library-page-dark .result-library-intro h2 { color: #fff4e4; }
+
+.result-library-intro p {
+  margin: 1rem auto 0;
+  max-width: 42rem;
+  color: #6a5546;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.library-page-dark .result-library-intro p { color: #cbb8a2; }
+
+.result-library-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(148, 98, 57, 0.26);
+  border-radius: 999px;
+  padding: 0.48rem 0.8rem;
+  background: rgba(255, 247, 231, 0.8);
+  color: #8b5835;
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  box-shadow: 0 8px 24px rgba(80, 46, 25, 0.07);
+}
+
+.library-page-dark .result-library-kicker {
+  background: rgba(67, 45, 35, 0.72);
+  border-color: rgba(226, 184, 123, 0.17);
+  color: #e0bb83;
+}
+
+.result-hero-grid {
+  display: grid;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (min-width: 1100px) {
+  .result-hero-grid { grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr); }
+}
+
+.result-type-book {
+  position: relative;
+  overflow: hidden;
+  min-height: 31rem;
+  border: 1px solid rgba(121, 77, 48, 0.32);
+  border-left: 0.7rem solid #5b2d2d;
+  border-radius: 0.5rem 1.8rem 1.8rem 0.5rem;
+  padding: clamp(1.4rem, 4vw, 2.8rem);
+  background:
+    linear-gradient(135deg, rgba(255, 249, 236, 0.97), rgba(236, 214, 181, 0.9)),
+    repeating-linear-gradient(0deg, rgba(90, 54, 31, 0.025) 0 1px, transparent 1px 26px);
+  color: #2d201a;
+  box-shadow: 0 28px 70px rgba(66, 37, 20, 0.15), inset 15px 0 30px rgba(80, 45, 26, 0.055);
+}
+
+.result-type-book::after {
+  content: "";
+  position: absolute;
+  right: -4rem;
+  bottom: -5rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background: rgba(111, 56, 81, 0.1);
+  filter: blur(12px);
+}
+
+.library-page-dark .result-type-book {
+  border-color: rgba(219, 174, 109, 0.16);
+  border-left-color: #7d3d48;
+  background: linear-gradient(135deg, rgba(64, 43, 34, 0.97), rgba(34, 27, 28, 0.97));
+  color: #f8ead7;
+  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.32), inset 15px 0 30px rgba(0, 0, 0, 0.14);
+}
+
+.result-book-ribbon {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  padding: 0.7rem 0.9rem 1rem;
+  border-radius: 0 0 0.8rem 0.8rem;
+  background: linear-gradient(180deg, #7e2634, #5f1e2a);
+  color: #fff6e8;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.result-book-edition {
+  color: #8d6547;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.library-page-dark .result-book-edition { color: #cba77b; }
+
+.result-book-title-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: clamp(2.5rem, 8vw, 5rem);
+}
+
+.result-type-monogram {
+  display: grid;
+  flex: 0 0 auto;
+  width: clamp(6.2rem, 16vw, 9.2rem);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(111, 62, 42, 0.24);
+  border-radius: 1.4rem 0.5rem 1.4rem 0.5rem;
+  background: rgba(255, 250, 239, 0.62);
+  color: #6f3040;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(2.5rem, 7vw, 4.8rem);
+  box-shadow: 0 14px 35px rgba(68, 38, 23, 0.1);
+}
+
+.library-page-dark .result-type-monogram {
+  border-color: rgba(225, 179, 116, 0.15);
+  background: rgba(30, 22, 21, 0.48);
+  color: #e5b4bf;
+}
+
+.result-book-title-row h3 {
+  color: inherit;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+.result-book-title-row p {
+  margin-top: 0.7rem;
+  color: #70594a;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.library-page-dark .result-book-title-row p { color: #c9b59d; }
+
+.result-book-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 2rem;
+}
+
+.result-book-meta span {
+  border: 1px solid rgba(133, 88, 53, 0.2);
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem;
+  background: rgba(255, 250, 240, 0.54);
+  color: #6d4b35;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.library-page-dark .result-book-meta span {
+  border-color: rgba(222, 178, 116, 0.15);
+  background: rgba(35, 26, 23, 0.54);
+  color: #ddc4a3;
+}
+
+.result-book-description {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.6rem;
+  max-width: 50rem;
+  color: #4d3a30;
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+
+.library-page-dark .result-book-description { color: #e4d4bf; }
+
+.result-confidence-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.7rem;
+  border: 1px solid rgba(123, 78, 47, 0.2);
+  border-radius: 1.1rem;
+  padding: 1rem;
+  background: rgba(255, 251, 243, 0.62);
+  color: #5d4434;
+}
+
+.library-page-dark .result-confidence-card {
+  border-color: rgba(226, 181, 119, 0.13);
+  background: rgba(27, 21, 19, 0.48);
+  color: #e0cdb4;
+}
+
+.result-confidence-title { font-size: 0.75rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+.result-confidence-card p { margin-top: 0.3rem; font-size: 0.74rem; line-height: 1.55; }
+.result-side-stack { display: grid; gap: 1.25rem; }
+
+.result-candidate-catalogue,
+.result-export-card {
+  border: 1px solid rgba(137, 91, 57, 0.23);
+  border-radius: 1.5rem;
+  padding: 1.2rem;
+  background: rgba(255, 249, 238, 0.76);
+  box-shadow: 0 18px 45px rgba(72, 42, 25, 0.09);
+}
+
+.library-page-dark .result-candidate-catalogue,
+.library-page-dark .result-export-card {
+  border-color: rgba(218, 177, 114, 0.14);
+  background: rgba(39, 30, 27, 0.72);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
+}
+
+.result-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: #8a5735; }
+.library-page-dark .result-panel-heading { color: #d8ad76; }
+.result-panel-heading span { font-size: 0.62rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+.result-panel-heading h3 { margin-top: 0.15rem; color: #2d201a; font-size: 1.35rem; }
+.library-page-dark .result-panel-heading h3 { color: #fff2e1; }
+.result-panel-copy { margin-top: 0.85rem; color: #6d5848; font-size: 0.76rem; line-height: 1.6; }
+.library-page-dark .result-panel-copy { color: #c9b59e; }
+
+.result-candidate-card { display: flex; align-items: center; gap: 0.8rem; border: 1px solid rgba(135, 91, 57, 0.18); border-radius: 1rem; padding: 0.75rem; background: rgba(255, 252, 246, 0.66); }
+.library-page-dark .result-candidate-card { border-color: rgba(219, 176, 112, 0.12); background: rgba(27, 21, 19, 0.42); }
+.result-candidate-rank { color: #a27958; font-family: "JetBrains Mono", monospace; font-size: 0.66rem; }
+.result-candidate-card strong { color: #5e2d39; font-size: 1rem; }
+.library-page-dark .result-candidate-card strong { color: #efbdc7; }
+.result-candidate-card span { margin-left: 0.45rem; color: #695447; font-size: 0.72rem; }
+.library-page-dark .result-candidate-card span { color: #cbb8a2; }
+.result-candidate-card b { color: #744b31; font-size: 0.72rem; }
+.library-page-dark .result-candidate-card b { color: #e0bc8b; }
+.result-candidate-track { margin-top: 0.45rem; height: 0.3rem; overflow: hidden; border-radius: 999px; background: rgba(111, 75, 50, 0.12); }
+.result-candidate-track div { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #7e2f3e, #b77945, #7a4f74); }
+
+.result-form-field { display: block; }
+.result-form-field > span { display: block; margin-bottom: 0.4rem; color: #75563e; font-size: 0.67rem; font-weight: 800; }
+.library-page-dark .result-form-field > span { color: #d5b58d; }
+.result-form-field input { width: 100%; border: 1px solid rgba(137, 91, 57, 0.24) !important; border-radius: 0.8rem; padding: 0.7rem 0.8rem; background: rgba(255, 252, 245, 0.82) !important; color: #2f2119 !important; font-size: 0.78rem; }
+.library-page-dark .result-form-field input { background: rgba(25, 20, 18, 0.7) !important; color: #fff1df !important; }
+.result-upload-field { display: flex; min-height: 4.2rem; cursor: pointer; align-items: center; justify-content: center; gap: 0.55rem; border: 1px dashed rgba(137, 91, 57, 0.32); border-radius: 0.9rem; color: #795638; font-size: 0.72rem; font-weight: 800; }
+.library-page-dark .result-upload-field { border-color: rgba(221, 178, 114, 0.2); color: #d4b489; }
+.result-remove-photo { margin-top: 0.6rem; color: #8a4050; font-size: 0.7rem; font-weight: 800; }
+.result-download-button { display: flex; width: 100%; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1rem; border-radius: 0.9rem; padding: 0.8rem 1rem; background: linear-gradient(135deg, #733344, #9b6139); color: #fff7ea; font-size: 0.8rem; font-weight: 900; box-shadow: 0 12px 25px rgba(100, 47, 49, 0.18); }
+.result-download-button:hover { filter: brightness(1.07); transform: translateY(-1px); }
+
+.library-comparison-section,
+.library-relation-section {
+  border: 1px solid rgba(137, 91, 57, 0.24);
+  border-radius: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: rgba(250, 242, 229, 0.68);
+  box-shadow: 0 20px 55px rgba(68, 40, 24, 0.08);
+}
+.library-page-dark .library-comparison-section,
+.library-page-dark .library-relation-section { border-color: rgba(217, 176, 113, 0.13); background: rgba(31, 24, 22, 0.66); box-shadow: 0 22px 58px rgba(0, 0, 0, 0.2); }
+
+.library-section-titlebar { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; color: #8b5937; }
+.library-page-dark .library-section-titlebar { color: #d8ad76; }
+.library-section-titlebar span { font-size: 0.66rem; font-weight: 900; letter-spacing: 0.16em; text-transform: uppercase; }
+.library-section-titlebar h3 { margin-top: 0.3rem; color: #2b1e18; font-size: clamp(1.7rem, 4vw, 2.6rem); }
+.library-page-dark .library-section-titlebar h3 { color: #fff3e2; }
+.library-section-titlebar p { margin-top: 0.55rem; max-width: 46rem; color: #6b5547; font-size: 0.8rem; line-height: 1.65; }
+.library-page-dark .library-section-titlebar p { color: #c8b49d; }
+
+.library-catalog-select { display: block; max-width: 23rem; margin-top: 1.4rem; }
+.library-catalog-select span { display: block; margin-bottom: 0.45rem; color: #77583f; font-size: 0.68rem; font-weight: 900; }
+.library-page-dark .library-catalog-select span { color: #d5b58c; }
+.library-catalog-select select { width: 100%; border: 1px solid rgba(137, 91, 57, 0.25) !important; border-radius: 0.85rem; padding: 0.75rem 0.8rem; background: rgba(255, 251, 243, 0.86) !important; color: #30221a !important; font-size: 0.8rem; }
+.library-page-dark .library-catalog-select select { background: rgba(25, 20, 18, 0.72) !important; color: #fff2e0 !important; }
+
+.library-open-book { position: relative; display: grid; gap: 0; margin-top: 1.5rem; border: 1px solid rgba(128, 83, 52, 0.24); border-radius: 1.3rem; overflow: hidden; background: #f7ead5; box-shadow: 0 22px 48px rgba(68, 39, 22, 0.13); }
+@media (min-width: 768px) { .library-open-book { grid-template-columns: 1fr 1fr; } .library-open-book::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(105, 65, 39, 0.18); box-shadow: 0 0 18px rgba(74, 38, 20, 0.24); } }
+.library-page-dark .library-open-book { border-color: rgba(218, 176, 112, 0.14); background: #2d211d; }
+.library-book-page { padding: clamp(1.2rem, 3vw, 2rem); background: repeating-linear-gradient(0deg, rgba(98, 59, 33, 0.025) 0 1px, transparent 1px 25px), linear-gradient(135deg, rgba(255, 251, 242, 0.98), rgba(242, 225, 199, 0.92)); }
+.library-page-dark .library-book-page { background: repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 25px), linear-gradient(135deg, rgba(57, 42, 34, 0.97), rgba(37, 29, 27, 0.97)); }
+.library-book-page-label { color: #9a6a49; font-size: 0.64rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+.library-book-page-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-top: 0.7rem; border-bottom: 1px solid rgba(131, 85, 52, 0.18); padding-bottom: 1rem; }
+.library-book-page-header strong { color: #742f40; font-size: 2.4rem; font-family: "DM Serif Display", Georgia, serif; }
+.library-page-dark .library-book-page-header strong { color: #e9b8c2; }
+.library-book-page-header h4 { color: #2f211a; font-size: 1.25rem; }
+.library-page-dark .library-book-page-header h4 { color: #fff2e0; }
+.library-book-page-header p, .library-book-page-header > span { color: #76604f; font-size: 0.68rem; line-height: 1.5; }
+.library-page-dark .library-book-page-header p, .library-page-dark .library-book-page-header > span { color: #c7b39d; }
+.library-comparison-list { margin-top: 1rem; display: grid; gap: 0.85rem; }
+.library-comparison-list > div { border-left: 3px solid #9a6139; padding-left: 0.8rem; }
+.library-comparison-list b { color: #65432e; font-size: 0.72rem; }
+.library-page-dark .library-comparison-list b { color: #e2bd8c; }
+.library-comparison-list p { margin-top: 0.25rem; color: #574438; font-size: 0.75rem; line-height: 1.65; }
+.library-page-dark .library-comparison-list p { color: #d7c4ae; }
+.library-empty-catalogue { display: flex; align-items: center; gap: 1rem; margin-top: 1.4rem; border: 1px dashed rgba(137, 91, 57, 0.28); border-radius: 1.2rem; padding: 1.2rem; color: #7b5a41; }
+.library-page-dark .library-empty-catalogue { border-color: rgba(218, 176, 112, 0.16); color: #d2b28b; }
+.library-empty-catalogue strong { color: #3a2a22; font-size: 0.85rem; }
+.library-page-dark .library-empty-catalogue strong { color: #f7e8d4; }
+.library-empty-catalogue p { margin-top: 0.2rem; font-size: 0.72rem; line-height: 1.5; }
+
+.library-relation-layout { display: grid; gap: 1rem; margin-top: 1.5rem; }
+@media (min-width: 1100px) { .library-relation-layout { grid-template-columns: minmax(18rem, 0.7fr) minmax(0, 1.3fr); } }
+.library-type-drawer, .library-relation-record { position: relative; border: 1px solid rgba(132, 87, 54, 0.22); border-radius: 1.35rem; padding: 1rem; background: rgba(255, 250, 241, 0.72); }
+.library-page-dark .library-type-drawer, .library-page-dark .library-relation-record { border-color: rgba(218, 176, 112, 0.13); background: rgba(42, 32, 28, 0.7); }
+.library-drawer-label { margin-bottom: 0.8rem; color: #8b5937; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+.library-page-dark .library-drawer-label { color: #d9ae77; }
+.library-type-tab { min-width: 0; border: 1px solid rgba(135, 89, 55, 0.18); border-radius: 0.8rem; padding: 0.55rem 0.35rem; background: rgba(255, 252, 245, 0.66); color: #604837; text-align: center; transition: 160ms ease; }
+.library-page-dark .library-type-tab { border-color: rgba(217, 175, 111, 0.11); background: rgba(27, 21, 19, 0.42); color: #d8c3a9; }
+.library-type-tab strong { display: block; font-family: "JetBrains Mono", monospace; font-size: 0.75rem; }
+.library-type-tab span { display: block; overflow: hidden; margin-top: 0.15rem; font-size: 0.55rem; text-overflow: ellipsis; white-space: nowrap; }
+.library-type-tab:hover { transform: translateY(-1px); border-color: rgba(126, 47, 62, 0.38); }
+.library-type-tab-active { border-color: #7c3343 !important; background: linear-gradient(135deg, #7a3142, #9b6139) !important; color: #fff8eb !important; box-shadow: 0 8px 18px rgba(91, 39, 44, 0.18); }
+.library-record-stamp { position: absolute; top: 1rem; right: 1rem; transform: rotate(3deg); border: 2px solid rgba(122, 48, 64, 0.35); padding: 0.3rem 0.5rem; color: #7a3040; font-size: 0.58rem; font-weight: 900; letter-spacing: 0.14em; }
+.library-page-dark .library-record-stamp { border-color: rgba(233, 184, 194, 0.3); color: #e2aeb8; }
+.library-relation-pair { display: flex; align-items: center; gap: 1rem; padding-right: 5rem; color: #8a4050; }
+.library-page-dark .library-relation-pair { color: #e0aab5; }
+.library-relation-pair > div { display: flex; flex-direction: column; }
+.library-relation-pair strong { font-family: "DM Serif Display", Georgia, serif; font-size: 2.2rem; line-height: 1; }
+.library-relation-pair span { color: #6d5848; font-size: 0.67rem; }
+.library-page-dark .library-relation-pair span { color: #c9b59d; }
+.library-relation-name { margin-top: 1.4rem; border-top: 1px solid rgba(135, 89, 55, 0.18); padding-top: 1rem; }
+.library-relation-name span { color: #8b5937; font-size: 0.64rem; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+.library-relation-name h4 { margin-top: 0.25rem; color: #2c1f19; font-size: 2rem; }
+.library-page-dark .library-relation-name h4 { color: #fff1df; }
+.library-relation-copy { display: grid; gap: 0.9rem; margin-top: 1rem; }
+@media (min-width: 768px) { .library-relation-copy { grid-template-columns: 1fr 1fr; } }
+.library-relation-copy > div { border-left: 3px solid #9b6139; padding-left: 0.8rem; }
+.library-relation-copy b { color: #68462f; font-size: 0.72rem; }
+.library-page-dark .library-relation-copy b { color: #e1bb89; }
+.library-relation-copy p { margin-top: 0.3rem; color: #574438; font-size: 0.76rem; line-height: 1.7; }
+.library-page-dark .library-relation-copy p { color: #d8c4ad; }
+.library-relation-note { margin-top: 1rem; border: 1px dashed rgba(133, 88, 54, 0.22); border-radius: 0.9rem; padding: 0.75rem; color: #76604f; font-size: 0.68rem; line-height: 1.55; }
+.library-page-dark .library-relation-note { border-color: rgba(217, 175, 111, 0.14); color: #bca992; }
+
+.library-retest-card { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 1rem; border: 1px solid rgba(132, 87, 54, 0.22); border-radius: 1.4rem; padding: 1.2rem; background: linear-gradient(135deg, rgba(255,249,238,0.78), rgba(240,221,193,0.62)); }
+@media (min-width: 640px) { .library-retest-card { flex-direction: row; align-items: center; } }
+.library-page-dark .library-retest-card { border-color: rgba(216, 175, 112, 0.13); background: linear-gradient(135deg, rgba(48,36,30,0.76), rgba(31,25,24,0.76)); }
+.library-retest-card span { color: #8b5937; font-size: 0.64rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; }
+.library-page-dark .library-retest-card span { color: #d6aa73; }
+.library-retest-card h4 { margin-top: 0.25rem; color: #2b1e18; font-size: 1.4rem; }
+.library-page-dark .library-retest-card h4 { color: #fff2e0; }
+.library-retest-card p { margin-top: 0.35rem; max-width: 40rem; color: #6a5547; font-size: 0.73rem; line-height: 1.6; }
+.library-page-dark .library-retest-card p { color: #c7b39c; }
+.library-retest-card button { flex: none; border-radius: 0.85rem; padding: 0.7rem 1rem; background: #3f2b24; color: #fff4e4; font-size: 0.75rem; font-weight: 900; }
+.library-page-dark .library-retest-card button { background: #8f5940; }
 ````
 
 ---
