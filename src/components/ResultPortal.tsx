@@ -1,7 +1,10 @@
 import { useMemo, useState } from "react";
 import {
+  BarChart3,
   BookOpen,
   Brain,
+  CheckCircle2,
+  ChevronRight,
   Compass,
   Film,
   Gift,
@@ -19,6 +22,7 @@ import {
 import { TIM_MODELS } from "../constants/socionicsData";
 import { buildResultExperience, type ResultSectionId } from "../results/resultExperience";
 import type { AssessmentResult, TIM } from "../types/socionics";
+import { polishEditorialList, polishEditorialText } from "../utils/editorialText";
 
 type Props = {
   primaryType: TIM;
@@ -50,24 +54,34 @@ const recommendationIcon = (title: string) => {
 };
 
 export default function ResultPortal({ primaryType, result, theme }: Props) {
-  const experience = useMemo(
-    () => buildResultExperience(primaryType, result),
-    [primaryType, result],
-  );
+  const experience = useMemo(() => buildResultExperience(primaryType, result), [primaryType, result]);
   const [activeSection, setActiveSection] = useState<ResultSectionId>("summary");
   const active = experience.sections.find((section) => section.id === activeSection) ?? experience.sections[0];
+  const activeIndex = Math.max(0, experience.sections.findIndex((section) => section.id === active.id));
+  const nextSection = experience.sections[activeIndex + 1];
   const model = TIM_MODELS[primaryType];
   const isDark = theme === "dark";
+  const candidateGap = Math.max(0, result.top3[0].fitScore - (result.top3[1]?.fitScore ?? 0));
+  const coveragePercent = Math.round(result.coverage.ratio * 100);
+  const consistencyPercent = Math.max(0, Math.min(100, Math.round(100 - result.responseQuality.inconsistencyScore * 45)));
+  const holdoutPercent = Math.round(result.top3[0].holdoutScore);
+
+  const shellClass = isDark ? "library-result-dark" : "library-result-light";
+  const titleClass = isDark ? "text-[#fff5ea]" : "text-[#231914]";
+  const bodyClass = isDark ? "text-[#dbc7ae]" : "text-[#5f4b3e]";
+  const mutedClass = isDark ? "text-[#cbb69c]" : "text-[#6f5948]";
+  const labelClass = isDark ? "text-[#ddb175]" : "text-[#8c5a34]";
+  const accentLabelClass = isDark ? "text-[#ddb5ee]" : "text-[#7a4f74]";
 
   return (
-    <section className={`library-result-shell ${isDark ? "library-result-dark" : "library-result-light"}`}>
+    <section className={`library-result-shell ${shellClass}`}>
       <div className="library-ambient library-ambient-one" />
       <div className="library-ambient library-ambient-two" />
 
       <div className="relative space-y-8">
         <div className="library-catalog-hero">
           <div className="library-catalog-ribbon">Katalog hasil</div>
-          <div className="grid gap-5 xl:grid-cols-[1.3fr_0.7fr] xl:items-start">
+          <div className="grid gap-5 xl:grid-cols-[1.25fr_0.75fr] xl:items-start">
             <div className="space-y-5">
               <div className="flex flex-wrap gap-2">
                 <span className="library-tag">
@@ -75,68 +89,109 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
                   {primaryType} · {model.name}
                 </span>
                 {experience.tags.map((tag) => (
-                  <span key={tag} className="library-tag">{tag}</span>
+                  <span key={tag} className="library-tag">
+                    {polishEditorialText(tag)}
+                  </span>
                 ))}
               </div>
 
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#d5b07b]">
+                <p className={`text-[11px] font-bold uppercase tracking-[0.18em] ${labelClass}`}>
                   Ringkasan editorial
                 </p>
-                <h3 className="mt-2 text-3xl font-black tracking-tight text-[#241915] sm:text-5xl dark:text-[#fff7ea]">
-                  {experience.title}
+                <h3 className={`mt-2 text-3xl font-black tracking-tight sm:text-5xl ${titleClass}`}>
+                  {polishEditorialText(experience.title)}
                 </h3>
-                <p className="mt-3 max-w-3xl text-sm leading-7 text-[#5f4a3d] dark:text-[#ddc9b0]">
-                  {experience.subtitle}
+                <p className={`mt-3 max-w-3xl text-sm leading-7 ${bodyClass}`}>
+                  {polishEditorialText(experience.subtitle)}
                 </p>
               </div>
 
               <div className="grid gap-3 md:grid-cols-2">
                 <div className="library-note-card">
-                  <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#8c5a34] dark:text-[#ddb175]">
+                  <div className={`text-[11px] font-extrabold uppercase tracking-[0.16em] ${labelClass}`}>
                     Pendapat ahli singkat
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[#2d221d] dark:text-[#f4e7d4]">
-                    {experience.expertSnapshot}
+                  <p className={`mt-2 text-sm leading-6 ${titleClass}`}>
+                    {polishEditorialText(experience.expertSnapshot)}
                   </p>
                 </div>
                 <div className="library-note-card library-note-purple">
-                  <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#7a4f74] dark:text-[#ddb5ee]">
+                  <div className={`text-[11px] font-extrabold uppercase tracking-[0.16em] ${accentLabelClass}`}>
                     Stereotipe internet
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[#2d221d] dark:text-[#f4e7d4]">
-                    {experience.internetSnapshot}
+                  <p className={`mt-2 text-sm leading-6 ${titleClass}`}>
+                    {polishEditorialText(experience.internetSnapshot)}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="library-signal-strip">
-              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
-                Sinyal yang kelihatan dari jawabanmu
+            <div className="space-y-4">
+              <div className="library-signal-strip">
+                <div className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
+                  Sinyal yang kelihatan dari jawabanmu
+                </div>
+                <p className={`mt-2 text-xs leading-6 ${mutedClass}`}>
+                  Ini bukan vonis, tapi jejak pola yang paling sering muncul dari jawabanmu.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {experience.observedSignals.map((signal) => (
+                    <span key={signal} className="library-signal-chip">
+                      {polishEditorialText(signal)}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {experience.observedSignals.map((signal) => (
-                  <span key={signal} className="library-signal-chip">
-                    {signal}
-                  </span>
-                ))}
+
+              <div className="library-evidence-card">
+                <div className="library-evidence-heading">
+                  <BarChart3 className="h-4 w-4" />
+                  <span>Kualitas bukti hasil</span>
+                </div>
+                <div className="library-evidence-grid">
+                  <div>
+                    <strong>{coveragePercent}%</strong>
+                    <span>Cakupan jawaban</span>
+                  </div>
+                  <div>
+                    <strong>{consistencyPercent}%</strong>
+                    <span>Konsistensi respons</span>
+                  </div>
+                  <div>
+                    <strong>{holdoutPercent}%</strong>
+                    <span>Dukungan holdout</span>
+                  </div>
+                  <div>
+                    <strong>{candidateGap.toFixed(1)}</strong>
+                    <span>Jarak kandidat</span>
+                  </div>
+                </div>
+                {result.unresolvedPair ? (
+                  <p className="library-evidence-note">
+                    Kandidat yang masih perlu dibedakan: <b>{result.unresolvedPair}</b>.
+                  </p>
+                ) : (
+                  <p className="library-evidence-note">
+                    Kandidat utama sudah memiliki jarak yang bisa dibaca, tetapi hasil tetap perlu diuji lewat perilaku nyata.
+                  </p>
+                )}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[250px_minmax(0,1fr)] xl:items-start">
+        <div className="grid gap-6 xl:grid-cols-[280px_minmax(0,1fr)] xl:items-start">
           <aside className="library-floating-nav xl:sticky xl:top-6">
             <div className="space-y-1">
-              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+              <div className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
                 Daftar bab hasil
               </div>
-              <p className="text-xs leading-5 text-[#6d584b] dark:text-[#cbb89e]">
-                Baca hasilmu seperti katalog. Klik bab yang ingin kamu buka lebih dulu.
+              <p className={`text-xs leading-5 ${mutedClass}`}>
+                Buka bagian yang paling ingin kamu baca dulu. Semua bab tetap saling melengkapi.
               </p>
             </div>
-            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 xl:block xl:space-y-2 xl:overflow-visible">
+            <div className="library-nav-grid mt-4">
               {experience.sections.map((section) => {
                 const Icon = SECTION_ICONS[section.id];
                 const current = section.id === active.id;
@@ -147,13 +202,15 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
                     onClick={() => setActiveSection(section.id)}
                     className={`library-nav-tab ${current ? "library-nav-tab-active" : ""}`}
                   >
-                    <Icon className="h-4 w-4" />
-                    <span className="min-w-0">
-                      <span className="block text-[10px] font-bold uppercase tracking-[0.16em] opacity-70">
-                        {section.kicker}
+                    <span className="library-nav-icon-wrap">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="min-w-0 text-left">
+                      <span className="block text-[10px] font-bold uppercase tracking-[0.16em] opacity-75">
+                        {polishEditorialText(section.kicker)}
                       </span>
-                      <span className="block truncate text-sm font-extrabold">
-                        {section.title}
+                      <span className="block text-sm font-extrabold leading-5 whitespace-normal break-words">
+                        {polishEditorialText(section.title)}
                       </span>
                     </span>
                   </button>
@@ -163,15 +220,19 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
           </aside>
 
           <div className="space-y-6">
-            <div className="library-section-heading">
-              <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
-                {active.kicker}
+            <div className="library-section-heading block">
+              <div className="library-chapter-progress">
+                <span>Bab {activeIndex + 1} dari {experience.sections.length}</span>
+                <div><i style={{ width: `${((activeIndex + 1) / experience.sections.length) * 100}%` }} /></div>
               </div>
-              <h4 className="mt-2 text-2xl font-black text-[#251a15] sm:text-3xl dark:text-[#fff5e6]">
-                {active.title}
+              <div className={`mt-4 text-[11px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
+                {polishEditorialText(active.kicker)}
+              </div>
+              <h4 className={`mt-2 text-2xl font-black sm:text-3xl ${titleClass}`}>
+                {polishEditorialText(active.title)}
               </h4>
-              <p className="mt-3 text-sm leading-7 text-[#5f4a3d] dark:text-[#d8c3aa]">
-                {active.intro}
+              <p className={`mt-3 max-w-4xl text-sm leading-7 ${bodyClass}`}>
+                {polishEditorialText(active.intro)}
               </p>
             </div>
 
@@ -179,55 +240,58 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
               {active.cards.map((card) => (
                 <article key={`${active.id}-${card.title}`} className="library-insight-card">
                   <div className="flex items-start justify-between gap-3">
-                    <h5 className="text-lg font-black text-[#241915] dark:text-[#fff3e3]">{card.title}</h5>
-                    <span className="library-tag whitespace-nowrap">{active.kicker}</span>
+                    <h5 className={`text-lg font-black leading-6 ${titleClass}`}>{polishEditorialText(card.title)}</h5>
+                    <span className="library-tag whitespace-nowrap">{polishEditorialText(active.kicker)}</span>
                   </div>
 
                   <div className="mt-5 space-y-4">
                     <div>
-                      <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                      <div className={`text-[10px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
                         Pendapat ahli
                       </div>
-                      <p className="mt-1.5 text-sm leading-6 text-[#2f241f] dark:text-[#f4e8d7]">
-                        {card.expert}
+                      <p className={`mt-1.5 text-sm leading-6 ${titleClass}`}>
+                        {polishEditorialText(card.expert)}
                       </p>
                     </div>
 
                     <div>
-                      <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#7a4f74] dark:text-[#d7b0ea]">
+                      <div className={`text-[10px] font-extrabold uppercase tracking-[0.18em] ${accentLabelClass}`}>
                         Versi gampangnya
                       </div>
-                      <p className="mt-1.5 text-sm leading-6 text-[#5b473b] dark:text-[#d5c0a5]">
-                        {card.simple}
+                      <p className={`mt-1.5 text-sm leading-6 ${bodyClass}`}>
+                        {polishEditorialText(card.simple)}
                       </p>
                     </div>
 
                     {card.stereotype && (
-                      <div className="rounded-2xl border border-[rgba(122,79,116,0.18)] bg-[rgba(248,239,250,0.8)] p-3 text-sm leading-6 text-[#4f3b48] dark:border-[rgba(215,176,234,0.14)] dark:bg-[rgba(57,38,59,0.72)] dark:text-[#e7d6f0]">
-                        <strong className="font-extrabold">Stereotipe internet:</strong> {card.stereotype}
+                      <div className="library-copy-block library-copy-block-purple">
+                        <strong className="font-extrabold">Stereotipe internet:</strong>{" "}
+                        {polishEditorialText(card.stereotype)}
                       </div>
                     )}
 
                     {card.misunderstood && (
-                      <div className="rounded-2xl border border-[rgba(146,95,53,0.18)] bg-[rgba(255,249,237,0.8)] p-3 text-sm leading-6 text-[#4a382f] dark:border-[rgba(223,184,126,0.12)] dark:bg-[rgba(60,43,34,0.72)] dark:text-[#e8d7bf]">
-                        <strong className="font-extrabold">Yang sering bikin orang salah paham:</strong> {card.misunderstood}
+                      <div className="library-copy-block library-copy-block-cream">
+                        <strong className="font-extrabold">Yang sering bikin orang salah paham:</strong>{" "}
+                        {polishEditorialText(card.misunderstood)}
                       </div>
                     )}
 
                     {card.warning && (
-                      <div className="rounded-2xl border border-[rgba(138,70,45,0.22)] bg-[rgba(172,93,55,0.08)] p-3 text-sm leading-6 text-[#623f2b] dark:border-[rgba(239,160,94,0.16)] dark:bg-[rgba(97,53,30,0.26)] dark:text-[#f4d0a2]">
-                        <strong className="font-extrabold">Yang perlu kamu waspadai:</strong> {card.warning}
+                      <div className="library-copy-block library-copy-block-warn">
+                        <strong className="font-extrabold">Yang perlu kamu waspadai:</strong>{" "}
+                        {polishEditorialText(card.warning)}
                       </div>
                     )}
 
                     {card.actions && card.actions.length > 0 && (
                       <div>
-                        <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                        <div className={`text-[10px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
                           Saran praktis
                         </div>
                         <ul className="mt-2 space-y-2">
-                          {card.actions.map((action) => (
-                            <li key={action} className="flex gap-2 text-sm leading-6 text-[#312620] dark:text-[#f2e6d5]">
+                          {polishEditorialList(card.actions).map((action) => (
+                            <li key={action} className={`flex gap-2 text-sm leading-6 ${isDark ? "text-[#f2e6d5]" : "text-[#312620]"}`}>
                               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#a56a3f]" />
                               <span>{action}</span>
                             </li>
@@ -242,7 +306,7 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
 
             {active.recommendations && active.recommendations.length > 0 && (
               <div className="space-y-4">
-                <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#8c5a34] dark:text-[#ddb175]">
+                <div className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${labelClass}`}>
                   Rak rekomendasi untukmu
                 </div>
                 <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
@@ -251,17 +315,21 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
                     return (
                       <article key={group.title} className="library-shelf-card">
                         <div className="flex items-start gap-3">
-                          <div className="rounded-2xl border border-[rgba(146,95,53,0.24)] bg-[rgba(255,246,228,0.72)] p-2.5 text-[#8c5a34] shadow-sm dark:border-[rgba(223,184,126,0.16)] dark:bg-[rgba(57,41,33,0.72)] dark:text-[#e6c58f]">
+                          <div className="library-shelf-icon">
                             <Icon className="h-4 w-4" />
                           </div>
                           <div className="min-w-0 flex-1">
-                            <h5 className="text-base font-extrabold text-[#2b201a] dark:text-[#fbf2e2]">{group.title}</h5>
-                            <p className="mt-1 text-xs leading-5 text-[#6f5948] dark:text-[#cbb89e]">{group.note}</p>
+                            <h5 className={`text-base font-extrabold ${isDark ? "text-[#fbf2e2]" : "text-[#2b201a]"}`}>
+                              {polishEditorialText(group.title)}
+                            </h5>
+                            <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
+                              {polishEditorialText(group.note)}
+                            </p>
                           </div>
                         </div>
                         <div className="mt-4 space-y-2">
-                          {group.items.map((item) => (
-                            <div key={item} className="library-book-spine">
+                          {polishEditorialList(group.items).map((item, index) => (
+                            <div key={item} className="library-book-spine" style={{ ["--spine-index" as string]: index }}>
                               <span>{item}</span>
                             </div>
                           ))}
@@ -271,6 +339,22 @@ export default function ResultPortal({ primaryType, result, theme }: Props) {
                   })}
                 </div>
               </div>
+            )}
+            {nextSection && (
+              <button
+                type="button"
+                className="library-next-chapter"
+                onClick={() => {
+                  setActiveSection(nextSection.id);
+                  document.querySelector(".library-result-shell")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+              >
+                <span>
+                  <small>Bab berikutnya</small>
+                  <strong>{polishEditorialText(nextSection.title)}</strong>
+                </span>
+                <ChevronRight className="h-5 w-5" />
+              </button>
             )}
           </div>
         </div>
