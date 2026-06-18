@@ -1,32 +1,64 @@
-# Panduan Pengalaman Hasil Empat Pintu
+# Panduan Hasil Editorial Perpustakaan — v2.1.0
 
 ## Tujuan
 
-Halaman hasil tidak berhenti pada nama TIM. Ia membuka empat jalur refleksi yang berbeda dan tetap mempertahankan ketidakpastian hasil, kandidat pembanding, Model A, serta hubungan antar-tipe.
+Halaman hasil dirancang seperti katalog editorial, bukan laporan teknis dan bukan dunia metafora. Peserta dapat membaca hasil sedikit demi sedikit melalui tujuh rak pembacaan:
 
-## Pintu A — Ruang Cermin
+1. Ringkasan inti.
+2. Cara berpikir.
+3. Emosi dan pemicu.
+4. Relasi dan sirkel.
+5. Pandangan dunia.
+6. Blind spot dan sabotase diri.
+7. Rekomendasi setelah tes.
 
-Membahas fungsi Base, Creative, Role, Demonstrative, temperamen, pola seimbang, pola tertekan, dan bukti yang dapat menyangkal kandidat utama.
+## Kontrak bahasa
 
-## Pintu B — Ruang Cuaca
+- Gunakan kata **kamu**.
+- Hindari paragraf puitis dan metafora panjang.
+- Gunakan kalimat ringkas, tajam, dan mudah dipindai.
+- Bedakan dengan jelas antara ringkasan teori, versi gampang, stereotipe internet, salah paham, risiko, dan saran praktis.
+- Stereotipe internet diberi label sebagai bagian ringan, bukan fakta.
+- Tidak ada kutipan ahli palsu. Label **Catatan ahli — ringkasan teori** berarti sintesis Model A, bukan kutipan langsung dari seseorang.
 
-Membaca emosi sebagai sinyal kebutuhan atau tekanan, bukan diagnosis. Emosi yang dibahas meliputi sukacita, marah, takut, sedih, malu, iri, muak, cinta, bosan, dan kebutuhan regulasi.
+## Struktur setiap kartu
 
-## Pintu C — Observatorium Dunia
+Kartu dapat berisi:
 
-Membahas aspek aturan, politik, agama, ekonomi, masyarakat, kekuasaan, dan kontribusi publik yang kemungkinan lebih cepat menarik perhatian tipe tersebut. Tidak ada klaim bahwa tipe menentukan pilihan partai, agama, ideologi, atau kelas sosial.
+- **Catatan ahli — ringkasan teori:** pembacaan yang bersumber dari posisi Model A.
+- **Versi gampangnya:** bahasa sehari-hari tanpa mengurangi makna.
+- **Stereotipe internet:** gambaran komunitas yang sengaja dibuat ringan.
+- **Yang sering bikin orang salah paham:** perbedaan antara kesan luar dan motif batin.
+- **Yang perlu kamu waspadai:** blind spot, tekanan, atau risiko penggunaan fungsi secara berlebihan.
+- **Saran praktis:** tindakan kecil yang bisa diuji di kehidupan nyata.
 
-## Pintu D — Laboratorium Hidup
+## Tema visual
 
-Menyediakan nasihat, sirkel ideal, kebutuhan bantuan, hadiah, buku, film, musik, pekerjaan, destinasi, kosakata, serta eksperimen kecil. Semua rekomendasi adalah bahan eksplorasi dan dapat ditolak bila tidak sesuai pengalaman nyata.
+Tema memakai bahasa visual perpustakaan modern:
+
+- warna walnut, parchment, burgundy, deep navy, dusty plum, dan muted gold;
+- font Plus Jakarta Sans untuk isi dan DM Serif Display untuk judul;
+- kartu katalog, bookmark, rak pembacaan mengambang, dan daftar rekomendasi bergaya punggung buku;
+- navigasi sticky di desktop dan horizontal di mobile;
+- gradient lembut dan bayangan ringan tanpa warna neon.
 
 ## Personalisasi
 
-Selain data 16 TIM, komponen membaca `channelProfile` aktual peserta dan menampilkan empat sinyal dengan magnitudo terbesar. Sinyal tersebut diberi label sebagai pola jawaban, bukan fakta mutlak.
+Komponen tetap membaca `channelProfile` aktual peserta dan menampilkan empat sinyal dengan magnitudo terbesar. Sinyal ditulis sebagai pola jawaban, bukan identitas mutlak.
+
+## Fitur yang dipertahankan
+
+- Top 3 kandidat.
+- Confidence dan indeks kecocokan relatif.
+- Grid Model A.
+- Bandingkan Dengan Tipe Lain.
+- Analisis Hubungan Antar-Tipe.
+- Kartu hasil dengan foto opsional.
+- Retest.
 
 ## Batas klaim
 
 - Bukan diagnosis psikologis atau klinis.
-- Bukan alat prediksi politik, agama, moralitas, karier, atau kompatibilitas absolut.
-- Tidak menggantikan pengalaman hidup, budaya, kondisi kesehatan, atau bantuan profesional.
-- Rekomendasi buku, film, musik, destinasi, hadiah, dan pekerjaan adalah moodboard reflektif.
+- Bukan penentu ideologi politik, agama, moralitas, kecerdasan, karier, atau kompatibilitas absolut.
+- Pengalaman hidup, budaya, trauma, kesehatan, kelas sosial, dan keadaan saat tes tetap dapat mengubah pola jawaban.
+- Rekomendasi buku, film, musik, tempat, hadiah, dan pekerjaan adalah bahan eksplorasi, bukan resep hidup.
