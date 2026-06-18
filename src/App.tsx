@@ -1,1781 +1,572 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import {
-  Brain,
-  Compass,
-  Activity,
-  Sliders,
-  Shield,
-  Heart,
-  Target,
-  Check,
-  RotateCcw,
-  Download,
-  Upload,
-  BookOpen,
-  Info,
-  Users,
-  ArrowLeft,
-  ChevronRight,
-  ChevronUp,
-  AlertTriangle,
-  X,
-  Menu,
-  Lock,
-  HelpCircle,
-  LibraryBig
+import React, { useState, useEffect } from "react";
+import { SociotypeCode, SociotypeInfo, SavedDiagnosis } from "./types";
+import { SOCIOTYPES } from "./data/socionicsData";
+import ModelAGrid from "./components/ModelAGrid";
+import RelationsMatrix from "./components/RelationsMatrix";
+import ReininCalculator from "./components/ReininCalculator";
+import CounselingChat from "./components/CounselingChat";
+import { 
+  Award, 
+  BookOpen, 
+  MessageSquare, 
+  Scale, 
+  Archive, 
+  HelpCircle, 
+  AlertTriangle, 
+  ChevronRight, 
+  Clock, 
+  Trash2, 
+  ExternalLink,
+  ChevronDown
 } from "lucide-react";
-import { motion } from "motion/react";
-
-import { useTestSession } from "./hooks/useTestSession";
-import { TIM_MODELS, QUADRA_DATA, INTERTYPE_MAP, ELEMENTS_METADATA } from "./constants/socionicsData";
-import { ALL_QUESTIONS } from "./data/questions";
-import { calculateResult } from "./scoring/engine";
-import { TIM, TIMProfile, InformationElement, MeasurementChannel, ModelAPosition, Quadra, TestSession } from "./types/socionics";
-import { getCasualVersion, getOptionDetail } from "./utils/optionDetails";
-import { runInstrumentAudit } from "./audit/instrumentAudit";
-import { polishEditorialText } from "./utils/editorialText";
-import { getPositionEditorial, getRelationEditorial, getTypeComparisonSnapshot } from "./results/modelAEditorial";
-const ResultPortal = React.lazy(() => import("./components/ResultPortal"));
-
-// Option Scale Wording by ScaleType
-const SCALE_OPTIONS_MAP: Record<string, { val: number; label: string }[]> = {
-  automaticity: [
-    { val: 1, label: "Tidak muncul secara alami" },
-    { val: 2, label: "Harus kupikirkan cukup lama" },
-    { val: 3, label: "Tergantung keadaan" },
-    { val: 4, label: "Cukup spontan" },
-    { val: 5, label: "Muncul hampir tanpa usaha" }
-  ],
-  comfort: [
-    { val: 1, label: "Sangat menguras tenaga" },
-    { val: 2, label: "Cukup tidak nyaman" },
-    { val: 3, label: "Netral atau tergantung situasi" },
-    { val: 4, label: "Cukup nyaman" },
-    { val: 5, label: "Sangat nyaman" }
-  ],
-  threat: [
-    { val: 1, label: "Sama sekali tidak mengganggu" },
-    { val: 2, label: "Sedikit mengganggu" },
-    { val: 3, label: "Cukup menekan" },
-    { val: 4, label: "Sangat menekan" },
-    { val: 5, label: "Membuatku beku, defensif, malu, atau menghindar" }
-  ],
-  relief: [
-    { val: 1, label: "Tidak membantu" },
-    { val: 2, label: "Sedikit membantu" },
-    { val: 3, label: "Lumayan membantu" },
-    { val: 4, label: "Sangat membantu" },
-    { val: 5, label: "Sangat melegakan batin harian" }
-  ],
-  recognition: [
-    { val: 1, label: "Tidak berarti" },
-    { val: 2, label: "Sedikit berarti" },
-    { val: 3, label: "Cukup menyenangkan" },
-    { val: 4, label: "Sangat berarti" },
-    { val: 5, label: "Menyentuh kebutuhan terdalam batin" }
-  ],
-  frequency: [
-    { val: 1, label: "Tidak pernah" },
-    { val: 2, label: "Jarang" },
-    { val: 3, label: "Kadang-kadang" },
-    { val: 4, label: "Sering" },
-    { val: 5, label: "Hampir selalu" }
-  ],
-  competence: [
-    { val: 1, label: "Sangat kesulitan" },
-    { val: 2, label: "Cukup kesulitan" },
-    { val: 3, label: "Bisa dalam keadaan tertentu" },
-    { val: 4, label: "Cukup mampu" },
-    { val: 5, label: "Sangat mampu" }
-  ],
-  importance: [
-    { val: 1, label: "Sama sekali tidak penting" },
-    { val: 2, label: "Kurang penting" },
-    { val: 3, label: "Tergantung keadaan" },
-    { val: 4, label: "Penting" },
-    { val: 5, label: "Sangat penting" }
-  ],
-  comparison: [
-    { val: 1, label: "Jauh lebih dekat B" },
-    { val: 2, label: "Agak lebih dekat B" },
-    { val: 3, label: "Sama dekat" },
-    { val: 4, label: "Agak lebih dekat A" },
-    { val: 5, label: "Jauh lebih dekat A" }
-  ]
-};
-
-/// Option details are now loaded dynamically from src/utils/optionDetails.ts
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<"landing" | "test" | "review" | "result" | "method" | "references" | "audit">("landing");
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Application tabs
+  const [activeTab, setActiveTab] = useState<"profiler" | "reinin" | "chat" | "history">("profiler");
+  
+  // Selected Sociotype state
+  const [selectedType, setSelectedType] = useState<SociotypeCode>(SociotypeCode.LII);
+  
+  // History diagnostics saved states
+  const [savedReports, setSavedReports] = useState<SavedDiagnosis[]>([]);
+  const [viewingReportId, setViewingReportId] = useState<string | null>(null);
 
-  // Local temporary states for redesigned automatic test flow
-  const [selectedRating, setSelectedRating] = useState<number | null>(null);
-  const [expandedRating, setExpandedRating] = useState<number | null>(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const questionRef = useRef<HTMLDivElement | null>(null);
-  const transitionTimeoutRef = useRef<number | null>(null);
+  // Meticulous editorial panel open state
+  const [showCritique, setShowCritique] = useState(true);
 
-  const {
-    session,
-    activeQuestions,
-    currentQuestion,
-    isFirstQuestion,
-    isLastQuestion,
-    startNewSession,
-    answerQuestion,
-    skipQuestion,
-    goToQuestion,
-    appendTieBreakQuestions,
-    completeSession,
-    resetSession
-  } = useTestSession();
-
-  // Clear timeout on unmount or cleanup
+  // Load from local storage
   useEffect(() => {
-    return () => {
-      if (transitionTimeoutRef.current !== null) {
-        window.clearTimeout(transitionTimeoutRef.current);
+    try {
+      const stored = localStorage.getItem("socionics_reports");
+      if (stored) {
+        setSavedReports(JSON.parse(stored));
       }
-    };
+    } catch (e) {
+      console.error("Gagal memuat arsip diagnosis dari localStorage:", e);
+    }
   }, []);
 
-  // Handle auto-redirection on fresh completion
-  useEffect(() => {
-    if (session?.completed) {
-      setCurrentPage("result");
-    }
-  }, [session?.completed]);
+  // Save report to local storage
+  const handleSaveDiagnosisReport = (summary: string) => {
+    const newReport: SavedDiagnosis = {
+      id: "report-" + Date.now(),
+      date: new Date().toLocaleDateString("id-ID", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }),
+      selectedType: selectedType,
+      chatHistorySummary: summary
+    };
 
-  const finishOrExtendSession = (baseSession: TestSession) => {
-    const provisional = calculateResult(baseSession.answers, ALL_QUESTIONS, {
-      startedAt: baseSession.startedAt,
-      questionIds: baseSession.questionIds,
-    });
-
-    if (provisional.unresolvedPair && !baseSession.tieBreakPair) {
-      const extended = appendTieBreakQuestions(provisional.unresolvedPair, baseSession);
-      if (extended && extended.questionIds.length > baseSession.questionIds.length) {
-        setCurrentPage("test");
-        return;
-      }
-    }
-
-    completeSession(baseSession);
-    setCurrentPage("result");
+    const updated = [newReport, ...savedReports];
+    setSavedReports(updated);
+    localStorage.setItem("socionics_reports", JSON.stringify(updated));
+    setActiveTab("history"); // Instantly navigate to history
+    setViewingReportId(newReport.id);
   };
 
-  // One tap saves immediately. The information icon remains a separate control.
-  const handleOptionSelect = (val: number) => {
-    if (isTransitioning || !currentQuestion || !session) return;
-
-    setSelectedRating(val);
-    const savedSession = answerQuestion(currentQuestion.id, val, false);
-    if (!savedSession) return;
-
-    setIsTransitioning(true);
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const delay = prefersReducedMotion ? 60 : 420;
-
-    if (transitionTimeoutRef.current !== null) {
-      window.clearTimeout(transitionTimeoutRef.current);
-    }
-
-    transitionTimeoutRef.current = window.setTimeout(() => {
-      setExpandedRating(null);
-
-      if (isLastQuestion) {
-        finishOrExtendSession(savedSession);
-      } else {
-        goToQuestion(savedSession.currentIndex + 1, savedSession);
-      }
-
-      setIsTransitioning(false);
-      transitionTimeoutRef.current = null;
-    }, delay);
-  };
-
-  const handleSkipCurrentQuestion = () => {
-    if (isTransitioning || !currentQuestion || !session) return;
-    const savedSession = skipQuestion(currentQuestion.id);
-    if (!savedSession) return;
-    setExpandedRating(null);
-    setSelectedRating(null);
-    if (isLastQuestion) finishOrExtendSession(savedSession);
-  };
-
-  const handleInfoClick = (e: React.MouseEvent, val: number) => {
-    e.preventDefault();
+  const handleDeleteReport = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setExpandedRating((current) => (current === val ? null : val));
-  };
-
-  // Synchronize local selected rating and hide explanation panel on question/index change
-  useEffect(() => {
-    if (currentPage === "test" && currentQuestion) {
-      const saved = session?.answers[currentQuestion.id] || null;
-      setSelectedRating(saved);
-      setExpandedRating(null); // Keep explanation closed by default!
-      
-      // Gentle scroll to the active question Card
-      if (questionRef.current) {
-        questionRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
-    }
-  }, [currentPage, currentQuestion?.id, session?.currentIndex]);
-
-  // Keyboard Event Listeners for Test (1 to 5 keys to instantly select, arrow keys to slide page)
-  useEffect(() => {
-    if (currentPage !== "test" || !currentQuestion || isTransitioning) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key >= "1" && e.key <= "5") {
-        const rating = parseInt(e.key);
-        handleOptionSelect(rating);
-      } else if (e.key === "ArrowLeft" && !isFirstQuestion) {
-        goToQuestion(session!.currentIndex - 1);
-      } else if (e.key === "ArrowRight" && !isLastQuestion) {
-        skipQuestion(currentQuestion.id);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentPage, currentQuestion?.id, isFirstQuestion, isLastQuestion, selectedRating, session, isTransitioning]);
-
-  // Compute assessment outputs
-  const handledCount = session
-    ? Object.keys(session.answers).length + session.skippedIds.length
-    : 0;
-  const allSessionItemsHandled = Boolean(
-    session && activeQuestions.length > 0 && handledCount >= activeQuestions.length,
-  );
-
-  const calculatedOutput = useMemo(() => {
-    if (!session || Object.keys(session.answers).length < 2) return null;
-    return calculateResult(session.answers, ALL_QUESTIONS, {
-      startedAt: session.startedAt,
-      questionIds: session.questionIds,
-    });
-  }, [session]);
-
-  const resultHeroPreview = useMemo(() => {
-    if (!calculatedOutput) return null;
-    const type = calculatedOutput.top3[0].type;
-    const base = getPositionEditorial(type, "Base");
-    const creative = getPositionEditorial(type, "Creative");
-    const vulnerable = getPositionEditorial(type, "Vulnerable");
-    const suggestive = getPositionEditorial(type, "Suggestive");
-    return {
-      expert: `${base.inPractice} ${creative.inPractice}`,
-      signals: [
-        `Base ${base.element}: ${base.title}`,
-        `Creative ${creative.element}: ${creative.title}`,
-        `PoLR ${vulnerable.element}: area sensitif`,
-        `Suggestive ${suggestive.element}: bantuan yang dicari`,
-      ],
-    };
-  }, [calculatedOutput]);
-
-  // Card Uploader assets
-  const [cardNickname, setCardNickname] = useState("");
-  const [cardImage, setCardImage] = useState<string | null>(null);
-  const cardCanvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setCardImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    const updated = savedReports.filter(r => r.id !== id);
+    setSavedReports(updated);
+    localStorage.setItem("socionics_reports", JSON.stringify(updated));
+    if (viewingReportId === id) {
+      setViewingReportId(null);
     }
   };
 
-  const drawResultCard = () => {
-    const canvas = cardCanvasRef.current;
-    if (!canvas || !calculatedOutput) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const top1 = calculatedOutput.top3[0];
-    const topModel = TIM_MODELS[top1.type];
-
-    // Clear and fill canvas vertical space
-    ctx.clearRect(0, 0, 1080, 1920);
-
-    // Outer Background
-    ctx.fillStyle = theme === "dark" ? "#1f1714" : "#f8efe1";
-    ctx.fillRect(0, 0, 1080, 1920);
-
-    // Gradient corner lighting
-    const grad = ctx.createRadialGradient(540, 960, 50, 540, 960, 1000);
-    grad.addColorStop(0, theme === "dark" ? "#5a322b" : "#f2d6ad");
-    grad.addColorStop(1, theme === "dark" ? "#17100e" : "#f8efe1");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 1080, 1920);
-
-    // Frame borders
-    ctx.strokeStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
-    ctx.lineWidth = 20;
-    ctx.strokeRect(40, 40, 1000, 1840);
-
-    // Inner subtle guidelines
-    ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.24)" : "rgba(139, 94, 52, 0.22)";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(60, 60, 960, 1800);
-
-    // Header Title
-    ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
-    ctx.font = "bold 64px Space Grotesk";
-    ctx.textAlign = "center";
-    ctx.fillText("KARTU KATALOG TIPOLOGI", 540, 160);
-
-    ctx.font = "bold 28px JetBrains Mono";
-    ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
-    ctx.fillText("SOCIONICS DALAM DIRIKU • MODEL A", 540, 215);
-
-    // Sub Title
-    ctx.fillStyle = "rgba(100, 116, 139, 0.7)";
-    ctx.font = "22px Inter";
-    ctx.fillText("Katalog hasil reflektif • bukan diagnosis klinis", 540, 255);
-
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = "rgba(100, 116, 139, 0.3)";
-    ctx.beginPath();
-    ctx.moveTo(150, 290);
-    ctx.lineTo(930, 290);
-    ctx.stroke();
-
-    // Portrait Section
-    const drawPortrait = () => {
-      const px = 540 - 150;
-      const py = 330;
-      const pw = 300;
-      const ph = 300;
-
-      // Card Photo Inner Shadow Border
-      ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.48)" : "rgba(139, 94, 52, 0.42)";
-      ctx.lineWidth = 6;
-      ctx.strokeRect(px - 10, py - 10, pw + 20, ph + 20);
-
-      if (cardImage) {
-        const img = new Image();
-        img.onload = () => {
-          ctx.drawImage(img, px, py, pw, ph);
-          drawMetas();
-        };
-        img.src = cardImage;
-      } else {
-        // Fallback Vector
-        ctx.fillStyle = theme === "dark" ? "#2d211c" : "#ead9bd";
-        ctx.fillRect(px, py, pw, ph);
-
-        ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
-        ctx.font = "bold 110px Space Grotesk";
-        ctx.fillText(top1.type, 540, 500);
-
-        ctx.font = "20px JetBrains Mono";
-        ctx.fillStyle = "rgba(100, 116, 139, 0.8)";
-        ctx.fillText("No Image Uploaded", 540, 550);
-        drawMetas();
-      }
-    };
-
-    const drawMetas = () => {
-      // Nickname
-      ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
-      ctx.font = "bold 44px Space Grotesk";
-      ctx.fillText(cardNickname ? cardNickname.toUpperCase() : "PARTICIPANT", 540, 710);
-
-      // Main TIM Title
-      ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
-      ctx.font = "bold 88px Space Grotesk";
-      ctx.fillText(`${top1.type} • ${topModel.name}`, 540, 830);
-
-      ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
-      ctx.font = "34px Inter";
-      ctx.fillText(topModel.fullName, 540, 890);
-
-      // Metadata Pill Box
-      ctx.fillStyle = theme === "dark" ? "rgba(214, 183, 124, 0.11)" : "rgba(139, 94, 52, 0.10)";
-      ctx.fillRect(150, 930, 780, 120);
-      ctx.strokeStyle = theme === "dark" ? "rgba(214, 183, 124, 0.30)" : "rgba(139, 94, 52, 0.28)";
-      ctx.strokeRect(150, 930, 780, 120);
-
-      ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
-      ctx.font = "26px JetBrains Mono";
-      ctx.fillText(`Quadra: ${topModel.quadra}  |  Club: ${topModel.club}  |  Dual: ${topModel.dual}`, 540, 1000);
-
-      // Model A Grid (Simplified for Card)
-      ctx.textAlign = "left";
-      ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
-      ctx.font = "bold 34px Space Grotesk";
-      ctx.fillText("FUNGSI MODEL A UTAMA:", 150, 1120);
-
-      const positions: { key: ModelAPosition; title: string }[] = [
-        { key: "Base", title: "1. Leading / Base" },
-        { key: "Creative", title: "2. Creative" },
-        { key: "Role", title: "3. Role" },
-        { key: "Vulnerable", title: "4. Vulnerable / PoLR" },
-        { key: "Suggestive", title: "5. Suggestive" },
-        { key: "Mobilizing", title: "6. Mobilizing" },
-        { key: "Ignoring", title: "7. Ignoring" },
-        { key: "Demonstrative", title: "8. Demonstrative" }
-      ];
-
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(100, 116, 139, 0.2)";
-
-      positions.forEach((pos, idx) => {
-        const el = topModel.positions[pos.key];
-        const row = Math.floor(idx / 2);
-        const col = idx % 2;
-
-        const x = 150 + col * 400;
-        const y = 1170 + row * 130;
-
-        // Position cell backing
-        ctx.fillStyle = theme === "dark" ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)";
-        ctx.fillRect(x, y, 380, 100);
-        ctx.strokeRect(x, y, 380, 100);
-
-        ctx.fillStyle = "rgba(148, 163, 184, 0.9)";
-        ctx.font = "20px JetBrains Mono";
-        ctx.fillText(pos.title, x + 15, y + 40);
-
-        ctx.fillStyle = theme === "dark" ? "#d6b77c" : "#8b5e34";
-        ctx.font = "bold 38px Space Grotesk";
-        ctx.fillText(`${el} (${ELEMENTS_METADATA[el].name.split(" ")[0]})`, x + 15, y + 80);
-      });
-
-      // Bottom confidence seal
-      ctx.textAlign = "center";
-      ctx.fillStyle = theme === "dark" ? "#ffffff" : "#0f172a";
-      ctx.font = "bold 26px Space Grotesk";
-      ctx.fillText(`Indeks kecocokan: ${top1.fitScore}%  |  Verifikasi holdout: ${top1.holdoutScore}%`, 540, 1720);
-
-      ctx.fillStyle = "rgba(100, 116, 139, 0.7)";
-      ctx.font = "20px JetBrains Mono";
-      const timestamp = new Date(session!.lastUpdatedAt).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" });
-      ctx.fillText(`Tanggal: ${timestamp}  |  Scoring Engine v2.1.0`, 540, 1770);
-    };
-
-    drawPortrait();
-  };
-
-  const handleDownloadCard = () => {
-    drawResultCard();
-    setTimeout(() => {
-      const canvas = cardCanvasRef.current;
-      if (!canvas) return;
-      const dataUrl = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.download = `Socionics_Dalam_Diriku_${cardNickname || "hasil"}.png`;
-      link.href = dataUrl;
-      link.click();
-    }, 200);
-  };
-
-  // Integrity checks
-  const auditReport = useMemo(() => runInstrumentAudit(200), []);
-
-  // UI state for detailed view tabs
-  const [activeModelAPos, setActiveModelAPos] = useState<ModelAPosition | null>("Base");
-  const [compareTIM, setCompareTIM] = useState<TIM | "">("");
-  const [intertypeTarget, setIntertypeTarget] = useState<TIM>("SEI");
-
-  // Dynamic selection lists
-  const availableTIMs = Object.keys(TIM_MODELS) as TIM[];
+  const typeInfo = SOCIOTYPES[selectedType];
 
   return (
-    <div className={`library-app-shell min-h-screen ${theme === "dark" ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"}`}>
-      
-      {/* GLOBAL BACKGROUND CANVAS RENDERER FOR CARDS */}
-      <canvas ref={cardCanvasRef} width="1080" height="1920" className="hidden" />
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white" id="main-applet">
+      {/* Background radial gradient decoration */}
+      <div className="absolute top-0 left-0 w-full h-[600px] bg-radial-gradient from-indigo-950/15 via-transparent to-transparent pointer-events-none" />
 
-      {/* HEADER BAR */}
-      <header className={`sticky top-0 z-50 border-b no-print ${theme === "dark" ? "bg-slate-900/90 border-slate-800 backdrop-blur-md" : "bg-white/90 border-slate-200 backdrop-blur-md"}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 md:py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2 md:space-x-3 cursor-pointer" onClick={() => setCurrentPage("landing")}>
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-emerald-500 flex items-center justify-center text-white font-bold">
-              <LibraryBig className="w-5 h-5 md:w-6 md:h-6" />
-            </div>
-            <div>
-              <span className="text-base md:text-xl font-display font-bold tracking-tight">Socionics Dalam Diriku</span>
-              <span className="hidden sm:inline-block ml-2 text-xs bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded border border-emerald-500/20 font-mono">MODEL A</span>
-            </div>
-          </div>
-
-          <div className="hidden lg:flex items-center space-x-6">
-            <button onClick={() => setCurrentPage("landing")} className={`text-sm font-medium transition hover:text-emerald-500 ${currentPage === "landing" ? "text-emerald-500" : ""}`}>Beranda</button>
-            {session && (
-              <button onClick={() => setCurrentPage("test")} className={`text-sm font-medium transition hover:text-emerald-500 ${currentPage === "test" ? "text-emerald-500" : ""}`}>Asesmen</button>
-            )}
-            {calculatedOutput && (
-              <button onClick={() => setCurrentPage("result")} className={`text-sm font-medium transition hover:text-emerald-500 ${currentPage === "result" ? "text-emerald-500" : ""}`}>Hasil</button>
-            )}
-            <button onClick={() => setCurrentPage("method")} className={`text-sm font-medium transition hover:text-emerald-500 ${currentPage === "method" ? "text-emerald-500" : ""}`}>Metodologi</button>
-            <button onClick={() => setCurrentPage("references")} className={`text-sm font-medium transition hover:text-emerald-500 ${currentPage === "references" ? "text-emerald-500" : ""}`}>Referensi</button>
-            <button onClick={() => setCurrentPage("audit")} className={`text-sm font-medium transition hover:text-emerald-500 ${currentPage === "audit" ? "text-emerald-500" : ""}`}>Audit</button>
-          </div>
-
-          <div className="flex items-center space-x-2 md:space-x-4">
-            {/* Theme Toggle */}
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className={`w-11 h-11 lg:w-auto lg:h-auto min-w-[44px] min-h-[44px] px-0 lg:px-3 lg:py-2 flex items-center justify-center rounded-lg border transition text-sm ${
-                theme === "dark" ? "border-slate-800 hover:bg-slate-800" : "border-slate-200 hover:bg-slate-100"
-              }`}
-              aria-label="Ubah Tema"
-            >
-              <span className="lg:hidden">{theme === "dark" ? "☀️" : "🌙"}</span>
-              <span className="hidden lg:inline">{theme === "dark" ? "☀️ Light" : "🌙 Dark"}</span>
-            </button>
-
-            {/* Mobile menu trigger */}
-            <button
-              className={`lg:hidden w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg border transition ${
-                theme === "dark" ? "border-slate-800 hover:bg-slate-800" : "border-slate-200 hover:bg-slate-100"
-              }`}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Menu"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile menu panel */}
-        {isMobileMenuOpen && (
-          <div className={`lg:hidden px-4 pt-2 pb-4 space-y-2 border-t no-print ${
-            theme === "dark" ? "border-slate-800 bg-slate-900 text-slate-100" : "border-slate-200 bg-white text-slate-900 shadow-lg"
-          }`}>
-            <button onClick={() => { setCurrentPage("landing"); setIsMobileMenuOpen(false); }} className={`block w-full text-left py-2 px-3 rounded cursor-pointer ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"}`}>Beranda</button>
-            {session && (
-              <button onClick={() => { setCurrentPage("test"); setIsMobileMenuOpen(false); }} className={`block w-full text-left py-2 px-3 rounded cursor-pointer ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"}`}>Asesmen</button>
-            )}
-            {calculatedOutput && (
-              <button onClick={() => { setCurrentPage("result"); setIsMobileMenuOpen(false); }} className={`block w-full text-left py-2 px-3 rounded cursor-pointer ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"}`}>Hasil</button>
-            )}
-            <button onClick={() => { setCurrentPage("method"); setIsMobileMenuOpen(false); }} className={`block w-full text-left py-2 px-3 rounded cursor-pointer ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"}`}>Metodologi</button>
-            <button onClick={() => { setCurrentPage("references"); setIsMobileMenuOpen(false); }} className={`block w-full text-left py-2 px-3 rounded cursor-pointer ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"}`}>Referensi</button>
-            <button onClick={() => { setCurrentPage("audit"); setIsMobileMenuOpen(false); }} className={`block w-full text-left py-2 px-3 rounded cursor-pointer ${theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-100"}`}>Audit</button>
-          </div>
-        )}
-      </header>
-
-      {/* CORE CONTENT SWITCH */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 relative z-10">
         
-        {/* LANDING PAGE */}
-        {currentPage === "landing" && (
-          <div className="max-w-4xl mx-auto text-center space-y-12 py-10">
-            <div className="space-y-4">
-              <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full border border-emerald-500/20 text-xs sm:text-sm font-mono mx-auto">
-                <Compass className="w-4 h-4" />
-                <span>TES REFLEKSI SOCIONICS MODEL A</span>
-              </div>
-              <h1 className="text-4xl sm:text-6xl font-display font-extrabold tracking-tight">
-                Temukan Struktur Kognitif <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
-                  Model A Socionics
-                </span>
-              </h1>
-              <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-                Tes refleksi berbasis 64 kanal Model A, item verifikasi, dan pemeriksaan konsistensi untuk membaca pola jawabanmu dengan lebih hati-hati.
-              </p>
-            </div>
-
-            {/* Session status reload box */}
-            {session && (
-              <div className={`p-6 rounded-xl border max-w-md mx-auto space-y-4 ${
-                theme === "dark" ? "border-emerald-500/30 bg-emerald-500/5" : "border-emerald-500/20 bg-emerald-500/5 text-emerald-950"
-              }`}>
-                <div className={`flex items-center justify-center space-x-3 font-medium ${theme === "dark" ? "text-emerald-400" : "text-emerald-700"}`}>
-                  <Activity className="w-5 h-5 animate-pulse" />
-                  <span>Tesmu masih tersimpan</span>
-                </div>
-                <div className={`text-xs font-mono ${theme === "dark" ? "text-slate-400" : "text-slate-600"}`}>
-                  Selesai: {Object.keys(session.answers).length} / {activeQuestions.length} Soal | Mode: {session.mode.toUpperCase()}
-                </div>
-                <div className="flex justify-center space-x-3">
-                  <button onClick={() => setCurrentPage("test")} className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-lg text-sm transition shadow cursor-pointer">
-                    Lanjutkan Tes
-                  </button>
-                  <button onClick={resetSession} className={`font-medium px-4 py-2 rounded-lg text-sm transition cursor-pointer ${
-                    theme === "dark" ? "bg-slate-800 hover:bg-slate-700 text-slate-200" : "bg-slate-100 hover:bg-slate-200 text-slate-850 border border-slate-200 shadow-sm"
-                  }`}>
-                    Mulai Baru
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {!session && (
-              <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto text-left">
-                {[
-                  { mode: "ringkas", label: "Mode Ringkas", count: "80 Soal", desc: "Seluruh 64 elemen-kanal tetap tercakup, ditambah 16 replikasi seimbang. Estimasi 10–14 menit." },
-                  { mode: "standar", label: "Mode Standar", count: "128 Soal", desc: "Cakupan penuh, replikasi lintas konteks, dan 16 item holdout. Estimasi 18–24 menit." },
-                  { mode: "mendalam", label: "Mode Mendalam", count: "224–226 Soal", desc: "Semua 192 core dan 32 holdout; dua pembeda adaptif muncul hanya bila kandidat sangat dekat. Estimasi 32–45 menit." }
-                ].map((m) => (
-                  <div key={m.mode} className={`p-6 rounded-xl border space-y-4 hover:border-emerald-500/30 transition shadow-lg flex flex-col justify-between ${
-                    theme === "dark" ? "border-slate-800 bg-slate-900/50 text-slate-100" : "border-slate-200 bg-white text-slate-900 shadow-sm"
-                  }`}>
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-lg">{m.label}</h3>
-                        <span className="text-xs bg-emerald-500/10 text-emerald-500 px-2.5 py-0.5 rounded-full font-mono font-bold">{m.count}</span>
-                      </div>
-                      <p className={`text-xs mt-2 ${theme === "dark" ? "text-slate-400" : "text-slate-550"}`}>{m.desc}</p>
-                    </div>
-                    <button
-                      onClick={() => startNewSession(m.mode as any)}
-                      className={`w-full font-bold py-2 rounded-lg text-sm transition mt-4 cursor-pointer ${
-                        theme === "dark"
-                          ? "bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-slate-200"
-                          : "bg-slate-100 hover:bg-emerald-500 hover:text-slate-950 text-slate-800 border border-slate-205 shadow-sm"
-                      }`}
-                    >
-                      Pilih Mode
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Privacy and Ethics notice */}
-            <div className={`grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto text-xs border-t pt-8 text-left ${
-              theme === "dark" ? "text-slate-500 border-slate-900" : "text-slate-600 border-slate-200"
-            }`}>
-              <div className="flex items-start space-x-2">
-                <Shield className="w-5 h-5 text-emerald-500 shrink-0" />
-                <p>
-                  <strong>DATAMU TETAP LOKAL:</strong> Jawaban dan foto opsional diproses di perangkatmu. Aplikasi tidak mengirimkannya ke server.
-                </p>
-              </div>
-              <div className="flex items-start space-x-2">
-                <Info className="w-5 h-5 text-slate-500 shrink-0" />
-                <p>
-                  <strong>BATAS TES:</strong> Ini alat refleksi tipologi, bukan diagnosis, penilaian nilai diri, atau keputusan klinis.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center space-x-4 pt-4">
-              <button onClick={() => setCurrentPage("method")} className={`inline-flex items-center space-x-1 text-xs transition cursor-pointer ${
-                theme === "dark" ? "text-slate-400 hover:text-emerald-400" : "text-slate-600 hover:text-emerald-700"
-              }`}>
-                <Sliders className="w-3.5 h-3.5" />
-                <span>Lihat cara penilaian</span>
-              </button>
-              <button onClick={() => setCurrentPage("references")} className={`inline-flex items-center space-x-1 text-xs transition cursor-pointer ${
-                theme === "dark" ? "text-slate-400 hover:text-emerald-400" : "text-slate-600 hover:text-emerald-700"
-              }`}>
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>Lihat rujukan</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* TEST SESSIONS SCRIPT */}
-        {currentPage === "test" && currentQuestion && session && (
-          <div className="max-w-2xl mx-auto space-y-8">
-            
-            {/* Header progress info */}
-            <div className={`flex items-center justify-between border-b pb-4 text-xs font-mono ${
-              theme === "dark" ? "border-slate-905 text-slate-400" : "border-slate-200 text-slate-600"
-            }`}>
-              <div className="flex items-center space-x-2">
-                <Brain className="w-4 h-4 text-emerald-500" />
-                <span>Bagian: Pola respons sehari-hari</span>
+        {/* Core Header section */}
+        <header className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-slate-800 pb-5 mb-6 gap-4">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-sm tracking-tighter text-white shadow shadow-indigo-500/20">
+                SΩ
               </div>
               <div>
-                Pertanyaan <span className="text-emerald-500 font-bold">{session.currentIndex + 1}</span> dari <span className="font-bold">{activeQuestions.length}</span>
+                <h1 className="text-xl font-bold tracking-tight text-white font-sans sm:text-2xl">
+                  Socionics GPT
+                </h1>
               </div>
             </div>
+            <p className="text-xs text-slate-400 mt-1.5 max-w-2xl leading-normal leading-relaxed">
+              Kalkulator Teori Model A, Analis 15 Dikotomi Reinin, dan Konsul Diagnostik GPT-Counselor berdasarkan rujukan baku Aushra Augusta tanpa penyelewengan pop-MBTI.
+            </p>
+          </div>
 
-            {/* Progress Meter bar */}
-            <div className={`w-full h-2 rounded-full overflow-hidden ${theme === "dark" ? "bg-slate-900" : "bg-slate-200"}`}>
-              <div
-                className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-300"
-                style={{ width: `${((session.currentIndex + 1) / activeQuestions.length) * 100}%` }}
-              />
+          {/* Quick Context panel */}
+          <div className="flex items-center gap-2.5 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800 self-start md:self-auto">
+            <span className="text-[10px] font-mono text-slate-500 block">PROFIL AKTIF:</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono font-black text-indigo-400 bg-slate-950 px-2 py-0.5 rounded border border-indigo-950">
+                {typeInfo.code}
+              </span>
+              <span className="text-xs text-slate-300 font-bold">{typeInfo.pseudonym}</span>
+              <span className="text-[10px] text-slate-500">({typeInfo.mbtiEquivalent})</span>
             </div>
+          </div>
+        </header>
 
-            {/* Scenarios / Statement Display */}
-            <div
-              ref={questionRef}
-              className={`p-8 rounded-2xl border space-y-6 shadow-xl relative overflow-hidden ${
-                theme === "dark" ? "border-slate-850 bg-slate-900/40 text-slate-100" : "border-slate-205 bg-white text-slate-800 shadow-sm"
-              }`}
-            >
-              <div className="space-y-3">
-                <span className="text-[10px] uppercase tracking-wider text-emerald-500 font-mono font-bold">
-                  Versi Kasual
+        {/* Meticulous Editorial Critique Banner from ENTJ 3w4 analyst */}
+        {showCritique && (
+          <div className="bg-gradient-to-r from-indigo-950/40 via-slate-900/40 to-indigo-950/10 p-5 rounded-2xl border border-indigo-900/40 mb-6 flex items-start gap-4 shadow-xl">
+            <div className="p-2.5 bg-indigo-950 border border-indigo-800/80 text-indigo-400 rounded-xl shrink-0">
+              <AlertTriangle className="w-5 h-5 animate-pulse" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold tracking-wider text-indigo-400 uppercase">
+                  KRITIK EDITOR PARADIGMA J-K (ENTJ 3w4 PERFEKSIONIS)
                 </span>
-                <p className={`text-lg sm:text-xl font-medium leading-relaxed font-sans ${
-                  theme === "dark" ? "text-white" : "text-slate-900"
-                }`}>
-                  {getCasualVersion(currentQuestion)}
-                </p>
-              </div>
-
-              <details className={`border-t pt-4 group ${
-                theme === "dark" ? "border-slate-800/85" : "border-slate-100"
-              }`}>
-                <summary className={`cursor-pointer text-xs select-none ${
-                  theme === "dark" ? "text-slate-500 hover:text-slate-300" : "text-slate-500 hover:text-slate-700"
-                }`}>
-                  Lihat kalimat asli
-                </summary>
-                <div className="mt-3 space-y-3">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-wider text-emerald-500 font-mono font-bold">
-                      Situasi
-                    </span>
-                    <p className={`mt-1 text-sm leading-relaxed ${
-                      theme === "dark" ? "text-slate-400" : "text-slate-600"
-                    }`}>
-                      {currentQuestion.scenario}
-                    </p>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase tracking-wider text-teal-500 font-mono font-bold">
-                      Respons atau Sikapmu
-                    </span>
-                    <p className={`mt-1 text-sm leading-relaxed ${
-                      theme === "dark" ? "text-slate-300" : "text-slate-700"
-                    }`}>
-                      {currentQuestion.statement}
-                    </p>
-                  </div>
-                </div>
-              </details>
-            </div>
-
-            {/* SCALE RESPONSE CHOICES BUTTONS */}
-            <div className="space-y-4">
-              
-              {/* Responsive compact instruction header */}
-              <div className={`text-center text-xs md:text-sm ${theme === "dark" ? "text-slate-400" : "text-slate-500"} max-w-md mx-auto transition-all`}>
-                {session.currentIndex >= 3 ? (
-                  <span className="opacity-75">Ketuk jawabanmu.</span>
-                ) : (
-                  <span>Ketuk jawabanmu. Tekan <span className="text-emerald-500 font-bold font-mono">(i)</span> untuk melihat penjelasan.</span>
-                )}
-              </div>
-
-              {/* Compact 5-column responsive Likert Grid */}
-              <div className="grid grid-cols-5 gap-1.5 sm:gap-2.5" role="radiogroup" aria-label="Skala Pilihan Jawaban">
-                {(SCALE_OPTIONS_MAP[currentQuestion.scaleType] || SCALE_OPTIONS_MAP.frequency).map((opt) => {
-                  const isSelected = selectedRating === opt.val;
-                  const isExpanded = expandedRating === opt.val;
-                  return (
-                    <div
-                      key={opt.val}
-                      role="radio"
-                      aria-checked={isSelected}
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === " " || e.key === "Enter") {
-                          e.preventDefault();
-                          handleOptionSelect(opt.val);
-                        }
-                      }}
-                      onClick={() => handleOptionSelect(opt.val)}
-                      className={`relative p-1.5 sm:p-2.5 rounded-xl border text-center flex flex-col items-center justify-between transition-all duration-300 cursor-pointer select-none group min-h-[82px] sm:min-h-[105px] focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
-                        isSelected
-                          ? theme === "dark"
-                            ? "bg-emerald-500/10 border-emerald-500 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.22)] scale-[1.01]"
-                            : "bg-emerald-50 border-emerald-600 text-emerald-800 shadow-sm scale-[1.01]"
-                          : isExpanded
-                            ? theme === "dark"
-                              ? "border-teal-500/80 bg-teal-950/20 text-teal-300"
-                              : "border-teal-500 bg-teal-50/50 text-teal-800 shadow-xs"
-                            : theme === "dark"
-                              ? "border-slate-800 bg-slate-900/40 text-slate-400 hover:border-slate-700 hover:bg-slate-900/60"
-                              : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
-                      }`}
-                    >
-                      {/* Interactive (i) indicator toggle */}
-                      <button
-                        type="button"
-                        onClick={(e) => handleInfoClick(e, opt.val)}
-                        className={`absolute top-0.5 right-0.5 p-1 rounded-full transition-all duration-200 cursor-pointer ${
-                          isExpanded
-                            ? "text-teal-400 bg-teal-950/55 scale-110"
-                            : "text-slate-400 hover:text-emerald-400 hover:bg-slate-800/10"
-                        }`}
-                        aria-label={`Maksud rincian opsi ${opt.val}`}
-                        title="Lihat rincian maksud"
-                      >
-                        <Info className="w-3.5 h-3.5 shrink-0" />
-                      </button>
-
-                      {/* Score Value circle / checkmark badge */}
-                      <span className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-mono text-[10px] sm:text-xs md:text-sm border transition-all duration-350 ${
-                        isSelected
-                          ? theme === "dark"
-                            ? "bg-emerald-500 text-slate-950 border-emerald-400 font-extrabold shadow-md scale-105"
-                            : "bg-emerald-600 text-white border-emerald-500 font-extrabold shadow-xs"
-                          : isExpanded
-                            ? "bg-teal-500 text-slate-950 border-teal-400 font-bold"
-                            : theme === "dark"
-                              ? "border-slate-700 bg-slate-800 text-slate-300 group-hover:border-slate-600"
-                              : "border-slate-250 bg-slate-50 text-slate-700 group-hover:border-slate-300 shadow-xs"
-                      }`}>
-                        {isSelected ? (
-                          <span className="flex items-center justify-center">
-                            <Check className="w-3 h-3 sm:w-4.5 sm:h-4.5 text-current shrink-0 stroke-[3]" />
-                          </span>
-                        ) : (
-                          opt.val
-                        )}
-                      </span>
-
-                      {/* Custom styled 2-3 lines description with line clamp */}
-                      <span className="text-[9px] sm:text-[10px] font-medium leading-tight text-center mt-1 sm:mt-1.5 tracking-tight break-words max-w-full block line-clamp-2 sm:line-clamp-3">
-                        {opt.label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Feedbacks visual for auto-saving event */}
-              {isTransitioning && (
-                <div className="flex items-center justify-center space-x-1.5 text-xs text-emerald-500 font-medium animate-pulse py-1">
-                  <Check className="w-4 h-4 shrink-0 stroke-[2.5]" />
-                  <span>Jawaban tersimpan. Lanjut ke soal berikutnya...</span>
-                </div>
-              )}
-
-              {/* Redesigned Compact Accordion Explanation Panel */}
-              {expandedRating !== null && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.22 }}
-                  className={`p-4 rounded-xl border space-y-3 shadow-md overflow-hidden transition-all ${
-                    theme === "dark"
-                      ? "bg-slate-900/60 border-slate-800 text-slate-200"
-                      : "bg-teal-50/10 border-teal-500/15 text-slate-800 shadow-sm"
-                  }`}
+                <button 
+                  onClick={() => setShowCritique(false)}
+                  className="text-slate-500 hover:text-slate-300 text-xs font-mono font-bold hover:underline cursor-pointer"
                 >
-                  <div
-                    onClick={() => setExpandedRating(null)}
-                    className="flex items-center justify-between cursor-pointer border-b pb-1.5 select-none group/header"
-                    title="Klik untuk menutup"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <span className={`text-xs sm:text-sm font-bold ${theme === "dark" ? "text-slate-100" : "text-slate-950"}`}>
-                        {(SCALE_OPTIONS_MAP[currentQuestion.scaleType] || SCALE_OPTIONS_MAP.frequency).find(o => o.val === expandedRating)?.label || "Penjelasan"}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      className="p-1 rounded-full hover:bg-slate-800/10 transition text-slate-400 group-hover/header:text-slate-200"
-                      aria-label="Tutup panel"
-                    >
-                      <ChevronUp className="w-4 h-4 shrink-0" />
-                    </button>
-                  </div>
-
-                  {(() => {
-                    const detail = getOptionDetail(currentQuestion, expandedRating);
-                    return (
-                      <div className="space-y-3.5 text-xs sm:text-sm">
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-wider block">Artinya</span>
-                          <p className={`leading-relaxed ${theme === "dark" ? "text-slate-350" : "text-slate-600"}`}>
-                            {detail?.artinya}
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block">Reaksi</span>
-                          <p className={`leading-relaxed ${theme === "dark" ? "text-slate-300" : "text-slate-650"}`}>
-                            {detail?.reaksi}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })()}
-                </motion.div>
-              )}
-            </div>
-
-            {/* Bottom Actions Row */}
-            <div className={`pt-6 border-t space-y-4 ${theme === "dark" ? "border-slate-900" : "border-slate-200"}`}>
-              {/* Primary Nav Buttons */}
-              <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center sm:justify-between">
-                <button
-                  onClick={() => goToQuestion(session.currentIndex - 1)}
-                  disabled={isFirstQuestion}
-                  className={`w-full sm:w-auto px-5 py-3 text-sm font-medium rounded-xl border disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer flex items-center justify-center space-x-2 ${
-                    theme === "dark"
-                      ? "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-850"
-                      : "bg-white border-slate-205 text-slate-750 hover:bg-slate-100 shadow-sm"
-                  }`}
-                >
-                  <ArrowLeft className="w-4 h-4 shrink-0" />
-                  <span>Kembali</span>
-                </button>
-
-                <button
-                  onClick={handleSkipCurrentQuestion}
-                  className={`w-full sm:w-auto px-5 py-3 text-sm font-semibold rounded-xl border transition cursor-pointer flex items-center justify-center space-x-2 ${
-                    theme === "dark"
-                      ? "border-slate-800 bg-slate-900/40 hover:bg-slate-800 text-slate-300"
-                      : "border-slate-205 bg-white hover:bg-slate-50 text-slate-705 shadow-sm"
-                  }`}
-                >
-                  <span>Lewati Soal</span>
-                  <ChevronRight className="w-4 h-4 shrink-0" />
+                  TUTUP KRITIK &times;
                 </button>
               </div>
-
-              {/* Utility Nav Buttons (Tinjau, Jeda, Selesaikan) */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 w-full border-t border-slate-200/40 dark:border-slate-800/40">
-                <button
-                  onClick={() => {
-                    if (window.confirm("Ingin menjeda sesi tes? Jawabanmu tersimpan otomatis.")) {
-                      setCurrentPage("landing");
-                    }
-                  }}
-                  className={`w-full sm:w-auto text-xs font-mono px-3 py-2 border rounded-lg transition cursor-pointer flex items-center justify-center space-x-1 ${
-                    theme === "dark"
-                      ? "border-slate-850 text-slate-500 hover:text-slate-300 hover:border-slate-700 bg-slate-900/20"
-                      : "border-slate-205 text-slate-500 hover:text-slate-750 hover:bg-slate-50 bg-white shadow-sm"
-                  }`}
-                >
-                  <span>Jeda & Simpan Tes</span>
-                </button>
-
-                <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
-                  <button
-                    onClick={() => setCurrentPage("review")}
-                    className={`w-full sm:w-auto px-4 py-2.5 rounded-lg text-xs font-mono transition cursor-pointer border text-center ${
-                      theme === "dark"
-                        ? "bg-slate-900/50 hover:bg-slate-800 border-slate-800 text-slate-305"
-                        : "bg-white hover:bg-slate-50 text-slate-605 border-slate-202 shadow-sm"
-                    }`}
-                  >
-                    Tinjau Sesi ({Object.keys(session.answers).length}/{activeQuestions.length})
-                  </button>
-
-                  {allSessionItemsHandled && (
-                    <button
-                      onClick={() => finishOrExtendSession(session)}
-                      className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-95 text-slate-950 font-bold px-4 py-2.5 rounded-lg text-xs transition cursor-pointer shadow-md text-center"
-                    >
-                      Selesaikan Sesi
-                    </button>
-                  )}
-                </div>
-              </div>
+              <h4 className="text-sm font-bold text-slate-200 mt-1 font-sans">
+                Kenapa Tes Kepribadian Online Anda Sampah? Menjawab Kontradiksi MBTI vs Model A
+              </h4>
+              <p className="text-xs text-slate-300 mt-2 leading-relaxed max-w-5xl leading-normal">
+                Mayoritas komunitas mencampuradukkan MBTI dengan Socionics tanpa mengerti bahwa sistem dinamis kognisinya bertolak belakang. 
+                <strong className="text-indigo-300"> MBTI menyamakan INTJ dengan INTj Socionics.</strong> Ini adalah pembodohan kolektif. 
+                INTJ MBTI (Ni-Te) memetakan murni ke <strong className="text-indigo-400 font-mono">ILI (Balzac)</strong> di Socionics, 
+                sedangkan INTj Socionics adalah <strong className="text-indigo-400 font-mono">LII (Robespierre)</strong> yang kognisi utamanya adalah <strong className="text-indigo-300">Ti-Ne</strong>. 
+                Aplikasi ini kami desain untuk memutus sisa-sisa kontradiksi tersebut membedah fungsi kerentanan (PoLR) mutlak Anda dan memaksa kognisi Anda sejajar dengan literatur orisinal Augusta, bukannya diagram trait malas berkuisioner 4-pertanyaan.
+              </p>
             </div>
           </div>
         )}
 
-        {/* REVIEW SESSION SCREEN */}
-        {currentPage === "review" && session && (
-          <div className="max-w-3xl mx-auto space-y-8">
-            <div className="text-center space-y-3">
-              <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold font-semibold">Tinjau Progress Menjawab</span>
-              <h2 className="text-3xl font-display font-extrabold tracking-tight">Tinjauan Sesi Asesmen</h2>
-              <p className="text-sm text-slate-400 max-w-lg mx-auto">
-                Berikut adalah rekam jejak jawaban Anda. Pastikan semua pertanyaan telah terisi untuk mendapatkan ketajaman interpretasi Model A yang lebih baik.
-              </p>
-            </div>
+        {/* Tab Navigation Menu bar */}
+        <div className="flex border-b border-slate-800 gap-2 mb-6 overflow-x-auto scrollbar-none pb-px">
+          <button
+            onClick={() => setActiveTab("profiler")}
+            className={`flex items-center gap-2 px-4 py-3 text-xs font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === "profiler"
+                ? "border-indigo-500 text-indigo-400 bg-indigo-950/10"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-800"
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            Profiler Model A & Relasi
+          </button>
+          
+          <button
+            onClick={() => setActiveTab("reinin")}
+            className={`flex items-center gap-2 px-4 py-3 text-xs font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === "reinin"
+                ? "border-indigo-500 text-indigo-400 bg-indigo-950/10"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-800"
+            }`}
+          >
+            <Scale className="w-4 h-4" />
+            Dikotomi Reinin Matematik
+          </button>
 
-            {/* Quick stats panel */}
-            <div className={`p-6 rounded-xl border flex flex-col sm:flex-row items-center justify-between gap-4 ${
-              theme === "dark" ? "border-slate-850 bg-slate-900/60 text-white" : "border-slate-200 bg-white text-slate-800 shadow-sm"
-            }`}>
-              <div className="text-center sm:text-left space-y-1">
-                <div className="text-xs font-mono text-slate-400">Total Progress Terjawab:</div>
-                <div className="text-xl font-bold font-display">
-                  {Object.keys(session.answers).length} dari {activeQuestions.length} Pertanyaan ({Math.round((Object.keys(session.answers).length / activeQuestions.length) * 100)}%)
+          <button
+            onClick={() => setActiveTab("chat")}
+            className={`flex items-center gap-2 px-4 py-3 text-xs font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === "chat"
+                ? "border-indigo-500 text-indigo-400 bg-indigo-950/10"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-800"
+            }`}
+          >
+            <MessageSquare className="w-4 h-4" />
+            Analis Diagnosa AI
+          </button>
+
+          <button
+            onClick={() => setActiveTab("history")}
+            className={`flex items-center gap-2 px-4 py-3 text-xs font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap relative ${
+              activeTab === "history"
+                ? "border-indigo-500 text-indigo-400 bg-indigo-950/10"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-800"
+            }`}
+          >
+            <Archive className="w-4 h-4" />
+            Arsip Hasil Diagnosa
+            {savedReports.length > 0 && (
+              <span className="ml-1.5 bg-indigo-600 text-white font-mono text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+                {savedReports.length}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {/* Tab Canvas Content area */}
+        <main className="space-y-6">
+          
+          {/* TAB 1: PROFILER */}
+          {activeTab === "profiler" && (
+            <div className="flex flex-col gap-6">
+              
+              {/* Type Grid Selector categorised by Quadra */}
+              <div className="bg-slate-950 border border-slate-800/80 p-5 rounded-2xl">
+                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-bold">DAFTAR KATEGORI QUADRA</span>
+                <h3 className="text-sm font-bold text-slate-200 mt-0.5 mb-3">Pilih Sosiotipe untuk Diagnosa Introspektif</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  {/* Alpha Quadra panel */}
+                  <div className="bg-slate-900/10 p-3 rounded-xl border border-emerald-950/40">
+                    <div className="flex items-center justify-between border-b border-emerald-950/40 pb-1.5 mb-2">
+                      <span className="text-xs font-sans font-bold text-emerald-400">Quadra Alpha</span>
+                      <span className="text-[9px] font-mono text-slate-500 font-bold">Val: Fe, Ti, Ne, Si</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {[SociotypeCode.ILE, SociotypeCode.SEI, SociotypeCode.ESE, SociotypeCode.LII].map((code) => (
+                        <button
+                          key={code}
+                          onClick={() => setSelectedType(code)}
+                          className={`p-2 rounded-lg text-left border text-xs cursor-pointer transition-all ${
+                            selectedType === code
+                              ? "bg-emerald-950/40 border-emerald-500/80 text-emerald-300 font-bold"
+                              : "bg-slate-950 border-slate-900 text-slate-400 hover:border-slate-800 hover:text-slate-200"
+                          }`}
+                        >
+                          <div className="font-mono font-bold">{code}</div>
+                          <div className="text-[10px] truncate">{SOCIOTYPES[code].pseudonym}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Beta Quadra panel */}
+                  <div className="bg-slate-900/10 p-3 rounded-xl border border-rose-950/40">
+                    <div className="flex items-center justify-between border-b border-rose-950/40 pb-1.5 mb-2">
+                      <span className="text-xs font-sans font-bold text-rose-400">Quadra Beta</span>
+                      <span className="text-[9px] font-mono text-slate-500 font-bold">Val: Fe, Ti, Se, Ni</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {[SociotypeCode.EIE, SociotypeCode.LSI, SociotypeCode.SLE, SociotypeCode.IEI].map((code) => (
+                        <button
+                          key={code}
+                          onClick={() => setSelectedType(code)}
+                          className={`p-2 rounded-lg text-left border text-xs cursor-pointer transition-all ${
+                            selectedType === code
+                              ? "bg-rose-950/40 border-rose-500/80 text-rose-300 font-bold"
+                              : "bg-slate-950 border-slate-900 text-slate-400 hover:border-slate-800 hover:text-slate-200"
+                          }`}
+                        >
+                          <div className="font-mono font-bold">{code}</div>
+                          <div className="text-[10px] truncate">{SOCIOTYPES[code].pseudonym}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Gamma Quadra panel */}
+                  <div className="bg-slate-900/10 p-3 rounded-xl border border-sky-950/40">
+                    <div className="flex items-center justify-between border-b border-sky-950/40 pb-1.5 mb-2">
+                      <span className="text-xs font-sans font-bold text-sky-400">Quadra Gamma</span>
+                      <span className="text-[9px] font-mono text-slate-500 font-bold">Val: Te, Fi, Se, Ni</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {[SociotypeCode.SEE, SociotypeCode.ILI, SociotypeCode.LIE, SociotypeCode.ESI].map((code) => (
+                        <button
+                          key={code}
+                          onClick={() => setSelectedType(code)}
+                          className={`p-2 rounded-lg text-left border text-xs cursor-pointer transition-all ${
+                            selectedType === code
+                              ? "bg-sky-950/40 border-sky-500/80 text-sky-300 font-bold"
+                              : "bg-slate-950 border-slate-900 text-slate-400 hover:border-slate-800 hover:text-slate-200"
+                          }`}
+                        >
+                          <div className="font-mono font-bold">{code}</div>
+                          <div className="text-[10px] truncate">{SOCIOTYPES[code].pseudonym}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Delta Quadra panel */}
+                  <div className="bg-slate-900/10 p-3 rounded-xl border border-purple-950/40">
+                    <div className="flex items-center justify-between border-b border-purple-950/40 pb-1.5 mb-2">
+                      <span className="text-xs font-sans font-bold text-purple-400">Quadra Delta</span>
+                      <span className="text-[9px] font-mono text-slate-500 font-bold">Val: Te, Fi, Ne, Si</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {[SociotypeCode.LSE, SociotypeCode.EII, SociotypeCode.IEE, SociotypeCode.SLI].map((code) => (
+                        <button
+                          key={code}
+                          onClick={() => setSelectedType(code)}
+                          className={`p-2 rounded-lg text-left border text-xs cursor-pointer transition-all ${
+                            selectedType === code
+                              ? "bg-purple-950/40 border-purple-500/80 text-purple-300 font-bold"
+                              : "bg-slate-950 border-slate-900 text-slate-400 hover:border-slate-800 hover:text-slate-200"
+                          }`}
+                        >
+                          <div className="font-mono font-bold">{code}</div>
+                          <div className="text-[10px] truncate">{SOCIOTYPES[code].pseudonym}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
-                <button
-                  onClick={() => {
-                    const firstUnansweredIdx = activeQuestions.findIndex(q => session.answers[q.id] === undefined);
-                    goToQuestion(firstUnansweredIdx !== -1 ? firstUnansweredIdx : 0);
-                    setCurrentPage("test");
-                  }}
-                  className={`w-full sm:w-auto px-4 py-2.5 text-sm font-medium rounded-lg border transition cursor-pointer text-center ${
-                    theme === "dark" ? "bg-slate-800 border-slate-750 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200 shadow-sm"
-                  }`}
-                >
-                  Lanjutkan Pengisian
-                </button>
-                <button
-                  onClick={() => finishOrExtendSession(session)}
-                  disabled={!allSessionItemsHandled}
-                  title={allSessionItemsHandled ? "Selesaikan sesi" : "Jawab atau lewati seluruh pertanyaan terlebih dahulu"}
-                  className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 px-5 py-2.5 rounded-lg font-bold text-sm transition cursor-pointer shadow text-center"
-                >
-                  {allSessionItemsHandled ? "Selesaikan & Lihat Hasil" : `Belum selesai (${handledCount}/${activeQuestions.length})`}
-                </button>
-              </div>
-            </div>
 
-            {/* Questions list (one by one downwards) */}
-            <div className="space-y-4">
-              {activeQuestions.map((q, idx) => {
-                const ansVal = session.answers[q.id];
-                const isAnswered = ansVal !== undefined;
-                return (
-                  <div
-                    key={q.id}
-                    className={`p-5 rounded-xl border flex flex-col md:flex-row md:items-center justify-between gap-4 transition ${
-                      isAnswered
-                        ? theme === "dark" ? "bg-slate-900/20 border-slate-800" : "bg-emerald-50/10 border-emerald-100"
-                        : theme === "dark" ? "bg-red-500/5 border-red-500/10" : "bg-red-50/20 border-red-100"
-                    }`}
-                  >
-                    <div className="space-y-2 flex-1">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs font-mono font-bold text-slate-450 bg-slate-850/10 px-2 py-0.5 rounded">
-                          No. {idx + 1}
-                        </span>
-                        {!isAnswered && (
-                          <span className="text-[10px] uppercase font-mono font-bold text-red-500 bg-red-500/10 px-2 py-0.5 rounded">
-                            Belum Diisi
-                          </span>
-                        )}
-                      </div>
-                      
-                      {q.scenario && (
-                        <p className="text-xs text-slate-520">
-                          <span className="font-semibold text-emerald-500 font-mono text-[10px] uppercase tracking-wider mr-1.5">Situasi</span> — {q.scenario}
-                        </p>
-                      )}
-                      
-                      <p className={`text-sm sm:text-base font-medium leading-relaxed ${theme === "dark" ? "text-slate-200" : "text-slate-850"}`}>
-                        {q.statement}
+              {/* Selected Type Overview card */}
+              <div className="bg-gradient-to-b from-slate-900/60 to-slate-950 border border-slate-800 rounded-2xl p-6">
+                <div className="flex flex-col md:flex-row md:items-start justify-between border-b border-slate-800/85 pb-5 gap-4">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <span className="text-xs font-mono font-black text-indigo-400 bg-slate-950 px-2 py-0.5 rounded border border-indigo-950 shadow">
+                        {typeInfo.code}
+                      </span>
+                      <h2 className="text-2xl font-bold font-sans text-slate-100 tracking-tight">
+                        {typeInfo.pseudonym} &mdash; {typeInfo.englishName}
+                      </h2>
+                    </div>
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-400 mt-2 font-mono">
+                      <span>Rusia: <strong className="text-slate-300">{typeInfo.russianName}</strong></span>
+                      <span>Alias Gulenko: <strong className="text-slate-300">{typeInfo.gulenkoAlias}</strong></span>
+                      <span>MBTI Equivalent: <strong className="text-slate-300">{typeInfo.mbtiEquivalent}</strong></span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-xs text-slate-300 font-bold bg-slate-955 px-3 py-1.5 rounded-lg border border-slate-800">
+                      Quadra: {typeInfo.quadra}
+                    </span>
+                    <button
+                      onClick={() => setSelectedType(typeInfo.duals)}
+                      className="text-xs text-indigo-300 font-bold bg-indigo-950/40 hover:bg-indigo-900/30 border border-indigo-900/50 px-3 py-1.5 rounded-lg transition-all cursor-pointer"
+                    >
+                      Dual: {typeInfo.duals} &rarr;
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+                  {/* Text descriptions */}
+                  <div className="lg:col-span-7 space-y-4">
+                    <div>
+                      <h4 className="text-xs font-mono text-indigo-300 font-bold uppercase tracking-wider">KOMPETENSI PSIKOKOGNISI</h4>
+                      <p className="text-xs text-slate-300 mt-1 leading-relaxed leading-normal">
+                        {typeInfo.description}
                       </p>
                     </div>
 
-                    <div className="flex items-center space-x-4 shrink-0 justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0">
-                      {isAnswered ? (
-                        <div className="flex items-center space-x-2">
-                          <span className="text-xs text-slate-400 font-mono mr-1">Skor Pilihan</span>
-                          <span className="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center font-mono text-sm">
-                            {ansVal}
+                    <div className="border-t border-slate-800/40 pt-4">
+                      <h4 className="text-xs font-mono text-indigo-300 font-bold uppercase tracking-wider mb-2">ORISINALITAS REININ CHANNELS</h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {typeInfo.keyTraits.map((trait) => (
+                          <span key={trait} className="bg-slate-900 text-slate-300 border border-slate-800 text-[10px] px-2.5 py-1 rounded-md font-mono">
+                            {trait}
                           </span>
-                        </div>
-                      ) : (
-                        <span className="text-xs text-red-400 italic">Dilewati</span>
-                      )}
-
-                      <button
-                        onClick={() => {
-                          goToQuestion(idx);
-                          setCurrentPage("test");
-                        }}
-                        className={`px-3.5 py-1.5 text-xs font-semibold rounded transition cursor-pointer ${
-                          theme === "dark"
-                            ? "bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-750"
-                            : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 shadow-sm"
-                        }`}
-                      >
-                        Ubah
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Review page footer buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-between items-center pt-4">
-              <button
-                onClick={() => setCurrentPage("test")}
-                className={`w-full sm:w-auto px-4 py-2.5 text-sm font-medium rounded-lg border transition cursor-pointer text-center ${
-                  theme === "dark" ? "bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-800" : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50 shadow-sm"
-                }`}
-              >
-                ← Kembali ke Tes
-              </button>
-              <button
-                onClick={() => finishOrExtendSession(session)}
-                disabled={!allSessionItemsHandled}
-                title={allSessionItemsHandled ? "Selesaikan sesi" : "Jawab atau lewati seluruh pertanyaan terlebih dahulu"}
-                className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 font-bold px-5 py-2.5 rounded-lg text-xs sm:text-sm transition cursor-pointer shadow text-center"
-              >
-                {allSessionItemsHandled ? "Selesaikan Tes & Lihat Analisis →" : `Belum selesai (${handledCount}/${activeQuestions.length})`}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* DETAILED RESULTS DASHBOARD */}
-        {currentPage === "result" && calculatedOutput && (
-          <div className={`library-result-page ${theme === "dark" ? "library-page-dark" : "library-page-light"} space-y-12`}>
-            
-            {/* Editorial result header */}
-            <div className="result-library-intro">
-              <div className="result-library-kicker">
-                <LibraryBig className="h-4 w-4" />
-                <span>HASIL MODEL A · EDISI KATALOG</span>
-              </div>
-              <h2>Katalog Hasil Socionics Kamu</h2>
-              <p>
-                Hasil ini disusun seperti koleksi bacaan: mulai dari tipe utama, lanjut ke cara berpikir, emosi, relasi, pandangan dunia, blind spot, dan rekomendasi.
-              </p>
-            </div>
-
-            {/* Main result cover + candidate catalogue */}
-            <div className="result-hero-grid">
-              <article className="result-type-book">
-                <div className="result-book-ribbon">Kandidat utama</div>
-                <div className="result-book-edition">SOCIONICS DALAM DIRIKU · MODEL A</div>
-
-                <div className="result-book-title-row">
-                  <div className="result-type-monogram">{calculatedOutput.top3[0].type}</div>
-                  <div>
-                    <div className="result-book-code">{calculatedOutput.top3[0].type}</div>
-                    <h3>{TIM_MODELS[calculatedOutput.top3[0].type].name}</h3>
-                    <p>{TIM_MODELS[calculatedOutput.top3[0].type].fullName}</p>
-                  </div>
-                </div>
-
-                <div className="result-book-meta">
-                  <span>Quadra {TIM_MODELS[calculatedOutput.top3[0].type].quadra}</span>
-                  <span>{TIM_MODELS[calculatedOutput.top3[0].type].club}</span>
-                  <span>{calculatedOutput.top3[0].fitScore}% Kecocokan Relatif</span>
-                </div>
-
-                <p className="result-book-description">
-                  {polishEditorialText(resultHeroPreview?.expert ?? "Hasil utama ini merangkum pola Model A yang paling konsisten dengan jawabanmu.")}
-                </p>
-
-                <div className="result-book-highlights">
-                  {(resultHeroPreview?.signals ?? []).slice(0, 4).map((signal) => (
-                    <span key={signal}>{polishEditorialText(signal)}</span>
-                  ))}
-                </div>
-
-                <div className="result-confidence-card">
-                  <Shield className="h-5 w-5" />
-                  <div>
-                    <div className="result-confidence-title">
-                      Tingkat Keyakinan Tes: {calculatedOutput.confidence.toUpperCase()}
-                    </div>
-                    <p>{polishEditorialText(calculatedOutput.confidenceExplanation)}</p>
-                  </div>
-                </div>
-              </article>
-
-              <div className="result-side-stack">
-                <section className="result-candidate-catalogue">
-                  <div className="result-panel-heading">
-                    <div>
-                      <span>Rak kandidat</span>
-                      <h3>Tiga tipe terdekat</h3>
-                    </div>
-                    <Target className="h-5 w-5" />
-                  </div>
-
-                  <div className="space-y-3">
-                    {calculatedOutput.top3.map((candidate, index) => (
-                      <div key={candidate.type} className="result-candidate-card">
-                        <div className="result-candidate-rank">0{index + 1}</div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-baseline justify-between gap-3">
-                            <div className="min-w-0">
-                              <strong>{candidate.type}</strong>
-                              <span>{TIM_MODELS[candidate.type].name}</span>
-                            </div>
-                            <b>{candidate.fitScore}%</b>
-                          </div>
-                          <div className="result-candidate-track">
-                            <div style={{ width: `${candidate.fitScore}%` }} />
-                          </div>
-                        </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </section>
-
-                <section className="result-export-card">
-                  <div className="result-panel-heading">
-                    <div>
-                      <span>Kartu katalog</span>
-                      <h3>Simpan hasilmu</h3>
                     </div>
-                    <Download className="h-5 w-5" />
                   </div>
 
-                  <p className="result-panel-copy">
-                    Tambahkan nama panggilan dan foto opsional. Semuanya diproses langsung di browser kamu.
-                  </p>
+                  {/* Strengths & Weaknesses cards */}
+                  <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-emerald-950/5 border border-emerald-900/20 p-4 rounded-xl">
+                      <h5 className="text-[11px] font-mono text-emerald-400 font-bold uppercase tracking-wider mb-2">KEKUATAN UTAMA</h5>
+                      <ul className="space-y-1.5">
+                        {typeInfo.strengths.map((st) => (
+                          <li key={st} className="flex items-start gap-1.5 text-[11px] text-slate-300 leading-normal leading-relaxed">
+                            <span className="text-emerald-500 font-bold shrink-0 mt-0.5">&bull;</span>
+                            {st}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
-                    <label className="result-form-field">
-                      <span>Nama panggilan</span>
-                      <input
-                        type="text"
-                        id="nickname-input-privacy"
-                        name="random_tipologi_nickname_field"
-                        autoComplete="off"
-                        placeholder="Contoh: Alfidda"
-                        value={cardNickname}
-                        onChange={(e) => setCardNickname(e.target.value)}
-                      />
-                    </label>
-
-                    <label className="result-upload-field" htmlFor="cardFilePortrait">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        id="cardFilePortrait"
-                        onChange={handleImageUpload}
-                      />
-                      <Upload className="h-5 w-5" />
-                      <span>{cardImage ? "Foto sudah dipilih" : "Pilih foto opsional"}</span>
-                    </label>
+                    <div className="bg-rose-950/5 border border-rose-900/20 p-4 rounded-xl">
+                      <h5 className="text-[11px] font-mono text-rose-400 font-bold uppercase tracking-wider mb-2">KERENTANAN UTAMA</h5>
+                      <ul className="space-y-1.5">
+                        {typeInfo.weaknesses.map((wk) => (
+                          <li key={wk} className="flex items-start gap-1.5 text-[11px] text-slate-300 leading-normal leading-relaxed">
+                            <span className="text-rose-500 font-bold shrink-0 mt-0.5">&bull;</span>
+                            {wk}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-
-                  {cardImage && (
-                    <button type="button" onClick={() => setCardImage(null)} className="result-remove-photo">
-                      Hapus foto yang dipilih
-                    </button>
-                  )}
-
-                  <button type="button" onClick={handleDownloadCard} className="result-download-button">
-                    <Download className="h-4 w-4" />
-                    <span>Unduh Kartu PNG</span>
-                  </button>
-                </section>
-              </div>
-            </div>
-
-
-            {/* EDITORIAL CATALOGUE RESULT EXPERIENCE */}
-            <React.Suspense
-              fallback={(
-                <div className="library-result-shell flex min-h-56 items-center justify-center text-sm text-[#8b6b4e]">
-                  Menyiapkan katalog hasil kamu...
                 </div>
-              )}
-            >
-              <ResultPortal
-                primaryType={calculatedOutput.top3[0].type}
-                result={calculatedOutput}
-                theme={theme}
-              />
-            </React.Suspense>
+              </div>
 
-            {/* INTERACTIVE MODEL A GRID */}
-            <div className={`space-y-6 border-t pt-10 ${theme === "dark" ? "border-slate-900" : "border-slate-205"}`}>
-              <div className="space-y-1">
-                <span className="text-xs uppercase tracking-wider text-emerald-500 font-mono font-bold">Model A kamu:</span>
-                <h3 className={`text-2xl sm:text-3xl font-display font-extrabold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Susunan Delapan Posisi Model A</h3>
-                <p className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-550"}`}>
-                  Klik satu posisi untuk membaca fungsi, kekuatan, kebutuhan, dan sisi rawannya.
+              {/* Embed Model A and Intertype Relations dashboards */}
+              <ModelAGrid typeInfo={typeInfo} />
+              <RelationsMatrix currentType={typeInfo} />
+            </div>
+          )}
+
+          {/* TAB 2: REININ CALCULATOR */}
+          {activeTab === "reinin" && (
+            <ReininCalculator onSelectType={(code) => {
+              setSelectedType(code);
+              setActiveTab("profiler");
+            }} />
+          )}
+
+          {/* TAB 3: AI DIAGNOSIS CHAT */}
+          {activeTab === "chat" && (
+            <CounselingChat 
+              selectedType={selectedType} 
+              onSaveDiagnosticsReport={handleSaveDiagnosisReport} 
+            />
+          )}
+
+          {/* TAB 4: ARCHIVE HISTORY */}
+          {activeTab === "history" && (
+            <div className="bg-slate-950 border border-slate-800 rounded-2xl p-6" id="history-section">
+              <div className="border-b border-slate-800 pb-4 mb-6">
+                <h3 className="text-lg font-sans font-bold text-slate-100 flex items-center gap-2">
+                  <Archive className="w-5 h-5 text-indigo-400" />
+                  Arsip & Berkas Laporan Diagnostik
+                </h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  Seluruh transkrip diagnosa and evaluasi asisten ENTJ 3w4 tersimpan aman di peranti penyimpanan lokal peramban Anda.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                
-                {/* 4x2 Grid */}
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { key: "Base", index: 1, title: "1. Base / Leading" },
-                    { key: "Creative", index: 2, title: "2. Creative" },
-                    { key: "Role", index: 3, title: "3. Role / Peran" },
-                    { key: "Vulnerable", index: 4, title: "4. Vulnerable / PoLR" },
-                    { key: "Suggestive", index: 5, title: "5. Suggestive" },
-                    { key: "Mobilizing", index: 6, title: "6. Mobilizing" },
-                    { key: "Ignoring", index: 7, title: "7. Ignoring" },
-                    { key: "Demonstrative", index: 8, title: "8. Demonstrative" }
-                  ].map((pos) => {
-                    const top1 = calculatedOutput.top3[0];
-                    const el = TIM_MODELS[top1.type].positions[pos.key];
-                    const isSelected = activeModelAPos === pos.key;
-
-                    return (
-                      <button
-                        key={pos.key}
-                        onClick={() => setActiveModelAPos(isSelected ? null : (pos.key as ModelAPosition))}
-                        className={`p-4 rounded-xl border text-left transition relative select-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/30 ${
-                          isSelected
-                            ? theme === "dark"
-                              ? "bg-emerald-500/10 border-emerald-500 text-emerald-300 shadow-md shadow-emerald-500/10 font-medium"
-                              : "bg-emerald-500/5 border-emerald-500 text-emerald-700 font-semibold shadow-sm"
-                            : theme === "dark"
-                              ? "border-slate-850 bg-slate-900/40 text-slate-300 hover:border-slate-700 hover:bg-slate-900/60"
-                              : "border-slate-200 bg-white text-slate-700 hover:border-slate-305 hover:bg-slate-50 shadow-sm"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between text-[11px] font-mono mb-2">
-                          <span className={theme === "dark" ? "text-slate-400" : "text-slate-500"}>{pos.title}</span>
-                          <span className={isSelected ? (theme === "dark" ? "text-emerald-400 font-bold" : "text-emerald-600 font-bold") : "text-slate-605"}>Pos {pos.index}</span>
-                        </div>
-                        <div className={`text-xl sm:text-2xl font-display font-extrabold tracking-tight ${theme === "dark" ? "" : "text-slate-900"}`}>
-                          {el} ({ELEMENTS_METADATA[el].name.split(" ")[0]})
-                        </div>
-                        <div className={`text-[10px] font-mono truncate mt-1 ${theme === "dark" ? "text-slate-500" : "text-slate-450"}`}>
-                          {ELEMENTS_METADATA[el].name}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Position detail reader card */}
-                {activeModelAPos ? (() => {
-                  const detail = getPositionEditorial(calculatedOutput.top3[0].type, activeModelAPos);
-                  return (
-                    <article className={`model-a-reader ${theme === "dark" ? "model-a-reader-dark" : "model-a-reader-light"}`}>
-                      <header className="model-a-reader-header">
-                        <div className="flex min-w-0 items-center gap-3">
-                          <div className="model-a-reader-icon">
-                            <Info className="h-5 w-5" />
-                          </div>
-                          <div className="min-w-0">
-                            <div className="model-a-reader-kicker">Posisi {detail.position} · {detail.block}</div>
-                            <h4>{detail.title} — {detail.element}</h4>
-                            <p>{ELEMENTS_METADATA[detail.element].name}</p>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setActiveModelAPos(null)}
-                          className="model-a-reader-close"
-                          aria-label="Tutup rincian posisi"
-                        >
-                          <X className="h-4 w-4" />
-                        </button>
-                      </header>
-
-                      <div className="model-a-status-row">
-                        <span>{detail.status}</span>
-                        <span>Tipe {calculatedOutput.top3[0].type}</span>
-                      </div>
-
-                      <div className="model-a-reader-section">
-                        <span>Artinya dalam Model A</span>
-                        <p>{detail.meaning}</p>
-                      </div>
-
-                      <div className="model-a-reader-section model-a-reader-highlight">
-                        <span>Seperti apa dalam keseharian</span>
-                        <p>{detail.inPractice}</p>
-                      </div>
-
-                      <div className="model-a-reader-grid">
-                        <div>
-                          <span>Bukti yang perlu dicari</span>
-                          <p>{detail.evidence}</p>
-                        </div>
-                        <div>
-                          <span>Yang perlu dijaga</span>
-                          <p>{detail.caution}</p>
-                        </div>
-                      </div>
-
-                      <div className="model-a-reflection">
-                        <strong>Pertanyaan refleksi</strong>
-                        <p>{detail.reflection}</p>
-                      </div>
-                    </article>
-                  );
-                })() : (
-                  <div className={`p-8 rounded-2xl border flex flex-col items-center justify-center text-center space-y-3 ${
-                    theme === "dark" ? "border-slate-800 bg-slate-900/10 text-slate-400" : "border-slate-200 bg-slate-50 text-slate-500 shadow-sm"
-                  }`}>
-                    <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-1">
-                      <Target className="w-6 h-6 animate-pulse" />
-                    </div>
-                    <h4 className="font-display font-semibold text-base">Pilih Salah Satu Posisi</h4>
-                    <p className="text-xs max-w-xs leading-relaxed">
-                      Klik salah satu posisi Model A untuk membaca artinya, contoh keseharian, bukti yang perlu dicari, dan sisi yang perlu dijaga.
+              {savedReports.length === 0 ? (
+                <div className="py-20 text-center text-slate-500 flex flex-col items-center gap-4">
+                  <Archive className="w-12 h-12 text-slate-700 animate-pulse" />
+                  <div>
+                    <p className="text-sm font-bold text-slate-300 font-sans">Belum ada diagnosa yang diarsipkan</p>
+                    <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto leading-relaxed">
+                      Lakukan konsultasi dengan asisten AI di tab &quot;Analis Diagnosa AI&quot; lalu klik &quot;Arsipkan Laporan&quot; untuk mengunci transkrip kognisi Anda.
                     </p>
                   </div>
-                )}
-              </div>
-            </div>
-
-            {/* MODEL COMPARISON FEATURE */}
-            <section className="library-comparison-section">
-              <div className="library-section-titlebar">
-                <div>
-                  <span>Perbandingan tipe</span>
-                  <h3>Bandingkan Dengan Tipe Lain</h3>
-                  <p>Pilih satu tipe untuk membandingkan pusat perhatian, titik rawan, dan bentuk bantuan yang terasa paling melegakan.</p>
-                </div>
-                <BookOpen className="h-7 w-7" />
-              </div>
-
-              <label className="library-catalog-select">
-                <span>Pilih tipe pembanding</span>
-                <select value={compareTIM} onChange={(e) => setCompareTIM(e.target.value as TIM)}>
-                  <option value="">-- Pilih Tipe --</option>
-                  {availableTIMs.filter((type) => type !== calculatedOutput.top3[0].type).map((type) => (
-                    <option key={type} value={type}>{type} - {TIM_MODELS[type].name}</option>
-                  ))}
-                </select>
-              </label>
-
-              {compareTIM ? (
-                <div className="library-open-book">
-                  {[calculatedOutput.top3[0].type, compareTIM].map((type, index) => {
-                    const snapshot = getTypeComparisonSnapshot(type);
-                    return (
-                      <article key={type} className="library-book-page">
-                        <div className="library-book-page-label">{index === 0 ? "Tipe utama kamu" : "Tipe pembanding"}</div>
-                        <div className="library-book-page-header">
-                          <div>
-                            <strong>{type}</strong>
-                            <h4>{TIM_MODELS[type].name}</h4>
-                            <p>{TIM_MODELS[type].fullName}</p>
-                          </div>
-                          <span>Quadra {TIM_MODELS[type].quadra}</span>
-                        </div>
-
-                        <div className="library-comparison-list">
-                          <div>
-                            <b>Base · {snapshot.base.element}</b>
-                            <p>{snapshot.base.inPractice}</p>
-                          </div>
-                          <div>
-                            <b>Creative · {snapshot.creative.element}</b>
-                            <p>{snapshot.creative.inPractice}</p>
-                          </div>
-                          <div>
-                            <b>PoLR · {snapshot.vulnerable.element}</b>
-                            <p>{snapshot.vulnerable.inPractice}</p>
-                          </div>
-                          <div>
-                            <b>Suggestive · {snapshot.suggestive.element}</b>
-                            <p>{snapshot.suggestive.inPractice}</p>
-                          </div>
-                        </div>
-                      </article>
-                    );
-                  })}
                 </div>
               ) : (
-                <div className="library-empty-catalogue">
-                  <BookOpen className="h-8 w-8" />
-                  <div>
-                    <strong>Belum ada tipe pembanding.</strong>
-                    <p>Pilih satu tipe dari daftar di atas. Perbandingan akan tampil seperti dua halaman buku yang dibuka berdampingan.</p>
-                  </div>
-                </div>
-              )}
-            </section>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  
+                  {/* Left Sidebar: List of archived transcripts */}
+                  <div className="lg:col-span-4 space-y-3 max-h-[500px] overflow-y-auto pr-1">
+                    {savedReports.map((report) => {
+                      const details = SOCIOTYPES[report.selectedType];
+                      const isSelected = viewingReportId === report.id;
 
-            {/* DYNAMIC INTERTYPE RELATIONS CALCULATOR */}
-            <section className="library-relation-section">
-              <div className="library-section-titlebar">
-                <div>
-                  <span>Relasi antar-tipe</span>
-                  <h3>Analisis Hubungan Antar-Tipe</h3>
-                  <p>Pilih tipe seseorang untuk membaca pola komunikasi, titik nyaman, dan gesekan yang mungkin muncul.</p>
-                </div>
-                <Users className="h-7 w-7" />
-              </div>
-
-              <div className="library-relation-layout">
-                <div className="library-type-drawer">
-                  <div className="library-drawer-label">Laci tipe</div>
-                  <div className="grid grid-cols-4 gap-2 sm:grid-cols-8 xl:grid-cols-4">
-                    {availableTIMs.map((type) => {
-                      const isActive = intertypeTarget === type;
                       return (
-                        <button
-                          key={type}
-                          type="button"
-                          onClick={() => setIntertypeTarget(type)}
-                          className={`library-type-tab ${isActive ? "library-type-tab-active" : ""}`}
-                          title={`${type} - ${TIM_MODELS[type].name}`}
+                        <div
+                          key={report.id}
+                          onClick={() => setViewingReportId(report.id)}
+                          className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                            isSelected
+                              ? "bg-slate-900 border-indigo-500/50 shadow shadow-indigo-500/5"
+                              : "bg-slate-950 border-slate-900 hover:border-slate-800"
+                          }`}
                         >
-                          <strong>{type}</strong>
-                          <span>{TIM_MODELS[type].name}</span>
-                        </button>
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-mono font-black text-indigo-400 bg-slate-950 border border-indigo-950 px-1.5 py-0.5 rounded">
+                                {report.selectedType}
+                              </span>
+                              <span className="text-xs font-bold text-slate-200 truncate">{details.pseudonym}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-[9px] text-slate-500 mt-1.5">
+                              <Clock className="w-3 h-3 shrink-0" />
+                              <span className="truncate">{report.date}</span>
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={(e) => handleDeleteReport(report.id, e)}
+                            className="p-1.5 rounded-md hover:bg-rose-950/20 text-slate-600 hover:text-rose-400 transition-colors shrink-0 cursor-pointer"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       );
                     })}
                   </div>
-                </div>
 
-                <div className="library-relation-record">
-                  {(() => {
-                    const self = calculatedOutput.top3[0].type;
-                    const relationCode = INTERTYPE_MAP[self][intertypeTarget];
-                    const relation = getRelationEditorial(relationCode);
+                  {/* Right Canvas: View Full report */}
+                  <div className="lg:col-span-8">
+                    {viewingReportId ? (() => {
+                      const report = savedReports.find(r => r.id === viewingReportId);
+                      if (!report) return null;
+                      const details = SOCIOTYPES[report.selectedType];
 
-                    return (
-                      <>
-                        <div className="library-record-stamp">CATATAN RELASI</div>
-                        <div className="library-relation-pair">
-                          <div>
-                            <strong>{self}</strong>
-                            <span>{TIM_MODELS[self].name}</span>
+                      return (
+                        <div className="bg-slate-900/30 border border-slate-800/80 p-6 rounded-2xl flex flex-col gap-4">
+                          <div className="border-b border-slate-800 pb-3 flex items-start justify-between flex-wrap gap-2">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="bg-indigo-950 text-indigo-400 border border-indigo-900/60 text-xs font-mono font-bold px-2 py-0.5 rounded">
+                                  {report.selectedType}
+                                </span>
+                                <h4 className="text-sm font-bold font-sans text-slate-200">
+                                  Dokumen Evaluasi Kognitif {details.pseudonym}
+                                </h4>
+                              </div>
+                              <p className="text-[10px] text-slate-500 mt-1">
+                                Diarsipkan pada {report.date}
+                              </p>
+                            </div>
+                            
+                            <button
+                              onClick={() => {
+                                setSelectedType(report.selectedType);
+                                setActiveTab("profiler");
+                              }}
+                              className="text-[10px] font-mono font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 cursor-pointer hover:underline"
+                            >
+                              MUAT MODEL A &rarr;
+                            </button>
                           </div>
-                          <Heart className="h-5 w-5" />
-                          <div>
-                            <strong>{intertypeTarget}</strong>
-                            <span>{TIM_MODELS[intertypeTarget].name}</span>
+
+                          {/* Render Full report content */}
+                          <div className="bg-slate-955 p-5 rounded-xl border border-slate-850 max-h-[460px] overflow-y-auto scrollbar-thin text-xs text-slate-300 space-y-3 font-sans leading-relaxed">
+                            {report.chatHistorySummary ? (
+                              report.chatHistorySummary.split("\n").map((line, idx) => {
+                                if (line.startsWith("### ")) {
+                                  return <h5 key={idx} className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-wider mt-4 mb-1.5">{line.replace("### ", "")}</h5>;
+                                }
+                                if (line.startsWith("## ")) {
+                                  return <h4 key={idx} className="text-sm font-sans font-black text-slate-100 tracking-tight mt-5 mb-2 border-b border-slate-800 pb-1">{line.replace("## ", "")}</h4>;
+                                }
+                                if (line.startsWith("# ")) {
+                                  return <h3 key={idx} className="text-base font-sans font-black text-slate-200 mt-6 mb-2">{line.replace("# ", "")}</h3>;
+                                }
+                                if (line.startsWith("- ") || line.startsWith("* ")) {
+                                  return (
+                                    <li key={idx} className="list-disc list-inside text-xs text-slate-300 ml-2 mt-1">
+                                      {line.substring(2)}
+                                    </li>
+                                  );
+                                }
+                                if (line.trim() === "") return <div key={idx} className="h-2" />;
+                                return <p key={idx} className="mt-1 leading-normal leading-relaxed">{line}</p>;
+                              })
+                            ) : (
+                              <p className="italic text-slate-500">Isi transkrip tidak ditemukan.</p>
+                            )}
                           </div>
                         </div>
-
-                        <div className="library-relation-name">
-                          <span>Jenis hubungan</span>
-                          <h4>{relation.name}</h4>
-                        </div>
-
-                        <div className="library-relation-copy">
-                          <div>
-                            <b>Gambaran singkat</b>
-                            <p>{relation.summary}</p>
-                          </div>
-                          <div>
-                            <b>Potensi kekuatan</b>
-                            <p>{relation.strength}</p>
-                          </div>
-                          <div>
-                            <b>Gesekan yang mungkin muncul</b>
-                            <p>{relation.friction}</p>
-                          </div>
-                          <div>
-                            <b>Saran praktis</b>
-                            <p>{relation.advice}</p>
-                          </div>
-                        </div>
-
-                        <div className="library-relation-note">
-                          Hubungan nyata tetap dipengaruhi kedewasaan, pengalaman, komunikasi, dan batas pribadi. Gunakan bagian ini sebagai hipotesis, bukan penentu kualitas hubungan.
-                        </div>
-                      </>
-                    );
-                  })()}
+                      );
+                    })() : (
+                      <div className="bg-slate-900/10 border border-slate-800 border-dashed p-10 rounded-2xl text-center text-slate-500">
+                        <Clock className="w-8 h-8 mx-auto text-slate-700 animate-pulse mb-3" />
+                        <p className="text-xs font-bold text-slate-400">Pilih berkas arsip di sebelah kiri untuk menelaah transkrip evaluasi kognisi.</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </section>
-
-            {/* RE-TEST BOX */}
-            <section className="library-retest-card">
-              <div>
-                <span>Mulai dari halaman pertama lagi</span>
-                <h4>Mau mengulang tes?</h4>
-                <p>Jawaban lama akan dihapus dari perangkat kamu. Sesi baru akan memakai susunan pertanyaan yang dibuat ulang.</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  if (window.confirm("Hapus hasil ini dan mulai tes dari awal?")) {
-                    resetSession();
-                    setCurrentPage("landing");
-                  }
-                }}
-              >
-                Mulai Ulang Tes
-              </button>
-            </section>
-          </div>
-        )}
-
-        {/* METHODOLOGY DESCRIPTION BLOCK */}
-        {currentPage === "method" && (
-          <div className="max-w-3xl mx-auto space-y-8">
-            <button onClick={() => setCurrentPage("landing")} className="inline-flex items-center space-x-1.5 text-xs text-slate-400 hover:text-white transition">
-              <ArrowLeft className="w-4 h-4" />
-              <span>Kembali</span>
-            </button>
-
-            <div className="space-y-2">
-              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">Arsitektur Interpretasi Model A</h2>
-              <p className="text-sm text-slate-400">
-                Dokumentasi teoretis scoring engine dari aplikasi Socionics Dalam Diriku.
-              </p>
+              )}
             </div>
+          )}
 
-            <div className="space-y-6 text-sm text-slate-300 leading-relaxed font-sans">
-              <section className="space-y-3">
-                <h3 className="text-lg font-bold font-display text-emerald-400">1. Matriks 64 Kanal</h3>
-                <p>
-                  Asesmen ini mengumpulkan bukti dari 8 Information Elements melalui 8 kanal: Producer, Flexible, Mask, Threat, Receiver, Aspiration, Dismissive, dan Background. Kombinasi tersebut membentuk 64 sel yang dibandingkan dengan pola posisi Model A. Ini adalah model interpretatif berbasis teori, bukan pengukuran klinis objektif.
-                </p>
-              </section>
-
-              <section className="space-y-3">
-                <h3 className="text-lg font-bold font-display text-emerald-400">2. Signed Position Fit</h3>
-                <p>
-                  Pilihan 1–5 dipetakan ke rentang -1 sampai +1 sehingga arah dan kekuatan jawaban tetap terlihat. Setiap elemen dibandingkan dengan signed theory prior delapan posisi Model A menggunakan weighted RMSE. Prior ini adalah hipotesis desain yang dapat dikalibrasi ulang setelah data pilot tersedia.
-                </p>
-              </section>
-
-              <section className="space-y-3">
-                <h3 className="text-lg font-bold font-display text-emerald-400">3. Perbandingan 16 Model Kandidat</h3>
-                <p>
-                  Enam belas TIM dievaluasi sebagai enam belas susunan lengkap posisi Model A. Skor yang ditampilkan adalah indeks kemiripan terhadap prior teori, dengan kontribusi kecil dari koherensi quadra, holdout, dan item pembeda yang relevan. Angka tersebut tidak disebut posterior atau probabilitas ilmiah sebelum model dikalibrasi menggunakan data nyata.
-                </p>
-                <div className="bg-slate-900 p-4 rounded-lg font-mono text-xs text-center border border-slate-800 text-slate-300">
-                  Fit(TIM) = mean(position similarity) + limited supporting evidence
-                </div>
-              </section>
-
-              <section className="space-y-3">
-                <h3 className="text-lg font-bold font-display text-emerald-400">4. Holdout Silang & Penilai Person-Fit</h3>
-                <p>
-                  Item holdout tidak membentuk profil core dan dipakai sebagai pemeriksaan prediksi tambahan. Konsistensi dihitung dari replikasi yang sengaja menarget sel yang sama di konteks berbeda. Confidence merangkum cakupan, jarak kandidat, holdout, dan pola respons; ia bukan koefisien reliabilitas empiris.
-                </p>
-              </section>
-            </div>
-          </div>
-        )}
-
-        {/* REFERENCES & CITATIONS PAGE */}
-        {currentPage === "references" && (
-          <div className="max-w-3xl mx-auto space-y-8">
-            <button onClick={() => setCurrentPage("landing")} className="inline-flex items-center space-x-1.5 text-xs text-slate-400 hover:text-white transition">
-              <ArrowLeft className="w-4 h-4" />
-              <span>Kembali</span>
-            </button>
-
-            <div className="space-y-2">
-              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">Tinjauan Rujukan Kajian</h2>
-              <p className="text-sm text-slate-400">
-                Parafrase kutipan, atribusi, dan landasan intelektual Socionics Model A.
-              </p>
-            </div>
-
-            <div className="space-y-6 text-sm text-slate-300 leading-relaxed font-sans">
-              <section className="space-y-2">
-                <h4 className="font-bold text-white font-display">• Carl Gustav Jung - Psychological Types (1921)</h4>
-                <p className="text-xs text-slate-400">
-                  Peletak batu pertama dari konsep pembagian tipe metabolisme mental utama lewat pilar dimensi rasional-irasional dan ekstratimid-introtimid, yang kelak direstrukturisasi ke dalam Socionics.
-                </p>
-              </section>
-
-              <section className="space-y-2">
-                <h4 className="font-bold text-white font-display">• Aušra Augustinavičiūtė - Model A & Wikisocion Traditional Compliations</h4>
-                <p className="text-xs text-slate-400">
-                  Lembaga pendiri sosiologis asal Lithuania yang meletakkan pola 8 posisi fungsi mental (Ego, Super-ego, Super-id, Id) dan memilah relasi dinamika metabolisme informasi (Intertype Relations).
-                </p>
-              </section>
-
-              <section className="space-y-2">
-                <h4 className="font-bold text-white font-display">• Antoni Kępiński - Information Metabolism Theory</h4>
-                <p className="text-xs text-slate-400">
-                  Mengembangkan kerangka psikiatri bahwa jiwa manusia mengonsumsi informasi eksternal dengan cara metabolik layaknya lambung mengonsumsi kalori fisik, menjadi basis analogi Socionics.
-                </p>
-              </section>
-
-              <section className="space-y-2">
-                <h4 className="font-bold text-white font-display">• Kajian Akademik Karol Pietrak</h4>
-                <p className="text-xs text-slate-400">
-                  Menelaah penggunaan Socionics sebagai kerangka pendidikan dan refleksi, tanpa mengklaim validasi klinis atau reliabilitas empiris yang belum diuji.
-                </p>
-              </section>
-            </div>
-          </div>
-        )}
-
-        {/* EMBEDDED REAL-TIME AUDIT SUITE */}
-        {currentPage === "audit" && (
-          <div className="max-w-4xl mx-auto space-y-8">
-            <button onClick={() => setCurrentPage("landing")} className="inline-flex items-center space-x-1.5 text-xs text-slate-400 hover:text-white transition">
-              <ArrowLeft className="w-4 h-4" />
-              <span>Kembali</span>
-            </button>
-
-            <div className="space-y-2">
-              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white">Konsol Audit Integritas Instrumen</h2>
-              <p className="text-sm text-slate-400">
-                Pemeriksaan struktural otomatis terhadap duplikasi, cakupan 64 sel, canonical tie-break, dan sampling lintas seed. Ini bukan bukti reliabilitas empiris.
-              </p>
-            </div>
-
-            {/* Test result banner from metadata checklist */}
-            <div className={`p-5 rounded-xl border ${auditReport.success ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" : "bg-rose-500/10 border-rose-500/30 text-rose-400"}`}>
-              <div className="flex items-center space-x-3">
-                <Activity className="w-6 h-6 animate-pulse" />
-                <div>
-                  <h3 className="font-bold text-lg">
-                    {auditReport.success ? "AUDIT STRUKTURAL LULUS" : "MASALAH STRUKTURAL DITEMUKAN"}
-                  </h3>
-                  <p className="text-xs text-slate-400">{auditReport.errors.length} error dan {auditReport.warnings.length} peringatan ditemukan pada pemeriksaan otomatis.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Coverage statistics table */}
-            <div className="grid sm:grid-cols-3 gap-6">
-              <div className="p-5 rounded-xl border border-slate-900 bg-slate-900/40 space-y-2">
-                <span className="text-[10px] uppercase font-mono text-slate-500">Jumlah Pertanyaan Sesi:</span>
-                <div className="text-3xl font-display font-bold text-white">{auditReport.metrics.totalItems} ITEM</div>
-                <p className="text-[10px] text-slate-400 leading-relaxed font-mono">{auditReport.metrics.coreItems} Core | {auditReport.metrics.holdoutItems} Holdout | {auditReport.metrics.tieBreakItems} Adaptive tie-break</p>
-              </div>
-
-              <div className="p-5 rounded-xl border border-slate-900 bg-slate-900/40 space-y-2">
-                <span className="text-[10px] uppercase font-mono text-slate-500">Keseimbangan Kognitif:</span>
-                <div className="text-3xl font-display font-bold text-white">{auditReport.metrics.completeCoreCells} / 64 SEL</div>
-                <p className="text-[10px] text-slate-400 leading-relaxed font-mono">Masing-masing sel memiliki tiga core item independen.</p>
-              </div>
-
-              <div className="p-5 rounded-xl border border-slate-900 bg-slate-900/40 space-y-2">
-                <span className="text-[10px] uppercase font-mono text-slate-500">Penyebaran Konteks Kegiatan:</span>
-                <div className="text-3xl font-display font-bold text-white">{auditReport.metrics.simulatedSessions} SEED</div>
-                <p className="text-[10px] text-slate-400 leading-relaxed font-mono">Ringkas, standar, dan mendalam diuji agar selalu mencakup 64/64 sel.</p>
-              </div>
-            </div>
-
-            {auditReport.warnings.length > 0 && (
-              <div className="p-6 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-4">
-                <div className="flex items-center space-x-2 text-amber-400 font-bold text-sm uppercase">
-                  <AlertTriangle className="w-5 h-5" />
-                  <span>Peringatan yang Perlu Ditinjau:</span>
-                </div>
-                <ul className="list-disc pl-5 text-xs text-amber-200 space-y-1.5 font-mono">
-                  {auditReport.warnings.map((warning, index) => <li key={index}>{warning}</li>)}
-                </ul>
-              </div>
-            )}
-
-            {/* Error logs */}
-            {auditReport.errors.length > 0 && (
-              <div className="p-6 rounded-xl border border-rose-500/30 bg-rose-500/5 space-y-4">
-                <div className="flex items-center space-x-2 text-rose-400 font-bold text-sm uppercase">
-                  <AlertTriangle className="w-5 h-5" />
-                  <span>Daftar Pelanggaran Konsistensi:</span>
-                </div>
-                <ul className="list-disc pl-5 text-xs text-rose-300 space-y-1.5 font-mono">
-                  {auditReport.errors.map((err, i) => (
-                    <li key={i}>{err}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-      </main>
-
-      {/* FOOTER */}
-      <footer className={`border-t py-8 mt-20 no-print text-center text-xs ${theme === "dark" ? "bg-slate-900/50 border-slate-900 text-slate-500" : "bg-white border-slate-200 text-slate-400"}`}>
-        <div className="max-w-7xl mx-auto px-4 space-y-2">
-          <p>© 2026 Socionics Dalam Diriku. Hak cipta dilindungi undang-undang.</p>
-          <p>Scored locally on device client-side. No cookie session telemetry trackers deployed.</p>
-        </div>
-      </footer>
+        </main>
+      </div>
     </div>
   );
 }
