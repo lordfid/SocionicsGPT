@@ -1,6 +1,6 @@
 {
-  "name": "Socionics Atlas & Psychometric Engine",
-  "description": "A mathematically rigorous Model A diagnostics engine, interactive intertype relations atlas, and causal cinematic typing consultant.",
+  "name": "SocionicsGPT",
+  "description": "Sistem audit kepribadian kognitif berbasis Model A dengan 64-channel coverage, validasi holdout, adaptive tie-breaks, dan visualisasi interaktif.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
